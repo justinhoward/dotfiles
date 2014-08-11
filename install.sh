@@ -1,9 +1,57 @@
-dir="$(dirname "$0")"
+pushd `dirname $0` > /dev/null
+dir=`pwd`
+popd > /dev/null
 
-ln -siv "$dir/environment.sh" ~/.environment
-ln -siv "$dir/zsh/zshrc.zsh" ~/.zshrc
-ln -siv "$dir/xorg/xinitrc.sh" ~/.xinitrc
-ln -siv "$dir/bash/bash_profile.sh" ~/.bash_profile
-ln -siv "$dir/bash/bashrc.sh" ~/.bashrc
+function backup()
+{
+	local path=$1
 
-[ -f ~/.profile ] && rm -iv ~/.profile
+	# Don't back up symbolic links or missing files
+	if [ ! -e $path ] || [ -h $path ]; then
+		return
+	fi
+
+	echo "$path exists. Moving to $path.bak"
+	if [ -f "$path.bak" ]; then
+		echo "Could not back up $path. Exiting"
+		exit 1
+	fi
+
+	mv $path "$path.bak"
+}
+
+function remove()
+{
+	local path=$1
+
+	backup path
+
+	rm -rf $path
+}
+
+function symlink()
+{
+	local relTarget=$1 link=$2 target
+
+	target="$dir/$relTarget"
+
+	backup $link
+
+	if [ -d $target ]; then
+		ln -sfrT $target $link
+	else
+		ln -sfr $target $link
+	fi
+}
+
+symlink environment.sh ~/.environment
+symlink zsh/zshrc.zsh ~/.zshrc
+symlink xorg/xinitrc.sh ~/.xinitrc
+symlink bash/bash_profile.sh ~/.bash_profile
+symlink bash/bashrc.sh ~/.bashrc
+symlink vim/vimrc.vim ~/.vimrc
+symlink vim/vim ~/.vim
+
+remove ~/.profile
+
+echo 'Dotfiles installed'
