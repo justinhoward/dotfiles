@@ -18,7 +18,7 @@ DEFAULT_USER=justin_howard
 DISABLE_AUTO_UPDATE="true"
 
 # oh-my-zsh custom folder path
-ZSH_CUSTOM=~/.zsh-custom
+ZSH_CUSTOM="$DOTFILE_PATH/zsh/oh_my_zsh_custom"
 
 # Enable oh-my-zsh plugins
 plugins=(git)
