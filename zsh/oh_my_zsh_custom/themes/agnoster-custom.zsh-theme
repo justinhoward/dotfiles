@@ -69,9 +69,9 @@ prompt_context() {
 
 # Git: branch/detached head, dirty status
 prompt_git() {
-  local ref dirty mode repo_path base loc remote relative stashes
+  local ref dirty mode repo_path base loc remote relative stashes in_work_tree
 
-  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+  if in_work_tree=$(git rev-parse --is-inside-work-tree 2>/dev/null); then
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
     if [[ -n $dirty ]]; then
@@ -79,6 +79,8 @@ prompt_git() {
     else
       prompt_segment green black
     fi
+
+    repo_path=$(git rev-parse --git-dir 2>/dev/null)
 
     if [[ -e "${repo_path}/BISECT_LOG" ]]; then
       mode=" <B>"
@@ -88,15 +90,11 @@ prompt_git() {
       mode=" >R>"
     fi
 
-    setopt promptsubst
-    autoload -Uz vcs_info
-
-    repo_path=$(git rev-parse --git-dir 2>/dev/null)
-    remote=$(git rev-parse @{u} 2>/dev/null)
-    if [[ "$(git stash list | wc -l)" -gt 0 ]]; then
+    if [[ "$in_work_tree" = "true" ]] && [[ "$(git stash list | wc -l)" -gt 0 ]]; then
       stashes="▼"
     fi
 
+    remote=$(git rev-parse @{u} 2>/dev/null)
     if [[ -z $remote ]]; then
       relative=""
     else
@@ -113,6 +111,9 @@ prompt_git() {
         relative=" ↕"
       fi
     fi
+
+    setopt promptsubst
+    autoload -Uz vcs_info
 
     zstyle ':vcs_info:*' enable git
     zstyle ':vcs_info:*' get-revision true
