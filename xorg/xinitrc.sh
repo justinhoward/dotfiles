@@ -1,5 +1,10 @@
 # ~/.xinitrc
 
+# Run shared environment
+if [[ -f ~/.environment ]]; then
+	. ~/.environment
+fi
+
 # Executed by startx (run your window manager from here)
 
 # Run global xinit scripts
@@ -19,10 +24,6 @@ fi
 
 if [ $(command -v xautolock 2>&1 /dev/null) ] && [ $(command -v slock 2>&1 /dev/null) ]; then
 	xautolock -time 5 -locker slock &
-fi
-
-if [[ -f ~/.environment ]]; then
-	. ~/.environment
 fi
 
 #fix white screen for java apps in xmonad
