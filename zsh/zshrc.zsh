@@ -1,10 +1,5 @@
 # ~/.zshrc
 
-# Run shared environment
-if [[ -f ~/.environment ]]; then
-	. ~/.environment
-fi
-
 # Path to your oh-my-zsh installation.
 ZSH=/usr/share/oh-my-zsh/
 
@@ -17,11 +12,16 @@ DEFAULT_USER=justin_howard
 # Disable oh-my-zsh bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 
-# oh-my-zsh custom folder path
-ZSH_CUSTOM="$DOTFILE_PATH/zsh/oh_my_zsh_custom"
-
 # Enable oh-my-zsh plugins
 plugins=(git)
+
+# Run shared environment
+if [[ -f ~/.environment ]]; then
+	. ~/.environment
+fi
+
+# oh-my-zsh custom folder path
+ZSH_CUSTOM="$DOTFILE_PATH/zsh/oh_my_zsh_custom"
 
 # Run oh-my-zsh
 source $ZSH/oh-my-zsh.sh
