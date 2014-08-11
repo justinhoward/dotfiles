@@ -38,9 +38,9 @@ function symlink()
 	backup $link
 
 	if [ -d $target ]; then
-		ln -sfrT $target $link
+		ln -sfT $target $link
 	else
-		ln -sfr $target $link
+		ln -sf $target $link
 	fi
 }
 
