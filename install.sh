@@ -6,6 +6,11 @@ function backup()
 {
 	local path=$1
 
+	# Remove symbolic links
+	if [ -h $path ]; then
+		rm -f $path
+	fi
+
 	# Don't back up symbolic links or missing files
 	if [ ! -e $path ] || [ -h $path ]; then
 		return
@@ -37,11 +42,7 @@ function symlink()
 
 	backup $link
 
-	if [ -d $target ]; then
-		ln -sfT $target $link
-	else
-		ln -sf $target $link
-	fi
+	ln -sf $target $link
 }
 
 symlink environment.sh ~/.environment
