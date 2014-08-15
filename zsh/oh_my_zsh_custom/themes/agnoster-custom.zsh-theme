@@ -98,8 +98,8 @@ prompt_git() {
     if [[ -z $remote ]]; then
       relative=""
     else
-      base=$(git merge-base @ @{u})
-      loc=$(git rev-parse @)
+      base=$(git merge-base HEAD @{u})
+      loc=$(git rev-parse HEAD)
 
       if [ $loc = $remote ]; then
         relative=" ="
