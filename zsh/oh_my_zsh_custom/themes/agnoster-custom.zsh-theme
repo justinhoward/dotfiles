@@ -96,7 +96,7 @@ prompt_git() {
 
     remote=$(git rev-parse @{u} 2>/dev/null)
     if [[ -z $remote ]]; then
-      relative=""
+      relative=" "
     else
       base=$(git merge-base HEAD @{u})
       loc=$(git rev-parse HEAD)
