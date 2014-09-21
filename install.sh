@@ -18,7 +18,7 @@ function backup()
 
 	echo "$path exists. Moving to $path.bak"
 	if [ -f "$path.bak" ]; then
-		echo "Could not back up $path. Exiting"
+		echo "Could not back up $path to $path.bak. Exiting"
 		exit 1
 	fi
 
@@ -45,14 +45,17 @@ function symlink()
 	ln -sf $target $link
 }
 
-symlink environment.sh ~/.environment
-symlink zsh/zshrc.zsh ~/.zshrc
-symlink xorg/xinitrc.sh ~/.xinitrc
-symlink bash/bash_profile.sh ~/.bash_profile
-symlink bash/bashrc.sh ~/.bashrc
-symlink vim/vimrc.vim ~/.vimrc
-symlink vim/vim ~/.vim
+symlink installed/zshrc.zsh ~/.zshrc
+symlink installed/xinitrc.sh ~/.xinitrc
+symlink installed/bash_profile.sh ~/.bash_profile
+symlink installed/bashrc.sh ~/.bashrc
+symlink installed/vimrc.vim ~/.vimrc
+symlink installed/vim ~/.vim
+symlink installed/dotfilesrc.sh ~/.dotfilesrc
 
 remove ~/.profile
+remove ~/.zprofile
+remove ~/.zlogin
+remove ~/.zshenv
 
 echo 'Dotfiles installed'

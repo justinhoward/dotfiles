@@ -1,1 +1,0 @@
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.composer/vendor/bin:$PATH
