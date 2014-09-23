@@ -14,6 +14,7 @@ zstyle ':prezto:module:prompt:justinhoward:symbols' separator_r "\ue0b2"
 zstyle ':prezto:module:prompt:justinhoward:symbols' job "\u2699"
 zstyle ':prezto:module:prompt:justinhoward:symbols' root "\u26a1"
 zstyle ':prezto:module:prompt:justinhoward:symbols' error "\u2718"
+zstyle ':prezto:module:prompt:justinhoward' user "$(whoami)"
 
 # Characters
 # SEGMENT_SEPARATOR="\ue0b0"
@@ -23,20 +24,6 @@ zstyle ':prezto:module:prompt:justinhoward:symbols' error "\u2718"
 # CROSS="\u2718"
 # LIGHTNING="\u26a1"
 # GEAR="\u2699"
-
-function prompt_justinhoward_pwd {
-  local pwd="${PWD/#$HOME/~}"
-  local prompt_pwd
-
-  if [[ "$pwd" == (#m)[/~] ]]; then
-    prompt_pwd="$MATCH"
-    unset MATCH
-  else
-    prompt_pwd="${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}/${pwd:t}"
-  fi
-
-  echo -n $prompt_pwd
-}
 
 function prompt_justinhoward_status {
   local symbols job_symbol root_symbol return_code
@@ -54,8 +41,33 @@ function prompt_justinhoward_status {
   echo -n "$symbols"
 }
 
+prompt_justinhoward_context() {
+  local user default_user
+  zstyle -s ':prezto:module:prompt:justinhoward' user user
+  zstyle -s ':prezto:module:prompt:justinhoward' default_user default_user
+
+  if [[ "$user" != "$default_user" || -n "$SSH_CONNECTION" ]]; then
+    echo -n "%(!.%{%F{yellow}%}.)$user@%m"
+  fi
+}
+
+function prompt_justinhoward_pwd {
+  local pwd="${PWD/#$HOME/~}"
+  local prompt_pwd
+
+  if [[ "$pwd" == (#m)[/~] ]]; then
+    prompt_pwd="$MATCH"
+    unset MATCH
+  else
+    prompt_pwd="${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}/${pwd:t}"
+  fi
+
+  echo -n $prompt_pwd
+}
+
 function prompt_justinhoward_compile_l {
-  local status_symbols
+  _prompt_justinhoward_bg=
+  local status_symbols segments
 
   status_symbols=$(prompt_justinhoward_status)
 
@@ -63,12 +75,17 @@ function prompt_justinhoward_compile_l {
     prompt_justinhoward_segment_l "$status_symbols" black blue
   fi
 
+  prompt_justinhoward_segment_l "$(prompt_justinhoward_context)" black blue
   prompt_justinhoward_segment_l "$(prompt_justinhoward_pwd)" blue black
   prompt_justinhoward_end_l
 }
 
 function prompt_justinhoward_compile_r {
+  _prompt_justinhoward_bg=
 
+  prompt_justinhoward_segment_r "hi" green red
+  prompt_justinhoward_segment_r "there" yellow blue
+  prompt_justinhoward_end_r
 }
 
 function prompt_justinhoward_precmd {
@@ -90,12 +107,8 @@ function prompt_justinhoward_segment_l {
   local text=$1 bg=$2 fg=$3 separator
   zstyle -s ':prezto:module:prompt:justinhoward:symbols' separator_l separator
 
-  if [[ -n "$_prompt_justinhoward_bg" ]]; then
-    if [[ "$_prompt_justinhoward_bg" != "$bg" ]]; then
-      echo -n " %{%F{$_prompt_justinhoward_bg}%K{$bg}$separator"
-    else
-      echo -n " "
-    fi
+  if [[ -n "$_prompt_justinhoward_bg" ]] && [[ "$_prompt_justinhoward_bg" != "$bg" ]]; then
+      echo -n " %{%F{$_prompt_justinhoward_bg}%K{$bg}%}$separator"
   fi
 
   echo -n "%{%K{$bg}%F{$fg}%} $text"
@@ -105,7 +118,25 @@ function prompt_justinhoward_segment_l {
 function prompt_justinhoward_end_l {
   zstyle -s ':prezto:module:prompt:justinhoward:symbols' separator_l separator
 
-  echo -n " %{%F{$_prompt_justinhoward_bg}%k$separator%{%f%} "
+  echo -n " %{%F{$_prompt_justinhoward_bg}%k%}$separator%{%f%} "
+}
+
+function prompt_justinhoward_segment_r {
+  local text=$1 bg=$2 fg=$3 separator
+  zstyle -s ':prezto:module:prompt:justinhoward:symbols' separator_r separator
+
+  if [[ -z "$_prompt_justinhoward_bg" ]]; then
+    echo -n " %{%F{$bg}%}$separator"
+  elif [[ "$_prompt_justinhoward_bg" != $bg ]]; then
+    echo -n " %{%F{$bg}%K{$_prompt_justinhoward_bg}%}$separator"
+  fi
+
+  echo -n "%{%K{$bg}%F{$fg}%} $text"
+  _prompt_justinhoward_bg=$bg
+}
+
+function prompt_justinhoward_end_r {
+  echo -n " %{%f%k%}"
 }
 
 function prompt_justinhoward_setup {
