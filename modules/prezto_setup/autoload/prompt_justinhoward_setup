@@ -14,7 +14,7 @@ zstyle ':prezto:module:prompt:justinhoward:symbols' separator_r "\ue0b2"
 zstyle ':prezto:module:prompt:justinhoward:symbols' job "\u2699"
 zstyle ':prezto:module:prompt:justinhoward:symbols' root "\u26a1"
 zstyle ':prezto:module:prompt:justinhoward:symbols' error "\u2718"
-zstyle ':prezto:module:prompt:justinhoward' user "$(whoami)"
+zstyle ':prezto:module:prompt:justinhoward' user "$USER"
 
 # Characters
 # SEGMENT_SEPARATOR="\ue0b0"
@@ -65,6 +65,26 @@ function prompt_justinhoward_pwd {
   echo -n $prompt_pwd
 }
 
+function prompt_justinhoward_git {
+    echo -n "${git_info:+${(e)git_info[prompt]}}"
+}
+
+function prompt_justinhoward_git_color {
+  local bg git_clean
+  git_clean="${git_info:+${(e)git_info[clean]}}"
+  if [[ -n "$git_clean" ]]; then
+    bg=green
+  else
+    bg=yellow
+  fi
+
+  echo -n $bg
+}
+
+function prompt_justinhoward_git_status {
+    echo -n "${git_info[rprompt]}"
+}
+
 function prompt_justinhoward_compile_l {
   _prompt_justinhoward_bg=
   local status_symbols segments
@@ -77,30 +97,22 @@ function prompt_justinhoward_compile_l {
 
   prompt_justinhoward_segment_l "$(prompt_justinhoward_context)" black blue
   prompt_justinhoward_segment_l "$(prompt_justinhoward_pwd)" blue black
+
+  if [[ -n "$_prompt_justinhoward_git_enabled" ]]; then
+    prompt_justinhoward_segment_l "$(prompt_justinhoward_git)" "$(prompt_justinhoward_git_color)" black
+  fi
+
   prompt_justinhoward_end_l
 }
 
 function prompt_justinhoward_compile_r {
   _prompt_justinhoward_bg=
+  local git
 
-  prompt_justinhoward_segment_r "hi" green red
-  prompt_justinhoward_segment_r "there" yellow blue
-  prompt_justinhoward_end_r
-}
-
-function prompt_justinhoward_precmd {
-  zstyle ':prezto:module:prompt:justinhoward' return_code "$?"
-
-  setopt LOCAL_OPTIONS
-  unsetopt XTRACE KSH_ARRAYS
-
-  _prompt_justinhoward_l=$(prompt_justinhoward_compile_l)
-  _prompt_justinhoward_r=$(prompt_justinhoward_compile_r)
-
-  # Get Git repository information.
-  if (( $+functions[git-info] )); then
-    git-info
+  if [[ -n "$_prompt_justinhoward_git_enabled" ]]; then
+    prompt_justinhoward_segment_r "$(prompt_justinhoward_git_status)" black blue
   fi
+  prompt_justinhoward_end_r
 }
 
 function prompt_justinhoward_segment_l {
@@ -139,6 +151,25 @@ function prompt_justinhoward_end_r {
   echo -n " %{%f%k%}"
 }
 
+function prompt_justinhoward_precmd {
+  zstyle ':prezto:module:prompt:justinhoward' return_code "$?"
+
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Get Git repository information.
+  if (( $+functions[git-info] )); then
+    if git-info; then
+      _prompt_justinhoward_git_enabled=1
+    else
+      _prompt_justinhoward_git_enabled=
+    fi
+  fi
+
+  _prompt_justinhoward_l=$(prompt_justinhoward_compile_l)
+  _prompt_justinhoward_r=$(prompt_justinhoward_compile_r)
+}
+
 function prompt_justinhoward_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
@@ -158,22 +189,24 @@ function prompt_justinhoward_setup {
 
   # Set git-info parameters.
   zstyle ':prezto:module:git:info' verbose 'yes'
-  zstyle ':prezto:module:git:info:action' format ':%%B%F{yellow}%s%f%%b'
-  zstyle ':prezto:module:git:info:added' format ' %%B%F{green}✚%f%%b'
-  zstyle ':prezto:module:git:info:ahead' format ' %%B%F{yellow}⬆%f%%b'
-  zstyle ':prezto:module:git:info:behind' format ' %%B%F{yellow}⬇%f%%b'
-  zstyle ':prezto:module:git:info:branch' format ':%F{green}%b%f'
-  zstyle ':prezto:module:git:info:commit' format ':%F{green}%.7c%f'
-  zstyle ':prezto:module:git:info:deleted' format ' %%B%F{red}✖%f%%b'
-  zstyle ':prezto:module:git:info:modified' format ' %%B%F{blue}✱%f%%b'
+  zstyle ':prezto:module:git:info:action' format ':%%F{yellow}%s%f%'
+  zstyle ':prezto:module:git:info:added' format ' %%F{green}✚%f%'
+  zstyle ':prezto:module:git:info:ahead' format ' %%F{yellow}⬆%f%'
+  zstyle ':prezto:module:git:info:behind' format ' %%F{yellow}⬇%f%'
+  zstyle ':prezto:module:git:info:branch' format '%b'
+  zstyle ':prezto:module:git:info:clean' format '1'
+  zstyle ':prezto:module:git:info:commit' format '%F{green}%.7c%f'
+  zstyle ':prezto:module:git:info:deleted' format ' %%F{red}✖%f%'
+  zstyle ':prezto:module:git:info:modified' format ' %%F{blue}✱%f%'
   zstyle ':prezto:module:git:info:position' format ':%F{red}%p%f'
-  zstyle ':prezto:module:git:info:renamed' format ' %%B%F{magenta}➜%f%%b'
-  zstyle ':prezto:module:git:info:stashed' format ' %%B%F{cyan}✭%f%%b'
-  zstyle ':prezto:module:git:info:unmerged' format ' %%B%F{yellow}═%f%%b'
-  zstyle ':prezto:module:git:info:untracked' format ' %%B%F{white}◼%f%%b'
+  zstyle ':prezto:module:git:info:renamed' format ' %%F{magenta}➜%f%'
+  zstyle ':prezto:module:git:info:stashed' format ' %%F{cyan}✭%f%'
+  zstyle ':prezto:module:git:info:unmerged' format ' %%F{yellow}═%f%'
+  zstyle ':prezto:module:git:info:untracked' format ' %%F{white}◼%f%'
   zstyle ':prezto:module:git:info:keys' format \
-    'prompt' ' %F{blue}git%f$(coalesce "%b" "%p" "%c")%s' \
-    'rprompt' '%A%B%S%a%d%m%r%U%u'
+    'prompt' '$(coalesce "%b" "%p" "%c")%s' \
+    'rprompt' '%A%B%S%a%d%m%r%U%u' \
+    'clean' '%C'
 
   # Define prompts.
   # PROMPT='%F{cyan}${_prompt_justinhoward_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
