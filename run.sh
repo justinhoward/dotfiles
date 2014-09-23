@@ -8,23 +8,23 @@ done
 
 detect_environment
 
-init_dotfiles_module environment
+dmodload environment
 
 if [ $DOTFILES_INTERACTIVE ]; then
-    init_dotfiles_module interactive
+    dmodload interactive
 fi
 
 if [ $DOTFILES_LOGIN ]; then
-    init_dotfiles_module login
+    dmodload login
 fi
 
 if [ $DOTFILES_XORG ]; then
-    init_dotfiles_module xorg
+    dmodload xorg
     $DOTFILES_EXEC_WM
 fi
 
 unset runner
-unset -f init_dotfiles_module detect_environment
+unset -f dmodload detect_environment
 
 if [ $DOTFILES_XORG ]; then
     $DOTFILES_EXEC_WM

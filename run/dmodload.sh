@@ -1,4 +1,4 @@
-function init_dotfiles_module()
+function dmodload()
 {
     local module_load_path="$DOTFILES_PATH/modules/$1"
 
