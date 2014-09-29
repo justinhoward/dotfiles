@@ -10,4 +10,5 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'completion' \
   'prompt' \
-  'git'
+  'git' \
+  'fasd'
