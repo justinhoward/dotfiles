@@ -1,4 +1,4 @@
-if [ "$DOTFILES_SHELL" != "zsh" ]; then
+if [[ "$DOTFILES_SHELL" != "zsh" ]]; then
     return
 fi
 
