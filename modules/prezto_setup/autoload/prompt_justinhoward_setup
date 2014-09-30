@@ -136,7 +136,7 @@ function prompt_justinhoward_segment_l {
 function prompt_justinhoward_end_l {
     zstyle -s ':prezto:module:prompt:justinhoward:symbols' separator_l separator
 
-    echo -n " %F{$_prompt_justinhoward_bg}%k$separator%f "
+    echo -n " %F{$_prompt_justinhoward_bg}%k$separator%f"
 }
 
 function prompt_justinhoward_segment_r {
@@ -189,9 +189,9 @@ function prompt_justinhoward_setup {
 
     # Set editor-info parameters.
     zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
-    zstyle ':prezto:module:editor:info:keymap:primary' format ' %B%F{red}❯%F{yellow}❯%F{green}❯%f%b'
-    zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format ' %F{red}♺%f'
-    zstyle ':prezto:module:editor:info:keymap:alternate' format ' %B%F{green}❮%F{yellow}❮%F{red}❮%f%b'
+    zstyle ':prezto:module:editor:info:keymap:primary' format ' '
+    zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format '%F{red}♺%f '
+    zstyle ':prezto:module:editor:info:keymap:alternate' format '%B%F{red}❯%f%b'
 
     # Set git-info parameters.
     zstyle ':prezto:module:git:info' verbose 'yes'
@@ -218,9 +218,9 @@ function prompt_justinhoward_setup {
 
     # Define prompts.
     # PROMPT='%F{cyan}${_prompt_justinhoward_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-    PROMPT='${_prompt_justinhoward_l}'
+    PROMPT='${_prompt_justinhoward_l}${editor_info[keymap]}'
     # RPROMPT='${editor_info[overwrite]}${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}'
-    RPROMPT='${_prompt_justinhoward_r}'
+    RPROMPT='${editor_info[overwrite]}${_prompt_justinhoward_r}'
     SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
