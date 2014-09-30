@@ -2,6 +2,7 @@
 # The order matters.
 zstyle ':prezto:load' pmodule \
   'environment' \
+  'utility' \
   'terminal' \
   'editor' \
   'history' \
