@@ -1,3 +1,3 @@
-if command -v xautolock 2>&1 /dev/null && command -v slock 2>&1 /dev/null; then
+if command -v xautolock > /dev/null 2>&1 && command -v slock > /dev/null 2>&1; then
     xautolock -time 5 -locker slock &
 fi

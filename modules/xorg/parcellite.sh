@@ -1,3 +1,3 @@
-if command -v parcellite 2>&1 /dev/null; then
+if command -v parcellite > /dev/null 2>&1; then
     parcellite -n &
 fi

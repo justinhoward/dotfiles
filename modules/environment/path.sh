@@ -1,7 +1,7 @@
 PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
 # PHP Composer
-if command -v composer 2>&1 /dev/null; then
+if command -v composer > /dev/null 2>&1; then
     if [[ -d "$COMPOSER_HOME" ]]; then
         PATH="$COMPOSER_HOME/vendor/bin:$PATH"
     elif [[ -d "$HOME/.composer/vendor/bin" ]]; then
@@ -10,7 +10,7 @@ if command -v composer 2>&1 /dev/null; then
 fi
 
 # Ruby gems
-if command -v ruby 2>&1 /dev/null && command -v gem 2>&1 /dev/null; then
+if command -v ruby > /dev/null 2>&1 && command -v gem > /dev/null 2>&1; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
