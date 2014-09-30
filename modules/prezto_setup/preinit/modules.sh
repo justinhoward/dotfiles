@@ -9,6 +9,8 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'prompt' \
   'git' \
-  'fasd'
+  'fasd' \
+  'pacman' \
+  'syntax-highlighting' \
+  'prompt' \
