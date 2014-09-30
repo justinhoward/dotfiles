@@ -41,11 +41,16 @@ function prompt_justinhoward_status {
 }
 
 prompt_justinhoward_context() {
-    local user default_user
+    local user default_user default_hostname
     zstyle -s ':prezto:module:prompt:justinhoward' default_user default_user
+    zstyle -s ':prezto:module:prompt:justinhoward' default_hostname default_hostname
 
     if [[ "$USER" != "$default_user" || -n "$SSH_CONNECTION" ]]; then
-        echo -n "%(!.%F{yellow}.)%n@%m"
+        echo -n "%(!.%F{yellow}.)%7>…>%n%<<"
+    fi
+
+    if [[ "$(hostname)" != "$default_hostname" ]]; then
+        echo -n "@%7>…>%m%<<"
     fi
 }
 
@@ -98,7 +103,7 @@ function prompt_justinhoward_compile_l {
     fi
 
     if [[ -n "$context" ]]; then
-        prompt_justinhoward_segment_l "$(prompt_justinhoward_context)" black blue
+        prompt_justinhoward_segment_l "$context" black default
     fi
     prompt_justinhoward_segment_l "$(prompt_justinhoward_pwd)" blue black
 
