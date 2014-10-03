@@ -1,4 +1,4 @@
-if [[ "$DOTFILES_SHELL" != "zsh" ]]; then
+if [[ "$dotfiles_shell" != "zsh" ]]; then
     return
 fi
 

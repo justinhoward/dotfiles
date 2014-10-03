@@ -1,31 +1,26 @@
-if [ -z $DOTFILES_PATH ]; then
-    export DOTFILES_PATH="$HOME/.dotfiles"
+if [[ -z $DOTFILES_PATH ]]; then
+    DOTFILES_PATH="$HOME/.dotfiles"
 fi
 
 for runner in "$DOTFILES_PATH"/run/*.sh; do
-    [ -f "$runner" ] && source "$runner"
+    [[ -f "$runner" ]] && source "$runner"
 done
-
-detect_environment
+unset runner
 
 dmodload environment
 
-if [ $DOTFILES_INTERACTIVE ]; then
-    dmodload interactive
-fi
-
-if [ $DOTFILES_LOGIN ]; then
-    dmodload login
-fi
-
-if [ $DOTFILES_XORG ]; then
+if [[ -n $dotfiles_xorg ]]; then
     dmodload xorg
-    $DOTFILES_EXEC_WM
+else
+    if [[ -n $dotfiles_interactive ]]; then
+        dmodload interactive
+    fi
+
+    if [[ -n $dotfiles_login ]]; then
+        dmodload login
+    fi
 fi
 
-unset runner
-unset -f dmodload detect_environment
-
-if [ $DOTFILES_XORG ]; then
-    $DOTFILES_EXEC_WM
+if [[ -n $dotfiles_xorg ]] && [[ -n $dotfiles_exec_wm ]]; then
+    eval $dotfiles_exec_wm
 fi

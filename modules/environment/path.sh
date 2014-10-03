@@ -20,7 +20,7 @@ fi
 
 export PATH
 
-if [[ $DOTFILES_SHELL = "zsh" ]]; then
+if [[ $dotfiles_shell = "zsh" ]]; then
     # Ensure path arrays do not contain duplicates.
     typeset -gU cdpath fpath mailpath path
 

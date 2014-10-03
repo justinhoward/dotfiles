@@ -1,8 +1,8 @@
-if [[ "$DOTFILES_SHELL" = "zsh" ]]; then
+if [[ "$dotfiles_shell" = "zsh" ]]; then
     return
 fi
 
-if [[ -z "$DOTFILES_INTERACTIVE" ]]; then
+if [[ -z "$dotfiles_interactive" ]]; then
     return
 fi
 
