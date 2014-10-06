@@ -58,8 +58,8 @@ remove ~/.zprofile
 remove ~/.zlogin
 remove ~/.zshenv
 
-if [[ ! -d config ]]; then
-	cp -r config_templates config
+if [[ ! -d "$dir/config" ]]; then
+	cp -r "$dir/config_templates" "$dir/config"
 fi
 
 echo 'Dotfiles installed'
