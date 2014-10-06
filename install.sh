@@ -58,4 +58,8 @@ remove ~/.zprofile
 remove ~/.zlogin
 remove ~/.zshenv
 
+if [[ ! -d config ]]; then
+	cp -r config_templates config
+fi
+
 echo 'Dotfiles installed'

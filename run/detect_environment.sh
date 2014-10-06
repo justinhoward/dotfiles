@@ -21,7 +21,3 @@ case $dotfiles_shell in
     *)
         case $- in (*l*) dotfiles_login=1; esac
 esac
-
-if [[ "$(basename $0)" = '.xinitrc' ]]; then
-    dotfiles_xorg=1
-fi

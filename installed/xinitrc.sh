@@ -1,5 +1,5 @@
 # ~/.xinitrc
 
-DOTFILES_XORG=1
+dotfiles_xorg=1
 
 source ~/.dotfilesrc

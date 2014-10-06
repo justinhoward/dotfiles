@@ -7,20 +7,22 @@ for runner in "$DOTFILES_PATH"/run/*.sh; do
 done
 unset runner
 
-dmodload environment
+dconfig modules
+
+devent load
 
 if [[ -n $dotfiles_xorg ]]; then
-    dmodload xorg
+    devent xorg
 else
     if [[ -n $dotfiles_interactive ]]; then
-        dmodload interactive
+        devent interactive
     fi
 
     if [[ -n $dotfiles_login ]]; then
-        dmodload login
+        devent login
     fi
 fi
 
-if [[ -n $dotfiles_xorg ]] && [[ -n $dotfiles_exec_wm ]]; then
-    eval $dotfiles_exec_wm
+if [[ -n $dotfiles_xorg ]]; then
+	devent xorg_exec
 fi
