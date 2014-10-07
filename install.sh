@@ -51,6 +51,7 @@ symlink installed/bash_profile.sh ~/.bash_profile
 symlink installed/bashrc.sh ~/.bashrc
 symlink installed/vimrc.vim ~/.vimrc
 symlink installed/vim ~/.vim
+symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
 
 remove ~/.profile
