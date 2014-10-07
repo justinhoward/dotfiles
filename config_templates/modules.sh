@@ -23,5 +23,3 @@ devent_xorg=(
 	xautolock
 	xmonad
 )
-
-dload_wm='exec xmonad'

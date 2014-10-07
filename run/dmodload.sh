@@ -11,6 +11,12 @@ function dmodload()
         >&2 echo "Module not found: $1"
     fi
 
+    if [[ -f "$module_load_path/condition.sh" ]]; then
+        if ! source "$module_load_path/condition.sh"; then
+            return
+        fi
+    fi
+
     dload "$module_load_path/preinit"
     dload "$module_load_path/init"
     dload "$module_load_path/postinit"
