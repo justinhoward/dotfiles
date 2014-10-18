@@ -1,15 +1,36 @@
+#!/usr/bin/env bash
+
 pushd `dirname $0` > /dev/null
 dir=`pwd`
 popd > /dev/null
 
+red='\033[0;31m'
+green='\033[0;32m'
+cyan='\033[0;36m'
+default='\033[0m'
+
+[[ -n "$ZDOTDIR" ]] && dotfiles_zdir="$ZDOTDIR" || dotfiles_zdir="$HOME"
+
+require=(
+	git
+)
+
+recommend=(
+	zsh
+	colormake
+	fasd
+)
+
+for req in "${require[@]}"; do
+	if ! command -v "$req" > /dev/null 2>&1; then
+		>&2 echo -e "Requires installing ${red}${req}${default}"
+		exit 1
+	fi
+done
+
 function backup()
 {
 	local path=$1
-
-	# Remove symbolic links
-	if [ -h $path ]; then
-		rm -f $path
-	fi
 
 	# Don't back up symbolic links or missing files
 	if [ ! -e $path ] || [ -h $path ]; then
@@ -31,7 +52,10 @@ function remove()
 
 	backup path
 
-	rm -rf $path
+	if [[ -e "$path" ]]; then
+		echo "Removing $path"
+		rm -rf $path
+	fi
 }
 
 function symlink()
@@ -42,7 +66,10 @@ function symlink()
 
 	backup $link
 
-	ln -sf $target $link
+	if [[ ! -e "$target" ]] || [[ `readlink "$link"` != "$target" ]]; then
+		echo "Symlinking $link => $target"
+		ln -sf $target $link
+	fi
 }
 
 symlink installed/zshrc.zsh ~/.zshrc
@@ -60,7 +87,18 @@ remove ~/.zlogin
 remove ~/.zshenv
 
 if [[ ! -d "$dir/config" ]]; then
+	echo "Copying config templates to $dir/config"
 	cp -r "$dir/config_templates" "$dir/config"
 fi
 
-echo 'Dotfiles installed'
+for rec in "${recommend[@]}"; do
+	if ! command -v "$rec" > /dev/null 2>&1; then
+		echo -e "Recommends installing ${cyan}${rec}${default}"
+	fi
+done
+
+if [[ ! -e "$dotfiles_zdir/.zprezto" ]]; then
+	git clone --recursive https://github.com/sorin-ionescu/prezto.git "${dotfiles_zdir}/.zprezto"
+fi
+
+echo -e "${green}Dotfiles installed${default}"
