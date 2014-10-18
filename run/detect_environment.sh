@@ -7,7 +7,7 @@ elif test -n "$KSH_VERSION"; then
 elif test -n "$FCEDIT"; then
     dotfiles_shell=ksh
 elif test -n "$PS3"; then
-    dotfiles_shell=unknown
+    dotfiles_shell=
 else
     dotfiles_shell=sh
 fi
