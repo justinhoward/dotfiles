@@ -1,5 +1,6 @@
 devent_load=(
 	path
+	rbenv
 	language
 	temp
 )
