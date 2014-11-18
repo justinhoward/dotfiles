@@ -6,4 +6,4 @@ alias gt='git tag --sort v:refname'
 alias gtl='git tag --sort v:refname | head -1'
 
 # Submodule (S)
-alias gSu='git submodule update'
+alias gSu='git submodule update --recursive'
