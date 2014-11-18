@@ -7,3 +7,6 @@ alias gtl='git tag --sort v:refname | head -1'
 
 # Submodule (S)
 alias gSu='git submodule update --recursive'
+
+# Branch (b)
+alias gba='git branch -a'
