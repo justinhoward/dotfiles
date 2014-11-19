@@ -10,3 +10,7 @@ alias gSu='git submodule update --recursive'
 
 # Branch (b)
 alias gba='git branch -a'
+
+# Index (i)
+alias giA='git add --all'
+alias gip='git add --patch'
