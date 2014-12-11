@@ -1,5 +1,12 @@
 # Justin Howard's Dotfiles
 
+Most dotfiles solutions cater to a single environment like a certain shell. This project is
+intended to organize dotfiles for every environment including non-interactive shells. It uses
+a module system like some other dotfile repositories.
+
+Most of the flashy fun stuff in this setup comes from the [Prezto](https://github.com/sorin-ionescu/prezto)
+ZSH dotfile system. Be sure to check out what it can do.
+
 ## Installation
 
 Clone the repository into your home directory
@@ -30,6 +37,10 @@ All files in this directory will be run immediately before prezto is loaded.
 ## Modules
 
 A module is a directory inside the `modules` directory. A module is loaded in stages.
+
+The modules get loaded when an "event" is fired.
+The built in events are "load", "xorg", "interactive", "login", and "xorg_init". These events will only
+get fired if its respective environment is present.
 
 ### Condition
 If a `condition.sh` file exists in the module's directory, it will be run before
