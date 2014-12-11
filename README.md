@@ -8,10 +8,17 @@ Clone the repository into your home directory
 git clone git@github.com:justinhoward/dotfiles.git ~/.dotfiles
 ```
 
-Run the install script
+Run the install script. This will backup your existing dotfiles to `<name>.bak` and symlink
+to the ones in the dotfiles repository.
+
 ``` bash
 ~/.dotfiles/install.sh
 ```
+
+## Fonts
+
+The default theme requires a patched [powerline font](https://github.com/powerline/fonts). You can install one, or change the
+theme to a different prezto theme.
 
 ## Customizing
 
