@@ -4,4 +4,6 @@
 zstyle ':prezto:module:prompt:justinhoward' default_user "justin_howard"
 zstyle ':prezto:module:prompt:justinhoward' default_hostname "justinbox"
 
+# zstyle ':prezto:module:prompt:justinhoward' disable_git "1"
+
 zstyle ':prezto:module:prompt' theme 'justinhoward'

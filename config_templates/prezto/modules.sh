@@ -6,6 +6,7 @@ zstyle ':prezto:load' pmodule \
   'terminal' \
   'editor' \
   'history' \
+  'history-substring-search' \
   'directory' \
   'spectrum' \
   'utility' \

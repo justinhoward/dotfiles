@@ -163,6 +163,8 @@ function prompt_justinhoward_end_r {
 }
 
 function prompt_justinhoward_precmd {
+    local disable_git
+    zstyle -s ':prezto:module:prompt:justinhoward' disable_git disable_git
     zstyle ':prezto:module:prompt:justinhoward' return_code "$?"
 
     setopt LOCAL_OPTIONS
@@ -170,7 +172,7 @@ function prompt_justinhoward_precmd {
 
     # Get Git repository information.
     if (( $+functions[git-info] )); then
-        if git-info; then
+        if git-info && [[ -z "$disable_git" ]]; then
             _prompt_justinhoward_git_enabled=1
         else
             _prompt_justinhoward_git_enabled=
