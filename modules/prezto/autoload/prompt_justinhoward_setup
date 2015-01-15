@@ -15,6 +15,8 @@ zstyle ':prezto:module:prompt:justinhoward:symbols' job "\u2699"
 zstyle ':prezto:module:prompt:justinhoward:symbols' root "\u26a1"
 zstyle ':prezto:module:prompt:justinhoward:symbols' error "\u2718"
 
+prompt_justinhoward_mounted_systems=("nfs")
+
 # Characters
 # SEGMENT_SEPARATOR="\ue0b0"
 # PLUSMINUS="\u00b1"
@@ -167,6 +169,16 @@ function prompt_justinhoward_end_r {
     echo -n " %f%k"
 }
 
+function prompt_justinhoward_ismounted {
+    local filesystem=$(stat -fc%T `pwd`)
+    for system in ${prompt_justinhoward_mounted_systems[@]}; do
+        if [[ "$filesystem" == "$system" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
 function prompt_justinhoward_precmd {
     zstyle ':prezto:module:prompt:justinhoward' return_code "$?"
 
@@ -177,7 +189,7 @@ function prompt_justinhoward_precmd {
     unsetopt XTRACE KSH_ARRAYS
 
     # Get Git repository information.
-    if (( $+functions[git-info] )) && [[ -z "$disable_git" ]] && git-info; then
+    if ! prompt_justinhoward_ismounted && (( $+functions[git-info] )) && [[ -z "$disable_git" ]] && git-info; then
         _prompt_justinhoward_git_enabled=1
     else
         _prompt_justinhoward_git_enabled=
