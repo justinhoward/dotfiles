@@ -76,7 +76,6 @@ symlink installed/zshrc.zsh ~/.zshrc
 symlink installed/xinitrc.sh ~/.xinitrc
 symlink installed/bash_profile.sh ~/.bash_profile
 symlink installed/bashrc.sh ~/.bashrc
-symlink installed/vimrc.vim ~/.vimrc
 symlink installed/vim ~/.vim
 symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
@@ -85,6 +84,7 @@ remove ~/.profile
 remove ~/.zprofile
 remove ~/.zlogin
 remove ~/.zshenv
+remove ~/.vimrc
 
 if [[ ! -d "$dir/config" ]]; then
 	echo "Copying config templates to $dir/config"
@@ -99,6 +99,10 @@ done
 
 if [[ ! -e "$dotfiles_zdir/.zprezto" ]]; then
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git "${dotfiles_zdir}/.zprezto"
+fi
+
+if [[ -e "!~/.vim/bundle/neobundle.vim" ]]; then
+	curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
 fi
 
 echo -e "${green}Dotfiles installed${default}"

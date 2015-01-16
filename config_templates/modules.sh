@@ -15,6 +15,7 @@ devent_interactive=(
 	editor
 	git-aliases
 	less-colors
+	terminal
 )
 
 devent_xorg=(
