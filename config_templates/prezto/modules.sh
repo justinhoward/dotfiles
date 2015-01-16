@@ -12,7 +12,9 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'completion' \
   'git' \
+  'node' \
+  'rsync' \
+  'ruby' \
   'fasd' \
-  'pacman' \
   'syntax-highlighting' \
   'prompt' \
