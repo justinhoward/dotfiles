@@ -26,7 +26,7 @@ set fileformats=unix,dos
 
 " turn on incremental searching as you type
 set incsearch
-:
+
 " status line
 set laststatus=2 " Always display the status line
 set noshowmode " Hide the default mode text
@@ -38,6 +38,16 @@ let mapleader=' '
 " only wait a very short time for terminal key codes
 " these aren't used by modern terminals
 set ttimeoutlen=10
+
+" map space-; to open the file explorer
+map <leader>e :Explore<cr>
+
+" map space-j and space-k to next and previous buffers
+map <leader>j :bnext<cr>
+map <leader>k :bprevious<cr>
+
+" change the default explorer style to tree
+let g:netrw_liststyle=3
 
 "NeoBundle Scripts-----------------------------
 if has('vim_starting')
@@ -67,7 +77,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'jeetsukumaran/vim-buffergator'
 
 " Required:
 call neobundle#end()
