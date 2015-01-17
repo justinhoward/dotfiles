@@ -101,7 +101,7 @@ if [[ ! -e "$dotfiles_zdir/.zprezto" ]]; then
 	git clone --recursive https://github.com/sorin-ionescu/prezto.git "${dotfiles_zdir}/.zprezto"
 fi
 
-if [[ -e "!~/.vim/bundle/neobundle.vim" ]]; then
+if [[ ! -e "~/.vim/bundle/neobundle.vim" ]]; then
 	curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
 fi
 
