@@ -77,6 +77,7 @@ symlink installed/xinitrc.sh ~/.xinitrc
 symlink installed/bash_profile.sh ~/.bash_profile
 symlink installed/bashrc.sh ~/.bashrc
 symlink installed/vim ~/.vim
+symlink installed/vimrc ~/.vimrc
 symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
 
@@ -84,7 +85,6 @@ remove ~/.profile
 remove ~/.zprofile
 remove ~/.zlogin
 remove ~/.zshenv
-remove ~/.vimrc
 
 if [[ ! -d "$dir/config" ]]; then
 	echo "Copying config templates to $dir/config"
