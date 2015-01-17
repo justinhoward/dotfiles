@@ -94,3 +94,6 @@ NeoBundleCheck
 let g:airline_theme='murmur'
 let g:airline_powerline_fonts=1
 
+map <Plug>(easymotion-prefix)l <Plug>(easymotion-lineforward)
+map <Plug>(easymotion-prefix)h <Plug>(easymotion-linebackward)
+map <Plug>(easymotion-prefix)/ <Plug>(easymotion-sn)
