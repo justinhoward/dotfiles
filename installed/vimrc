@@ -69,6 +69,9 @@ set noshowmode " Hide the default mode text
 let g:airline_theme='murmur'
 let g:airline_powerline_fonts=1
 
+" change leader key from \ to ,
+let mapleader=','
+
 " set key code delay to 10ms
 " only wait a very short time for terminal key codes
 " these aren't used by modern terminals
