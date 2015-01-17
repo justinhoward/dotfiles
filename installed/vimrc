@@ -1,3 +1,44 @@
+" disable compatibility
+set nocompatible
+
+" remove splash screen
+set shortmess+=I
+
+" allow hidden buffers
+set hidden
+
+" turn on syntax highlighting
+syntax enable
+
+colorscheme monokai
+
+" use automatic tab indentation
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set noexpandtab
+
+" automatic indentation settings
+filetype plugin indent on
+
+" use unix line endings by default
+set fileformats=unix,dos
+
+" turn on incremental searching as you type
+set incsearch
+:
+" status line
+set laststatus=2 " Always display the status line
+set noshowmode " Hide the default mode text
+
+" change leader key from \ to ,
+let mapleader=' '
+
+" set key code delay to 10ms
+" only wait a very short time for terminal key codes
+" these aren't used by modern terminals
+set ttimeoutlen=10
+
 "NeoBundle Scripts-----------------------------
 if has('vim_starting')
  if &compatible
@@ -26,6 +67,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/nerdtree'
 
 " Required:
 call neobundle#end()
@@ -38,41 +80,7 @@ filetype plugin indent on
 NeoBundleCheck
 "End NeoBundle Scripts-------------------------
 
-" remove splash screen
-set shortmess+=I
-
-" turn on syntax highlighting
-syntax enable
-
-colorscheme monokai
-
-" use automatic tab indentation
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set noexpandtab
-
-" automatic indentation settings
-filetype plugin indent on
-
-" use unix line endings by default
-set fileformats=unix,dos
-
-" turn on incremental searching as you type
-set incsearch
-:
-" status line
-set laststatus=2 " Always display the status line
-set noshowmode " Hide the default mode text
-
 " vim-airline
 let g:airline_theme='murmur'
 let g:airline_powerline_fonts=1
 
-" change leader key from \ to ,
-let mapleader=','
-
-" set key code delay to 10ms
-" only wait a very short time for terminal key codes
-" these aren't used by modern terminals
-set ttimeoutlen=10
