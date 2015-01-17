@@ -62,6 +62,9 @@ set incsearch
 set laststatus=2 " Always display the status line
 set noshowmode " Hide the default mode text
 
+" fix lag when exiting insert mode
+set timeoutlen=50
+
 " vim-airline
 let g:airline_theme='murmur'
 let g:airline_powerline_fonts=1
