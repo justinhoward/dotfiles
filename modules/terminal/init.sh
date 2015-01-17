@@ -3,3 +3,7 @@ if [ -e /usr/share/terminfo/x/xterm-256color ]; then
 else
 	export TERM='xterm-color'
 fi
+
+if [[ "$dotfiles_shell" =  "zsh" ]]; then
+	export KEYTIMEOUT=1
+fi
