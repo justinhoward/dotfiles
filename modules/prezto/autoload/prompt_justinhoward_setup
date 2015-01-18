@@ -170,7 +170,7 @@ function prompt_justinhoward_end_r {
 }
 
 function prompt_justinhoward_ismounted {
-    local filesystem=$(stat -fc%T `pwd`)
+    local filesystem=$(stat -fc%T "`pwd`")
     for system in ${prompt_justinhoward_mounted_systems[@]}; do
         if [[ "$filesystem" == "$system" ]]; then
             return 0
