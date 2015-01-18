@@ -86,7 +86,11 @@ remove ~/.zprofile
 remove ~/.zlogin
 remove ~/.zshenv
 
-if [[ ! -d "$dir/config" ]]; then
+[[ ! -e "$dir/installed/vim/backup" ]] && mkdir "$dir/installed/vim/backup"
+[[ ! -e "$dir/installed/vim/swap" ]] && mkdir "$dir/installed/vim/swap"
+[[ ! -e "$dir/installed/vim/undo" ]] && mkdir "$dir/installed/vim/undo"
+
+if [[ ! -e "$dir/config" ]]; then
 	echo "Copying config templates to $dir/config"
 	cp -r "$dir/config_templates" "$dir/config"
 fi

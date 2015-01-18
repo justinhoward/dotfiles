@@ -49,6 +49,10 @@ map <leader>k :bprevious<cr>
 " change the default explorer style to tree
 let g:netrw_liststyle=3
 
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
+
 "NeoBundle Scripts-----------------------------
 if has('vim_starting')
  if &compatible
