@@ -82,6 +82,7 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'jeetsukumaran/vim-buffergator'
+NeoBundle 'scrooloose/nerdcommenter'
 
 " Required:
 call neobundle#end()
