@@ -83,6 +83,7 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'jeetsukumaran/vim-buffergator'
 NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'embear/vim-localvimrc'
 
 " Required:
 call neobundle#end()
@@ -102,3 +103,7 @@ let g:airline_powerline_fonts=1
 map <Plug>(easymotion-prefix)l <Plug>(easymotion-lineforward)
 map <Plug>(easymotion-prefix)h <Plug>(easymotion-linebackward)
 map <Plug>(easymotion-prefix)/ <Plug>(easymotion-sn)
+omap <Plug>(easymotion-prefix)/ <Plug>(easymotion-tn)
+
+" don't ask before loading .lvimrc files
+let g:localvimrc_ask=0
