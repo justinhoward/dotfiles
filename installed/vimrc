@@ -41,6 +41,7 @@ set ttimeoutlen=10
 
 " map space-; to open the file explorer
 map <leader>e :Explore<cr>
+map <leader><S-E> :Rexplore<cr>
 
 " map space-j and space-k to next and previous buffers
 map <leader>j :bnext<cr>
