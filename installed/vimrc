@@ -52,7 +52,17 @@ let g:netrw_liststyle=3
 
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
+
+if v:version >= 704
+	set undodir=~/.vim/undo//
+endif
+
+" turn on persistent undo
+set undofile
+
+" automatically trim trailing whitespace on save
+autocmd FileType c,cpp,java,php,vim,javascript autocmd BufWritePre * %s/\s\+$//e
+
 
 "NeoBundle Scripts-----------------------------
 if has('vim_starting')
