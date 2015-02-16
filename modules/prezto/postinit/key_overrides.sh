@@ -5,4 +5,11 @@ for keymap in 'emacs' 'viins' 'vicmd'; do
 	bindkey -M $keymap '^[[1;5D' backward-word
 done
 
+if (( $+widgets[history-incremental-pattern-search-backward] )); then
+  bindkey -M viins "$key_info[Control]R" \
+    history-incremental-pattern-search-backward
+  bindkey -M viins "$key_info[Control]S" \
+    history-incremental-pattern-search-forward
+fi
+
 unset keymap
