@@ -1,5 +1,6 @@
 devent_load=(
 	path
+	umask
 	rbenv
 	language
 	temp
