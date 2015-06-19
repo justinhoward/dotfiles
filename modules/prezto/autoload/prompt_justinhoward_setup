@@ -17,15 +17,6 @@ zstyle ':prezto:module:prompt:justinhoward:symbols' error "\u2718"
 
 prompt_justinhoward_mounted_systems=("nfs")
 
-# Characters
-# SEGMENT_SEPARATOR="\ue0b0"
-# PLUSMINUS="\u00b1"
-# BRANCH="\ue0a0"
-# DETACHED="\u27a6"
-# CROSS="\u2718"
-# LIGHTNING="\u26a1"
-# GEAR="\u2699"
-
 function prompt_justinhoward_status {
     local symbols job_symbol root_symbol return_code
 
@@ -42,7 +33,7 @@ function prompt_justinhoward_status {
     echo -n "$symbols"
 }
 
-prompt_justinhoward_context() {
+function prompt_justinhoward_context {
     local user default_user default_hostname
     zstyle -s ':prezto:module:prompt:justinhoward' default_user default_user
     zstyle -s ':prezto:module:prompt:justinhoward' default_hostname default_hostname
