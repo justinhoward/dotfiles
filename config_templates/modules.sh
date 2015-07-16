@@ -20,10 +20,8 @@ devent_interactive=(
 )
 
 devent_xorg=(
-	screen-layout
-	non-reparenting
-	set-cursor
-	parcellite
-	xautolock
-	xmonad
+    screen-layout
+    parcellite
+    xautolock
+    awesome
 )
