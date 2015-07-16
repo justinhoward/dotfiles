@@ -36,6 +36,9 @@ do
 end
 -- }}}
 
+-- Start compositor
+awful.util.spawn_with_shell("xcompmgr -cF &")
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init("/usr/share/awesome/themes/default/theme.lua")
@@ -65,7 +68,7 @@ local layouts =
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.fullscreen,
     awful.layout.suit.magnifier
 }
 -- }}}
@@ -245,7 +248,7 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -271,16 +274,20 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+
+    -- Conky
+    awful.key({ modkey }, "grave", function() toggle_conky() end)
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
-    awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end),
-    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
-    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
+    awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen          end),
+    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                                 end),
+    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                             ),
+    awful.key({ modkey,           }, "Return", function (c) c:swap(awful.client.getmaster())         end),
+    awful.key({ modkey,           }, "o",      function (c) awful.client.movetoscreen(c, c.screen-1) end),
+    awful.key({ modkey, "Shift"   }, "o",      function (c) awful.client.movetoscreen(c, c.screen+1) end),
+    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop                    end),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
@@ -368,6 +375,14 @@ awful.rules.rules = {
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
+    { rule = { class = "Conky" },
+      properties = {
+          floating = true,
+          sticky = true,
+          ontop = false,
+          focusable = false,
+          border_width = 0,
+          size_hints = {"program_position", "program_size"} } },
 }
 -- }}}
 
@@ -442,4 +457,47 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+-- }}}
+
+-- {{{ Conky
+function get_conky()
+    local clients = client.get()
+    local conky = nil
+    local i = 1
+    while clients[i]
+    do
+        if clients[i].class == "Conky"
+        then
+            conky = clients[i]
+        end
+        i = i + 1
+    end
+    return conky
+end
+function raise_conky()
+    local conky = get_conky()
+    if conky
+    then
+        conky.ontop = true
+    end
+end
+function lower_conky()
+    local conky = get_conky()
+    if conky
+    then
+        conky.ontop = false
+    end
+end
+function toggle_conky()
+    local conky = get_conky()
+    if conky
+    then
+        if conky.ontop
+        then
+            conky.ontop = false
+        else
+            conky.ontop = true
+        end
+    end
+end
 -- }}}

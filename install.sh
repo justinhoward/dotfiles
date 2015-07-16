@@ -80,8 +80,8 @@ symlink installed/vim ~/.vim
 symlink installed/vimrc ~/.vimrc
 symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
-mkdir -p ~/.config/awesome
-symlink installed/awesome.lua ~/.config/awesome/rc.lua
+mkdir -p ~/.config/
+symlink installed/awesome ~/.config/awesome
 
 remove ~/.profile
 remove ~/.zprofile
