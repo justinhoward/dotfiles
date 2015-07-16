@@ -82,6 +82,7 @@ symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
 mkdir -p ~/.config/
 symlink installed/awesome ~/.config/awesome
+symlink installed/conkyrc.lua ~/.conkyrc
 
 remove ~/.profile
 remove ~/.zprofile

@@ -23,5 +23,6 @@ devent_xorg=(
     screen-layout
     parcellite
     xautolock
+    conky
     awesome
 )
