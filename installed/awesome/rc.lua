@@ -277,7 +277,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Conky
-    awful.key({ modkey }, "grave", function() toggle_conky() end)
+    awful.key({ modkey }, "grave", function() toggle_conky() end),
+
+    -- Screen Lock
+    awful.key({ modkey }, "Pause", function() awful.util.spawn("slock") end)
 )
 
 clientkeys = awful.util.table.join(
