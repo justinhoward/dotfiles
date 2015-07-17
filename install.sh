@@ -67,6 +67,12 @@ function symlink()
 	backup $link
 
 	if [[ ! -e "$target" ]] || [[ `readlink "$link"` != "$target" ]]; then
+		local dir=`dirname $link`
+		if [[ ! -d "$dir" ]]; then
+			echo "Creating directory $dir"
+			mkdir -p "$dir"
+		fi
+
 		echo "Symlinking $link => $target"
 		ln -sf $target $link
 	fi
@@ -80,7 +86,6 @@ symlink installed/vim ~/.vim
 symlink installed/vimrc ~/.vimrc
 symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
-mkdir -p ~/.config/
 symlink installed/awesome ~/.config/awesome
 symlink installed/conkyrc.lua ~/.conkyrc
 
