@@ -69,7 +69,6 @@ $nodename - $sysname $kernel on $machine
 $hr
 ${color grey}Uptime:$color $uptime
 ${color grey}Frequency (in MHz):$color $freq
-${color grey}Frequency (in GHz):$color $freq_g
 ${color grey}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
 ${color grey}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
 ${color grey}CPU Usage:$color $cpu% ${cpubar 4}
