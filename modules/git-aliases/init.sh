@@ -15,3 +15,7 @@ alias gbr='git branch -r'
 # Index (i)
 alias giA='git add --all'
 alias gip='git add --patch'
+
+# Working Copy (w)
+alias gwd='git diff'
+alias gwD='git diff --word-diff'
