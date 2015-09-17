@@ -19,9 +19,10 @@ devent_interactive=(
 )
 
 devent_xorg=(
-    screen-layout
-    parcellite
-    xautolock
-    conky
-    awesome
+	virtualbox-client
+	screen-layout
+	parcellite
+	xautolock
+	conky
+	awesome
 )
