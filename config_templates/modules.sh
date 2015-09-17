@@ -21,6 +21,7 @@ devent_interactive=(
 devent_xorg=(
 	virtualbox-client
 	screen-layout
+	key-rate
 	parcellite
 	xautolock
 	conky
