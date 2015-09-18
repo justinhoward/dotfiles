@@ -22,6 +22,7 @@ devent_xorg=(
 	virtualbox-client
 	screen-layout
 	key-rate
+	set-cursor
 	parcellite
 	xautolock
 	conky
