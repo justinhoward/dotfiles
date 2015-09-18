@@ -9,6 +9,8 @@ green='\033[0;32m'
 cyan='\033[0;36m'
 default='\033[0m'
 
+source "$dir/run/detect_environment.sh"
+
 [[ -n "$ZDOTDIR" ]] && dotfiles_zdir="$ZDOTDIR" || dotfiles_zdir="$HOME"
 
 require=(
