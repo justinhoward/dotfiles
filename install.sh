@@ -84,11 +84,17 @@ symlink installed/bash_profile.sh ~/.bash_profile
 symlink installed/bashrc.sh ~/.bashrc
 symlink installed/vim ~/.vim
 symlink installed/vimrc ~/.vimrc
-symlink installed/xmonad ~/.xmonad
 symlink installed/dotfilesrc.sh ~/.dotfilesrc
-symlink installed/awesome ~/.config/awesome
-symlink installed/conkyrc.lua ~/.conkyrc
-symlink installed/amethyst ~/.amethyst
+
+if [[ $dotfiles_platform == 'linux' ]]; then
+	symlink installed/xmonad ~/.xmonad
+	symlink installed/awesome ~/.config/awesome
+	symlink installed/conkyrc.lua ~/.conkyrc
+fi
+
+if [[ $dotfiles_platform == 'osx' ]]; then
+	symlink installed/amethyst ~/.amethyst
+fi
 
 remove ~/.profile
 remove ~/.zprofile
