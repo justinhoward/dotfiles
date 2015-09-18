@@ -1,1 +1,1 @@
-exec awesome
+exec awesome --no-argb
