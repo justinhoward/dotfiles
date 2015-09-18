@@ -12,6 +12,18 @@ else
     dotfiles_shell=sh
 fi
 
+uname=`uname`
+
+if [[ "$uname" == "Linux" ]]; then
+  dotfiles_platform=linux
+elif [[ "$uname" == "Darwin" ]]; then
+  dotfiles_platform=osx
+elif [[ "$uname" == "FreeBSD" ]]; then
+  dotfiles_platform=freebsd
+fi
+
+unset uname
+
 case $- in *i*) dotfiles_interactive=1; esac
 
 case $dotfiles_shell in
