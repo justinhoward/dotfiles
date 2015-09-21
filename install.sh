@@ -92,6 +92,7 @@ if [[ $dotfiles_platform == 'linux' ]]; then
 	symlink installed/xmonad ~/.xmonad
 	symlink installed/awesome ~/.config/awesome
 	symlink installed/conkyrc.lua ~/.conkyrc
+	symlink installed/terminator ~/.config/terminator
 fi
 
 if [[ $dotfiles_platform == 'osx' ]]; then

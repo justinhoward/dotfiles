@@ -1,0 +1,24 @@
+[global_config]
+  inactive_color_offset = 1.0
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_color = "#282828"
+    background_image = None
+    cursor_color = "#cccccc"
+    font = DejaVu Sans Mono for Powerline 10
+    foreground_color = "#f3f3f3"
+    palette = "#575757:#f92672:#6cc72c:#fe9720:#5f91ef:#9358fe:#36af90:#a5a5a5:#707070:#ff80f4:#a7e22e:#ffee99:#5fd9ef:#ae82fe:#66efd5:#d8d8d8"
+    scrollback_lines = 100000
+    scrollbar_position = hidden
+    show_titlebar = False
+    use_system_font = False
