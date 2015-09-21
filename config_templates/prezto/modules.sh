@@ -1,5 +1,8 @@
 # Set the Prezto modules to load (browse modules).
 # The order matters.
+
+# syntax-highlighting: should be second to last
+# prompt: should be last
 zstyle ':prezto:load' pmodule \
   'environment' \
   'utility' \
@@ -16,5 +19,6 @@ zstyle ':prezto:load' pmodule \
   'rsync' \
   'ruby' \
   'fasd' \
+  'pacman' \
   'syntax-highlighting' \
   'prompt' \
