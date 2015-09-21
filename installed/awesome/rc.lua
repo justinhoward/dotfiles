@@ -318,7 +318,7 @@ for i = 1, 9 do
                            awful.tag.viewonly(tag)
                         end
                   end),
-        -- Toggle tag.
+        -- Toggle tag visibility.
         awful.key({ modkey, "Control" }, "#" .. i + 9,
                   function ()
                       local screen = mouse.screen
@@ -337,7 +337,7 @@ for i = 1, 9 do
                           end
                      end
                   end),
-        -- Toggle tag.
+        -- Toggle tag on client.
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus then
