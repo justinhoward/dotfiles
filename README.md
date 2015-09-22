@@ -89,7 +89,7 @@ during install. See `dload` for details.
 #### Configuration
 
 Your module can contain a `config.sh` script or `config` directory
-to be copied to `$DOTFILES_PATH/config` after installation. Your
+to be copied to `$DOTFILES_PATH/config` before installation. Your
 module should use `dconfig` to load those configuration files
 at runtime.
 
