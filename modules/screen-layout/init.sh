@@ -1,3 +1,3 @@
 if [[ -f ~/.screenlayout/default.sh ]]; then
-    . ~/.screenlayout/default.sh &
+    source ~/.screenlayout/default.sh &
 fi

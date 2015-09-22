@@ -24,7 +24,7 @@ function denv() {
 
   case $- in *i*) dotfiles_interactive=1; esac
 
-  case $dotfiles_shell in
+  case "$dotfiles_shell" in
       bash)
           case :$BASHOPTS: in (*:login_shell:*) dotfiles_login=1; esac
           ;;
