@@ -10,6 +10,7 @@ cyan='\033[0;36m'
 default='\033[0m'
 
 source "$dir/run/detect_environment.sh"
+source "$dir/run/dcheck.sh"
 
 [[ -n "$ZDOTDIR" ]] && dotfiles_zdir="$ZDOTDIR" || dotfiles_zdir="$HOME"
 
@@ -24,7 +25,7 @@ recommend=(
 )
 
 for req in "${require[@]}"; do
-	if ! command -v "$req" > /dev/null 2>&1; then
+	if ! dcheck "$req"; then
 		>&2 echo -e "Requires installing ${red}${req}${default}"
 		exit 1
 	fi
@@ -114,7 +115,7 @@ if [[ ! -e "$dir/config" ]]; then
 fi
 
 for rec in "${recommend[@]}"; do
-	if ! command -v "$rec" > /dev/null 2>&1; then
+	if ! dcheck "$rec"; then
 		echo -e "Recommends installing ${cyan}${rec}${default}"
 	fi
 done
