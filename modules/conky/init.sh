@@ -1,3 +1,3 @@
-if command -v conky > /dev/null 2>&1; then
+if dcheck conky; then
     conky
 fi

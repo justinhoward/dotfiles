@@ -1,7 +1,6 @@
 _dmods=()
 
-function dmodload()
-{
+function dmodload() {
     case "${_dmods[@]}" in *"$1"*) return ;; esac
     _dmods+="$1"
 

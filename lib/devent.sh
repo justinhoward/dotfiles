@@ -1,5 +1,4 @@
-function devent()
-{
+function devent() {
 	local event_modules module
 
 	if [[ "$dotfiles_shell" == 'zsh' ]]; then

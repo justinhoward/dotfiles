@@ -1,7 +1,6 @@
 _dconfigs=()
 
-function dconfig()
-{
+function dconfig() {
 	case "${_dconfigs[@]}" in *"$1"*) return ;; esac
     _dconfigs+="$1"
 

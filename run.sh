@@ -1,14 +1,9 @@
-if [[ -z $DOTFILES_PATH ]]; then
-    DOTFILES_PATH="$HOME/.dotfiles"
-fi
+#!/usr/bin/env bash
 
-for runner in "$DOTFILES_PATH"/run/*.sh; do
-    [[ -f "$runner" ]] && source "$runner"
-done
-unset runner
-
+[[ -z "$DOTFILES_PATH" ]] && DOTFILES_PATH="$HOME/.dotfiles"
+source "$DOTFILES_PATH"/load.sh
+denv
 dconfig modules
-
 devent load
 
 if [[ -n $dotfiles_xorg ]]; then

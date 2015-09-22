@@ -8,6 +8,6 @@ export PAGER='less'
 export LESS='-g -i -M -R -S -w -z-4'
 
 # Set the Less input preprocessor.
-if command -v lesspipe.sh > /dev/null 2>&1; then
+if dcheck lesspipe.sh; then
   export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
 fi

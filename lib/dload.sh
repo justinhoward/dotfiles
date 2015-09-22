@@ -1,5 +1,4 @@
-function dload()
-{
+function dload() {
     local load_path=$1 load_dir
 
     if [[ ! -f "$load_path".sh ]] && [[ ! -d "$load_path" ]]; then
