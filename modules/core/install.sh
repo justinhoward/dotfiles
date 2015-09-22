@@ -7,8 +7,3 @@ dremove ~/.profile
 dremove ~/.zprofile
 dremove ~/.zlogin
 dremove ~/.zshenv
-
-if [[ ! -e "$DOTFILES_PATH/config" ]]; then
-	echo "Copying config templates to $DOTFILES_PATH/config"
-	cp -r "$DOTFILES_PATH/config_templates" "$DOTFILES_PATH/config"
-fi

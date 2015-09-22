@@ -1,1 +1,1 @@
-dsymlink modules/amethyst/config ~/.amethyst
+dsymlink modules/amethyst/installed-config ~/.amethyst

@@ -1,1 +1,1 @@
-dsymlink modules/terminator/config ~/.config/terminator
+dsymlink modules/terminator/installed-config ~/.config/terminator

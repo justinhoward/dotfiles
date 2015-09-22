@@ -1,1 +1,1 @@
-dsymlink modules/awesome/config ~/.config/awesome
+dsymlink modules/awesome/installed-config ~/.config/awesome

@@ -1,1 +1,1 @@
-dsymlink modules/xmonad/config ~/.xmonad
+dsymlink modules/xmonad/installed-config ~/.xmonad

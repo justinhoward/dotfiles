@@ -1,4 +1,4 @@
-dsymlink modules/vim/config ~/.vim
+dsymlink modules/vim/installed-config ~/.vim
 dsymlink modules/vim/vimrc ~/.vimrc
 
 [[ ! -e "$HOME/.vim/backup" ]] && mkdir "$HOME/.vim/backup"
