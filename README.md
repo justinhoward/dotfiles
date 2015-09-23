@@ -102,6 +102,7 @@ environment to run in order to conditionally load configurations.
 - `dotfiles_shell`: The name of the running shell. `bash`, `sh`, `ksh`, `zsh`, or empty if unknown.
 - `dotfiles_interactive`: `1` if the shell is interactive, empty if not
 - `dotfiles_login`: `1` if the shell is a login shell, empty if not
+- `dotfiles_virtual`: `1` if the shell is a virtual tty, empty if not
 - `dotfiles_xorg`: `1` if the environment is the xorg window manager, empty if not
 
 ## Functions

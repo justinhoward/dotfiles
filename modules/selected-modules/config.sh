@@ -11,11 +11,12 @@ devent_login=(
 )
 
 devent_interactive=(
+	terminal
+	prompt
 	prezto
 	editor
 	git-aliases
 	less-colors
-	terminal
 )
 
 devent_xorg=(

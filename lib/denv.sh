@@ -32,5 +32,10 @@ function denv() {
           case $- in (*l*) dotfiles_login=1; esac
   esac
 
+  case `tty` in
+    /dev/tty[0-9]*) ;;
+    *) dotfiles_virtual=1 ;;
+  esac
+
   [[ -n "$ZDOTDIR" ]] && dotfiles_zdir="$ZDOTDIR" || dotfiles_zdir="$HOME"
 }
