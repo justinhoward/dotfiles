@@ -23,6 +23,7 @@ devent_xorg=(
 	virtualbox-client
 	screen-layout
 	key-rate
+	set-background
 	set-cursor
 	parcellite
 	xautolock
