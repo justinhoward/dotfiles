@@ -27,6 +27,6 @@ devent_xorg=(
 	set-cursor
 	parcellite
 	xautolock
-	awesome
 	conky
+	awesome
 )
