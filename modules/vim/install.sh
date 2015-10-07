@@ -5,6 +5,7 @@ dsymlink modules/vim/vimrc ~/.vimrc
 [[ ! -e "$HOME/.vim/swap" ]] && mkdir "$HOME/.vim/swap"
 [[ ! -e "$HOME/.vim/undo" ]] && mkdir "$HOME/.vim/undo"
 
-if [[ ! -e "$HOME/.vim/bundle/neobundle.vim" ]]; then
-	curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+if [[ ! -e "$HOME/.vim/autoload/plug.vim" ]]; then
+  curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
