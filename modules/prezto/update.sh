@@ -1,5 +1,5 @@
 if [[ -d "$dotfiles_zdir/.zprezto" ]]; then
-  echo 'Updating Prezto...'
+  echo 'Updating prezto...'
   (
     cd "$dotfiles_zdir/.zprezto"
     git pull > /dev/null
