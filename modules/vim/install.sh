@@ -1,6 +1,9 @@
 dsymlink modules/vim/installed-config ~/.vim
 dsymlink modules/vim/vimrc ~/.vimrc
 
+dsymlink modules/vim/installed-config ~/.nvim
+dsymlink modules/vim/vimrc ~/.nvimrc
+
 [[ ! -e "$HOME/.vim/backup" ]] && mkdir "$HOME/.vim/backup"
 [[ ! -e "$HOME/.vim/swap" ]] && mkdir "$HOME/.vim/swap"
 [[ ! -e "$HOME/.vim/undo" ]] && mkdir "$HOME/.vim/undo"
