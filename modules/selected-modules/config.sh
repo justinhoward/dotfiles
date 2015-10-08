@@ -17,6 +17,7 @@ devent_interactive=(
 	editor
 	git-aliases
 	less-colors
+	vim
 )
 
 devent_xorg=(
