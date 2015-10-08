@@ -197,7 +197,7 @@ function prompt_justinhoward_basic {
 }
 
 function prompt_justinhoward_setup {
-    [[ ! "$dotfiles_virtual" ]] && prompt_justinhoward_basic && return
+    [[ -z "$dotfiles_virtual" ]] && prompt_justinhoward_basic && return
 
     setopt LOCAL_OPTIONS
     unsetopt XTRACE KSH_ARRAYS
