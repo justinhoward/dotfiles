@@ -106,3 +106,5 @@ hi cssClassName ctermfg=148 ctermbg=NONE cterm=NONE guifg=#a6e22e guibg=NONE gui
 hi cssValueLength ctermfg=141 ctermbg=NONE cterm=NONE guifg=#ae81ff guibg=NONE gui=NONE
 hi cssCommonAttr ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=NONE
 hi cssBraces ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+hi IndentGuidesOdd ctermfg=NONE ctermbg=236 cterm=NONE guifg=none guibg=#303030 gui=NONE
+hi IndentGuidesEven ctermfg=NONE ctermbg=237 cterm=NONE guifg=none guibg=#3a3a3a gui=NONE
