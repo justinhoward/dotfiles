@@ -1,7 +1,7 @@
 
 " map space-e to open the file explorer
-map <leader>e :Explore<cr>
-map <leader><S-E> :Rexplore<cr>
+"map <leader>e :Explore<cr>
+"map <leader><S-E> :Rexplore<cr>
 
 " map space-j and space-k to next and previous buffers
 map <leader>j :bnext<cr>
@@ -21,3 +21,8 @@ map <leader>p :CtrlPTag<cr>
 
 " Buffergator
 map <leader>b :BuffergatorToggle<cr>
+unmap <leader>tc
+unmap <leader>to
+
+" NERD Tree
+map <leader>e :NERDTreeToggle<cr>

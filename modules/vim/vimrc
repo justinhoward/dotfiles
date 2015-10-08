@@ -21,5 +21,6 @@ Plug 'rking/ag.vim'
 Plug 'majutsushi/tagbar'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
+Plug 'scrooloose/nerdtree'
 
 call plug#end()
