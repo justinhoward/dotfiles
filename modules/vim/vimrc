@@ -16,5 +16,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-sleuth'
+Plug 'ervandew/supertab'
 
 call plug#end()
