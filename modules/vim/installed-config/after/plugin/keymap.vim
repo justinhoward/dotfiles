@@ -24,3 +24,8 @@ map <Plug>(easymotion-prefix)h <Plug>(easymotion-linebackward)
 map <Plug>(easymotion-prefix)/ <Plug>(easymotion-sn)
 omap <Plug>(easymotion-prefix)/ <Plug>(easymotion-tn)
 
+" Tagbar
+nmap <leader>t :TagbarToggle<cr>
+
+" CtrlP
+map <leader>p :CtrlPTag<cr>

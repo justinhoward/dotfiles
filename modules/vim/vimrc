@@ -18,5 +18,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-sleuth'
 Plug 'ervandew/supertab'
 Plug 'rking/ag.vim'
+Plug 'majutsushi/tagbar'
 
 call plug#end()
