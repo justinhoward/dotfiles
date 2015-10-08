@@ -19,5 +19,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'ervandew/supertab'
 Plug 'rking/ag.vim'
 Plug 'majutsushi/tagbar'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-easytags'
 
 call plug#end()
