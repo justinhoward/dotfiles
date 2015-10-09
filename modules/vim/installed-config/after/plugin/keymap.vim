@@ -17,7 +17,7 @@ omap <Plug>(easymotion-prefix)/ <Plug>(easymotion-tn)
 nmap <leader>t :TagbarToggle<cr>
 
 " CtrlP
-map <leader>p :CtrlPTag<cr>
+map <leader>pt :CtrlPTag<cr>
 
 " Buffergator
 map <leader>b :BuffergatorToggle<cr>
