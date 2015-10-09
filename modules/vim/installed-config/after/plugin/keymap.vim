@@ -26,3 +26,7 @@ unmap <leader>to
 
 " NERD Tree
 map <leader>e :NERDTreeToggle<cr>
+
+" UndoTree
+map <leader>u :UndoTreeToggle<cr>
+
