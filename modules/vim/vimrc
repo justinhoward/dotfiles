@@ -23,5 +23,6 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 Plug 'scrooloose/nerdtree'
 Plug 'mbbill/undotree'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()

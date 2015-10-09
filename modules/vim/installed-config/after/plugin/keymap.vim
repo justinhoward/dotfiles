@@ -3,9 +3,15 @@
 "map <leader>e :Explore<cr>
 "map <leader><S-E> :Rexplore<cr>
 
-" map space-j and space-k to next and previous buffers
-map <leader>j :bnext<cr>
-map <leader>k :bprevious<cr>
+" map <leader>b then j or k to next and previous buffers
+map <leader>bj :bnext<cr>
+map <leader>bk :bprevious<cr>
+
+" map <leader> hjkl to move between windows
+map <leader>h <C-w><C-h>
+map <leader>j <C-w><C-j>
+map <leader>k <C-w><C-k>
+map <leader>l <C-w><C-l>
 
 " Map unmapped easymotion commands
 map <Plug>(easymotion-prefix)l <Plug>(easymotion-lineforward)
@@ -20,7 +26,7 @@ nmap <leader>t :TagbarToggle<cr>
 map <leader>pt :CtrlPTag<cr>
 
 " Buffergator
-map <leader>b :BuffergatorToggle<cr>
+map <leader>bb :BuffergatorToggle<cr>
 unmap <leader>tc
 unmap <leader>to
 
@@ -28,5 +34,7 @@ unmap <leader>to
 map <leader>e :NERDTreeToggle<cr>
 
 " UndoTree
-map <leader>u :UndoTreeToggle<cr>
+map <leader>u :UndotreeToggle<cr>
 
+" Git Gutter
+map <leader>g :GitGutterToggle<cr>
