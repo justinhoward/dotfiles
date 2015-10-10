@@ -24,5 +24,6 @@ Plug 'xolox/vim-easytags'
 Plug 'scrooloose/nerdtree'
 Plug 'mbbill/undotree'
 Plug 'airblade/vim-gitgutter'
+Plug 'bkad/CamelCaseMotion'
 
 call plug#end()
