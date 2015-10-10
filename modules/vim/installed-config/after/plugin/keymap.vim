@@ -46,3 +46,9 @@ map <leader>gs :GitGutterStageHunk<cr>
 unmap <leader>hp
 unmap <leader>hr
 unmap <leader>hs
+
+" Text wrapping
+map <leader>w :set wrap!<cr>
+
+" Toggle list
+map <leader>s :ToggleList<cr>
