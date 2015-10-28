@@ -23,5 +23,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'mbbill/undotree'
 Plug 'airblade/vim-gitgutter'
 Plug 'bkad/CamelCaseMotion'
+Plug 'suan/vim-instant-markdown'
+Plug 'sudo.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
