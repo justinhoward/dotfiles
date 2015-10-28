@@ -20,3 +20,7 @@ alias gbr='git branch -r'
 # Index (i)
 alias giA='git add --all'
 alias gip='git add --patch'
+
+# Worktree (W)
+alias gWa='git worktree add'
+alias gWp='git worktree prune'
