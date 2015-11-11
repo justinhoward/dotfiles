@@ -26,6 +26,7 @@ devent_xorg=(
 	key-rate
 	set-background
 	set-cursor
+	gnome-keyring
 	parcellite
 	xautolock
 	conky
