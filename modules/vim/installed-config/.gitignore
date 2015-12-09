@@ -1,6 +1,7 @@
 /.netrwhist
 /.netrwbook
 /autoload/plug.vim
+/autoload/plug.vim.old
 /plugged
 /backup
 /swap
