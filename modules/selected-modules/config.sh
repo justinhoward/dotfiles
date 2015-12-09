@@ -15,6 +15,7 @@ devent_interactive=(
 	prompt
 	prezto
 	editor
+	browser
 	git-aliases
 	less-colors
 	vim
