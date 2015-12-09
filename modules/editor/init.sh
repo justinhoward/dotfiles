@@ -1,6 +1,7 @@
-export EDITOR='vim'
-export VISUAL='vim'
-export PAGER='less'
+dcheck nvim && EDITOR=nvim || EDITOR=vim
+export EDITOR
+export VISUAL="$EDITOR"
+export PAGER=less
 
 # Set the default Less options.
 # Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
