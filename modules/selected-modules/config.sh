@@ -16,6 +16,7 @@ devent_interactive=(
 	prezto
 	editor
 	browser
+	xdg
 	git-aliases
 	less-colors
 	vim
@@ -27,6 +28,7 @@ devent_xorg=(
 	key-rate
 	set-background
 	set-cursor
+	xdg
 	gnome-keyring
 	parcellite
 	xautolock
