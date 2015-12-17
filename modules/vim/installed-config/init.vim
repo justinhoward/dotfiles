@@ -1,7 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-surround'
@@ -26,5 +25,6 @@ Plug 'bkad/CamelCaseMotion'
 Plug 'suan/vim-instant-markdown'
 Plug 'sudo.vim'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'junegunn/fzf'
 
 call plug#end()

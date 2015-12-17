@@ -52,3 +52,6 @@ map <leader>w :set wrap!<cr>
 
 " Toggle list
 map <leader>s :ToggleList<cr>
+
+" FZF
+map <leader>pp :FZF<cr>
