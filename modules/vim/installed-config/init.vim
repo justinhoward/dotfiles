@@ -26,5 +26,7 @@ Plug 'sudo.vim'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/fzf'
 Plug 'benekastah/neomake'
+Plug 'Shougo/deoplete.nvim'
+Plug 'pangloss/vim-javascript'
 
 call plug#end()
