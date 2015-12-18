@@ -28,5 +28,6 @@ Plug 'junegunn/fzf'
 Plug 'benekastah/neomake'
 Plug 'Shougo/deoplete.nvim'
 Plug 'pangloss/vim-javascript'
+Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
