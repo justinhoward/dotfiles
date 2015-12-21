@@ -19,7 +19,8 @@ Run the install script. This will backup your existing dotfiles to `<name>.bak` 
 to the ones in the dotfiles repository.
 
 ``` bash
-~/.dotfiles/install.sh
+cd ~/.dotfiles
+make
 ```
 
 ## Fonts
@@ -34,6 +35,10 @@ Change what modules get loaded when by customizing `config/selected-modules.sh`.
 Prezto configuration can be found in the `config/prezto` directory.
 All files in this directory will be run immediately before prezto is loaded.
 
+## Updating
+
+To update `dotfiles` itself and all its modules, run `make update`.
+
 ## Modules
 
 A module is a directory inside the `modules` directory. Modules can contain a mixture
@@ -43,7 +48,7 @@ of scripts to load at runtime, installation scripts, and config files.
 
 At runtime, modules are only loaded when an "event" is fired.
 The built in events are "load", "xorg", "interactive", "login", and "xorg_init".
-You can use `confg/selected-modules.sh` to change which modules are loaded during
+You can use `config/modules.sh` to change which modules are loaded during
 which events. Events are fired in the following order.
 
 - `load`: After the dotfiles library is loaded.
