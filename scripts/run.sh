@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 [[ -z "$DOTFILES_PATH" ]] && DOTFILES_PATH="$HOME/.dotfiles"
-source "$DOTFILES_PATH"/load.sh
+source "$DOTFILES_PATH"/scripts/load.sh
 dconfig modules
 devent load
 
