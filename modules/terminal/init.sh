@@ -1,4 +1,4 @@
-if [[ -e /usr/share/terminfo/x/xterm-256color ]] && [[ -n "$dotfiles_virtual" ]]; then
+if [[ -n "$dotfiles_virtual" ]]; then
 	export TERM='xterm-256color'
 else
 	export TERM='xterm-color'
