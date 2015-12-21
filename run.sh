@@ -2,7 +2,7 @@
 
 [[ -z "$DOTFILES_PATH" ]] && DOTFILES_PATH="$HOME/.dotfiles"
 source "$DOTFILES_PATH"/load.sh
-dconfig selected-modules
+dconfig modules
 devent load
 
 if [[ -n $dotfiles_xorg ]]; then
