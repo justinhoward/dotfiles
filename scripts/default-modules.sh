@@ -17,6 +17,7 @@ devent_interactive=(
 	editor
 	browser
 	xdg
+	sudo
 	git-aliases
 	less-colors
 	vim
