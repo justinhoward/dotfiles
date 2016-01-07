@@ -25,17 +25,8 @@ unmap <leader>hp
 unmap <leader>hr
 unmap <leader>hs
 
-" Text wrapping
-map <leader>w :set wrap!<cr>
-
-" Toggle list
-map <leader>s :ToggleList<cr>
+" Save file
+map <leader>w :w<cr>
 
 " FZF
 map <leader>p :FZF<cr>
-
-" CamelCaseMotion
-map <silent> ,w <Plug>CamelCaseMotion_w
-map <silent> ,b <Plug>CamelCaseMotion_b
-map <silent> ,e <Plug>CamelCaseMotion_e
-map <silent> ,ge <Plug>CamelCaseMotion_ge
