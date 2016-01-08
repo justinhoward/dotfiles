@@ -24,5 +24,6 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'pangloss/vim-javascript'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()

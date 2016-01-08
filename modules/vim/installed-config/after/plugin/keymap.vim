@@ -7,6 +7,7 @@ map <leader>q <C-w><C-c>
 
 " Buffergator
 map <leader>b :BuffergatorToggle<cr>
+unmap <leader>t
 unmap <leader>tc
 unmap <leader>to
 
@@ -30,3 +31,4 @@ map <leader>w :w<cr>
 
 " FZF
 map <leader>p :FZF<cr>
+map <leader>t :FZFTags<cr>
