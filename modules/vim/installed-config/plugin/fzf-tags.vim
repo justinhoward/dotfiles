@@ -8,6 +8,11 @@ function! s:tags_sink(line)
 endfunction
 
 function! s:tags()
+	if empty(tagfiles())
+		echom 'No tags file'
+		return
+	endif
+
   call fzf#run({
   \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
   \            '| grep -v ^!',
