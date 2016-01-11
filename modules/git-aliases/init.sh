@@ -1,4 +1,4 @@
-zstyle -s ':prezto:module:git:log:cherry' format '_git_log_cherry_format' \
+dcheck zstyle && zstyle -s ':prezto:module:git:log:cherry' format '_git_log_cherry_format' \
   || _git_log_cherry_format="%m %C(green)%h%C(reset) %s%C(red)%d%C(reset)"
 
 # Log (l)
