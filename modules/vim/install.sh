@@ -19,3 +19,6 @@ if [[ ! -e "$HOME/.vim/autoload/plug.vim" ]]; then
   )
 fi
 
+drecommend fzf
+drecommend ag
+drecommend ctags
