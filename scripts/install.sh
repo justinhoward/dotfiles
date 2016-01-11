@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-path="$DOTFILES_PATH"
+[[ -z "$DOTFILES_PATH" ]] && DOTFILES_PATH="$HOME/.dotfiles"
 
 [[ -z "$path" ]] && path="$HOME/.dotfiles"
 source "$path"/scripts/load.sh
