@@ -25,5 +25,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-repeat'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
