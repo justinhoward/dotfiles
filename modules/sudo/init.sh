@@ -18,7 +18,7 @@ function _sudo_resolve_aliases() {
   done
 
   result=`alias "$1" 2> /dev/null`
-  [[ $? -eq 0 ]] && command=(`echo "$result" | head -n1 | sed "s/[^=]*='\(.*\)'/\1/"`) || command=("$1")
+  [[ $? -eq 0 ]] && command=(`echo "$result" | head -n1 | sed -e "s/[^=]*=\(.*\)/\1/" -e "s/^'//" -e "s/'$//" `) || command=("$1")
   shift
 
   case "${command[1]}" in
