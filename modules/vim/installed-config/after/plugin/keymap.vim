@@ -13,6 +13,7 @@ unmap <leader>to
 
 " NERD Tree
 map <leader>e :NERDTreeToggle<cr>
+map <leader>E :NERDTreeFind<cr>
 
 " UndoTree
 map <leader>u :UndotreeToggle<cr>
