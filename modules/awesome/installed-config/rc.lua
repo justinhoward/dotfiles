@@ -506,3 +506,32 @@ function toggle_conky()
     end
 end
 -- }}}
+
+-- {{{ fullscreen patch
+-- Patch change screen for fullscreen
+-- There is an awesome bug where changing the screen of a fullscreen window
+-- does not resize the window to fit the screen.
+local function client_reload_max(c)
+    local c = c or client.focus
+    if not c then return end
+    if c.maximized then
+        c.maximized = false
+        c.maximized = true
+    else
+        if c.maximized_horizontal then
+            c.maximized_horizontal = false
+            c.maximized_horizontal = true
+        end
+        if c.maximized_vertical then
+            c.maximized_vertical = false
+            c.maximized_vertical = true
+        end
+    end
+    if c.fullscreen then
+        c.fullscreen = false
+        c.fullscreen = true
+    end
+end
+-- Connect change screen signal to a resize function
+client.connect_signal("property::screen", client_reload_max)
+-- }}}
