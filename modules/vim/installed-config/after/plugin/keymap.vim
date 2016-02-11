@@ -4,6 +4,7 @@ map <leader>j <C-w><C-j>
 map <leader>k <C-w><C-k>
 map <leader>l <C-w><C-l>
 map <leader>q <C-w><C-c>
+map <leader>x :bdelete<cr>
 
 " Buffergator
 map <leader>b :BuffergatorToggle<cr>
