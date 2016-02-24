@@ -34,6 +34,5 @@ devent_xorg=(
 	gnome-keyring
 	parcellite
 	xautolock
-	conky
 	awesome
 )
