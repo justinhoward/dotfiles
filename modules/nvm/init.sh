@@ -4,7 +4,10 @@ if [[ -s "$HOME/.nvm/nvm.sh" ]]; then
   source "$HOME/.nvm/nvm.sh"
 else
   if dcheck pacman; then
-    prefix=`dirname "$(pacman -Ql nvm 2> /dev/null|cut -d' ' -f2|grep /nvm.sh|head -1)"`
+    start_script=`pacman -Ql nvm 2> /dev/null|cut -d' ' -f2|grep /nvm.sh|head -1`
+    if [[ -n "$start_script" ]]; then
+      prefix=`dirname "$start_script"`
+    fi
   elif dcheck brew; then
     prefix=`brew --prefix nvm`
   fi
