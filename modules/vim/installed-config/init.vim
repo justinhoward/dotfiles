@@ -2,7 +2,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
 Plug 'flazz/vim-colorschemes'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'scrooloose/nerdcommenter'
