@@ -30,5 +30,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'raimondi/delimitmate'
 Plug 'tpope/vim-endwise'
+Plug 'easymotion/vim-easymotion'
 
 call plug#end()

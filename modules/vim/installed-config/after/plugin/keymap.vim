@@ -47,3 +47,8 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>- <Plug>AirlineSelectPrevTab
 nmap <leader>= <Plug>AirlineSelectNextTab
+
+" Easymotion
+
+map <Plug>(easymotion-prefix)/ <Plug>(easymotion-sn)
+omap <Plug>(easymotion-prefix)/ <Plug>(easymotion-tn)
