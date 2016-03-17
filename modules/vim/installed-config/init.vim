@@ -28,5 +28,7 @@ Plug 'tpope/vim-repeat'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'rust-lang/rust.vim'
 Plug 'derekwyatt/vim-scala'
+Plug 'raimondi/delimitmate'
+Plug 'tpope/vim-endwise'
 
 call plug#end()
