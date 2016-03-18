@@ -6,12 +6,6 @@ map <leader>l <C-w><C-l>
 map <leader>q <C-w><C-c>
 map <leader>x :bdelete<cr>
 
-" Buffergator
-map <leader>b :BuffergatorToggle<cr>
-unmap <leader>t
-unmap <leader>tc
-unmap <leader>to
-
 " NERD Tree
 map <leader>e :NERDTreeToggle<cr>
 map <leader>E :NERDTreeFind<cr>
@@ -52,3 +46,18 @@ nmap <leader>= <Plug>AirlineSelectNextTab
 
 map <Plug>(easymotion-prefix)/ <Plug>(easymotion-sn)
 omap <Plug>(easymotion-prefix)/ <Plug>(easymotion-tn)
+
+" Neosnippet
+
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+
+" Indent Guides
+
+unmap <leader>ig
+map <leader>vi :IndentGuidesToggle<cr>
+
+" Whitespace
+
+map <leader>vw :ToggleList<cr>
