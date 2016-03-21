@@ -61,3 +61,7 @@ map <leader>vi :IndentGuidesToggle<cr>
 " Whitespace
 
 map <leader>vw :ToggleList<cr>
+
+" YankRing
+
+map <leader>y :YRShow<cr>

@@ -2,9 +2,10 @@
 /.netrwbook
 /autoload/plug.vim
 /autoload/plug.vim.old
-/plugged
-/backup
-/swap
-/undo
-/tags
+/plugged/
+/backup/
+/swap/
+/undo/
+/tags/
+/yankring/
 /.init.vim-rplugin~
