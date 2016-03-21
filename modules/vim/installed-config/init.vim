@@ -31,7 +31,6 @@ Plug 'tpope/vim-endwise'
 Plug 'easymotion/vim-easymotion'
 Plug 'shougo/neosnippet.vim'
 Plug 'shougo/neosnippet-snippets'
-Plug 'carlitux/deoplete-ternjs'
 Plug 'YankRing.vim'
 
 call plug#end()
