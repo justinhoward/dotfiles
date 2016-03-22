@@ -3,7 +3,6 @@ map <leader>h <C-w><C-h>
 map <leader>j <C-w><C-j>
 map <leader>k <C-w><C-k>
 map <leader>l <C-w><C-l>
-map <leader>q <C-w><C-c>
 map <leader>x :bdelete<cr>
 
 " NERD Tree
@@ -40,8 +39,8 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <leader>- <Plug>AirlineSelectPrevTab
-nmap <leader>= <Plug>AirlineSelectNextTab
+nmap <m-l> <Plug>AirlineSelectPrevTab
+nmap <m-h> <Plug>AirlineSelectNextTab
 
 " Easymotion
 
