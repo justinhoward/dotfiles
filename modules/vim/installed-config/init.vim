@@ -31,7 +31,7 @@ Plug 'tpope/vim-endwise'
 Plug 'easymotion/vim-easymotion'
 Plug 'shougo/neosnippet.vim'
 Plug 'shougo/neosnippet-snippets'
-Plug 'YankRing.vim'
 Plug 'andrewradev/splitjoin.vim'
+Plug 'Shougo/neoyank.vim'
 
 call plug#end()

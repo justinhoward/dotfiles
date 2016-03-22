@@ -28,6 +28,7 @@ map <leader>w :w<cr>
 " FZF
 map <leader>p :FZF<cr>
 map <leader>t :FZFTags<cr>
+map <leader>y :FZFYank<cr>
 
 " Airline
 nmap <leader>1 <Plug>AirlineSelectTab1
@@ -61,7 +62,3 @@ map <leader>vi :IndentGuidesToggle<cr>
 " Whitespace
 
 map <leader>vw :ToggleList<cr>
-
-" YankRing
-
-map <leader>y :YRShow<cr>
