@@ -1,6 +1,58 @@
 [global_config]
   inactive_color_offset = 1.0
 [keybindings]
+  broadcast_all = ""
+  broadcast_group = ""
+  broadcast_off = ""
+  close_term = ""
+  close_window = ""
+  copy = <Shift><Ctrl>c
+  cycle_next = ""
+  cycle_prev = ""
+  edit_tab_title = ""
+  edit_terminal_title = ""
+  edit_window_title = ""
+  full_screen = ""
+  go_down = ""
+  go_left = ""
+  go_next = ""
+  go_prev = ""
+  go_right = ""
+  go_up = ""
+  group_all = ""
+  group_tab = ""
+  help = ""
+  hide_window = ""
+  insert_number = ""
+  insert_padded = ""
+  layout_launcher = ""
+  move_tab_left = ""
+  move_tab_right = ""
+  new_tab = ""
+  new_terminator = ""
+  new_window = ""
+  next_tab = ""
+  paste = <Shift><Ctrl>v
+  prev_tab = ""
+  reset = ""
+  reset_clear = ""
+  resize_down = ""
+  resize_left = ""
+  resize_right = ""
+  resize_up = ""
+  rotate_ccw = ""
+  rotate_cw = ""
+  scaled_zoom = ""
+  search = ""
+  split_horiz = ""
+  split_vert = ""
+  toggle_scrollbar = ""
+  toggle_zoom = ""
+  ungroup_all = ""
+  ungroup_tab = ""
+  zoom_in = ""
+  zoom_normal = ""
+  zoom_out = ""
 [layouts]
   [[default]]
     [[[child1]]]
@@ -13,7 +65,6 @@
 [profiles]
   [[default]]
     background_color = "#282828"
-    background_image = None
     cursor_color = "#cccccc"
     font = Hack 10
     foreground_color = "#f3f3f3"
