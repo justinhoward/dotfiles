@@ -33,5 +33,6 @@ Plug 'shougo/neosnippet.vim'
 Plug 'shougo/neosnippet-snippets'
 Plug 'andrewradev/splitjoin.vim'
 Plug 'Shougo/neoyank.vim'
+Plug 'justinhoward/fzf-neoyank'
 
 call plug#end()

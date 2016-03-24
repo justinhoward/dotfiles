@@ -27,7 +27,7 @@ map <leader>w :w<cr>
 " FZF
 map <leader>p :FZF<cr>
 map <leader>t :FZFTags<cr>
-map <leader>y :FZFYank<cr>
+map <leader>y :FZFNeoyank<cr>
 
 " Airline
 nmap <leader>1 <Plug>AirlineSelectTab1
