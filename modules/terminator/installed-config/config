@@ -43,7 +43,7 @@
   rotate_ccw = ""
   rotate_cw = ""
   scaled_zoom = ""
-  search = ""
+  search = <Primary><Shift>f
   split_horiz = ""
   split_vert = ""
   toggle_scrollbar = ""
