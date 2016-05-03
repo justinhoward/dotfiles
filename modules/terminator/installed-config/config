@@ -50,9 +50,9 @@
   toggle_zoom = ""
   ungroup_all = ""
   ungroup_tab = ""
-  zoom_in = ""
-  zoom_normal = ""
-  zoom_out = ""
+  zoom_in = <Ctrl>plus
+  zoom_normal = <Ctrl>parenright
+  zoom_out = <Ctrl>underscore
 [layouts]
   [[default]]
     [[[child1]]]
