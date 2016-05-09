@@ -22,6 +22,7 @@ devent_interactive=(
 	less-colors
 	vim
 	nvm
+	aws-cli
 )
 
 devent_xorg=(
