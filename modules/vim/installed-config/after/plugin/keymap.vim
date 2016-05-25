@@ -17,9 +17,11 @@ map <leader>gg :GitGutterToggle<cr>
 map <leader>gp :GitGutterPreviewHunk<cr>
 map <leader>gr :GitGutterRevertHunk<cr>
 map <leader>gs :GitGutterStageHunk<cr>
+map <leader>gu :GitGutterUndoHunk<cr>
 unmap <leader>hp
 unmap <leader>hr
 unmap <leader>hs
+unmap <leader>hu
 
 " Save file
 map <leader>w :w<cr>
