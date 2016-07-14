@@ -32,5 +32,6 @@ Plug 'shougo/neosnippet-snippets'
 Plug 'andrewradev/splitjoin.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'justinhoward/fzf-neoyank'
+Plug 'suan/vim-instant-markdown'
 
 call plug#end()

@@ -63,3 +63,6 @@ map <leader>vi :IndentGuidesToggle<cr>
 " Whitespace
 
 map <leader>vw :ToggleList<cr>
+
+" Instant Markdown
+map <leader>vm :InstantMarkdownPreview<cr>
