@@ -23,6 +23,7 @@ devent_interactive=(
 	vim
 	nvm
 	aws-cli
+	wdiff
 )
 
 devent_xorg=(
