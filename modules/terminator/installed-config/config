@@ -32,6 +32,10 @@
   new_terminator = ""
   new_window = ""
   next_tab = ""
+  page_down = ""
+  page_down_half = Page_Down
+  page_up = ""
+  page_up_half = Page_Up
   paste = <Shift><Ctrl>v
   prev_tab = ""
   reset = ""
