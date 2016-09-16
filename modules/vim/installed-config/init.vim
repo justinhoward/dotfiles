@@ -33,7 +33,5 @@ Plug 'andrewradev/splitjoin.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'justinhoward/fzf-neoyank'
 Plug 'suan/vim-instant-markdown'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
 
 call plug#end()
