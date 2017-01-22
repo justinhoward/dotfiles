@@ -1,3 +1,4 @@
 theme = dofile "/usr/share/awesome/themes/default/theme.lua"
 theme.wallpaper = nil
-return theme;
+theme.border_width = 2
+return theme
