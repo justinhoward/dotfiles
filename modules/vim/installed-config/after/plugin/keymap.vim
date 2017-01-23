@@ -66,3 +66,11 @@ map <leader>vw :ToggleList<cr>
 
 " Instant Markdown
 map <leader>vm :InstantMarkdownPreview<cr>
+
+" Quickfix
+map <leader>fo :copen<cr>
+map <leader>fc :cclose<cr>
+map <leader>fn :cnext<cr>
+map <leader>fp :cprevious<cr>
+map <leader>ff :cnfile<cr>
+map <leader>fF :cpfile<cr>
