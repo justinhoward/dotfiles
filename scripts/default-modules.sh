@@ -25,6 +25,7 @@ devent_interactive=(
 	aws-cli
 	wdiff
 	fzf
+	rbenv
 )
 
 devent_xorg=(
