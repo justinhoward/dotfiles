@@ -17,3 +17,11 @@ alias drx='drr --rm'
 
 # Exec
 alias des='docker exec -it'
+
+# Compose
+alias dcc='docker-compose'
+alias dcu='dcc up'
+alias dcU='dcc up --build'
+alias dcb='dcc build'
+alias dcd='dcc down'
+alias dcs='dcc stop'
