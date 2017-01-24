@@ -26,6 +26,7 @@ devent_interactive=(
 	wdiff
 	fzf
 	rbenv
+	docker
 )
 
 devent_xorg=(
