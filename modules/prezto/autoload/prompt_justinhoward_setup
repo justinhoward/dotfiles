@@ -42,7 +42,7 @@ function prompt_justinhoward_context {
         echo -n "%(!.%F{yellow}.)%7>…>%n%<<"
     fi
 
-    if [[ "$(hostname)" != "$default_hostname" ]]; then
+    if [[ "$(hostname)" != "$default_hostname" || -n "$SSH_CONNECTION" ]]; then
         echo -n "@%7>…>%m%<<"
     fi
 }
