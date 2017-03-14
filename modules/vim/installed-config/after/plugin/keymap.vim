@@ -74,3 +74,6 @@ map <leader>fn :cnext<cr>
 map <leader>fp :cprevious<cr>
 map <leader>ff :cnfile<cr>
 map <leader>fF :cpfile<cr>
+
+" Find
+map <leader>s :Ack!<c-space>
