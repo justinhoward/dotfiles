@@ -15,7 +15,7 @@ if [[ ! -e "$HOME/.vim/autoload/plug.vim" ]]; then
   echo 'Installing vim plugins...'
   (
     dcheck nvim && vim=nvim || vim=vim
-    nohup vim -c 'PlugInstall'  -c 'qall' >/dev/null 2>&1
+    nohup "$vim" -c 'PlugInstall'  -c 'qall' >/dev/null 2>&1
   )
 fi
 
