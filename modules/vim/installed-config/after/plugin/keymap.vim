@@ -30,6 +30,7 @@ map <leader>w :w<cr>
 map <leader>p :FZF<cr>
 map <leader>t :FZFTags<cr>
 map <leader>y :FZFNeoyank<cr>
+map <leader>Y :FZFNeoyank " P<cr>
 
 " Airline
 nmap <leader>1 <Plug>AirlineSelectTab1
