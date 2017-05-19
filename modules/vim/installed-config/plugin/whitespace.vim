@@ -7,4 +7,4 @@ set softtabstop=2
 set expandtab
 
 " Use unix line endings by default
-set fileformats=unix,dos
+set fileformats=unix
