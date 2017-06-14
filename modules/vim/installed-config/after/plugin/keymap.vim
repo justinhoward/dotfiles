@@ -29,8 +29,9 @@ map <leader>w :w<cr>
 " FZF
 map <leader>p :FZF<cr>
 map <leader>t :FZFTags<cr>
-map <leader>y :FZFNeoyank<cr>
-map <leader>Y :FZFNeoyank " P<cr>
+nnoremap <leader>y :FZFNeoyank<cr>
+nnoremap <leader>Y :FZFNeoyank " P<cr>
+vnoremap <leader>y :FZFNeoyankSelection<cr>
 
 " Airline
 nmap <leader>1 <Plug>AirlineSelectTab1
