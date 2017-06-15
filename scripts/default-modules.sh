@@ -27,6 +27,7 @@ devent_interactive=(
 	fzf
 	rbenv
 	docker
+	composer
 )
 
 devent_xorg=(
