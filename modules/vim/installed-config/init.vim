@@ -30,5 +30,6 @@ Plug 'andrewradev/splitjoin.vim'
 Plug 'Shougo/neoyank.vim'
 Plug 'justinhoward/fzf-neoyank'
 Plug 'suan/vim-instant-markdown'
+Plug 'michaeljsmith/vim-indent-object'
 
 call plug#end()
