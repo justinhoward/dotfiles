@@ -36,6 +36,7 @@ devent_xorg=(
 	set-cursor
 	xdg
 	gnome-keyring
+	ssh-agent
 	parcellite
 	xautolock
 	awesome
