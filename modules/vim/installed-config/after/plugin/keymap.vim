@@ -1,34 +1,34 @@
 " map <leader> hjkl to move between windows
-map <leader>h <C-w><C-h>
-map <leader>j <C-w><C-j>
-map <leader>k <C-w><C-k>
-map <leader>l <C-w><C-l>
-map <leader>x :bdelete<cr>
+nnoremap <leader>h <C-w><C-h>
+nnoremap <leader>j <C-w><C-j>
+nnoremap <leader>k <C-w><C-k>
+nnoremap <leader>l <C-w><C-l>
+nnoremap <leader>x :bdelete<cr>
 
 " NERD Tree
-map <leader>e :NERDTreeToggle<cr>
-map <leader>E :NERDTreeFind<cr>
+nnoremap <leader>e :NERDTreeToggle<cr>
+nnoremap <leader>E :NERDTreeFind<cr>
 
 " UndoTree
-map <leader>u :UndotreeToggle<cr>
+nnoremap <leader>u :UndotreeToggle<cr>
 
 " Git Gutter
-map <leader>gg :GitGutterToggle<cr>
-map <leader>gp :GitGutterPreviewHunk<cr>
-map <leader>gr :GitGutterRevertHunk<cr>
-map <leader>gs :GitGutterStageHunk<cr>
-map <leader>gu :GitGutterUndoHunk<cr>
+nnoremap <leader>gg :GitGutterToggle<cr>
+nnoremap <leader>gp :GitGutterPreviewHunk<cr>
+nnoremap <leader>gr :GitGutterUndoHunk<cr>
+nnoremap <leader>gs :GitGutterStageHunk<cr>
+nnoremap <leader>gu :GitGutterUndoHunk<cr>
 unmap <leader>hp
 unmap <leader>hr
 unmap <leader>hs
 unmap <leader>hu
 
 " Save file
-map <leader>w :w<cr>
+nnoremap <leader>w :w<cr>
 
 " FZF
-map <leader>p :FZF<cr>
-map <leader>t :FZFTags<cr>
+nnoremap <leader>p :FZF<cr>
+nnoremap <leader>] :FZFTags<cr>
 nnoremap <leader>y :FZFNeoyank<cr>
 nnoremap <leader>Y :FZFNeoyank " P<cr>
 vnoremap <leader>y :FZFNeoyankSelection<cr>
@@ -46,36 +46,35 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <m-l> <Plug>AirlineSelectPrevTab
 nmap <m-h> <Plug>AirlineSelectNextTab
 
-" Easymotion
-
-map <Plug>(easymotion-prefix)/ <Plug>(easymotion-sn)
-omap <Plug>(easymotion-prefix)/ <Plug>(easymotion-tn)
-
 " Neosnippet
-
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 
 " Indent Guides
-
 unmap <leader>ig
-map <leader>vi :IndentGuidesToggle<cr>
+nnoremap <leader>vi :IndentGuidesToggle<cr>
 
 " Whitespace
-
-map <leader>vw :ToggleList<cr>
+nnoremap <leader>vw :ToggleList<cr>
 
 " Instant Markdown
-map <leader>vm :InstantMarkdownPreview<cr>
+nnoremap <leader>vm :InstantMarkdownPreview<cr>
 
 " Quickfix
-map <leader>fo :copen<cr>
-map <leader>fc :cclose<cr>
-map <leader>fn :cnext<cr>
-map <leader>fp :cprevious<cr>
-map <leader>ff :cnfile<cr>
-map <leader>fF :cpfile<cr>
+nnoremap <leader>fo :copen<cr>
+nnoremap <leader>fc :cclose<cr>
+nnoremap <leader>fn :cnext<cr>
+nnoremap <leader>fp :cprevious<cr>
+nnoremap <leader>ff :cnfile<cr>
+nnoremap <leader>fF :cpfile<cr>
 
 " Find
-map <leader>s :Ack!<c-space>
+nnoremap <leader>s :Ack!<c-space>
+
+" Test
+nnoremap <leader>tt :TestNearest<cr>
+nnoremap <leader>tl :TestLast<cr>
+nnoremap <leader>ts :TestSuite<cr>
+nnoremap <leader>tf :TestFile<cr>
+nnoremap <leader>tg :TestVisit<cr>

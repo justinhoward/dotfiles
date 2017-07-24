@@ -31,5 +31,7 @@ Plug 'Shougo/neoyank.vim'
 Plug 'justinhoward/fzf-neoyank'
 Plug 'suan/vim-instant-markdown'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'tpope/vim-dispatch'
+Plug 'janko-m/vim-test'
 
 call plug#end()
