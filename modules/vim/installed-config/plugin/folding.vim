@@ -1,2 +1,2 @@
 set foldmethod=syntax
-set foldlevelstart=1
+autocmd BufRead * normal zR
