@@ -47,9 +47,9 @@ nmap <m-l> <Plug>AirlineSelectPrevTab
 nmap <m-h> <Plug>AirlineSelectNextTab
 
 " Neosnippet
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <C-j> <Plug>(neosnippet_expand_or_jump)
+smap <C-j> <Plug>(neosnippet_expand_or_jump)
+xmap <C-j> <Plug>(neosnippet_expand_target)
 
 " Indent Guides
 unmap <leader>ig
