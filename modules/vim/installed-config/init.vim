@@ -33,5 +33,6 @@ Plug 'suan/vim-instant-markdown'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'
+Plug 'chrisbra/csv.vim'
 
 call plug#end()
