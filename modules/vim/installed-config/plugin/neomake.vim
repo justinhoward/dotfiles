@@ -1,1 +1,1 @@
-autocmd! BufWritePost * Neomake
+call neomake#configure#automake('nw', 750)
