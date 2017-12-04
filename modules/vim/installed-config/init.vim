@@ -17,7 +17,7 @@ Plug 'mbbill/undotree'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/fzf'
-Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-repeat'
 Plug 'ludovicchabant/vim-gutentags'
