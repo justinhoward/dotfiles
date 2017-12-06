@@ -1,11 +1,19 @@
 set showtabline=2
 
+function! LightlineFilename()
+  return expand('%:t')
+endfunction
+
+function! LightlineFiletype()
+  return &filetype
+endfunction
+
 function! LightlineFileformat()
-	return &fileformat == 'unix' ? '' : &fileformat
+  return &fileformat ==# 'unix' ? '' : &fileformat
 endfunction
 
 function! LightlineFileencoding()
-	return &fileencoding == 'utf-8' ? '' : &fileencoding
+  return &fileencoding ==# 'utf-8' ? '' : &fileencoding
 endfunction
 
 let g:lightline = {
@@ -35,6 +43,8 @@ let g:lightline = {
   \ },
   \ 'component_function': {
   \   'gitbranch': 'fugitive#head',
+  \   'filename': 'LightlineFilename',
+  \   'filetype': 'LightlineFiletype',
   \   'fileformat': 'LightlineFileformat',
   \   'fileencoding': 'LightlineFileencoding'
   \ },
