@@ -1,8 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'mgee/lightline-bufferline'
+Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'embear/vim-localvimrc'

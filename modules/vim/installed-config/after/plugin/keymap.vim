@@ -33,18 +33,17 @@ nnoremap <leader>y :FZFNeoyank<cr>
 nnoremap <leader>Y :FZFNeoyank " P<cr>
 vnoremap <leader>y :FZFNeoyankSelection<cr>
 
-" Airline
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
-nmap <m-l> <Plug>AirlineSelectPrevTab
-nmap <m-h> <Plug>AirlineSelectNextTab
+" Lightline
+nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 
 " Neosnippet
 imap <C-j> <Plug>(neosnippet_expand_or_jump)
@@ -71,10 +70,3 @@ nnoremap <leader>fF :cpfile<cr>
 
 " Find
 nnoremap <leader>s :Ack!<c-space>
-
-" Test
-nnoremap <leader>tt :TestNearest<cr>
-nnoremap <leader>tl :TestLast<cr>
-nnoremap <leader>ts :TestSuite<cr>
-nnoremap <leader>tf :TestFile<cr>
-nnoremap <leader>tg :TestVisit<cr>
