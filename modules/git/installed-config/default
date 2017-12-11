@@ -1,0 +1,8 @@
+[core]
+	excludesfile = /home/justin/.gitignore-global
+
+[color "diff"]
+	frag = magenta
+	meta = yellow
+	new = green
+	old = red
