@@ -6,3 +6,23 @@
 	meta = yellow
 	new = green
 	old = red
+
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+  prompt = false
+
+[mergetool]
+  path = nnvim
+
+[mergetool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
+
+[difftool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL

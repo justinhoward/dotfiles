@@ -20,6 +20,10 @@ alias gbr='git branch -r'
 # Index (i)
 alias giA='git add --all'
 alias gip='git add --patch'
+alias gidt='git difftool --cached'
+
+# Working tree (w)
+alias gwdt='git difftool'
 
 # Worktree (W)
 alias gWa='git worktree add'
