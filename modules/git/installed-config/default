@@ -8,21 +8,21 @@
 	old = red
 
 [merge]
-  tool = vimdiff
+  tool = nvimdiff
   conflictstyle = diff3
   prompt = false
 
 [mergetool]
-  path = nnvim
+  keepBackup = false
 
-[mergetool "vimdiff"]
-  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED
+[mergetool "nvimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 
 [diff]
-  tool = vimdiff
+  tool = nvimdiff
 
 [difftool]
   prompt = false
 
-[difftool "vimdiff"]
-  cmd = nvim -d $BASE $LOCAL
+[difftool "nvimdiff"]
+  cmd = nvim -d $LOCAL $MERGED
