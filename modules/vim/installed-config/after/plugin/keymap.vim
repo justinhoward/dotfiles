@@ -70,3 +70,4 @@ nnoremap <leader>fF :cpfile<cr>
 
 " Find
 nnoremap <leader>s :Ack!<c-space>
+nnoremap <leader>/ :nohlsearch<cr>
