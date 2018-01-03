@@ -21,5 +21,4 @@ zstyle ':prezto:load' pmodule \
   'fasd' \
   'pacman' \
   'syntax-highlighting' \
-  'autosuggestions' \
   'prompt' \
