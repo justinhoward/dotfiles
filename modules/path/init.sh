@@ -11,7 +11,7 @@ fi
 
 # Ruby gems
 if dcheck ruby && dcheck gem; then
-    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+    PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
 if [[ -d "$HOME/bin" ]]; then
