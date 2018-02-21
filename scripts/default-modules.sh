@@ -29,6 +29,7 @@ devent_interactive=(
 	rbenv
 	docker
 	composer
+	neomutt
 )
 
 devent_xorg=(

@@ -1,0 +1,9 @@
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+
+audio/*; /usr/bin/xdg-open %s
+
+image/*; /usr/bin/eog %s > /dev/null
+
+application/msword; /usr/bin/xdg-open %s
+application/pdf; /usr/bin/xdg-open %s
+application/postscript ; /usr/bin/xdg-open %s

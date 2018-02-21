@@ -1,0 +1,7 @@
+# User config
+# Complete this and copy to ~/.mutt/user
+
+set my_realname="Justin Howard"
+set my_username="justin.howard"
+set my_domain="example.com"
+set my_password=""
