@@ -1,9 +1,20 @@
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
 
-audio/*; /usr/bin/xdg-open %s
-
 image/*; /usr/bin/eog %s > /dev/null
 
-application/msword; /usr/bin/xdg-open %s
-application/pdf; /usr/bin/xdg-open %s
-application/postscript ; /usr/bin/xdg-open %s
+# MS Excel
+application/x-msexcel; mutt_bgrun libreoffice %s
+application/ms-exc; mutt_bgrun libreoffice %s
+application/excel; mutt_bgrun libreoffice %s
+application/msexcel; mutt_bgrun libreoffice %s
+application/vnd.ms-exc; mutt_bgrun libreoffice %s
+application/vnd.ms-excel; mutt_bgrun libreoffice %s
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; mutt_bgrun libreoffice %s
+
+# MS Word
+# use textedit to open .doc files as it's more light-weight
+application/msword; mutt_bgrun libreoffice %s
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; mutt_bgrun libreoffice %s
+
+# PDF
+application/pdf; mutt_bgrun chrome %s

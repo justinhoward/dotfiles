@@ -1,21 +1,23 @@
-source "~/.config/neomutt/user"
+source ~/.config/neomutt/user
+source ~/.config/neomutt/keybindings
+source ~/.config/neomutt/colors
 
 # Quotation and date formats
-set attribution='On %d, %n wrote:'
-set date_format='!%m/%d/%Y %H:%M'
+set attribution = 'On %d, %n wrote:'
+set date_format = '!%m/%d/%Y %H:%M'
 
 # Hours and dates
-set charset='utf-8'
-set assumed_charset='utf-8'
-set send_charset='utf-8:us-ascii'
+set charset = 'utf-8'
+set assumed_charset = 'utf-8'
+set send_charset = 'utf-8:us-ascii'
 
 # IMAP config
-set imap_user="$my_username@$my_domain"
-set imap_pass=$my_password
+set imap_user = "$my_username@$my_domain"
+set imap_pass = "$my_password"
 
-set folder='imaps://outlook.office365.com/'
-set spoolfile= +INBOX
-set postponed= +Drafts
+set folder = 'imaps://outlook.office365.com/'
+set spoolfile = +INBOX
+set postponed = +Drafts
 set record = '+Sent Items'
 set trash = '+Deleted Items'
 mailboxes
@@ -27,16 +29,16 @@ set imap_keepalive=180
 set imap_idle
 
 # SMTP config
-set realname = $my_realname
+set realname = "$my_realname"
 set from = "$my_username@$my_domain"
-set smtp_pass = $my_password
-set hostname = $my_domain
+set smtp_pass = "$my_password"
+set hostname = "$my_domain"
 set smtp_url = "smtp://$my_username@$my_domain@outlook.office365.com:587/"
-set ssl_force_tls = yes
-set smtp_authenticators = 'login'
+set ssl_force_tls
+set smtp_authenticators = login
 
 # Notifications
-set new_mail_command="notify-send 'Mail' '%n new messages' &"
+set new_mail_command = "notify-send 'Mail' '%n new messages' &"
 
 # Speed up interactions
 set wait_key = no # no confirmations
@@ -48,20 +50,20 @@ set include # include messages in replies
 set forward_quote # include messages in forwards
 
 # File storage settings
-set alias_file='~/.config/neomutt/aliases'
-set message_cachedir='~/.cache/neomutt/bodies'
-set header_cache='~/.cache/neomutt/headers'
+set alias_file = '~/.config/neomutt/aliases'
+set message_cachedir = '~/.cache/neomutt/bodies'
+set header_cache = '~/.cache/neomutt/headers'
 
 # Viewing attachments
-set mailcap_path = ~/.mutt/mailcap
+set mailcap_path = ~/.config/neomutt/mailcap
 alternative_order text/plain text/enriched text/html
 auto_view text/html
 
 set reply_to # use reply-to address
 
 # Reply using the address where message was received
-set reverse_name=yes
-set reverse_realname=yes
+set reverse_name
+set reverse_realname
 
 # Pager
 set pager_stop # don't go to next message
@@ -69,85 +71,21 @@ set smart_wrap # wrap on word boundaries
 set tilde # show blank line tildes
 unset markers # don't show + signs for wrapped lines
 
+# Browser
+set sort_browser = alpha
+
 # Text editor
-set editor="nvim"
+set editor = nvim
 
 # Adress book handling
-set sort_alias=alias
-set reverse_alias=yes
+set sort_alias = alias
+set reverse_alias
 
 # Index
 set sort = threads
 set sort_browser = date
 set sort_aux = reverse-last-date-received
 unset collapse_unread
-set index_format="[%Z]  %D  %-20.20F  %s"
+set index_format = "[%Z]  %D  %-20.20F  %s"
 unset mark_old # don't mark messages that are unread and unopened
 set beep_new
-
-## Key bindings
-
-# Mailboxes
-bind index,pager g noop # unbind default group-reply
-macro index gi '<change-folder>=INBOX<enter>' 'Go to Inbox'
-macro index ga "<change-folder>=Archive<enter>" 'Go to Archive'
-macro index gs "<change-folder>=Sent<quote-char><space>Items<enter>" 'Go to Sent'
-macro index gd "<change-folder>=Drafts<enter>" 'Go to Drafts'
-macro index gt "<change-folder>=Deleted<quote-char><space>Items<enter>" 'Go to Trash'
-
-macro index,pager A "<save-message>=Archive<enter>" 'Move a message to Archived'
-macro index M "<save-message>?<toggle-mailboxes>" 'Move a message to a mailbox'
-
-# Messages
-bind index,pager R group-reply
-
-# Movement
-bind index,pager \Cu half-up
-bind index,pager \Cd half-down
-bind index gg first-entry
-bind index G last-entry
-
-# Colors
-color normal default default
-color index green default ~N # new
-color index cyan default ~F # flagged
-color index blue default ~T # tagged
-color index red default ~D # deleted
-
-color body brightyellow default (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
-color body brightgreen default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
-
-color attachment magenta default
-color signature brightwhite default
-color search brightred black # search results
-
-color indicator default white # currently selected row
-color error red default
-color status white black # status line
-color tree brightblack default # thread tree
-color tilde cyan default # blank line padding
-
-color hdrdefault cyan black # default headers
-color header brightcyan black "^From:"
-color header brightcyan black "^Subject:"
-
-# quoted messages
-color quoted cyan default
-color quoted1 brightcyan default
-color quoted2 blue default
-color quoted3 green default
-color quoted4 yellow default
-color quoted5 red default
-
-# GPG
-color body green default "^gpg: Good signature from"
-color body brightred default "^gpg: Bad signature from"
-color body brightred default "^gpg: BAD signature from"
-color body brightred default "^gpg: Note: This key has expired!"
-color body brightyellow default "^gpg: WARNING: This key is not certified with a trusted signature!"
-color body brightyellow default "^gpg:          There is no indication that the signature belongs to the owner."
-color body brightyellow default "^gpg: can't handle these multiple signatures"
-color body brightyellow default "^gpg: signature verification suppressed"
-color body brightyellow default "^gpg: invalid node with packet of type"
-
-color sidebar_new brightyellow default

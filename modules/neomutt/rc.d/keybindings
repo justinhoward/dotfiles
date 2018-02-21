@@ -1,0 +1,78 @@
+# vim: set ft=muttrc
+
+# Generic can happen anywhere (except pager and editor)
+# Browser is the list of mailboxes
+# Index = the list of messages
+# Pager is when you have an email open
+
+source ~/.config/neomutt/unbind
+
+### General ###
+bind generic,index gg first-entry
+bind generic,index G last-entry
+bind generic,index,pager,index q exit
+macro generic,index,pager,index Q 'QQQ' # exit from anywhere
+bind generic,index <Return> select-entry
+bind generic,index <Up> previous-entry
+bind generic,index <Down> next-entry
+bind generic,index k previous-entry
+bind generic,index j next-entry
+bind generic,index,pager <PageUp> previous-page
+bind generic,index,pager <PageDown> next-page
+bind generic,index,pager \Cu half-up
+bind generic,index,pager \Cd half-down
+bind generic,index,pager / search
+bind generic,index,pager n search-next
+bind generic,index,pager p search-opposite
+bind generic,index,pager : enter-command
+bind generic,index,pager ? help
+
+### Index ###
+bind index <Return> display-message
+bind index c change-folder
+bind index m mail
+bind index t tag-entry
+bind index T tag-thread
+bind index <Space>/ limit
+bind index L break-thread
+bind index l link-threads
+bind index <Space>w sync-mailbox
+bind index @ display-address
+bind index \; tag-prefix
+bind index z collapse-thread
+bind index Z collapse-all
+
+macro index gi '<change-folder>=INBOX<enter>' 'Go to Inbox'
+macro index ga "<change-folder>=Archive<enter>" 'Go to Archive'
+macro index gs "<change-folder>=Sent<quote-char><space>Items<enter>" 'Go to Sent'
+macro index gd "<change-folder>=Drafts<enter>" 'Go to Drafts'
+macro index gt "<change-folder>=Deleted<quote-char><space>Items<enter>" 'Go to Trash'
+macro index gj "<change-folder>=Junk<quote-char><space>Email<enter>" 'Go to Junk'
+
+### Current Message ###
+bind index,pager e edit
+bind index,pager d delete-message
+bind index,pager D delete-thread
+bind index,pager p recall-message
+bind index,pager r reply
+bind index,pager R group-reply
+bind index,pager f forward-message
+bind index,pager s save-message # move
+bind index,pager | pipe-message
+bind index,pager u undelete-message
+bind index,pager v view-attachments
+macro index,pager a "<save-message>=Archive<enter>" 'Move a message to Archive'
+macro index <Space>u "\
+:set my_tmp_pipe_decode=\$pipe_decode\n\
+:set pipe_decode\n\
+|urlview\n\
+:set pipe_decode=\$my_tmp_pipe_decode\n\
+:unset my_tmp_pipe_decode\n" \
+'call urlview to extract URLs out of a message'
+
+### Pager ###
+bind pager <Up> previous-line
+bind pager <Down> next-line
+bind pager k previous-line
+bind pager j next-line
+bind pager h display-toggle-weed
