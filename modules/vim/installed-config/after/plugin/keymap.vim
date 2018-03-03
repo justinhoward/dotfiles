@@ -19,7 +19,6 @@ nnoremap <leader>gr :GitGutterUndoHunk<cr>
 nnoremap <leader>gs :GitGutterStageHunk<cr>
 nnoremap <leader>gu :GitGutterUndoHunk<cr>
 unmap <leader>hp
-unmap <leader>hr
 unmap <leader>hs
 unmap <leader>hu
 
