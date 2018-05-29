@@ -19,7 +19,7 @@ Plug 'junegunn/fzf'
 Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-repeat'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags', { 'tag': 'v1.0.0' }
 Plug 'shougo/neosnippet.vim'
 Plug 'shougo/neosnippet-snippets'
 Plug 'andrewradev/splitjoin.vim'
