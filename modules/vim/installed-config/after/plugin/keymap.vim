@@ -18,9 +18,6 @@ nnoremap <leader>gp :GitGutterPreviewHunk<cr>
 nnoremap <leader>gr :GitGutterUndoHunk<cr>
 nnoremap <leader>gs :GitGutterStageHunk<cr>
 nnoremap <leader>gu :GitGutterUndoHunk<cr>
-unmap <leader>hp
-unmap <leader>hs
-unmap <leader>hu
 
 " Save file
 nnoremap <leader>w :w<cr>
