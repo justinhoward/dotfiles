@@ -30,5 +30,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/csv.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'mhartington/nvim-typescript'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-line'
 
 call plug#end()
