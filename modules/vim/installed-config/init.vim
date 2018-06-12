@@ -29,7 +29,7 @@ Plug 'suan/vim-instant-markdown'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/csv.vim'
 Plug 'sheerun/vim-polyglot'
-Plug 'mhartington/nvim-typescript'
+Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 
