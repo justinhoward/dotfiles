@@ -27,18 +27,18 @@ function _sudo_resolve_aliases() {
   shift $((OPTIND-1))
 
   # Expand any aliases of the command (argument $1)
-  result=$(alias "$1" 2> /dev/null)
-  [[ $? -eq 0 ]] && command=($(echo "$result" | head -n1 | sed -e "s/[^=]*=\(.*\)/\1/" -e "s/^'//" -e "s/'$//" )) || command=("$1")
-  shift
+  while result="$(alias "$1" 2> /dev/null)"; do
+    expanded=($(echo "$result" | head -n1 | sed -e "s/[^=]*=\(.*\)/\1/" -e "s/^'//" -e "s/'$//" )) || expanded=("$result")
+    shift
+    set -- "${expanded[@]}" "$@"
+  done
 
   # Remove nocorrect and noglob since those don't work with sudo
-  case "${command[1]}" in
-    nocorrect|noglob)
-      command=("${command[@]:1}")
-      ;;
+  case "$1" in
+    nocorrect|noglob) shift ;;
   esac
 
-  /usr/bin/env sudo "${args[@]}" "${command[@]}" "$@"
+  /usr/bin/env sudo "${args[@]}" "$@"
 }
 
 alias sudo='_sudo_resolve_aliases'
