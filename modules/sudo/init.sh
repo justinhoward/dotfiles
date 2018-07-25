@@ -1,16 +1,10 @@
 dcheck sudo || return
 
 function _sudo_resolve_aliases() {
-  local -a args
+  args=()
 
-  while getopts ':c:C:g:h:p:U:u:-' opt; do
+  while getopts ':c:C:g:h:p:U:u:' opt; do
     case "$opt" in
-      # Catch -- argument and stop parsing
-      # getopts also automatically stops parsing if it encounters a non-option
-      # argument
-      -)
-        break
-        ;;
       # Record all unmatched options and options missing arguments
       \?|:)
         args+=("-$OPTARG")
@@ -28,7 +22,13 @@ function _sudo_resolve_aliases() {
 
   # Expand any aliases of the command (argument $1)
   while result="$(alias "$1" 2> /dev/null)"; do
-    expanded=($(echo "$result" | head -n1 | sed -e "s/[^=]*=\(.*\)/\1/" -e "s/^'//" -e "s/'$//" )) || expanded=("$result")
+    expanded=($(
+      echo "$result" \
+      | head -n1 \
+      | sed -e 's/[^=]*=\(.*\)/\1/' -e "s/^'//" -e "s/'$//" \
+    )) \
+    || expanded=("$result")
+
     shift
     set -- "${expanded[@]}" "$@"
   done
