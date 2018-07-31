@@ -343,6 +343,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "BackSpace",
        function ()
           if naughty.is_suspended() then
+             naughty.destroy_all_notifications()
              naughty.resume()
              naughty.notify({ preset = naughty.config.presets.normal,
                               title = "Notifications Resumed" })
