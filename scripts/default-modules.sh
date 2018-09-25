@@ -1,5 +1,6 @@
 devent_load=(
 	path
+	browser
 	umask
 	language
 	temp
@@ -15,7 +16,6 @@ devent_interactive=(
 	prompt
 	prezto
 	editor
-	browser
 	xdg
 	sudo
 	git
