@@ -13,11 +13,18 @@ nnoremap <leader>E :NERDTreeFind<cr>
 nnoremap <leader>u :UndotreeToggle<cr>
 
 " Git Gutter
-nnoremap <leader>gg :GitGutterToggle<cr>
-nnoremap <leader>gp :GitGutterPreviewHunk<cr>
-nnoremap <leader>gr :GitGutterUndoHunk<cr>
-nnoremap <leader>gs :GitGutterStageHunk<cr>
-nnoremap <leader>gu :GitGutterUndoHunk<cr>
+nmap <leader>gg :GitGutterToggle<cr>
+nmap <leader>gp :GitGutterPreviewHunk<cr>
+nmap <leader>gs :GitGutterStageHunk<cr>
+nmap <leader>gu :GitGutterUndoHunk<cr>
+" Refresh gutter
+nmap <leader>gr :GitGutterAll<cr>
+nmap [g <Plug>GitGutterPrevHunk
+nmap ]g <Plug>GitGutterNextHunk
+omap ig <Plug>GitGutterTextObjectInnerPending
+omap ag <Plug>GitGutterTextObjectOuterPending
+xmap ig <Plug>GitGutterTextObjectInnerVisual
+xmap ag <Plug>GitGutterTextObjectOuterVisual
 
 " Save file
 nnoremap <leader>w :w<cr>
