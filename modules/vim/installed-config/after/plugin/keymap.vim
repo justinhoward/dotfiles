@@ -60,8 +60,8 @@ nnoremap <leader>vi :IndentGuidesToggle<cr>
 " Whitespace
 nnoremap <leader>vw :ToggleList<cr>
 
-" Instant Markdown
-nnoremap <leader>vm :InstantMarkdownPreview<cr>
+" Markdown Preview
+nnoremap <leader>vm :PrevimOpen<cr>
 
 " Quickfix
 nnoremap <leader>fo :copen<cr>
