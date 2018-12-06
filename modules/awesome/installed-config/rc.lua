@@ -356,6 +356,13 @@ globalkeys = gears.table.join(
           end
        end,
        {description = "Toggle notifications", group = "screen"}
+    ),
+
+    awful.key({ modkey, "Mod1" }, "BackSpace",
+       function()
+          naughty.destroy_all_notifications()
+       end,
+       {description = "Dismiss notifications", group = "screen"}
     )
 )
 
