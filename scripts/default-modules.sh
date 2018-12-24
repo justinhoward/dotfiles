@@ -26,6 +26,7 @@ devent_interactive=(
 	aws-cli
 	wdiff
 	fzf
+	fasd
 	rbenv
 	docker
 	composer
