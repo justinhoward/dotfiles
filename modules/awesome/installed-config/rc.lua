@@ -283,8 +283,19 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey, "Shift"   }, "i", function () awful.spawn(browser) end,
+    awful.key({ modkey,           }, "i", function () awful.spawn(browser) end,
               {description = "open an internet browser", group = "launcher"}),
+    awful.key({ modkey, "Shift"   }, "i",
+        function ()
+            if string.find(browser, 'chrome') then
+               awful.spawn(browser .. ' --incognito')
+            elseif browser == 'firefox' then
+               awful.spawn(browser .. ' -private')
+            else
+               naughty.notify({ text = 'browser not found' })
+            end
+        end,
+              {description = "open a chrome incognito window", group = "launcher"}),
     awful.key({ modkey, "Mod1" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
