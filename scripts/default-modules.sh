@@ -22,6 +22,7 @@ devent_interactive=(
 	git-aliases
 	less-colors
 	vim
+	npm
 	nvm
 	aws-cli
 	wdiff
