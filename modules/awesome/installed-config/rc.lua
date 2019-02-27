@@ -386,7 +386,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "Pause", function() awful.util.spawn("slock") end,
               {description = "lock the screen", group = "launcher"}),
 
-    awful.key({ modkey,           }, "BackSpace",
+    awful.key({ modkey, "Mod1" }, "BackSpace",
        function ()
           if naughty.is_suspended() then
              naughty.destroy_all_notifications()
@@ -404,7 +404,7 @@ globalkeys = gears.table.join(
        {description = "Toggle notifications", group = "screen"}
     ),
 
-    awful.key({ modkey, "Mod1" }, "BackSpace",
+    awful.key({ modkey }, "BackSpace",
        function()
           naughty.destroy_all_notifications()
        end,
