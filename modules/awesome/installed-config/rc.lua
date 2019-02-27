@@ -105,8 +105,15 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end}
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+powermenu = {
+   { "restart", "reboot" },
+   { "shut down", "shutdown -h now" }
+}
+
+mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu },
+                                    { "open terminal", terminal },
+                                    { "web browser", browser },
+                                    { "power", powermenu }
                                   }
                         })
 
