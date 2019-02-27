@@ -10,6 +10,9 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+
+local vicious = require("vicious")
+
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -121,6 +124,30 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock("%a %b %e %l:%M %P")
 
+-- Volume Widget
+local function toggle_mute()
+   awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+end
+
+local function change_volume(by)
+   awful.spawn("sh -c 'pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume @DEFAULT_SINK@ " .. by .. "'")
+end
+
+
+volumecontrol = wibox.widget.textbox()
+volumecontrol:buttons(gears.table.join(
+    awful.button({ }, 1, function () toggle_mute() end),
+    awful.button({ }, 3, function () awful.spawn(terminal .. " -e alsamixer") end),
+    awful.button({ }, 4, function () change_volume("+1%") end),
+    awful.button({ }, 5, function () change_volume("-1%") end)
+))
+vicious.register(volumecontrol, vicious.widgets.volume,
+   function (widget, args)
+      local label = {["♫"] = "🔊", ["♩"] = "🔇"}
+      return (" %s %d%% "):format(label[args[2]], args[1])
+   end, 1, "Master"
+)
+
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end),
@@ -219,6 +246,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             -- mykeyboardlayout,
             wibox.widget.systray(),
+            volumecontrol,
             mytextclock,
             s.mylayoutbox,
         },
@@ -374,7 +402,11 @@ globalkeys = gears.table.join(
           naughty.destroy_all_notifications()
        end,
        {description = "Dismiss notifications", group = "screen"}
-    )
+    ),
+
+    awful.key({}, "XF86AudioRaiseVolume", function () change_volume("+2%") end),
+    awful.key({}, "XF86AudioLowerVolume", function () change_volume("-2%") end),
+    awful.key({}, "XF86AudioMute",        function () toggle_mute() end)
 )
 
 clientkeys = gears.table.join(
