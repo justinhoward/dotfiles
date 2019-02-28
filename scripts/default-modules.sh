@@ -44,5 +44,6 @@ devent_xorg=(
 	ssh-agent
 	parcellite
 	xautolock
+	imwheel
 	awesome
 )
