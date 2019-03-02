@@ -32,5 +32,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
+Plug 'takac/vim-hardtime'
 
 call plug#end()
