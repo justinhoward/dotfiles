@@ -28,7 +28,7 @@ devent_interactive=(
 	wdiff
 	fzf
 	fasd
-	rbenv
+	chruby
 	docker
 	composer
 	neomutt
@@ -45,5 +45,8 @@ devent_xorg=(
 	parcellite
 	xautolock
 	imwheel
+)
+
+devent_xorg_exec=(
 	awesome
 )
