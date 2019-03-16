@@ -100,8 +100,8 @@ awesome_menu = {
 }
 
 power_menu = {
-  { 'restart', 'reboot' },
-  { 'shut down', 'shutdown -h now' }
+  { 'restart', 'systemctl reboot -i' },
+  { 'shut down', 'systemctl halt' }
 }
 
 main_menu = {
