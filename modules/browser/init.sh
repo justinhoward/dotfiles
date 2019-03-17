@@ -1,7 +1,7 @@
 browsers=(
+  firefox
   google-chrome
   google-chrome-stable
-  firefox
 )
 
 for browser in "${browsers[@]}"; do

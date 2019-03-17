@@ -316,7 +316,7 @@ globalkeys = gears.table.join(
       if string.find(browser, 'chrome') then
        awful.spawn(browser .. ' --incognito')
       elseif browser == 'firefox' then
-       awful.spawn(browser .. ' -private')
+       awful.spawn(browser .. ' -private-window')
       else
        naughty.notify({ text = 'browser not found' })
       end
