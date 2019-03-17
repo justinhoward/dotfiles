@@ -33,5 +33,6 @@ Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'takac/vim-hardtime'
+Plug 'lambdalisue/suda.vim'
 
 call plug#end()
