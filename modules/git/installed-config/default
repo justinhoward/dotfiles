@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /home/justin/.gitignore-global
+	excludesfile = ~/.gitignore-global
 
 [color "diff"]
 	frag = magenta
