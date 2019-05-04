@@ -104,16 +104,18 @@ power_menu = {
   { 'shut down', 'systemctl halt' }
 }
 
-main_menu = {
+top_menu = {
   { 'awesome', awesome_menu },
   { 'open terminal', terminal },
   { 'web browser', browser },
   { 'power', power_menu }
 }
 
+main_menu = awful.menu{ items = top_menu }
+
 launcher = awful.widget.launcher{
   image = beautiful.awesome_icon,
-  menu = awful.menu{ items = main_menu }
+  menu = main_menu
 }
 
 -- Menubar configuration
@@ -258,7 +260,7 @@ end)
 
 -- Mouse bindings
 root.buttons(gears.table.join(
-  awful.button({}, 3, function () mymainmenu:toggle() end),
+  awful.button({}, 3, function () main_menu:toggle() end),
   awful.button({}, 4, awful.tag.viewnext),
   awful.button({}, 5, awful.tag.viewprev)
 ))
@@ -282,7 +284,7 @@ globalkeys = gears.table.join(
     function () awful.client.focus.byidx(-1) end,
     { description = 'focus previous by index', group = 'client' }
   ),
-  awful.key({ mod_key }, 'w', function () mymainmenu:show() end,
+  awful.key({ mod_key }, 'w', function () main_menu:show() end,
             { description = 'show main menu', group = 'awesome' }),
 
   -- Layout manipulation
