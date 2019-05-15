@@ -1,6 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'mgee/lightline-bufferline'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-surround'
