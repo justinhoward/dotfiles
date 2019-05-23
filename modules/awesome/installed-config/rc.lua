@@ -408,8 +408,8 @@ globalkeys = gears.table.join(
     { description = 'Dismiss notifications', group = 'screen' }
   ),
 
-  awful.key({}, 'XF86AudioRaiseVolume', function () change_volume('+2%') end),
-  awful.key({}, 'XF86AudioLowerVolume', function () change_volume('-2%') end),
+  awful.key({}, 'XF86AudioRaiseVolume', function () change_volume('+4%') end),
+  awful.key({}, 'XF86AudioLowerVolume', function () change_volume('-4%') end),
   awful.key({}, 'XF86AudioMute', function () toggle_mute() end)
 )
 
