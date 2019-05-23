@@ -1,3 +1,3 @@
 dcheck imwheel || return
 
-imwheel -b 45
+imwheel -b 4567
