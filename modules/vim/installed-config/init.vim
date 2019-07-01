@@ -30,11 +30,15 @@ Plug 'justinhoward/fzf-neoyank'
 Plug 'previm/previm'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'chrisbra/csv.vim'
-Plug 'sheerun/vim-polyglot'
 Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'takac/vim-hardtime'
 Plug 'lambdalisue/suda.vim'
+Plug 'ecomba/vim-ruby-refactoring'
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh',
+  \ }
 
 call plug#end()

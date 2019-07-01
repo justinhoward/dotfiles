@@ -74,3 +74,10 @@ nnoremap <leader>fF :cpfile<cr>
 " Find
 nnoremap <leader>s :Ack!<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
+
+" Language Client
+nnoremap <leader>ll :call LanguageClient_contextMenu()<cr>
+nnoremap <leader>li :call LanguageClient_textDocument_hover()<cr>
+nnoremap <leader>ld :call LanguageClient_textDocument_definition()<cr>
+nnoremap <leader>lr :call LanguageClient_textDocument_rename()<cr>
+nnoremap <leader>lu :call LanguageClient_textDocument_references()<cr>
