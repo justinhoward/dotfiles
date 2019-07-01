@@ -8,6 +8,3 @@ set expandtab
 
 " automatic indentation settings
 filetype plugin indent on
-
-" Use unix line endings by default
-set fileformats=unix
