@@ -1,44 +1,70 @@
 call plug#begin('~/.vim/plugged')
 
+" Git tools
 Plug 'tpope/vim-fugitive'
+" GitHub extension for fugitive
 Plug 'tpope/vim-rhubarb'
+" Buffer tabs for lightline
 Plug 'mgee/lightline-bufferline'
+" Status line formatting
 Plug 'itchyny/lightline.vim'
+" Automatic quoting and unquoting
 Plug 'tpope/vim-surround'
+" Commment/uncomment
 Plug 'scrooloose/nerdcommenter'
+" Project-local vimrc files
 Plug 'embear/vim-localvimrc'
+" Syntax for any language
 Plug 'sheerun/vim-polyglot'
+" Detect indentation
 Plug 'tpope/vim-sleuth'
+" Read editorconfig files
 Plug 'editorconfig/editorconfig-vim'
+" Remove trailing whitespace with a command
 Plug 'bronson/vim-trailing-whitespace'
+" Show vertical indent guides
 Plug 'nathanaelkane/vim-indent-guides'
+" Search in vim with ack/ag
 Plug 'mileszs/ack.vim'
+" File browser
 Plug 'scrooloose/nerdtree'
-Plug 'mbbill/undotree'
-Plug 'airblade/vim-gitgutter'
+" Show git status in nerdtree
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" Undo tree browser
+Plug 'mbbill/undotree'
+" Git status in the gutter and hunk editing
+Plug 'airblade/vim-gitgutter'
+" Fuzzy search for files and more
 Plug 'junegunn/fzf'
+" Linting etc.
 Plug 'w0rp/ale'
+" Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Repeat (.) support for plugins
 Plug 'tpope/vim-repeat'
+" Generate tag files automatically
 Plug 'ludovicchabant/vim-gutentags'
+" Snippet support
 Plug 'shougo/neosnippet.vim'
+" Common snippets
 Plug 'shougo/neosnippet-snippets'
+" Context-aware split/join
 Plug 'andrewradev/splitjoin.vim'
+" Save yank history
 Plug 'Shougo/neoyank.vim'
+" Search neoyank with FZF
 Plug 'justinhoward/fzf-neoyank'
+" Preview markdown files in browser
 Plug 'previm/previm'
+" textobj for indentation
 Plug 'michaeljsmith/vim-indent-object'
+" Fancy CSV formatting
 Plug 'chrisbra/csv.vim'
-Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
+" Define your own textobj
 Plug 'kana/vim-textobj-user'
+" textobj for current line
 Plug 'kana/vim-textobj-line'
-Plug 'takac/vim-hardtime'
+" sudo workaround until https://github.com/neovim/neovim/issues/1496 is resolved
 Plug 'lambdalisue/suda.vim'
-Plug 'ecomba/vim-ruby-refactoring'
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh',
-  \ }
 
 call plug#end()
