@@ -14,6 +14,10 @@ if dcheck ruby && dcheck gem; then
     PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
+if [[ -d "$HOME/.local/bin" ]]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 if [[ -d "$HOME/bin" ]]; then
     PATH="$HOME/bin:$PATH"
 fi
