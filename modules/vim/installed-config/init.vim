@@ -67,6 +67,7 @@ Plug 'kana/vim-textobj-line'
 " sudo workaround until https://github.com/neovim/neovim/issues/1496 is resolved
 Plug 'lambdalisue/suda.vim'
 " Language server support
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'natebosch/vim-lsc'
 
 call plug#end()
