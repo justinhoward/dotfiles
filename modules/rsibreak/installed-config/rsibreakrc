@@ -1,0 +1,33 @@
+[General]
+AutoStart=true
+
+[General Settings]
+BigDuration=3
+BigInterval=60
+BigThreshold=5
+DisableAccel=false
+Effect=0
+ExpandImageToFullScreen=true
+Graylevel=80
+HideLockButton=false
+HideMinimizeButton=false
+HidePostponeButton=false
+ImageFolder=/home/justin
+Patience=30
+PostponeBreakDuration=5
+SearchRecursiveCheck=false
+ShowSmallImagesCheck=true
+SlideInterval=10
+TinyDuration=30
+TinyInterval=10
+TinyThreshold=40
+UseNoIdleTimer=false
+UsePlasmaReadOnly=true
+
+[Popup Settings]
+UseFlash=true
+UsePopup=true
+
+[SetupDimensions]
+Height 1080=528
+Width 1920=489
