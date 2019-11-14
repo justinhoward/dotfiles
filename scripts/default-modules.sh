@@ -42,9 +42,10 @@ devent_xorg=(
 	xdg
 	gnome-keyring
 	ssh-agent
-	parcellite
 	xautolock
 	imwheel
+	parcellite
+	rsibreak
 )
 
 devent_xorg_exec=(
