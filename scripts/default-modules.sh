@@ -32,6 +32,7 @@ devent_interactive=(
 	docker
 	composer
 	neomutt
+	ssh-agent
 )
 
 devent_xorg=(
@@ -41,7 +42,6 @@ devent_xorg=(
 	set-cursor
 	xdg
 	gnome-keyring
-	ssh-agent
 	xautolock
 	imwheel
 	parcellite
