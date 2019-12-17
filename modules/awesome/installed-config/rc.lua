@@ -641,4 +641,4 @@ client.connect_signal('focus', function(c) c.border_color = beautiful.border_foc
 client.connect_signal('unfocus', function(c) c.border_color = beautiful.border_normal end)
 
 -- Launch startup applications
-awful.spawn('dex -a')
+awful.spawn('dex -ae Awesome')
