@@ -81,3 +81,13 @@ nnoremap <leader>ld :LSClientGoToDefinition<cr>
 nnoremap <leader>lr :LSClientRename<cr>
 nnoremap <leader>lu :LSClientFindReferences<cr>
 nnoremap <leader>lu :LSClientDocumentSymbol<cr>
+
+" Asterisk
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
