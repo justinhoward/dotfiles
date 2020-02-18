@@ -5,6 +5,9 @@ dcheck zstyle && zstyle -s ':prezto:module:git:log:cherry' format '_git_log_cher
 alias glp='git log --topo-order --stat --patch --full-diff --pretty=format:"${_git_log_medium_format}"'
 alias glf='git log --topo-order --name-status --pretty=format:${_git_log_medium_format}'
 alias gld='git log --left-right --cherry-mark --no-merges --topo-order --pretty=format:${_git_log_cherry_format}'
+# changelog
+alias glcL='git log --merges --first-parent --pretty=format:${_git_log_medium_format}'
+alias glcl='glcL --reverse "$(git describe --tags --abbrev=0)"..'
 
 # Tag (t)
 alias gt='git tag --sort v:refname'
