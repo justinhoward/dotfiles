@@ -10,13 +10,12 @@ alias glcL='git-changelog'
 alias glcl='git-changelog "$(git describe --tags --abbrev=0).."'
 
 function git-changelog() {
-  ref="${1:-HEAD}"
   while read -r rev; do
     printf '\e[1;30m-\e[0m %s \e[33m%s\e[0m \e[34m%s\e[0m\n' \
       "$(git --no-pager show -s --pretty="format:%b" "$rev" | head -n1)" \
       "$(git --no-pager show -s --pretty="format:%s" "$rev" | grep --color=never -Po '#\d+')" \
       "$(git --no-pager show -s --pretty="format:%aN" "$rev")"
-  done < <(git rev-list --merges --first-parent --reverse "$ref")
+  done < <(git rev-list --merges --first-parent --reverse "$@")
 }
 
 # Tag (t)
