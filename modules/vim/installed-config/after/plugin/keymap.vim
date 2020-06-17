@@ -76,11 +76,12 @@ nnoremap <leader>s :Ack!<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
 
 " Language Client
-nnoremap <leader>li :LSClientShowHover<cr>
-nnoremap <leader>ld :LSClientGoToDefinition<cr>
-nnoremap <leader>lr :LSClientRename<cr>
-nnoremap <leader>lu :LSClientFindReferences<cr>
-nnoremap <leader>lu :LSClientDocumentSymbol<cr>
+nnoremap <leader>ii :ALEHover<cr>
+nnoremap <leader>id :ALEGoToDefinition<cr>
+nnoremap <leader>it :ALEGoToTypeDefinition<cr>
+nnoremap <leader>ir :ALERename<cr>
+nnoremap <leader>if :ALEFindReferences<cr>
+nnoremap <leader>ic :ALEDocumentation<cr>
 
 " Asterisk
 map *   <Plug>(asterisk-*)
