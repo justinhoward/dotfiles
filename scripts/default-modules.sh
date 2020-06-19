@@ -28,6 +28,7 @@ devent_interactive=(
 	wdiff
 	fzf
 	fasd
+	ruby
 	chruby
 	docker
 	composer
