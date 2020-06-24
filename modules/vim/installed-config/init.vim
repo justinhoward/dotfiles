@@ -68,7 +68,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'lambdalisue/suda.vim'
 " Language server support
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'natebosch/vim-lsc'
+" Plug 'natebosch/vim-lsc'
 " Better * navigation
 Plug 'haya14busa/vim-asterisk'
 

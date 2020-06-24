@@ -83,6 +83,13 @@ nnoremap <leader>ir :ALERename<cr>
 nnoremap <leader>if :ALEFindReferences<cr>
 nnoremap <leader>ic :ALEDocumentation<cr>
 
+" Linting
+nnoremap <leader>cj :ALENext<cr>
+nnoremap <leader>ck :ALEPrevious<cr>
+nnoremap <leader>cg :ALEFirst<cr>
+nnoremap <leader>cG :ALELast<cr>
+nnoremap <leader>cf :ALEFix<cr>
+
 " Asterisk
 map *   <Plug>(asterisk-*)
 map #   <Plug>(asterisk-#)
