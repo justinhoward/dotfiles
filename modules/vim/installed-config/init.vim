@@ -36,6 +36,8 @@ Plug 'mbbill/undotree'
 Plug 'airblade/vim-gitgutter'
 " Fuzzy search for files and more
 Plug 'junegunn/fzf'
+" FZF sources for vim
+Plug 'junegunn/fzf.vim'
 " Linting etc.
 Plug 'w0rp/ale'
 " Autocomplete
