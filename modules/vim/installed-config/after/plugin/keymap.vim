@@ -76,12 +76,44 @@ nnoremap <leader>s :Ack!<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
 
 " Language Client
-nnoremap <leader>ii :ALEHover<cr>
-nnoremap <leader>id :ALEGoToDefinition<cr>
-nnoremap <leader>it :ALEGoToTypeDefinition<cr>
-nnoremap <leader>ir :ALERename<cr>
-nnoremap <leader>if :ALEFindReferences<cr>
-nnoremap <leader>ic :ALEDocumentation<cr>
+" nnoremap <leader>ii :ALEHover<cr>
+" nnoremap <leader>id :ALEGoToDefinition<cr>
+" nnoremap <leader>it :ALEGoToTypeDefinition<cr>
+" nnoremap <leader>ir :ALERename<cr>
+" nnoremap <leader>if :ALEFindReferences<cr>
+" nnoremap <leader>ic :ALEDocumentation<cr>
+
+" coc GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Map function and class text objects
+" Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " Linting
 nnoremap <leader>cj :ALENext<cr>
@@ -89,6 +121,7 @@ nnoremap <leader>ck :ALEPrevious<cr>
 nnoremap <leader>cg :ALEFirst<cr>
 nnoremap <leader>cG :ALELast<cr>
 nnoremap <leader>cf :ALEFix<cr>
+nnoremap <leader>rn <Plug>(coc-rename)
 
 " Asterisk
 map *   <Plug>(asterisk-*)

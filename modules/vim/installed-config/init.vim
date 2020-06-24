@@ -39,7 +39,8 @@ Plug 'junegunn/fzf'
 " Linting etc.
 Plug 'w0rp/ale'
 " Autocomplete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Repeat (.) support for plugins
 Plug 'tpope/vim-repeat'
 " Generate tag files automatically

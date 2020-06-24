@@ -2,9 +2,9 @@ let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 
 let g:ale_linters = {
-  \ 'typescript': ['eslint', 'tslint', 'tsserver'],
-  \ 'ruby': ['ruby', 'rubocop', 'solargraph', 'brakeman'],
-  \ 'rust': ['rls', 'cargo']
+  \ 'typescript': ['eslint', 'tslint'],
+  \ 'ruby': ['ruby', 'rubocop', 'brakeman'],
+  \ 'rust': ['cargo']
 \ }
 
 let g:ale_fixers = {
