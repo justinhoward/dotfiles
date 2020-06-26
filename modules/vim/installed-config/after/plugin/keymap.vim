@@ -83,6 +83,9 @@ nnoremap <leader>/ :nohlsearch<cr>
 " nnoremap <leader>if :ALEFindReferences<cr>
 " nnoremap <leader>ic :ALEDocumentation<cr>
 
+" coc trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
 " coc GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
