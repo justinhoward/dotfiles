@@ -34,6 +34,14 @@ devent_interactive=(
 	composer
 	neomutt
 	ssh-agent
+	osx-gnu
+)
+
+devent_xorg=(
+	screen-layout
+	key-rate
+	set-background
+	set-cursor
 )
 
 devent_xorg=(
