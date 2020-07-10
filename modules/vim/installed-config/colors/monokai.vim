@@ -144,6 +144,7 @@ call s:h("Directory",     { "fg": s:aqua })
 " diff
 call s:h("DiffAdd",       { "fg": s:addfg,      "bg": s:addbg })
 call s:h("DiffDelete",    { "fg": s:black,      "bg": s:delbg })
+call s:h("DiffRemoved",   { "fg": s:black,      "bg": s:delbg })
 call s:h("DiffChange",    { "fg": s:changefg,   "bg": s:changebg })
 call s:h("DiffText",      { "fg": s:black,      "bg": s:aqua })
 

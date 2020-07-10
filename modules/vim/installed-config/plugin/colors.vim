@@ -3,6 +3,7 @@ syntax enable
 
 " Turn on full color support in the terminal
 set termguicolors
+set t_Co=256
 
 " set color scheme from colors directory
 colorscheme monokai
