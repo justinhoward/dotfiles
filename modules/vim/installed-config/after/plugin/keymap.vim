@@ -30,8 +30,9 @@ xmap ag <Plug>GitGutterTextObjectOuterVisual
 nnoremap <leader>w :w<cr>
 
 " FZF
-nnoremap <leader>p :FZF<cr>
+nnoremap <leader>p :Files<cr>
 nnoremap <leader>] :Tags<cr>
+nnoremap <leader>[ :BTags<cr>
 nnoremap <leader>y :FZFNeoyank<cr>
 nnoremap <leader>Y :FZFNeoyank " P<cr>
 vnoremap <leader>y :FZFNeoyankSelection<cr>
