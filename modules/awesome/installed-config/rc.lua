@@ -148,8 +148,17 @@ vicious.register(
   volume_widget,
   vicious.widgets.volume,
    function (widget, args)
-      local label = { ['♫'] = '🔊', ['♩'] = '🔇' }
-      return (' %s %d%% '):format(label[args[2]], args[1])
+     local label
+     if args[2] == '🔈' then
+       label = '🔇'
+     elseif args[1] < 33 then
+       label = '🔈'
+     elseif args[1] < 66 then
+       label = '🔉'
+     else
+       label = '🔊'
+     end
+     return (' %s %d%% '):format(label, args[1])
    end,
    1,
    'Master'
