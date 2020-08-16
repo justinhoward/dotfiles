@@ -14,6 +14,11 @@ if dcheck ruby && dcheck gem; then
     PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
+# Rust cargo bin
+if [[ -d "$HOME/.cargo/bin" ]]; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 if [[ -d "$HOME/.local/bin" ]]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
