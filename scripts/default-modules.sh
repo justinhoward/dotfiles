@@ -35,6 +35,7 @@ devent_interactive=(
 	neomutt
 	ssh-agent
 	osx-gnu
+	dstask
 )
 
 devent_xorg=(
