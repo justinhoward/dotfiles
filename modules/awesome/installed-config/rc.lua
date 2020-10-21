@@ -419,7 +419,10 @@ globalkeys = gears.table.join(
 
   awful.key({}, 'XF86AudioRaiseVolume', function () change_volume('+4%') end),
   awful.key({}, 'XF86AudioLowerVolume', function () change_volume('-4%') end),
-  awful.key({}, 'XF86AudioMute', function () toggle_mute() end)
+  awful.key({}, 'XF86AudioMute', function () toggle_mute() end),
+
+  awful.key({ 'Mod1' }, 'XF86AudioMute', function() awful.util.spawn('zoom-toggle-mute') end,
+            { description = 'Toggle Zoom Meeting Mute', group = 'launcher' })
 )
 
 clientkeys = gears.table.join(
