@@ -1,5 +1,6 @@
 [core]
 	excludesfile = ~/.gitignore-global
+  pager = delta
 
 [color "diff"]
 	frag = magenta
@@ -20,9 +21,13 @@
 
 [diff]
   tool = nvimdiff
+  colorMoved = default
 
 [difftool]
   prompt = false
 
 [difftool "nvimdiff"]
   cmd = nvim -d $LOCAL $MERGED
+
+[delta]
+  line-numbers = true
