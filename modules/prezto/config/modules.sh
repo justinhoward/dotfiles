@@ -12,7 +12,6 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'directory' \
   'spectrum' \
-  'utility' \
   'completion' \
   'git' \
   'node' \
