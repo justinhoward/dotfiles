@@ -69,10 +69,9 @@ Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 " sudo workaround until https://github.com/neovim/neovim/issues/1496 is resolved
 Plug 'lambdalisue/suda.vim'
-" Language server support
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-" Plug 'natebosch/vim-lsc'
 " Better * navigation
 Plug 'haya14busa/vim-asterisk'
+" Run .http files with the dot-http command and http syntax
+Plug 'bayne/vim-dot-http'
 
 call plug#end()
