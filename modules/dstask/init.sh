@@ -1,5 +1,6 @@
 alias t='dstask'
 alias ta='t add'
+alias tl='t log'
 alias to='t open'
 alias tm='t modify'
 alias te='t edit'
