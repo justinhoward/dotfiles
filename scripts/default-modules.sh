@@ -36,6 +36,7 @@ devent_interactive=(
 	ssh-agent
 	osx-gnu
 	dstask
+  markdownlint
 )
 
 devent_xorg=(

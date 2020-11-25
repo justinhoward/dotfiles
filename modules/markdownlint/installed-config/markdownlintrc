@@ -1,0 +1,8 @@
+# vim: ft=toml
+default = true
+[MD003]
+  style = "setext_with_atx"
+[MD005]
+  style = "sublist"
+[MD026]
+  punctuation = ".,;:"
