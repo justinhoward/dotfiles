@@ -12,6 +12,9 @@ nnoremap <leader>E :NERDTreeFind<cr>
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
 
+" Tagbar
+nnoremap <leader>t :TagbarToggle<cr>
+
 " Git Gutter
 nmap <leader>gg :GitGutterToggle<cr>
 nmap <leader>gp :GitGutterPreviewHunk<cr>

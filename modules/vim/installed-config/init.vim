@@ -32,6 +32,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 " Undo tree browser
 Plug 'mbbill/undotree'
+" Tag browser
+Plug 'majutsushi/tagbar'
 " Git status in the gutter and hunk editing
 Plug 'airblade/vim-gitgutter'
 " Fuzzy search for files and more
