@@ -13,7 +13,7 @@ if !has("gui_running") && &t_Co < 256
 endif
 
 if ! exists("g:monokai_gui_italic")
-    let g:monokai_gui_italic = 1
+    let g:monokai_gui_italic = 0
 endif
 
 if ! exists("g:monokai_term_italic")
@@ -92,7 +92,8 @@ let s:darkred     = { "gui": "#5f0000", "cterm": "52" }
 
 let s:addfg       = { "gui": "#d7ffaf", "cterm": "193" }
 let s:addbg       = { "gui": "#5f875f", "cterm": "65" }
-let s:delbg       = { "gui": "#f75f5f", "cterm": "167" }
+let s:delfg       = { "gui": "#ff8b8b", "cterm": "210" }
+let s:delbg       = { "gui": "#f75f5f", "cterm": "124" }
 let s:changefg    = { "gui": "#d7d7ff", "cterm": "189" }
 let s:changebg    = { "gui": "#5f5f87", "cterm": "60" }
 
@@ -114,9 +115,6 @@ call s:h("Cursor",        { "fg": s:black,      "bg": s:white })
 call s:h("CursorColumn",  {                     "bg": s:lightblack2 })
 call s:h("CursorLine",    {                     "bg": s:lightblack2 })
 call s:h("NonText",       { "fg": s:lightgrey })
-call s:h("StatusLine",    { "fg": s:warmgrey,   "bg": s:black,        "format": "reverse" })
-call s:h("StatusLineNC",  { "fg": s:darkgrey,   "bg": s:warmgrey,     "format": "reverse" })
-call s:h("TabLine",       { "fg": s:white,      "bg": s:darkblack,    "format": "reverse" })
 call s:h("Visual",        {                     "bg": s:lightgrey })
 call s:h("Search",        { "fg": s:black,      "bg": s:yellow })
 call s:h("MatchParen",    { "fg": s:purple,                           "format": "underline,bold" })
@@ -129,6 +127,17 @@ call s:h("VertSplit",     { "fg": s:darkgrey,   "bg": s:darkblack })
 call s:h("LineNr",        { "fg": s:grey,       "bg": s:lightblack })
 call s:h("CursorLineNr",  { "fg": s:orange,     "bg": s:lightblack })
 call s:h("SignColumn",    {                     "bg": s:lightblack })
+
+" statusline
+call s:h("StatusLine",    { "fg": s:black,      "bg": s:lightgrey })
+call s:h("StatusLineNC",  { "fg": s:lightgrey,  "bg": s:black })
+call s:h("TabLine",       { "fg": s:lightgrey,  "bg": s:lightblack })
+call s:h("TabLineSel",    { "fg": s:darkblack,  "bg": s:warmgrey,     "format": "bold" })
+call s:h("TabLineFill",   { "bg": s:lightblack })
+call s:h("User1",         { "fg": s:yellow,     "bg": s:lightgrey,    "format": "bold" })
+call s:h("User2",         { "fg": s:orange,     "bg": s:lightgrey,    "format": "bold" })
+call s:h("User3",         { "fg": s:purple,     "bg": s:lightgrey,    "format": "bold" })
+call s:h("User4",         { "fg": s:aqua,       "bg": s:lightgrey,    "format": "bold" })
 
 " spell
 call s:h("SpellBad",      { "fg": s:red,                              "format": "underline" })
@@ -143,8 +152,7 @@ call s:h("Directory",     { "fg": s:aqua })
 
 " diff
 call s:h("DiffAdd",       { "fg": s:addfg,      "bg": s:addbg })
-call s:h("DiffDelete",    { "fg": s:black,      "bg": s:delbg })
-call s:h("DiffRemoved",   { "fg": s:black,      "bg": s:delbg })
+call s:h("DiffDelete",    { "fg": s:delfg,      "bg": s:delbg })
 call s:h("DiffChange",    { "fg": s:changefg,   "bg": s:changebg })
 call s:h("DiffText",      { "fg": s:black,      "bg": s:aqua })
 
@@ -262,7 +270,6 @@ call s:h("jsPrototype",         { "fg": s:aqua })
 call s:h("jsExceptions",        { "fg": s:aqua })
 call s:h("jsFutureKeys",        { "fg": s:aqua })
 call s:h("jsBuiltins",          { "fg": s:aqua })
-call s:h("jsArgsObj",           { "fg": s:aqua })
 call s:h("jsStatic",            { "fg": s:aqua })
 call s:h("jsSuper",             { "fg": s:orange, "format": "italic" })
 call s:h("jsFuncArgRest",       { "fg": s:purple, "format": "italic" })                                 
@@ -357,6 +364,17 @@ call s:h("cssURL",              { "fg": s:orange, "format": "underline,italic" }
 " LESS
 call s:h("lessVariable",        { "fg": s:green })
 
+" SASS
+call s:h("sassMixing",          { "fg": s:aqua })
+call s:h("sassMixin",           { "fg": s:aqua })
+call s:h("sassFunctionDecl",    { "fg": s:aqua })
+call s:h("sassReturn",          { "fg": s:aqua })
+call s:h("sassClass",           { "fg": s:green })
+call s:h("sassClassChar",       { "fg": s:pink })
+call s:h("sassIdChar",          { "fg": s:pink })
+call s:h("sassControl",         { "fg": s:aqua })
+call s:h("sassFor",             { "fg": s:aqua })
+
 " ruby
 call s:h("rubyInterpolationDelimiter",  {})
 call s:h("rubyInstanceVariable",        {})
@@ -394,6 +412,19 @@ call s:h("cStorageClass",               { "fg": s:pink })
 call s:h("cInclude",                    { "fg": s:pink })
 call s:h("cDefine",                     { "fg": s:pink })
 call s:h("cSpecial",                    { "fg": s:purple })
+
+" Markdown
+call s:h("markdownCode",       { "fg": s:purple, "format": "italic" } )
+call s:h("markdownListMarker", { "fg": s:purple                     } )
+
+" vim-notes
+call s:h("notesTitle",        { "fg": s:aqua,        "format": "bold"        } )
+call s:h("notesAtxMarker",    { "fg": s:pink,        "format": "italic,bold" } )
+call s:h("notesShortHeading", { "fg": s:white,       "format": "bold"        } )
+call s:h("notesListBullet",   { "fg": s:purple                               } )
+call s:h("notesListNumber",   { "fg": s:purple,      "format": "italic"      } )
+call s:h("notesBold",         {                      "format": "bold"        } )
+call s:h("notesDoneMarker",   { "fg": s:green                                } )
 
 " Terminal Colors
 " ---------------
