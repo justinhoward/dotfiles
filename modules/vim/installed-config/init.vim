@@ -1,5 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
+" Monokai Color Scheme
+Plug 'crusoexia/vim-monokai'
 " Git tools
 Plug 'tpope/vim-fugitive'
 " GitHub extension for fugitive
@@ -75,5 +77,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'haya14busa/vim-asterisk'
 " Run .http files with the dot-http command and http syntax
 Plug 'bayne/vim-dot-http'
+" Inline git blame
+Plug 'APZelos/blamer.nvim'
 
 call plug#end()
