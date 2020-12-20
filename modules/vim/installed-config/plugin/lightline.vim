@@ -16,17 +16,23 @@ function! LightlineFileencoding()
   return &fileencoding ==# 'utf-8' ? '' : &fileencoding
 endfunction
 
+function! LightlineGitBlame() abort
+  let blame = get(b:, 'coc_git_blame', '')
+  return winwidth(0) > 120 ? blame : ''
+endfunction
+
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'active': {
   \   'left': [
   \     ['mode', 'paste'],
-  \     ['gitbranch', 'filename', 'readonly']
+  \     ['gitbranch', 'filename', 'readonly'],
   \   ],
   \   'right': [
   \     ['lineinfo'],
   \     ['percent'],
-  \     ['fileformat', 'fileencoding', 'filetype']
+  \     ['fileformat', 'fileencoding', 'filetype'],
+  \     ['blame']
   \   ]
   \ },
   \ 'inactive': {
@@ -42,6 +48,7 @@ let g:lightline = {
   \   'right': []
   \ },
   \ 'component_function': {
+  \   'blame': 'LightlineGitBlame',
   \   'gitbranch': 'fugitive#head',
   \   'filename': 'LightlineFilename',
   \   'filetype': 'LightlineFiletype',

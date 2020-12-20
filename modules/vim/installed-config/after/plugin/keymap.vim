@@ -123,7 +123,7 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Linting
+" Linting (c=check)
 nnoremap <leader>cj :ALENext<cr>
 nnoremap <leader>ck :ALEPrevious<cr>
 nnoremap <leader>cg :ALEFirst<cr>
