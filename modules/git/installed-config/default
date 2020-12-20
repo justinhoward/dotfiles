@@ -31,3 +31,7 @@
 
 [delta]
   line-numbers = true
+
+  # Delta defaults to a triple dot character which isn't currently
+  # supported by the Hack font
+  line-numbers-left-format = {nm:^4}:
