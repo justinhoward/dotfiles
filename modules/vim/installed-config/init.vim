@@ -47,6 +47,8 @@ Plug 'w0rp/ale'
 " Autocomplete
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" FZF finder for COC
+Plug 'antoinemadec/coc-fzf'
 " Repeat (.) support for plugins
 Plug 'tpope/vim-repeat'
 " Generate tag files automatically
@@ -77,5 +79,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'haya14busa/vim-asterisk'
 " Run .http files with the dot-http command and http syntax
 Plug 'bayne/vim-dot-http'
+" Better buffer delete commands
+Plug 'moll/vim-bbye'
 
 call plug#end()

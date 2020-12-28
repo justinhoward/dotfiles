@@ -1,9 +1,22 @@
-" map <leader> hjkl to move between windows
-nnoremap <leader>h <C-w><C-h>
-nnoremap <leader>j <C-w><C-j>
-nnoremap <leader>k <C-w><C-k>
-nnoremap <leader>l <C-w><C-l>
-nnoremap <leader>x :bdelete<cr>
+" Move between windows with alt hjkl from any mode
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+
+" Delete current buffer normally (removes splits)
+nnoremap <A-x> :bdelete<cr>
+
+" Delete current buffer with bbye
+nnoremap <leader>x :Bdelete<cr>
 
 " NERD Tree
 nnoremap <leader>e :NERDTreeToggle<cr>
@@ -129,7 +142,10 @@ nnoremap <leader>ck :ALEPrevious<cr>
 nnoremap <leader>cg :ALEFirst<cr>
 nnoremap <leader>cG :ALELast<cr>
 nnoremap <leader>cf :ALEFix<cr>
-nnoremap <leader>rn <Plug>(coc-rename)
+
+" Refactor
+nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>rf <Plug>(coc-refactor)
 
 " Asterisk
 map *   <Plug>(asterisk-*)
