@@ -33,5 +33,5 @@
   line-numbers = true
 
   # Delta defaults to a triple dot character which isn't currently
-  # supported by the Hack font
-  line-numbers-left-format = {nm:^4}:
+  # supported by the Hack font, and termite doesn't use fallbacks correctly
+  # line-numbers-left-format = {nm:^4}:
