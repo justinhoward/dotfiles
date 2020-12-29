@@ -1,3 +1,1 @@
-if [[ "$dotfiles_platform" == 'osx' ]]; then
-  dsymlink modules/kitty/rc ~/.config/kitty
-fi
+dsymlink modules/kitty/rc ~/.config/kitty
