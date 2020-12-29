@@ -156,3 +156,14 @@ map z*  <Plug>(asterisk-z*)
 map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
+
+" Folding
+function! s:toggle_fold_method()
+  if &foldmethod ==# 'manual'
+    set foldmethod=syntax
+  else
+    set foldmethod=manual
+  endif
+endfunction
+
+nmap <silent> <leader>z :call <SID>toggle_fold_method()<cr>

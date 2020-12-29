@@ -1,2 +1,2 @@
-set foldmethod=syntax
-set nofoldenable
+set foldmethod=manual
+set foldenable
