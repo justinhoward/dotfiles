@@ -82,12 +82,12 @@ nnoremap <leader>vw :ToggleList<cr>
 nnoremap <leader>vm :PrevimOpen<cr>
 
 " Quickfix
-nnoremap <leader>fo :copen<cr>
-nnoremap <leader>fc :cclose<cr>
-nnoremap <leader>fn :cnext<cr>
-nnoremap <leader>fp :cprevious<cr>
-nnoremap <leader>ff :cnfile<cr>
-nnoremap <leader>fF :cpfile<cr>
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cc :cclose<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprevious<cr>
+nnoremap <leader>cf :cnfile<cr>
+nnoremap <leader>cF :cpfile<cr>
 
 " Find
 nnoremap <leader>s :Rg<c-space>
@@ -136,12 +136,12 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Linting (c=check)
-nnoremap <leader>cj :ALENext<cr>
-nnoremap <leader>ck :ALEPrevious<cr>
-nnoremap <leader>cg :ALEFirst<cr>
-nnoremap <leader>cG :ALELast<cr>
-nnoremap <leader>cf :ALEFix<cr>
+" Linting (f=fix)
+nnoremap <leader>fn :ALENext<cr>
+nnoremap <leader>fp :ALEPrevious<cr>
+nnoremap <leader>fg :ALEFirst<cr>
+nnoremap <leader>fG :ALELast<cr>
+nnoremap <leader>ff :ALEFix<cr>
 
 " Refactor/Reformat
 nmap <leader>rn <Plug>(coc-rename)
