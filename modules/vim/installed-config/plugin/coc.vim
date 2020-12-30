@@ -7,7 +7,8 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver',
   \ 'coc-solargraph',
   \ 'coc-rust-analyzer',
-  \ 'coc-json'
+  \ 'coc-json',
+  \ 'coc-highlight'
   \ ]
 
 " Highlight the symbol and its references when holding the cursor.
