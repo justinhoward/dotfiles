@@ -167,14 +167,18 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
 endif
 
 " Asterisk
-map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
-map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
-map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
-map z#  <Plug>(asterisk-z#)
-map gz# <Plug>(asterisk-gz#)
+" We reverse the mappings so that the z (stay) commands
+" are the default, and we can use z to have the default
+" vim behavior
+map *   <Plug>(asterisk-z*)
+map #   <Plug>(asterisk-z#)
+map g*  <Plug>(asterisk-gz*)
+map g#  <Plug>(asterisk-gz#)
+
+map z*  <Plug>(asterisk-*)
+map z#  <Plug>(asterisk-#)
+map gz* <Plug>(asterisk-g*)
+map gz# <Plug>(asterisk-g#)
 
 " Folding
 function! s:toggle_fold_method()
