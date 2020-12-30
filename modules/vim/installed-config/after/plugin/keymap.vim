@@ -82,12 +82,12 @@ nnoremap <leader>vw :ToggleList<cr>
 nnoremap <leader>vm :PrevimOpen<cr>
 
 " Quickfix
-nnoremap <leader>co :copen<cr>
-nnoremap <leader>cc :cclose<cr>
-nnoremap <leader>cn :cnext<cr>
-nnoremap <leader>cp :cprevious<cr>
-nnoremap <leader>cf :cnfile<cr>
-nnoremap <leader>cF :cpfile<cr>
+nnoremap <leader>qo :copen<cr>
+nnoremap <leader>qc :cclose<cr>
+nnoremap <leader>qn :cnext<cr>
+nnoremap <leader>qp :cprevious<cr>
+nnoremap <leader>qf :cnfile<cr>
+nnoremap <leader>qF :cpfile<cr>
 
 " Find
 nnoremap <leader>s :Rg<c-space>
