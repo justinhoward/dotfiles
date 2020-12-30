@@ -26,8 +26,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'bronson/vim-trailing-whitespace'
 " Show vertical indent guides
 Plug 'nathanaelkane/vim-indent-guides'
-" Search in vim with ack/ag
-Plug 'mileszs/ack.vim'
+" Search in vim with ripgrep
+Plug 'jremmen/vim-ripgrep'
 " File browser
 Plug 'scrooloose/nerdtree'
 " Show git status in nerdtree

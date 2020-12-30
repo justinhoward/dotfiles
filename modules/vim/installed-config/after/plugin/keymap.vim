@@ -90,7 +90,7 @@ nnoremap <leader>ff :cnfile<cr>
 nnoremap <leader>fF :cpfile<cr>
 
 " Find
-nnoremap <leader>s :Ack!<c-space>
+nnoremap <leader>s :Rg<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
 
 " Language Client
