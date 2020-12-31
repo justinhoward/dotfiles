@@ -16,7 +16,7 @@ fi
 
 # Ruby gems
 if dcheck ruby && dcheck gem; then
-  PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+  PATH="$(ruby -e 'puts Gem.paths.path.map { |p| "#{p}/bin" }.join(":")'):$PATH"
 fi
 
 # Rust cargo bin
