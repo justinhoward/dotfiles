@@ -5,7 +5,8 @@
 (
   echo "Updating dotfiles core"
   cd "$DOTFILES_PATH"
-  git pull
+  git fetch
+  git merge
 )
 
 source "$DOTFILES_PATH"/scripts/load.sh
