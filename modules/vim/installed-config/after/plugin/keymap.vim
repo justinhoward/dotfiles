@@ -121,6 +121,7 @@ nnoremap <leader>qF :cpfile<cr>
 
 " Find
 nnoremap <leader>s :Rg<c-space>
+nnoremap <leader>S :Rg -u<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
 
 " Language Client
