@@ -44,14 +44,8 @@ devent_xorg=(
 	key-rate
 	set-background
 	set-cursor
-)
-
-devent_xorg=(
-	screen-layout
-	key-rate
-	set-background
-	set-cursor
 	xdg
+	xsettingsd
 	gnome-keyring
 	xautolock
 	imwheel
