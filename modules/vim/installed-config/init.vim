@@ -81,5 +81,7 @@ Plug 'haya14busa/vim-asterisk'
 Plug 'bayne/vim-dot-http'
 " Better buffer delete commands
 Plug 'moll/vim-bbye'
+" Toggling automatic substitutions
+Plug 'AndrewRadev/switch.vim'
 
 call plug#end()
