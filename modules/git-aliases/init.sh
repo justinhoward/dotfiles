@@ -6,17 +6,7 @@ alias glp='git log --topo-order --stat --patch --full-diff --pretty=format:"${_g
 alias glf='git log --topo-order --name-status --pretty=format:${_git_log_medium_format}'
 alias gld='git log --left-right --cherry-mark --no-merges --topo-order --pretty=format:${_git_log_cherry_format}'
 # changelog
-alias glcL='git-changelog'
-alias glcl='git-changelog "$(git describe --tags --abbrev=0).."'
-
-function git-changelog() {
-  while read -r rev; do
-    printf '\e[1;30m-\e[0m %s \e[33m%s\e[0m \e[34m%s\e[0m\n' \
-      "$(git --no-pager show -s --pretty="format:%b" "$rev" | head -n1)" \
-      "$(git --no-pager show -s --pretty="format:%s" "$rev" | grep --color=never -Po '#\d+')" \
-      "$(git --no-pager show -s --pretty="format:%aN" "$rev")"
-  done < <(git rev-list --merges --first-parent --reverse "$@")
-}
+alias glcl='gh-changelog'
 
 # Tag (t)
 alias gt='git tag --sort v:refname'
