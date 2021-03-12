@@ -214,9 +214,12 @@ map gz# <Plug>(asterisk-g#)
 " Folding
 function! s:toggle_fold_method()
   if &foldmethod ==# 'manual'
-    set foldmethod=syntax
+    setlocal foldmethod=syntax
+    setlocal foldcolumn=1
   else
-    set foldmethod=manual
+    setlocal foldmethod=manual
+    setlocal foldcolumn=0
+    normal! zE
   endif
 endfunction
 
