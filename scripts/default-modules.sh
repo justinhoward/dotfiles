@@ -37,6 +37,7 @@ devent_interactive=(
 	osx-gnu
 	dstask
   markdownlint
+	jira-terminal
 )
 
 devent_xorg=(
