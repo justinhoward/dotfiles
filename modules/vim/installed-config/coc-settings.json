@@ -1,5 +1,12 @@
 {
   "diagnostic.displayByAle": true,
   "git.addGBlameToBufferVar": true,
-  "rust-analyzer.serverPath": "rust-analyzer"
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
+    }
+  }
 }
