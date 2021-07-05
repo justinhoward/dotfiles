@@ -10,7 +10,16 @@ alias jru='jr update'
 alias jrn='jr new'
 alias jrt='jr transition'
 
-function jro {
-  namespace="$(jq -r .namespace < ~/.jira_terminal_configuration.json)"
-  xdg-open "https://${namespace}/browse/$1"
+function jrns {
+  jq -r .namespace < ~/.jira_terminal_configuration.json
 }
+
+if dcheck xdg-open; then
+  function jro {
+    xdg-open "https://$(jrns)/browse/$1"
+  }
+elif dcheck open; then
+  function jro {
+    open "https://$(jrns)/browse/$1"
+  }
+fi
