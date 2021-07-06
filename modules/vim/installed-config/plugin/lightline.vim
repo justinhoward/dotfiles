@@ -32,18 +32,29 @@ function! LightlineGit()
   return ''
 endfunction
 
+let g:lightline#ale#indicator_checking = ' '
+let g:lightline#ale#indicator_ok = ' '
+let g:lightline#ale#indicator_warnings = ' '
+let g:lightline#ale#indicator_errors = ' '
+
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'active': {
   \   'left': [
   \     ['mode', 'paste'],
   \     ['gitbranch', 'filename', 'readonly'],
+  \     ['lspstatus']
   \   ],
   \   'right': [
-  \     ['lineinfo'],
-  \     ['percent'],
+  \     [
+  \       'linter_checking',
+  \       'linter_errors',
+  \       'linter_warnings',
+  \       'linter_infos',
+  \       'linter_ok'
+  \     ],
+  \     ['lineinfo', 'percent'],
   \     ['fileformat', 'fileencoding', 'filetype'],
-  \     ['lspstatus']
   \   ]
   \ },
   \ 'inactive': {
@@ -65,13 +76,24 @@ let g:lightline = {
   \   'filetype': 'LightlineFiletype',
   \   'fileformat': 'LightlineFileformat',
   \   'fileencoding': 'LightlineFileencoding',
-  \   'lspstatus': 'LightlineLspStatus'
+  \   'lspstatus': 'LightlineLspStatus',
+  \   'gutentags_status': 'LightlineGutentagsStatus'
   \ },
   \ 'component_expand': {
-  \   'buffers': 'lightline#bufferline#buffers'
+  \   'buffers': 'lightline#bufferline#buffers',
+  \   'linter_checking': 'lightline#ale#checking',
+  \   'linter_infos': 'lightline#ale#infos',
+  \   'linter_warnings': 'lightline#ale#warnings',
+  \   'linter_errors': 'lightline#ale#errors',
+  \   'linter_ok': 'lightline#ale#ok',
   \ },
   \ 'component_type': {
-  \   'buffers': 'tabsel'
+  \   'buffers': 'tabsel',
+  \   'linter_checking': 'right',
+  \   'linter_infos': 'right',
+  \   'linter_warnings': 'warning',
+  \   'linter_errors': 'error',
+  \   'linter_ok': 'right',
   \ },
   \ 'separator': {
   \   'left': '',

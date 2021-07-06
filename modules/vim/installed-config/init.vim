@@ -18,7 +18,7 @@ Plug 'itchyny/lightline.vim'
 " Automatic quoting and unquoting
 Plug 'tpope/vim-surround'
 " Commment/uncomment
-Plug 'scrooloose/nerdcommenter'
+Plug 'b3nj5m1n/kommentary'
 " Project-local vimrc files
 Plug 'embear/vim-localvimrc'
 " Syntax for any language
@@ -38,10 +38,9 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 " Undo tree browser
 Plug 'mbbill/undotree'
-" Tag browser
-Plug 'majutsushi/tagbar'
+" File outline
+Plug 'simrat39/symbols-outline.nvim'
 " Git status in the gutter and hunk editing
-" Plug 'airblade/vim-gitgutter'
 Plug 'lewis6991/gitsigns.nvim'
 " Fuzzy finder
 Plug 'junegunn/fzf'
@@ -53,6 +52,8 @@ Plug 'gfanto/fzf-lsp.nvim'
 Plug 'justinhoward/fzf-neoyank'
 " Linting etc.
 Plug 'w0rp/ale'
+" Lightline functions for ALE
+Plug 'maximbaz/lightline-ale'
 " Repeat (.) support for plugins
 Plug 'tpope/vim-repeat'
 " Generate tag files automatically
@@ -92,9 +93,15 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'kosayoda/nvim-lightbulb'
 " Statusline for LSP
 Plug 'nvim-lua/lsp-status.nvim'
+" Rust LSP extras
+Plug 'simrat39/rust-tools.nvim'
+" LSP diagnostics to ALE
+Plug 'nathunsmitty/nvim-ale-diagnostic'
 " Completion
 Plug 'hrsh7th/nvim-compe'
 " Color highlighter
 Plug 'norcalli/nvim-colorizer.lua'
+" Highlight word under cursor
+Plug 'yamatsum/nvim-cursorline'
 
 call plug#end()

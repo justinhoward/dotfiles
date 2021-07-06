@@ -25,8 +25,8 @@ nnoremap <leader>E :NvimTreeFindFile<cr>
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
 
-" Tagbar
-nnoremap <leader>t :TagbarToggle<cr>
+" Symbols outline
+nnoremap <leader>o :SymbolsOutline<cr>
 
 " Save file
 nnoremap <leader>w :w<cr>
@@ -97,10 +97,6 @@ nnoremap <leader>fp :ALEPrevious<cr>
 nnoremap <leader>fg :ALEFirst<cr>
 nnoremap <leader>fG :ALELast<cr>
 nnoremap <leader>ff :ALEFix<cr>
-
-" NERD Commenter
-nmap <leader>c<leader> <Plug>NERDCommenterToggle
-xmap <leader>c<leader> <Plug>NERDCommenterToggle
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands
