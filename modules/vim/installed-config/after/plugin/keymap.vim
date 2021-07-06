@@ -18,29 +18,15 @@ nnoremap <A-x> :bdelete<cr>
 " Delete current buffer with bbye
 nnoremap <leader>x :Bdelete<cr>
 
-" NERD Tree
-nnoremap <leader>e :NERDTreeToggle<cr>
-nnoremap <leader>E :NERDTreeFind<cr>
+" Nvim Tree
+nnoremap <leader>e :NvimTreeToggle<cr>
+nnoremap <leader>E :NvimTreeFindFile<cr>
 
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
 
 " Tagbar
 nnoremap <leader>t :TagbarToggle<cr>
-
-" Git Gutter
-nmap <leader>gg :GitGutterToggle<cr>
-nmap <leader>gp :GitGutterPreviewHunk<cr>
-nmap <leader>gs :GitGutterStageHunk<cr>
-nmap <leader>gu :GitGutterUndoHunk<cr>
-" Refresh gutter
-nmap <leader>gr :GitGutterAll<cr>
-nmap [g <Plug>GitGutterPrevHunk
-nmap ]g <Plug>GitGutterNextHunk
-omap ig <Plug>GitGutterTextObjectInnerPending
-omap ag <Plug>GitGutterTextObjectOuterPending
-xmap ig <Plug>GitGutterTextObjectInnerVisual
-xmap ag <Plug>GitGutterTextObjectOuterVisual
 
 " Save file
 nnoremap <leader>w :w<cr>
@@ -67,9 +53,12 @@ nmap <Leader>9 <Plug>lightline#bufferline#go(9)
 nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 
 " Neosnippet
-imap <C-j> <Plug>(neosnippet_expand_or_jump)
-smap <C-j> <Plug>(neosnippet_expand_or_jump)
-xmap <C-j> <Plug>(neosnippet_expand_target)
+imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 " Indent Guides
 unmap <leader>ig
@@ -81,91 +70,26 @@ nnoremap <leader>vw :ToggleList<cr>
 " Markdown Preview
 nnoremap <leader>vm :PrevimOpen<cr>
 
-" For toggling quickfix window from
-" https://vim.fandom.com/wiki/Toggle_to_open_or_close_the_quickfix_window
-function! s:get_buffer_list()
-  redir =>buflist
-  silent! ls!
-  redir END
-  return buflist
-endfunction
-
-function! s:toggle_list_window(bufname, pfx)
-  let buflist = s:get_buffer_list()
-  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
-      exec(a:pfx.'close')
-      return
-    endif
-  endfor
-  if a:pfx ==# 'l' && len(getloclist(0)) == 0
-      echohl ErrorMsg
-      echo 'Location List is Empty.'
-      return
-  endif
-  let winnr = winnr()
-  exec(a:pfx.'open')
-  if winnr() != winnr
-    wincmd p
-  endif
-endfunction
-
 " Quickfix
-nnoremap <silent> <leader>qq :call <SID>toggle_list_window('Quickfix List', 'c')<cr>
-nnoremap <leader>qo :copen<cr>
-nnoremap <leader>qc :cclose<cr>
-nnoremap <leader>qn :cnext<cr>
-nnoremap <leader>qp :cprevious<cr>
-nnoremap <leader>qf :cnfile<cr>
-nnoremap <leader>qF :cpfile<cr>
+nnoremap <silent> <leader>cc :QuickfixToggle<cr>
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cl :cclose<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprevious<cr>
+nnoremap <leader>cf :cnfile<cr>
+nnoremap <leader>cF :cpfile<cr>
 
 " Find
 nnoremap <leader>s :Rg<c-space>
 nnoremap <leader>S :Rg -u<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
 
-" Language Client
-" nnoremap <leader>ii :ALEHover<cr>
-" nnoremap <leader>id :ALEGoToDefinition<cr>
-" nnoremap <leader>it :ALEGoToTypeDefinition<cr>
-" nnoremap <leader>ir :ALERename<cr>
-" nnoremap <leader>if :ALEFindReferences<cr>
-" nnoremap <leader>ic :ALEDocumentation<cr>
-
-" coc trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" coc GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Map function and class text objects
-" Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" Compe (completion)
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Linting (f=fix)
 nnoremap <leader>fn :ALENext<cr>
@@ -174,28 +98,9 @@ nnoremap <leader>fg :ALEFirst<cr>
 nnoremap <leader>fG :ALELast<cr>
 nnoremap <leader>ff :ALEFix<cr>
 
-" Refactor/Reformat
-nmap <leader>rn <Plug>(coc-rename)
-xmap <leader>rf  <Plug>(coc-format-selected)
-nmap <leader>rf  <Plug>(coc-format-selected)
-
-" Code Action
-" Apply codeAction to the current buffer
-nmap <leader>a<leader> <Plug>(coc-codeaction)
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
+" NERD Commenter
+nmap <leader>c<leader> <Plug>NERDCommenterToggle
+xmap <leader>c<leader> <Plug>NERDCommenterToggle
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands
@@ -211,16 +116,4 @@ map z#  <Plug>(asterisk-#)
 map gz* <Plug>(asterisk-g*)
 map gz# <Plug>(asterisk-g#)
 
-" Folding
-function! s:toggle_fold_method()
-  if &foldmethod ==# 'manual'
-    setlocal foldmethod=syntax
-    setlocal foldcolumn=1
-  else
-    setlocal foldmethod=manual
-    setlocal foldcolumn=0
-    normal! zE
-  endif
-endfunction
-
-nmap <silent> <leader>z :call <SID>toggle_fold_method()<cr>
+nmap <silent> <leader>z :FoldToggle<cr>

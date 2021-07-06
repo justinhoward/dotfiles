@@ -16,9 +16,20 @@ function! LightlineFileencoding()
   return &fileencoding ==# 'utf-8' ? '' : &fileencoding
 endfunction
 
-function! LightlineGitBlame() abort
-  let blame = get(b:, 'coc_git_blame', '')
-  return winwidth(0) > 120 ? blame : ''
+function! LightlineLspStatus()
+  if luaeval('#vim.lsp.buf_get_clients() > 0')
+    return luaeval("require('lsp-status').status()")
+  endif
+
+  return ''
+endfunction
+
+function! LightlineGit()
+  if exists('b:gitsigns_head')
+    return join([b:gitsigns_head, b:gitsigns_status], ' ')
+  endif
+
+  return ''
 endfunction
 
 let g:lightline = {
@@ -32,7 +43,7 @@ let g:lightline = {
   \     ['lineinfo'],
   \     ['percent'],
   \     ['fileformat', 'fileencoding', 'filetype'],
-  \     ['blame']
+  \     ['lspstatus']
   \   ]
   \ },
   \ 'inactive': {
@@ -49,11 +60,12 @@ let g:lightline = {
   \ },
   \ 'component_function': {
   \   'blame': 'LightlineGitBlame',
-  \   'gitbranch': 'fugitive#head',
+  \   'gitbranch': 'LightlineGit',
   \   'filename': 'LightlineFilename',
   \   'filetype': 'LightlineFiletype',
   \   'fileformat': 'LightlineFileformat',
-  \   'fileencoding': 'LightlineFileencoding'
+  \   'fileencoding': 'LightlineFileencoding',
+  \   'lspstatus': 'LightlineLspStatus'
   \ },
   \ 'component_expand': {
   \   'buffers': 'lightline#bufferline#buffers'
