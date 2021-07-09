@@ -1,9 +1,11 @@
-function dremove() {
+#!/usr/bin/env bash
+
+dremove() {
 	local path="$1"
 
 	dbackup path
 
-	if [[ -e "$path" ]]; then
+	if [ -e "$path" ]; then
 		echo "Removing $path"
 		rm -rf "$path"
 	fi

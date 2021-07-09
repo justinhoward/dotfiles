@@ -1,4 +1,6 @@
-function dcolors() {
+#!/usr/bin/env bash
+
+dcolors() {
   dblack='\033[0;30m'
   dred='\033[0;31m'
   dgreen='\033[0;32m'

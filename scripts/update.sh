@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[[ -z "$DOTFILES_PATH" ]] && DOTFILES_PATH="$HOME/.dotfiles"
+[ -z "$DOTFILES_PATH" ] && DOTFILES_PATH="$HOME/.dotfiles"
 
 (
   echo "Updating dotfiles core"
@@ -9,10 +9,10 @@
   git merge
 )
 
-source "$DOTFILES_PATH"/scripts/load.sh
+. "$DOTFILES_PATH"/scripts/load.sh
 
 for module in "$DOTFILES_PATH"/modules/*; do
-  [[ ! -d $module ]] && return
+  [ ! -d "$module" ] && return
   dload "$module/update"
 done
 
