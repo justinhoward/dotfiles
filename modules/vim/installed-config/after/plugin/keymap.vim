@@ -72,12 +72,13 @@ nnoremap <leader>vm :PrevimOpen<cr>
 
 " Quickfix
 nnoremap <silent> <leader>cc :QuickfixToggle<cr>
-nnoremap <leader>co :copen<cr>
-nnoremap <leader>cl :cclose<cr>
-nnoremap <leader>cn :cnext<cr>
-nnoremap <leader>cp :cprevious<cr>
-nnoremap <leader>cf :cnfile<cr>
-nnoremap <leader>cF :cpfile<cr>
+nnoremap <silent> <leader>co :copen<cr>
+nnoremap <silent> <leader>cl :cclose<cr>
+nnoremap <silent> <leader>cn :cnext<cr>
+nnoremap <silent> <leader>cp :cprevious<cr>
+nnoremap <silent> <leader>cf :cnfile<cr>
+nnoremap <silent> <leader>cF :cpfile<cr>
+nnoremap <silent> <leader>ch :chistory<cr>
 
 " Find
 nnoremap <leader>s :Rg<c-space>
@@ -92,11 +93,12 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Linting (f=fix)
-nnoremap <leader>fn :ALENext<cr>
-nnoremap <leader>fp :ALEPrevious<cr>
-nnoremap <leader>fg :ALEFirst<cr>
-nnoremap <leader>fG :ALELast<cr>
-nnoremap <leader>ff :ALEFix<cr>
+nnoremap <silent> <leader>fn <Plug>(ale_next_wrap)<cr>
+nnoremap <silent> <leader>fp <Plug>(ale_previous_wrap)<cr>
+nnoremap <silent> <leader>fg <Plug>(ale_first)<cr>
+nnoremap <silent> <leader>fG <Plug>(ale_last)<cr>
+nnoremap <silent> <leader>ff <Plug>(ale_fix)<cr>
+nnoremap <silent> <leader>fd <Plug>(ale_detail)<cr>
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands

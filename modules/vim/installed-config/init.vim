@@ -101,7 +101,5 @@ Plug 'nathunsmitty/nvim-ale-diagnostic'
 Plug 'hrsh7th/nvim-compe'
 " Color highlighter
 Plug 'norcalli/nvim-colorizer.lua'
-" Highlight word under cursor
-Plug 'yamatsum/nvim-cursorline'
 
 call plug#end()
