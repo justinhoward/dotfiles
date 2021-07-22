@@ -2,3 +2,4 @@
 .tags.*
 .ackrc
 /vendor/bundle/
+.solargraph.yml
