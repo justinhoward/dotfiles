@@ -1,0 +1,81 @@
+{
+  "global": {
+    "check_for_updates_on_startup": true,
+    "show_in_menu_bar": false,
+    "show_profile_name_in_menu_bar": false
+  },
+  "profiles": [
+    {
+      "complex_modifications": {
+        "parameters": {},
+        "rules": [
+          {
+            "description": "Caps lock to control or ESC if alone",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "caps_lock",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_control" }]
+              }
+            ]
+          },
+          {
+            "description": "Open kitty with ⌘F1",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "f1",
+                  "modifiers": {
+                    "mandatory": ["command"],
+                    "optional": ["fn"]
+                  }
+                },
+                "to": [{ "shell_command": "/Applications/kitty.app/Contents/MacOS/kitty --single-instance -d \"$HOME\"" }]
+              }
+            ]
+          },
+          {
+            "description": "Open firefox with ⌘F2 (shift for private)",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "f2",
+                  "modifiers": { "mandatory": ["command"] }
+                },
+                "to": [{ "shell_command": "/Applications/Firefox.app/Contents/MacOS/firefox" }]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "f2",
+                  "modifiers": { "mandatory": ["command", "shift"] }
+                },
+                "to": [{ "shell_command": "/Applications/Firefox.app/Contents/MacOS/firefox --private-window" }]
+              }
+            ]
+          }
+        ]
+      },
+      "devices": [],
+      "fn_function_keys": [],
+      "name": "Default",
+      "parameters": {
+        "delay_milliseconds_before_open_device": 1000
+      },
+      "selected": true,
+      "simple_modifications": [
+        { "from": "caps_lock", "to": "left_control" }
+      ],
+      "virtual_hid_keyboard": {
+        "country_code": 0,
+        "indicate_sticky_modifier_keys_state": true,
+        "mouse_key_xy_scale": 100
+      }
+    }
+  ]
+}
