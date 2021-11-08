@@ -93,12 +93,12 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " Linting (f=fix)
-nnoremap <silent> <leader>fn <Plug>(ale_next_wrap)<cr>
-nnoremap <silent> <leader>fp <Plug>(ale_previous_wrap)<cr>
-nnoremap <silent> <leader>fg <Plug>(ale_first)<cr>
-nnoremap <silent> <leader>fG <Plug>(ale_last)<cr>
-nnoremap <silent> <leader>ff <Plug>(ale_fix)<cr>
-nnoremap <silent> <leader>fd <Plug>(ale_detail)<cr>
+nmap <silent> <leader>fn <Plug>(ale_next_wrap)
+nmap <silent> <leader>fp <Plug>(ale_previous_wrap)
+nmap <silent> <leader>fg <Plug>(ale_first)
+nmap <silent> <leader>fG <Plug>(ale_last)
+nmap <silent> <leader>ff <Plug>(ale_fix)
+nmap <silent> <leader>fd <Plug>(ale_detail)
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands

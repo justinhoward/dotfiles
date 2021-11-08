@@ -89,6 +89,8 @@ Plug 'bayne/vim-dot-http'
 Plug 'moll/vim-bbye'
 " Language server setup
 Plug 'neovim/nvim-lspconfig'
+" NVim lsp/ALE interop
+Plug 'rhysd/vim-lsp-ale'
 " Show code action light bulb
 Plug 'kosayoda/nvim-lightbulb'
 " Statusline for LSP
