@@ -32,13 +32,13 @@ nnoremap <leader>o :SymbolsOutline<cr>
 nnoremap <leader>w :w<cr>
 
 " FZF
-nnoremap <leader>p :GFiles<cr>
-nnoremap <leader>P :Files<cr>
-nnoremap <leader>] :Tags<cr>
-nnoremap <leader>} :BTags<cr>
-nnoremap <leader>y :FZFNeoyank<cr>
-nnoremap <leader>Y :FZFNeoyank " P<cr>
-vnoremap <leader>y :FZFNeoyankSelection<cr>
+nnoremap <leader>p :Telescope find_files<cr>
+nnoremap <leader>P :Telescope find_files no_ignore=true<cr>
+nnoremap <leader>] :Telescope lsp_document_symbols<cr>
+nnoremap <leader>} :Telescope lsp_workspace_symbols<cr>
+" nnoremap <leader>y :FZFNeoyank<cr>
+" nnoremap <leader>Y :FZFNeoyank " P<cr>
+" vnoremap <leader>y :FZFNeoyankSelection<cr>
 
 " Lightline
 nmap <Leader>1 <Plug>lightline#bufferline#go(1)
@@ -91,14 +91,6 @@ inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
-" Linting (f=fix)
-nmap <silent> <leader>fn <Plug>(ale_next_wrap)
-nmap <silent> <leader>fp <Plug>(ale_previous_wrap)
-nmap <silent> <leader>fg <Plug>(ale_first)
-nmap <silent> <leader>fG <Plug>(ale_last)
-nmap <silent> <leader>ff <Plug>(ale_fix)
-nmap <silent> <leader>fd <Plug>(ale_detail)
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands

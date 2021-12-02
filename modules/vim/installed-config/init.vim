@@ -6,7 +6,7 @@ Plug 'nvim-lua/plenary.nvim'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Monokai Color Scheme
-Plug 'crusoexia/vim-monokai'
+Plug 'sainnhe/sonokai'
 " Git tools
 Plug 'tpope/vim-fugitive'
 " GitHub extension for fugitive
@@ -28,7 +28,7 @@ Plug 'tpope/vim-sleuth'
 " Read editorconfig files
 Plug 'editorconfig/editorconfig-vim'
 " Remove trailing whitespace with a command
-Plug 'bronson/vim-trailing-whitespace'
+Plug 'ntpeters/vim-better-whitespace'
 " Show vertical indent guides
 Plug 'nathanaelkane/vim-indent-guides'
 " Search in vim with ripgrep
@@ -43,17 +43,15 @@ Plug 'simrat39/symbols-outline.nvim'
 " Git status in the gutter and hunk editing
 Plug 'lewis6991/gitsigns.nvim'
 " Fuzzy finder
-Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " Default FZF sources
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf.vim'
 " LSP FZF sources
 Plug 'gfanto/fzf-lsp.nvim'
 " Neoyank FZF source
 Plug 'justinhoward/fzf-neoyank'
-" Linting etc.
-Plug 'w0rp/ale'
-" Lightline functions for ALE
-Plug 'maximbaz/lightline-ale'
 " Repeat (.) support for plugins
 Plug 'tpope/vim-repeat'
 " Generate tag files automatically
@@ -89,16 +87,12 @@ Plug 'bayne/vim-dot-http'
 Plug 'moll/vim-bbye'
 " Language server setup
 Plug 'neovim/nvim-lspconfig'
-" NVim lsp/ALE interop
-Plug 'rhysd/vim-lsp-ale'
 " Show code action light bulb
 Plug 'kosayoda/nvim-lightbulb'
-" Statusline for LSP
-Plug 'nvim-lua/lsp-status.nvim'
+" External linter support for lsp
+Plug 'justinhoward/null-ls.nvim', { 'branch': 'combined-filetype-support' }
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
-" LSP diagnostics to ALE
-Plug 'nathunsmitty/nvim-ale-diagnostic'
 " Completion
 Plug 'hrsh7th/nvim-compe'
 " Color highlighter

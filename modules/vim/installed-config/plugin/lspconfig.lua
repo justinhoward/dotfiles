@@ -1,11 +1,10 @@
 local nvim_lsp = require('lspconfig')
-local lsp_status = require('lsp-status')
--- Register the status progress handler
-lsp_status.register_progress()
-lsp_status.config({
-  status_symbol = '',
-  diagnostics = false
-})
+local null_ls = require('null-ls')
+
+vim.fn.sign_define("DiagnosticSignError", { text = ' ', texthl = 'DiagnosticSignError' })
+vim.fn.sign_define("DiagnosticSignWarn", { text = ' ', texthl = 'DiagnosticSignWarn' })
+vim.fn.sign_define("DiagnosticSignInformation", { text = ' ', texthl = 'DiagnosticSignInfo' })
+vim.fn.sign_define("DiagnosticSignHint", { text = ' ', texthl = 'DiagnosticSignHint' })
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -23,12 +22,13 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>fn', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+  buf_set_keymap('n', '<space>fp', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+  buf_set_keymap('n', '<space>ff', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<space>rf', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
   buf_set_keymap('v', '<space>rf', '<cmd>lua vim.lsp.buf.range_formatting()<cr>', opts)
-
-  lsp_status.on_attach(client, bufnr)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -43,14 +43,43 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    underline = false,
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false,
+null_ls.config({
+  debug = true,
+  sources = {
+    null_ls.builtins.formatting.rubocop.with({
+      command = 'bundle',
+      args = vim.list_extend(
+        { "exec", "rubocop" },
+        require("null-ls").builtins.diagnostics.rubocop._opts.args
+      )
+    }),
+    null_ls.builtins.diagnostics.rubocop.with({
+      command = 'bundle',
+      args = vim.list_extend(
+        { "exec", "rubocop" },
+        require("null-ls").builtins.diagnostics.rubocop._opts.args
+      )
+    }),
+    null_ls.builtins.diagnostics.shellcheck,
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.diagnostics.cppcheck,
+    null_ls.builtins.diagnostics.markdownlint,
+    null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
+    null_ls.builtins.code_actions.shellcheck,
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.diagnostics.hadolint,
   }
-)
+})
+
+local null_ls_on_attach = function(client, bufnr)
+  on_attach(client, bufnr)
+end
+nvim_lsp['null-ls'].setup({
+  on_attach = null_ls_on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  }
+})
 
 require('rust-tools').setup {
     tools = { -- rust-tools options

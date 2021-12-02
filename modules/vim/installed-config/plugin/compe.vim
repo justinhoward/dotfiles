@@ -8,6 +8,7 @@ let g:compe.source = {
   \ 'path': v:true,
   \ 'buffer': v:true,
   \ 'tags': v:true,
+  \ 'treesitter': v:true,
   \ }
 
 highlight link CompeDocumentation NormalFloat

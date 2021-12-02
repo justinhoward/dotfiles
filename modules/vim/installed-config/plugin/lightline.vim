@@ -16,9 +16,33 @@ function! LightlineFileencoding()
   return &fileencoding ==# 'utf-8' ? '' : &fileencoding
 endfunction
 
-function! LightlineLspStatus()
+lua << EOF
+function _G.lightlineLspSymbol()
+  if vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then return '' end
+
+  if vim.lsp.diagnostic.get_count(0, [[Error]]) > 0 then
+    return ' '
+  end
+
+  if vim.lsp.diagnostic.get_count(0, [[Warning]]) > 0 then
+    return ' '
+  end
+
+  if vim.lsp.diagnostic.get_count(0, [[Info]]) > 0 then
+    return ' '
+  end
+
+  if vim.lsp.diagnostic.get_count(0, [[Hint]]) > 0 then
+    return ' '
+  end
+
+  return ''
+end
+EOF
+
+function! LightlineLspSymbol()
   if luaeval('#vim.lsp.buf_get_clients() > 0')
-    return luaeval("require('lsp-status').status()")
+    return luaeval("lightlineLspSymbol()")
   endif
 
   return ''
@@ -32,11 +56,6 @@ function! LightlineGit()
   return ''
 endfunction
 
-let g:lightline#ale#indicator_checking = ' '
-let g:lightline#ale#indicator_ok = ' '
-let g:lightline#ale#indicator_warnings = ' '
-let g:lightline#ale#indicator_errors = ' '
-
 let g:lightline = {
   \ 'colorscheme': 'wombat',
   \ 'active': {
@@ -46,13 +65,7 @@ let g:lightline = {
   \     ['lspstatus']
   \   ],
   \   'right': [
-  \     [
-  \       'linter_checking',
-  \       'linter_errors',
-  \       'linter_warnings',
-  \       'linter_infos',
-  \       'linter_ok'
-  \     ],
+  \     ['lspsymbol'],
   \     ['lineinfo', 'percent'],
   \     ['fileformat', 'fileencoding', 'filetype'],
   \   ]
@@ -77,15 +90,11 @@ let g:lightline = {
   \   'fileformat': 'LightlineFileformat',
   \   'fileencoding': 'LightlineFileencoding',
   \   'lspstatus': 'LightlineLspStatus',
+  \   'lspsymbol': 'LightlineLspSymbol',
   \   'gutentags_status': 'LightlineGutentagsStatus'
   \ },
   \ 'component_expand': {
-  \   'buffers': 'lightline#bufferline#buffers',
-  \   'linter_checking': 'lightline#ale#checking',
-  \   'linter_infos': 'lightline#ale#infos',
-  \   'linter_warnings': 'lightline#ale#warnings',
-  \   'linter_errors': 'lightline#ale#errors',
-  \   'linter_ok': 'lightline#ale#ok',
+  \   'buffers': 'lightline#bufferline#buffers'
   \ },
   \ 'component_type': {
   \   'buffers': 'tabsel',

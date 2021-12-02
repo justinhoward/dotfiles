@@ -1,9 +1,9 @@
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   -- Disabling for now since running this causes significant input lag
-  -- highlight = {
-  --   enable = true,              -- false will disable the whole extension
-  -- },
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+  },
   -- indent = {
   --   enable = true,
   -- },
