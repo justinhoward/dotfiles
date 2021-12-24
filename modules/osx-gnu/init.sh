@@ -5,3 +5,4 @@ if [[ "$dotfiles_platform" != 'osx' ]]; then
 fi
 
 dcheck ggrep && alias grep='ggrep'
+dcheck gtar && alias tar='gtar'

@@ -43,11 +43,12 @@ Plug 'simrat39/symbols-outline.nvim'
 " Git status in the gutter and hunk editing
 Plug 'lewis6991/gitsigns.nvim'
 " Fuzzy finder
-" Plug 'junegunn/fzf'
+Plug 'junegunn/fzf'
+" Default FZF sources
+Plug 'junegunn/fzf.vim'
+" Telescope finder
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-" Default FZF sources
-" Plug 'junegunn/fzf.vim'
 " LSP FZF sources
 Plug 'gfanto/fzf-lsp.nvim'
 " Neoyank FZF source
@@ -97,5 +98,9 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'hrsh7th/nvim-compe'
 " Color highlighter
 Plug 'norcalli/nvim-colorizer.lua'
+" DAP debugger client
+Plug 'mfussenegger/nvim-dap'
+" DAP virtual text hints
+Plug 'theHamsta/nvim-dap-virtual-text'
 
 call plug#end()

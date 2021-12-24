@@ -33,7 +33,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'ccls', 'tsserver', 'solargraph', 'bashls' }
+local servers = { 'ccls', 'tsserver', 'solargraph', 'bashls', 'pylsp' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -68,6 +68,7 @@ null_ls.config({
     null_ls.builtins.code_actions.shellcheck,
     null_ls.builtins.diagnostics.eslint,
     null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.flake8,
   }
 })
 

@@ -32,13 +32,14 @@ nnoremap <leader>o :SymbolsOutline<cr>
 nnoremap <leader>w :w<cr>
 
 " FZF
-nnoremap <leader>p :Telescope find_files<cr>
-nnoremap <leader>P :Telescope find_files no_ignore=true<cr>
-nnoremap <leader>] :Telescope lsp_document_symbols<cr>
-nnoremap <leader>} :Telescope lsp_workspace_symbols<cr>
-" nnoremap <leader>y :FZFNeoyank<cr>
-" nnoremap <leader>Y :FZFNeoyank " P<cr>
-" vnoremap <leader>y :FZFNeoyankSelection<cr>
+nnoremap <silent> <leader>p :Telescope find_files<cr>
+" nnoremap <silent> <leader>P :Telescope find_files no_ignore=true hidden=true<cr>
+nnoremap <silent> <leader>P :Files<cr>
+nnoremap <silent> <leader>] :Telescope lsp_document_symbols<cr>
+nnoremap <silent> <leader>} :Telescope lsp_workspace_symbols<cr>
+nnoremap <leader>y :FZFNeoyank<cr>
+nnoremap <leader>Y :FZFNeoyank " P<cr>
+vnoremap <leader>y :FZFNeoyankSelection<cr>
 
 " Lightline
 nmap <Leader>1 <Plug>lightline#bufferline#go(1)
@@ -107,3 +108,14 @@ map gz* <Plug>(asterisk-g*)
 map gz# <Plug>(asterisk-g#)
 
 nmap <silent> <leader>z :FoldToggle<cr>
+
+" nvim DAP debugger
+nnoremap <silent> <F8> :lua require'dap'.continue()<CR>
+nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>dd :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dc :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
