@@ -28,7 +28,7 @@ Plug 'tpope/vim-sleuth'
 " Read editorconfig files
 Plug 'editorconfig/editorconfig-vim'
 " Remove trailing whitespace with a command
-Plug 'ntpeters/vim-better-whitespace'
+" Plug 'ntpeters/vim-better-whitespace'
 " Show vertical indent guides
 Plug 'nathanaelkane/vim-indent-guides'
 " Search in vim with ripgrep
@@ -59,7 +59,6 @@ Plug 'tpope/vim-repeat'
 Plug 'ludovicchabant/vim-gutentags'
 " Snippet support
 Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
 " Snippet repository
 Plug 'rafamadriz/friendly-snippets'
 " Context-aware split/join
@@ -95,7 +94,11 @@ Plug 'justinhoward/null-ls.nvim', { 'branch': 'combined-filetype-support' }
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
 " Completion
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
 " Color highlighter
 Plug 'norcalli/nvim-colorizer.lua'
 " DAP debugger client

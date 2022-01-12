@@ -20,19 +20,25 @@ lua << EOF
 function _G.lightlineLspSymbol()
   if vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then return '' end
 
-  if vim.lsp.diagnostic.get_count(0, [[Error]]) > 0 then
+  local counts = {}
+  for _, diag in ipairs(vim.diagnostic.get()) do
+    if not counts[diag.severity] then counts[diag.severity] = 0 end
+    counts[diag.severity] = counts[diag.severity] + 1
+  end
+
+  if counts[vim.diagnostic.severity.ERROR] then
     return ' '
   end
 
-  if vim.lsp.diagnostic.get_count(0, [[Warning]]) > 0 then
+  if counts[vim.diagnostic.severity.WARN] then
     return ' '
   end
 
-  if vim.lsp.diagnostic.get_count(0, [[Info]]) > 0 then
+  if counts[vim.diagnostic.severity.INFO] then
     return ' '
   end
 
-  if vim.lsp.diagnostic.get_count(0, [[Hint]]) > 0 then
+  if counts[vim.diagnostic.severity.HINT] then
     return ' '
   end
 

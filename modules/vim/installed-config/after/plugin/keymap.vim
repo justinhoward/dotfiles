@@ -86,13 +86,6 @@ nnoremap <leader>s :Rg<c-space>
 nnoremap <leader>S :Rg -u<c-space>
 nnoremap <leader>/ :nohlsearch<cr>
 
-" Compe (completion)
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
 " Asterisk
 " We reverse the mappings so that the z (stay) commands
 " are the default, and we can use z to have the default

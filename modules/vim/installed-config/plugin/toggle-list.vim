@@ -2,9 +2,12 @@ if &cp || exists('g:toggle_list_loaded')
   finish
 endif
 
+if !exists('g:toggle_list_minimal')
+  let g:toggle_list_minimal = "trail:-,precedes:«,extends:»"
+endif
 
 if !exists('g:toggle_list_normal')
-  let g:toggle_list_normal = "tab:▸\ ,eol:¬,trail:-,precedes:«,extends:»"
+  let g:toggle_list_normal = g:toggle_list_minimal . ",tab:▸\ ,eol:¬"
 endif
 
 if !exists('g:toggle_list_verbose')
@@ -16,7 +19,7 @@ if !exists('g:toggle_list_mode')
 endif
 
 command! ToggleList call s:toggle_list_toggle()
-command! ToggleListOff call s:toggle_list_set(0)
+command! ToggleListMinimal call s:toggle_list_set(0)
 command! ToggleListNormal call s:toggle_list_set(1)
 command! ToggleListVerbose call s:toggle_list_set(2)
 
@@ -25,19 +28,19 @@ func! s:toggle_list_toggle()
 endfunction
 
 func! s:toggle_list_set(mode)
-  if a:mode == 1
+  set list
+
+  if a:mode == 0
+    let &listchars = g:toggle_list_minimal
+  elseif a:mode == 1
     let &listchars = g:toggle_list_normal
   elseif a:mode == 2
     let &listchars = g:toggle_list_verbose
   endif
 
-  if a:mode == 0
-    set nolist
-  else
-    set list
-  endif
-
   let g:toggle_list_mode = a:mode
 endfunction
+
+call s:toggle_list_set(0)
 
 let g:toggle_list_loaded = 1
