@@ -90,7 +90,7 @@ Plug 'neovim/nvim-lspconfig'
 " Show code action light bulb
 Plug 'kosayoda/nvim-lightbulb'
 " External linter support for lsp
-Plug 'justinhoward/null-ls.nvim', { 'branch': 'combined-filetype-support' }
+Plug 'jose-elias-alvarez/null-ls.nvim'
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
 " Completion

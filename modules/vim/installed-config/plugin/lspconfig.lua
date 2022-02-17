@@ -46,8 +46,9 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-null_ls.config({
+null_ls.setup({
   debug = true,
+  on_attach = on_attach,
   sources = {
     null_ls.builtins.formatting.rubocop.with({
       command = 'bundle',
@@ -72,16 +73,6 @@ null_ls.config({
     null_ls.builtins.diagnostics.eslint,
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.flake8,
-  }
-})
-
-local null_ls_on_attach = function(client, bufnr)
-  on_attach(client, bufnr)
-end
-nvim_lsp['null-ls'].setup({
-  on_attach = null_ls_on_attach,
-  flags = {
-    debounce_text_changes = 150,
   }
 })
 
