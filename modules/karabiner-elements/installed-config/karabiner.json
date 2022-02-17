@@ -6,6 +6,10 @@
   },
   "profiles": [
     {
+      "name": "Default",
+      "selected": true,
+      "devices": [],
+      "fn_function_keys": [],
       "complex_modifications": {
         "parameters": {},
         "rules": [
@@ -61,16 +65,10 @@
           }
         ]
       },
-      "devices": [],
-      "fn_function_keys": [],
-      "name": "Default",
       "parameters": {
         "delay_milliseconds_before_open_device": 1000
       },
-      "selected": true,
-      "simple_modifications": [
-        { "from": "caps_lock", "to": "left_control" }
-      ],
+      "simple_modifications": [],
       "virtual_hid_keyboard": {
         "country_code": 0,
         "indicate_sticky_modifier_keys_state": true,
