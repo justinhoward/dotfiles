@@ -56,6 +56,11 @@ nvim_lsp.solargraph.setup {
   flags = flags,
   init_options = {
     formatting = false
+  },
+  settings = {
+    solargraph = {
+      diagnostics = false
+    }
   }
 }
 
