@@ -34,27 +34,42 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'ccls', 'tsserver', 'solargraph', 'bashls', 'pylsp' }
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local flags = {
+  debounce_text_changes = 150,
+}
+
+-- Default configs
+local servers = { 'ccls', 'tsserver', 'bashls', 'pylsp' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
     on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
+    flags = flags
   }
 end
 
-null_ls.setup({
-  debug = true,
+-- Individual configs
+nvim_lsp.solargraph.setup {
+  capabilities = capabilities,
   on_attach = on_attach,
+  flags = flags,
+  init_options = {
+    formatting = false
+  }
+}
+
+-- Null-ls
+null_ls.setup({
+  debug = false,
+  on_attach = on_attach,
+  diagnostics_format = '[#{c}] #{m} (#{s})',
   sources = {
     null_ls.builtins.formatting.rubocop.with({
       command = 'bundle',
       args = vim.list_extend(
         { "exec", "rubocop" },
-        require("null-ls").builtins.diagnostics.rubocop._opts.args
+        require("null-ls").builtins.formatting.rubocop._opts.args
       )
     }),
     null_ls.builtins.diagnostics.rubocop.with({
@@ -76,6 +91,7 @@ null_ls.setup({
   }
 })
 
+-- Additional tools
 require('rust-tools').setup {
     tools = { -- rust-tools options
         hover_with_actions = false,
