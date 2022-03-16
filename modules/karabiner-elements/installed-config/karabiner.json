@@ -38,7 +38,9 @@
                     "optional": ["fn"]
                   }
                 },
-                "to": [{ "shell_command": "/Applications/kitty.app/Contents/MacOS/kitty --single-instance -d \"$HOME\"" }]
+                "to": [{
+                  "shell_command": "if application "kitty" is running then\ntell application "System Events" to tell process "kitty" to click menu item "New OS Window" of menu "Shell" of menu bar 1\nelse\ntell application "kitty" to activate\nend if"
+                }]
               }
             ]
           },
