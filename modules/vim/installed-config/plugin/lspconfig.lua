@@ -84,15 +84,17 @@ null_ls.setup({
         require("null-ls").builtins.diagnostics.rubocop._opts.args
       )
     }),
-    null_ls.builtins.diagnostics.shellcheck,
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.diagnostics.cppcheck,
-    null_ls.builtins.diagnostics.markdownlint,
-    null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
+    null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.code_actions.shellcheck,
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.cppcheck,
+    null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.markdownlint,
+    null_ls.builtins.diagnostics.shellcheck,
+    null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
+    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.prettier,
   }
 })
 
