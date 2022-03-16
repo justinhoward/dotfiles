@@ -32,7 +32,7 @@ nnoremap <leader>o :SymbolsOutline<cr>
 nnoremap <leader>w :w<cr>
 
 " FZF
-nnoremap <silent> <leader>p :Telescope find_files<cr>
+nnoremap <silent> <leader>p :Telescope find_files hidden=true<cr>
 " nnoremap <silent> <leader>P :Telescope find_files no_ignore=true hidden=true<cr>
 nnoremap <silent> <leader>P :Files<cr>
 nnoremap <silent> <leader>] :Telescope lsp_document_symbols<cr>
