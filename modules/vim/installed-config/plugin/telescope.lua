@@ -1,6 +1,7 @@
 require('telescope').setup {
   defaults = {
-    path_display = { 'truncate' }
+    path_display = { 'truncate' },
+    file_ignore_patterns = { '.git' }
   }
 }
 
