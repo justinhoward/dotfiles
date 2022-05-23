@@ -92,9 +92,11 @@ null_ls.setup({
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.markdownlint,
     null_ls.builtins.diagnostics.shellcheck,
+    null_ls.builtins.diagnostics.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
     null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
     null_ls.builtins.formatting.eslint_d,
     null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
   }
 })
 
