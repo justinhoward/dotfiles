@@ -1,2 +1,2 @@
-set laststatus=2 " Always display the status line
+set laststatus=3 " Always display the global status line
 set noshowmode " Hide the default mode text
