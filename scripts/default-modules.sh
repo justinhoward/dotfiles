@@ -8,7 +8,6 @@ devent_load=(
 
 devent_login=(
 	start-zsh
-	zsh-completion-dump
 )
 
 devent_interactive=(
