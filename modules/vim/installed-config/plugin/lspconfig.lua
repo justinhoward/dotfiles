@@ -70,6 +70,21 @@ null_ls.setup({
   on_attach = on_attach,
   diagnostics_format = '[#{c}] #{m} (#{s})',
   sources = {
+    null_ls.builtins.code_actions.eslint_d,
+    null_ls.builtins.code_actions.shellcheck,
+    null_ls.builtins.diagnostics.cppcheck,
+    null_ls.builtins.diagnostics.erb_lint.with({
+      command = 'bundle',
+      ignore_stderr = true,
+      args = vim.list_extend(
+        { "exec", "erblint" },
+        require("null-ls").builtins.diagnostics.erb_lint._opts.args
+      )
+    }),
+    null_ls.builtins.diagnostics.eslint_d,
+    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.markdownlint,
     null_ls.builtins.formatting.rubocop.with({
       command = 'bundle',
       args = vim.list_extend(
@@ -77,6 +92,19 @@ null_ls.setup({
         require("null-ls").builtins.formatting.rubocop._opts.args
       )
     }),
+    null_ls.builtins.diagnostics.shellcheck,
+    null_ls.builtins.diagnostics.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
+    null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
+    null_ls.builtins.formatting.erb_lint.with({
+      command = 'bundle',
+      ignore_stderr = true,
+      args = vim.list_extend(
+        { "exec", "erblint" },
+        require("null-ls").builtins.formatting.erb_lint._opts.args
+      )
+    }),
+    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.prettier,
     null_ls.builtins.diagnostics.rubocop.with({
       command = 'bundle',
       args = vim.list_extend(
@@ -84,18 +112,6 @@ null_ls.setup({
         require("null-ls").builtins.diagnostics.rubocop._opts.args
       )
     }),
-    null_ls.builtins.code_actions.eslint_d,
-    null_ls.builtins.code_actions.shellcheck,
-    null_ls.builtins.diagnostics.cppcheck,
-    null_ls.builtins.diagnostics.eslint_d,
-    null_ls.builtins.diagnostics.flake8,
-    null_ls.builtins.diagnostics.hadolint,
-    null_ls.builtins.diagnostics.markdownlint,
-    null_ls.builtins.diagnostics.shellcheck,
-    null_ls.builtins.diagnostics.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
-    null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
-    null_ls.builtins.formatting.eslint_d,
-    null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
   }
 })
