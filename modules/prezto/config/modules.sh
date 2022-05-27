@@ -17,7 +17,6 @@ zstyle ':prezto:load' pmodule \
   'node' \
   'rsync' \
   'ruby' \
-  'fasd' \
   'pacman' \
   'syntax-highlighting' \
   'prompt' \
