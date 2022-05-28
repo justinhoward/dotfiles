@@ -32,11 +32,8 @@ nnoremap <leader>o :SymbolsOutline<cr>
 nnoremap <leader>w :w<cr>
 
 " FZF
-nnoremap <silent> <leader>p :Telescope find_files hidden=true<cr>
-" nnoremap <silent> <leader>P :Telescope find_files no_ignore=true hidden=true<cr>
-nnoremap <silent> <leader>P :Files<cr>
-nnoremap <silent> <leader>] :Telescope lsp_document_symbols<cr>
-nnoremap <silent> <leader>} :Telescope lsp_workspace_symbols<cr>
+nnoremap <silent> <leader>p :GFilesWithDevicons<cr>
+nnoremap <silent> <leader>P :FilesWithDevicons<cr>
 nnoremap <leader>y :FZFNeoyank<cr>
 nnoremap <leader>Y :FZFNeoyank " P<cr>
 vnoremap <leader>y :FZFNeoyankSelection<cr>

@@ -46,9 +46,8 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'junegunn/fzf'
 " Default FZF sources
 Plug 'junegunn/fzf.vim'
-" Telescope finder
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" Devicons for fzf
+Plug 'coreyja/fzf.devicon.vim'
 " LSP FZF sources
 Plug 'gfanto/fzf-lsp.nvim'
 " Neoyank FZF source
