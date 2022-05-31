@@ -16,22 +16,22 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>Declarations<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>Definitions<CR>', opts)
-  buf_set_keymap('n', 'gy', '<cmd>TypeDefinitions<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>References<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>Implementations<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gD', "<cmd>lua require('fzf-lua').lsp_declarations()<cr>", opts)
+  buf_set_keymap('n', 'gd', "<cmd>lua require('fzf-lua').lsp_definitions()<cr>", opts)
+  buf_set_keymap('n', 'gy', "<cmd>lua require('fzf-lua').lsp_typedefs()<cr>", opts)
+  buf_set_keymap('n', 'gr', "<cmd>lua require('fzf-lua').lsp_references()<cr>", opts)
+  buf_set_keymap('n', 'gi', "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
   buf_set_keymap('n', '<leader>fn', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
   buf_set_keymap('n', '<leader>fp', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
   buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
-  buf_set_keymap('n', '<leader>fa', '<cmd>Diagnostics<cr>', opts)
-  buf_set_keymap('n', '<leader>fA', '<cmd>DiagnosticsAll<cr>', opts)
-  buf_set_keymap('n', '<leader>]', '<cmd>DocumentSymbols<cr>', opts)
-  buf_set_keymap('n', '<leader>}', '<cmd>WorkspaceSymbols<cr>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<leader>fa', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<cr>", opts)
+  buf_set_keymap('n', '<leader>fA', "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<cr>", opts)
+  buf_set_keymap('n', '<leader>]', "<cmd>lua require('fzf-lua').lsp_document_symbols()<cr>", opts)
+  buf_set_keymap('n', '<leader>}', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<cr>", opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+  buf_set_keymap('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   buf_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
   buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.range_formatting()<cr>', opts)
 end
@@ -127,8 +127,7 @@ require('rust-tools').setup {
         inlay_hints = {
             parameter_hints_prefix = "◀ ",
             other_hints_prefix  = "▶ ",
-        },
-        runnables = { use_telescope = false },
+        }
     },
     server = {
       on_attach = on_attach,

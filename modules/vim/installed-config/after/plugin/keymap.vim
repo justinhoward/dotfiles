@@ -32,11 +32,9 @@ nnoremap <leader>o :SymbolsOutline<cr>
 nnoremap <leader>w :w<cr>
 
 " FZF
-nnoremap <silent> <leader>p :GFilesWithDevicons<cr>
-nnoremap <silent> <leader>P :FilesWithDevicons<cr>
-nnoremap <leader>y :FZFNeoyank<cr>
-nnoremap <leader>Y :FZFNeoyank " P<cr>
-vnoremap <leader>y :FZFNeoyankSelection<cr>
+nnoremap <silent> <leader>p <cmd>lua require('fzf-lua').git_files()<cr>
+nnoremap <silent> <leader>P <cmd>lua require('fzf-lua').files()<cr>
+nnoremap <leader>y :YankyRingHistory<cr>
 
 " Lightline
 nmap <Leader>1 <Plug>lightline#bufferline#go(1)
@@ -109,3 +107,17 @@ nnoremap <silent> <leader>dc :lua require'dap'.set_breakpoint(vim.fn.input('Brea
 nnoremap <silent> <leader>dl :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+
+" Yanky yank ring
+nnoremap p <Plug>(YankyPutAfter)
+nnoremap p <Plug>(YankyPutBefore)
+xnoremap p <Plug>(YankyPutBefore)
+xnoremap P <Plug>(YankyPutBefore)
+nnoremap gp <Plug>(YankyGPutAfter)
+nnoremap gP <Plug>(YankyGPutBefore)
+xnoremap gp <Plug>(YankyGPutAfter)
+xnoremap gP <Plug>(YankyGPutBefore)
+
+" Cycle through yank ring
+nnoremap <c-n> <Plug>(YankyCycleForward)
+nnoremap <c-p> <Plug>(YankyCycleBackward)

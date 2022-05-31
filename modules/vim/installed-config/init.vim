@@ -42,16 +42,8 @@ Plug 'mbbill/undotree'
 Plug 'simrat39/symbols-outline.nvim'
 " Git status in the gutter and hunk editing
 Plug 'lewis6991/gitsigns.nvim'
-" Fuzzy finder
-Plug 'junegunn/fzf'
-" Default FZF sources
-Plug 'junegunn/fzf.vim'
-" Devicons for fzf
-Plug 'coreyja/fzf.devicon.vim'
-" LSP FZF sources
-Plug 'gfanto/fzf-lsp.nvim'
-" Neoyank FZF source
-Plug 'justinhoward/fzf-neoyank'
+" FZF Fuzzy finder (requires fzf binary)
+Plug 'ibhagwan/fzf-lua'
 " Repeat (.) support for plugins
 Plug 'tpope/vim-repeat'
 " Generate tag files automatically
@@ -62,8 +54,6 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'rafamadriz/friendly-snippets'
 " Context-aware split/join
 Plug 'andrewradev/splitjoin.vim'
-" Save yank history
-Plug 'Shougo/neoyank.vim'
 " Preview markdown files in browser
 Plug 'previm/previm'
 " textobj for indentation
@@ -80,8 +70,6 @@ Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'lambdalisue/suda.vim'
 " Better * navigation
 Plug 'haya14busa/vim-asterisk'
-" Run .http files with the dot-http command and http syntax
-Plug 'bayne/vim-dot-http'
 " Better buffer delete commands
 Plug 'moll/vim-bbye'
 " Language server setup
@@ -104,5 +92,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'mfussenegger/nvim-dap'
 " DAP virtual text hints
 Plug 'theHamsta/nvim-dap-virtual-text'
+
+Plug 'gbprod/yanky.nvim'
 
 call plug#end()
