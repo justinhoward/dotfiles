@@ -110,7 +110,7 @@ nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 
 " Yanky yank ring
 nnoremap p <Plug>(YankyPutAfter)
-nnoremap p <Plug>(YankyPutBefore)
+nnoremap P <Plug>(YankyPutBefore)
 xnoremap p <Plug>(YankyPutBefore)
 xnoremap P <Plug>(YankyPutBefore)
 nnoremap gp <Plug>(YankyGPutAfter)
