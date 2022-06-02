@@ -18,7 +18,9 @@ require('lualine').setup {
           warn = { fg = utils.extract_color_from_hllist('fg', { 'DiagnosticSignWarn' }, nil) },
           info = { fg = utils.extract_color_from_hllist('fg', { 'DiagnosticSignInformation' }, nil) },
           hint = { fg = utils.extract_color_from_hllist('fg', { 'DiagnosticSignHint' }, nil) }
-        }
+        },
+        always_visible = true,
+        cond = function() return vim.lsp.buf.server_ready() end
       }
     },
     lualine_c = {'filename'},
