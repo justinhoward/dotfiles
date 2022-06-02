@@ -11,10 +11,6 @@ Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-fugitive'
 " GitHub extension for fugitive
 Plug 'tpope/vim-rhubarb'
-" Buffer tabs for lightline
-Plug 'mgee/lightline-bufferline'
-" Status line formatting
-Plug 'itchyny/lightline.vim'
 " Automatic quoting and unquoting
 Plug 'tpope/vim-surround'
 " Commment/uncomment
@@ -92,7 +88,13 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'mfussenegger/nvim-dap'
 " DAP virtual text hints
 Plug 'theHamsta/nvim-dap-virtual-text'
-
+" Yankring and yank history
 Plug 'gbprod/yanky.nvim'
+" GH wrapper reviewing PRs, etc
+Plug 'ldelossa/gh.nvim'
+" Helper for gh.nvim
+Plug 'ldelossa/litee.nvim'
+" Statusline
+Plug 'nvim-lualine/lualine.nvim'
 
 call plug#end()
