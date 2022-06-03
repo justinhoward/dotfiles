@@ -1,3 +1,3 @@
 # ~/.zshrc
 
-source ~/.dotfilesrc
+. ~/.dotfilesrc

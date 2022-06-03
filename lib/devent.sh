@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
 devent() {
-	local event_modules module
+  local event_modules module reassign
 
-	if [ "$dotfiles_shell" = 'zsh' ]; then
-		eval "event_modules=(\${devent_$1})"
-	else
-		eval "event_modules=\${devent_$1[@]}"
-	fi
-
-	for module in "${event_modules[@]}"; do
-		dmodload "$module"
-	done
+  reassign='event_modules=("${devent_'
+  reassign+="$1"
+  reassign+='[@]}")'
+  eval "$reassign"
+  for module in "${event_modules[@]}"; do
+    dmodload "$module"
+  done
 }
