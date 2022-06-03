@@ -1,56 +1,57 @@
 devent_load=(
-	path
-	browser
-	umask
-	language
-	temp
+  path
+  browser
+  umask
+  language
+  temp
 )
 
 devent_login=(
-	start-zsh
+  start-zsh
 )
 
 devent_interactive=(
-	terminal
-	prompt
-	prezto
-	editor
-	xdg
-	sudo
-	git
-	git-aliases
-	less-colors
-	vim
-	aws-cli
-	wdiff
-	fzf
-	zoxide
-	ruby
-	chruby
-	docker
-	composer
-	neomutt
-	ssh-agent
-	osx-gnu
-	dstask
+  terminal
+  prompt
+  prezto
+  editor
+  xdg
+  sudo
+  git
+  less-colors
+  vim
+  aws-cli
+  wdiff
+  fzf
+  zoxide
+  ruby
+  chruby
+  docker
+  composer
+  neomutt
+  ssh-agent
+  osx-gnu
+  dstask
   markdownlint
-	jira-terminal
+  jira-terminal
+  git-aliases
+  exa
 )
 
 devent_xorg=(
-	screen-layout
-	key-rate
-	set-background
-	set-cursor
-	xdg
-	xsettingsd
-	gnome-keyring
-	xautolock
-	imwheel
-	parcellite
-	rsibreak
+  screen-layout
+  key-rate
+  set-background
+  set-cursor
+  xdg
+  xsettingsd
+  gnome-keyring
+  xautolock
+  imwheel
+  parcellite
+  rsibreak
 )
 
 devent_xorg_exec=(
-	awesome
+  awesome
 )
