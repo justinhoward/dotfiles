@@ -7,6 +7,11 @@ fzf_lua.setup({
   files = {
     fd_opts = "--color=never --type f --hidden --no-ignore --exclude .git"
   },
+  git = {
+    files = {
+      cmd = 'git ls-files --exclude-standard --others --cached'
+    }
+  },
   lsp = {
     jump_to_single_result = true
   }
