@@ -1,32 +1,37 @@
-# Justin Howard's Dotfiles
+Justin Howard's Dotfiles
+===============================
 
-Most dotfiles solutions cater to a single environment like a certain shell. This project is
-intended to organize dotfiles for every environment including non-interactive shells. It uses
-a module system like some other dotfile repositories.
+Most dotfiles solutions cater to a single environment like a certain shell. This
+project is intended to organize dotfiles for every environment including
+non-interactive shells. It uses a module system like some other dotfile
+repositories.
 
-Most of the flashy fun stuff in this setup comes from the [Prezto](https://github.com/sorin-ionescu/prezto)
-ZSH dotfile system. Be sure to check out what it can do.
+Most of the flashy fun stuff in this setup comes from the
+[Prezto](https://github.com/sorin-ionescu/prezto) ZSH dotfile system.
+Be sure to check out what it can do.
 
-## Installation
+Installation
+--------------------
 
 Clone the repository into your home directory
 
-``` bash
+```bash
 git clone git@github.com:justinhoward/dotfiles.git ~/.dotfiles
 ```
 
-Run the install script. This will backup your existing dotfiles to `<name>.bak` and symlink
-to the ones in the dotfiles repository.
+Run the install script. This will backup your existing dotfiles to `<name>.bak`
+and symlink to the ones in the dotfiles repository.
 
-``` bash
+```bash
 cd ~/.dotfiles
 make
 ```
 
 ## Fonts
 
-The default theme requires a patched [powerline font](https://github.com/powerline/fonts). You can install one, or change the
-theme to a different prezto theme.
+The default theme requires a patched
+[powerline font](https://github.com/powerline/fonts). You can install one,
+or change the theme to a different prezto theme.
 
 ## Customizing
 
@@ -41,8 +46,8 @@ To update `dotfiles` itself and all its modules, run `make update`.
 
 ## Modules
 
-A module is a directory inside the `modules` directory. Modules can contain a mixture
-of scripts to load at runtime, installation scripts, and config files.
+A module is a directory inside the `modules` directory. Modules can contain a
+mixture of scripts to load at runtime, installation scripts, and config files.
 
 ### Events
 
@@ -56,7 +61,7 @@ which events. Events are fired in the following order.
 - `interactive`: Only run if in an interactive shell
 - `login`: Only run if in a login shell
 - `xorg_init`: Only run in an X context.
-    This is last, so use it to exec your window manager.
+  This is last, so use it to exec your window manager.
 
 ### Parts
 
@@ -65,7 +70,8 @@ configuration scripts.
 
 #### Initialization
 
-Initialization happens at runtime when an event is triggered and loads a module.  It is made up of three stages.
+Initialization happens at runtime when an event is triggered and loads a module.
+It is made up of three stages.
 
 - `preinit`
 - `init`
@@ -118,18 +124,18 @@ Dotfiles provides some utility functions for loading modules
 - `dcheck(command)`: Checks if `command` is available. Returns a 0 code if it is.
 - `dcolors()`: Sets color code variables like `dred`, `dcyan`, `ddefault`, etc.
 - `dconfig(name)`: Uses `dload` to load configuration files in the `config` directory
-- `denv()`: Sets the dotfiles_* variables described above
+- `denv()`: Sets the dotfiles\_\* variables described above
 - `devent(name)`: Runs the `name` event. If the `devent_<name>` variable is an array
-    of module names, those modules will be loaded. See `config/modules.sh`
+  of module names, those modules will be loaded. See `config/modules.sh`
 - `dinstall(source, name, dest)`: When `source` is a path, copies `$source` and `$source.sh`
-    to `dest` and renames it to `name`. Used for installing config files.
+  to `dest` and renames it to `name`. Used for installing config files.
 - `dload(path)`: Provides the `.sh`, then directory loading sequence as used in each
-    module load stage
+  module load stage
 - `dmodload(name)`: Loads the `name` module. Does nothing if the module is already loaded.
 - `drecommend(command)`: If command is not installed, prints a recommendation.
 - `dremove(path)`: Backs up and removes the file or directory at `path`.
 - `drequire(command)`: If command is not installed, prints an error and exits.
 - `dsymlink(target, link)`: Creates a symbolic link from the path `link` to `target`. If
-    link exists, it is backed up. `target` is a relative path from `$DOTFILES_PATH`.
+  link exists, it is backed up. `target` is a relative path from `$DOTFILES_PATH`.
 
 [Licensed](LICENSE.txt) under the MIT License.
