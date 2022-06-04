@@ -35,14 +35,17 @@ nnoremap <silent> <leader>w :w<cr>
 " FZF
 nnoremap <silent> <leader>p <cmd>lua require('fzf-lua').git_files()<cr>
 nnoremap <silent> <leader>P <cmd>lua require('fzf-lua').files()<cr>
-nnoremap <silent> <leader>g <cmd>lua require('fzf-lua').live_grep_native()<cr>
+nnoremap <silent> <leader>gg <cmd>lua require('fzf-lua').live_grep()<cr>
+vnoremap <silent> <leader>gg <cmd>lua require('fzf-lua').grep_visual()<cr>
+nnoremap <silent> <leader>gw <cmd>lua require('fzf-lua').grep_cword()<cr>
+nnoremap <silent> <leader>gW <cmd>lua require('fzf-lua').grep_cWORD()<cr>
 nnoremap <leader>y :YankyRingHistory<cr>
 
 " Find
 nnoremap <leader>s :Rg<c-space>
 nnoremap <leader>S :Rg -u<c-space>
 
-" Lightline
+" Lualine status line
 nmap <silent> <Leader>1 :LualineBuffersJump 1<cr>
 nmap <silent> <Leader>2 :LualineBuffersJump 2<cr>
 nmap <silent> <Leader>3 :LualineBuffersJump 3<cr>
@@ -80,6 +83,7 @@ nnoremap <silent> <leader>cp :cprevious<cr>
 nnoremap <silent> <leader>cf :cnfile<cr>
 nnoremap <silent> <leader>cF :cpfile<cr>
 nnoremap <silent> <leader>ch :chistory<cr>
+nnoremap <silent> <leader>cs <cmd>lua require('fzf-lua').quickfix({})<cr>
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands
