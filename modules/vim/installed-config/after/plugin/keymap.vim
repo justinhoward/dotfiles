@@ -35,7 +35,12 @@ nnoremap <silent> <leader>w :w<cr>
 " FZF
 nnoremap <silent> <leader>p <cmd>lua require('fzf-lua').git_files()<cr>
 nnoremap <silent> <leader>P <cmd>lua require('fzf-lua').files()<cr>
+nnoremap <silent> <leader>g <cmd>lua require('fzf-lua').live_grep_native()<cr>
 nnoremap <leader>y :YankyRingHistory<cr>
+
+" Find
+nnoremap <leader>s :Rg<c-space>
+nnoremap <leader>S :Rg -u<c-space>
 
 " Lightline
 nmap <silent> <Leader>1 :LualineBuffersJump 1<cr>
@@ -75,10 +80,6 @@ nnoremap <silent> <leader>cp :cprevious<cr>
 nnoremap <silent> <leader>cf :cnfile<cr>
 nnoremap <silent> <leader>cF :cpfile<cr>
 nnoremap <silent> <leader>ch :chistory<cr>
-
-" Find
-nnoremap <leader>s :Rg<c-space>
-nnoremap <leader>S :Rg -u<c-space>
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands
