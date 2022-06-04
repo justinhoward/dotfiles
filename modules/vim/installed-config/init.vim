@@ -19,8 +19,6 @@ Plug 'numToStr/Comment.nvim'
 Plug 'embear/vim-localvimrc'
 " Syntax for any language
 Plug 'sheerun/vim-polyglot'
-" Detect indentation
-Plug 'tpope/vim-sleuth'
 " Read editorconfig files
 Plug 'editorconfig/editorconfig-vim'
 " Show vertical indent guides
