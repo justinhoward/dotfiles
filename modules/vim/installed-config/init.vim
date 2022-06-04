@@ -5,6 +5,10 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" textobj for treesitter queries
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+" Refactoring and highlighting with treesitter
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
 " Monokai Color Scheme
 Plug 'sainnhe/sonokai'
 " Git tools
@@ -13,6 +17,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 " Automatic quoting and unquoting
 Plug 'tpope/vim-surround'
+" Repeat (.) support for vim-surround
+Plug 'tpope/vim-repeat'
 " Commment/uncomment
 Plug 'numToStr/Comment.nvim'
 " Project-local vimrc files
@@ -20,7 +26,7 @@ Plug 'embear/vim-localvimrc'
 " Syntax for any language
 Plug 'sheerun/vim-polyglot'
 " Read editorconfig files
-Plug 'editorconfig/editorconfig-vim'
+Plug 'gpanders/editorconfig.nvim'
 " Show vertical indent guides
 Plug 'lukas-reineke/indent-blankline.nvim'
 " Search in vim with ripgrep
@@ -36,8 +42,6 @@ Plug 'stevearc/aerial.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 " FZF Fuzzy finder (requires fzf binary)
 Plug 'ibhagwan/fzf-lua'
-" Repeat (.) support for plugins
-Plug 'tpope/vim-repeat'
 " Generate tag files automatically
 Plug 'ludovicchabant/vim-gutentags'
 " Snippet support
@@ -56,8 +60,6 @@ Plug 'chrisbra/csv.vim'
 Plug 'kana/vim-textobj-user'
 " textobj for current line
 Plug 'kana/vim-textobj-line'
-" textobj for treesitter queries
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " sudo workaround until https://github.com/neovim/neovim/issues/1496 is resolved
 Plug 'lambdalisue/suda.vim'
 " Better * navigation
@@ -77,6 +79,7 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
+Plug 'lukas-reineke/cmp-rg'
 Plug 'hrsh7th/nvim-cmp'
 " Color highlighter
 Plug 'norcalli/nvim-colorizer.lua'

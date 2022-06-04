@@ -79,7 +79,6 @@ nnoremap <silent> <leader>ch :chistory<cr>
 " Find
 nnoremap <leader>s :Rg<c-space>
 nnoremap <leader>S :Rg -u<c-space>
-nnoremap <leader>/ :nohlsearch<cr>
 
 " Asterisk
 " We reverse the mappings so that the z (stay) commands

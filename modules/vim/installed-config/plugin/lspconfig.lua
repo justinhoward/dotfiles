@@ -100,7 +100,6 @@ null_ls.setup({
         require("null-ls").builtins.formatting.rubocop._opts.args
       )
     }),
-    null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.diagnostics.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
     null_ls.builtins.diagnostics.yamllint.with({ filetypes = {'yaml'} }),
     null_ls.builtins.formatting.erb_lint.with({

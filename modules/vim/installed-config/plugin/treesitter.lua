@@ -22,4 +22,8 @@ require'nvim-treesitter.configs'.setup {
       },
     },
   },
+  -- nvim-treesitter/nvim-treesitter-refactor
+  refactor = {
+    highlight_definitions = { enable = true }
+  }
 }
