@@ -79,6 +79,7 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
+Plug 'ray-x/cmp-treesitter'
 Plug 'lukas-reineke/cmp-rg'
 Plug 'hrsh7th/nvim-cmp'
 " Color highlighter

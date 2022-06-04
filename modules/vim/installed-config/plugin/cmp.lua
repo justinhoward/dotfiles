@@ -1,8 +1,36 @@
-local cmp = require'cmp'
+local cmp = require('cmp')
 
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
+
+local kind_icons = {
+  text = "",
+  method = "",
+  ['function'] = "",
+  constructor = "",
+  field = "",
+  variable = "",
+  class = "ﴯ",
+  interface = "",
+  module = "",
+  property = "ﰠ",
+  unit = "",
+  value = "",
+  enum = "",
+  keyword = "",
+  snippet = "",
+  color = "",
+  file = "",
+  reference = "",
+  folder = "",
+  enumMember = "",
+  constant = "",
+  struct = "",
+  event = "",
+  operator = "",
+  typeParameter = ""
+}
 
 cmp.setup({
   snippet = {
@@ -57,12 +85,19 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
+    { name = 'treesitter' },
+    { name = 'rg' },
   }, {
     { name = 'buffer' },
-    { name = 'rg' },
   }),
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered()
+  },
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.kind = string.format('%s %s', kind_icons[string.lower(vim_item.kind)], vim_item.kind)
+      return vim_item
+    end
   }
 })
