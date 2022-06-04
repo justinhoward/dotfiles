@@ -27,4 +27,4 @@ function! s:toggle_list_window(bufname, pfx)
   endif
 endfunction
 
-command! QuickfixToggle call <SID>toggle_list_window('Quickfix List', 'c')<cr>
+command! QuickfixToggle call <SID>toggle_list_window('Quickfix List', 'c')
