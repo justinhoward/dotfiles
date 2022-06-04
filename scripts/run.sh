@@ -18,5 +18,5 @@ else
 fi
 
 if [ -n "$dotfiles_xorg" ]; then
-	devent xorg_exec
+  devent xorg_exec
 fi

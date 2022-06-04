@@ -1,3 +1,3 @@
 if dcheck VBoxClient-all; then
-	VBoxClient-all
+  VBoxClient-all
 fi

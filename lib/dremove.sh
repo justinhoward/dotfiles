@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 dremove() {
-	local path="$1"
+  local path="$1"
 
-	dbackup path
+  dbackup path
 
-	if [ -e "$path" ]; then
-		echo "Removing $path"
-		rm -rf "$path"
-	fi
+  if [ -e "$path" ]; then
+    echo "Removing $path"
+    rm -rf "$path"
+  fi
 }

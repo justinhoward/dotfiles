@@ -2,7 +2,7 @@
 set incsearch
 
 if has('nvim')
-	set inccommand=split
+  set inccommand=split
 endif
 
 " Search case sensitively only if query contains uppercase characters

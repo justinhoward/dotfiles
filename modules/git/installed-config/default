@@ -2,10 +2,10 @@
   pager = delta
 
 [color "diff"]
-	frag = magenta
-	meta = yellow
-	new = green
-	old = red
+  frag = magenta
+  meta = yellow
+  new = green
+  old = red
 
 [merge]
   tool = nvimdiff

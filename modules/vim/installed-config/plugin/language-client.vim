@@ -1,6 +1,6 @@
 " LanguageClient-neovim
 let g:LanguageClient_serverCommands = {
-	\ 'ruby': ['solargraph', 'stdio']
+  \ 'ruby': ['solargraph', 'stdio']
   \ }
 
 " vim-lsc

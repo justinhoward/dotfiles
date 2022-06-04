@@ -1,3 +1,3 @@
 if dcheck vmware-user; then
-	vmware-user
+  vmware-user
 fi

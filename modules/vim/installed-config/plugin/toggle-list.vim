@@ -3,7 +3,7 @@ if &cp || exists('g:toggle_list_loaded')
 endif
 
 if !exists('g:toggle_list_minimal')
-  let g:toggle_list_minimal = "trail:-,precedes:«,extends:»"
+  let g:toggle_list_minimal = "trail:-,precedes:«,extends:»,tab:\ \ "
 endif
 
 if !exists('g:toggle_list_normal')
