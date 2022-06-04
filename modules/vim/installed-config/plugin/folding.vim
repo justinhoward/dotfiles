@@ -3,6 +3,8 @@ set foldexpr=nvim_treesitter#foldexpr()
 set foldenable
 " Default plus jump
 set foldopen=block,hor,mark,percent,quickfix,search,tag,undo,jump
+" Turn off fill dots .....
+set fillchars=fold:\ 
 
 " Folding
 function! s:toggle_fold_method()
@@ -16,4 +18,4 @@ function! s:toggle_fold_method()
   endif
 endfunction
 
-command! FoldToggle call <SID>toggle_fold_method()<cr>
+command! FoldToggle call <SID>toggle_fold_method()

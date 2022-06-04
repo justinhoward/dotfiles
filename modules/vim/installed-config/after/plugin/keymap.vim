@@ -1,5 +1,5 @@
 " Move between windows with alt hjkl from any mode
-tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-h> <C-<silent> \><C-N><C-w>h
 tnoremap <A-j> <C-\><C-N><C-w>j
 tnoremap <A-k> <C-\><C-N><C-w>k
 tnoremap <A-l> <C-\><C-N><C-w>l
@@ -13,23 +13,24 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
 " Delete current buffer normally (removes splits)
-nnoremap <A-x> :bdelete<cr>
+nnoremap <silent> <A-x> :bdelete<cr>
 
 " Delete current buffer with bbye
-nnoremap <leader>x :Bdelete<cr>
+nnoremap <silent> <leader>x :Bdelete<cr>
 
 " Nvim Tree
-nnoremap <leader>e :NvimTreeToggle<cr>
-nnoremap <leader>E :NvimTreeFindFile<cr>
+nnoremap <silent> <leader>e :NvimTreeToggle<cr>
+nnoremap <silent> <leader>E :NvimTreeFindFile<cr>
 
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
 
-" Symbols outline
-nnoremap <leader>o :SymbolsOutline<cr>
+" Aerial file tree
+nnoremap <silent> <leader>o :AerialToggle<cr>
+nnoremap <silent> <leader>O :AerialToggle!<cr>
 
 " Save file
-nnoremap <leader>w :w<cr>
+nnoremap <silent> <leader>w :w<cr>
 
 " FZF
 nnoremap <silent> <leader>p <cmd>lua require('fzf-lua').git_files()<cr>
@@ -57,14 +58,13 @@ imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 " Indent Guides
-unmap <leader>ig
-nnoremap <leader>vi :IndentGuidesToggle<cr>
+nnoremap <silent> <leader>vi :IndentBlanklineToggle<cr>
 
 " Whitespace
-nnoremap <leader>vw :ToggleList<cr>
+nnoremap <silent> <leader>vw :ToggleList<cr>
 
 " Markdown Preview
-nnoremap <leader>vm :PrevimOpen<cr>
+nnoremap <silent> <leader>vm :PrevimOpen<cr>
 
 " Quickfix
 nnoremap <silent> <leader>cc :QuickfixToggle<cr>

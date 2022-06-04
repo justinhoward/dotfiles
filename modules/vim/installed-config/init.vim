@@ -14,7 +14,7 @@ Plug 'tpope/vim-rhubarb'
 " Automatic quoting and unquoting
 Plug 'tpope/vim-surround'
 " Commment/uncomment
-Plug 'b3nj5m1n/kommentary'
+Plug 'numToStr/Comment.nvim'
 " Project-local vimrc files
 Plug 'embear/vim-localvimrc'
 " Syntax for any language
@@ -23,10 +23,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-sleuth'
 " Read editorconfig files
 Plug 'editorconfig/editorconfig-vim'
-" Remove trailing whitespace with a command
-" Plug 'ntpeters/vim-better-whitespace'
 " Show vertical indent guides
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'lukas-reineke/indent-blankline.nvim'
 " Search in vim with ripgrep
 Plug 'jremmen/vim-ripgrep'
 " File browser
@@ -35,7 +33,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 " Undo tree browser
 Plug 'mbbill/undotree'
 " File outline
-Plug 'simrat39/symbols-outline.nvim'
+Plug 'stevearc/aerial.nvim'
 " Git status in the gutter and hunk editing
 Plug 'lewis6991/gitsigns.nvim'
 " FZF Fuzzy finder (requires fzf binary)
@@ -67,7 +65,7 @@ Plug 'lambdalisue/suda.vim'
 " Better * navigation
 Plug 'haya14busa/vim-asterisk'
 " Better buffer delete commands
-Plug 'moll/vim-bbye'
+Plug 'famiu/bufdelete.nvim'
 " Language server setup
 Plug 'neovim/nvim-lspconfig'
 " Show code action light bulb
