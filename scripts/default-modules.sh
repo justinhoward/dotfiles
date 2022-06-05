@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# Allow unused variables
+# shellcheck disable=2034
+
 devent_load=(
   path
   browser

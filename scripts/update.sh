@@ -4,7 +4,7 @@
 
 (
   echo "Updating dotfiles core"
-  cd "$DOTFILES_PATH"
+  cd "$DOTFILES_PATH" || exit 1
   git fetch
   git merge
 )
@@ -16,4 +16,6 @@ for module in "$DOTFILES_PATH"/modules/*; do
   dload "$module/update"
 done
 
+# Allow referencing colors
+# shellcheck disable=2154
 echo -e "${dgreen}Dotfiles updated${ddefault}"

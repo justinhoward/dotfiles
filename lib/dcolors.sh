@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Allow unused variables
+# shellcheck disable=2034
 
 dcolors() {
   dblack='\033[0;30m'

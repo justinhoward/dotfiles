@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Ignore non-constant source
+# shellcheck disable=1090
 
 dload() {
   local load_path="$1" load_dir

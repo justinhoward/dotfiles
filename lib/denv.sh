@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Allow unused variables
+# shellcheck disable=2034
 
 function denv() {
   if test -n "$ZSH_VERSION"; then
@@ -15,7 +17,8 @@ function denv() {
     dotfiles_shell='sh'
   fi
 
-  local uname="$(uname)"
+  local uname
+  uname="$(uname)"
   if [ "$uname" = "Linux" ]; then
     dotfiles_platform=linux
   elif [ "$uname" = "Darwin" ]; then

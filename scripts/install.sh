@@ -15,4 +15,6 @@ for module in "$path"/modules/*; do
   dload "$module/install"
 done
 
+# Allow referencing colors
+# shellcheck disable=2154
 echo -e "${dgreen}Dotfiles installed${ddefault}"
