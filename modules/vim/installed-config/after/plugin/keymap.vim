@@ -1,5 +1,5 @@
 " Move between windows with alt hjkl from any mode
-tnoremap <A-h> <C-<silent> \><C-N><C-w>h
+tnoremap <A-h> <C-\><C-N><C-w>h
 tnoremap <A-j> <C-\><C-N><C-w>j
 tnoremap <A-k> <C-\><C-N><C-w>k
 tnoremap <A-l> <C-\><C-N><C-w>l
