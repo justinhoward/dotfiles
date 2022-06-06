@@ -29,7 +29,7 @@ devent_interactive=(
   fzf
   zoxide
   ruby
-  chruby
+  node
   docker
   composer
   neomutt
