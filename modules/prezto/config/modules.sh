@@ -11,12 +11,9 @@ zstyle ':prezto:load' pmodule \
   'history' \
   'history-substring-search' \
   'directory' \
-  'spectrum' \
   'completion' \
   'git' \
   'node' \
-  'rsync' \
-  'ruby' \
   'pacman' \
   'syntax-highlighting' \
   'prompt' \
