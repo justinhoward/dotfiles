@@ -1,3 +1,3 @@
 if dcheck fnm; then
-  eval "$(fnm env --use-on-cd)"
+  eval "$(fnm env --log-level=quiet --use-on-cd)"
 fi
