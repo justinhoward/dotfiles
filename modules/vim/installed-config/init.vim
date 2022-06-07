@@ -45,7 +45,7 @@ Plug 'ibhagwan/fzf-lua'
 " Generate tag files automatically
 Plug 'ludovicchabant/vim-gutentags'
 " Snippet support
-Plug 'hrsh7th/vim-vsnip'
+Plug 'L3MON4D3/LuaSnip'
 " Snippet repository
 Plug 'rafamadriz/friendly-snippets'
 " Context-aware split/join
@@ -75,11 +75,11 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
 " Completion
-Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'ray-x/cmp-treesitter'
 Plug 'lukas-reineke/cmp-rg'
 Plug 'hrsh7th/nvim-cmp'

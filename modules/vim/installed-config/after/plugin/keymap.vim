@@ -58,13 +58,13 @@ nmap <silent> <Leader>8 :LualineBuffersJump 8<cr>
 nmap <silent> <Leader>9 :LualineBuffersJump 9<cr>
 nmap <silent> <Leader>0 :LualineBuffersJump 0<cr>
 
-" Neosnippet
-imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+" Snippets
+imap <silent> <C-j> <Plug>luasnip-expand-or-jump
+smap <silent> <C-j> <Plug>luasnip-expand-or-jump
+imap <expr> <Tab>   luasnip#jumpable(1)  ? '<Plug>luasnip-jump-next'      : '<Tab>'
+smap <expr> <Tab>   luasnip#jumpable(1)  ? '<Plug>luasnip-jump-next'      : '<Tab>'
+imap <expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev'      : '<S-Tab>'
+smap <expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev'      : '<S-Tab>'
 
 " Indent Guides
 nnoremap <silent> <leader>vi :IndentBlanklineToggle<cr>
