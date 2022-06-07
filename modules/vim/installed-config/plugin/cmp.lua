@@ -36,7 +36,7 @@ cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   mapping = {
@@ -48,7 +48,20 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping({
+      -- Accept currently selected item.
+      -- Set `select` to `false` to only confirm explicitly selected items.
+      i = cmp.mapping.confirm({ select = false }),
+      c = function(fallback)
+        if cmp.visible() then
+          if not cmp.confirm({ select = false }) then
+            fallback()
+          end
+        else
+          fallback()
+        end
+      end
+    }),
     ['<C-n>'] = cmp.mapping({
           c = function()
               if cmp.visible() then
@@ -84,7 +97,7 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    { name = 'luasnip' },
     { name = 'treesitter' },
     { name = 'rg' },
   }, {
