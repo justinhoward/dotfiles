@@ -1,7 +1,7 @@
 default: install
 
 install:
-  ./scripts/install.sh
+	./scripts/install.sh
 
 update:
-  ./scripts/update.sh
+	./scripts/update.sh
