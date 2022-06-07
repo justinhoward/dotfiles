@@ -44,6 +44,7 @@ nnoremap <silent> <leader>sh <cmd>lua require('fzf-lua').live_grep({ rg_opts = '
 vnoremap <silent> <leader>sh <cmd>lua require('fzf-lua').grep_visual({ rg_opts = 'u', prompt = 'Rg -u❯ ' })<cr>
 nnoremap <silent> <leader>sw <cmd>lua require('fzf-lua').grep_cword()<cr>
 nnoremap <silent> <leader>sW <cmd>lua require('fzf-lua').grep_cWORD()<cr>
+nnoremap <silent> <leader>sl <cmd>lua require('fzf-lua').grep_last()<cr>
 
 " Lualine status line
 nmap <silent> <Leader>1 :LualineBuffersJump 1<cr>
