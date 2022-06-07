@@ -9,16 +9,6 @@ if dcheck composer; then
   fi
 fi
 
-# Homebrew Ruby
-if [ -e /usr/local/opt/ruby/bin/ruby ]; then
-  PATH="/usr/local/opt/ruby/bin:$PATH"
-fi
-
-# Ruby gems
-if dcheck ruby && dcheck gem; then
-  PATH="$(ruby -e 'puts Gem.paths.path.map { |p| "#{p}/bin" }.join(":")'):$PATH"
-fi
-
 # Rust cargo bin
 if [[ -d "$HOME/.cargo/bin" ]]; then
   PATH="$HOME/.cargo/bin:$PATH"
