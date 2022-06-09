@@ -69,7 +69,7 @@ FONT=(font=Hack Nerd Font Regular trim=true size=12 ansi=true)
 # example: SPACES=('I' 'II' 'III' 'IV' 'V' 'VI' 'VII' 'VIII' 'IX' 'X' 'XI' 'XII' 'XIII' 'XIV' 'XV' 'XVI') will give you roman neumerals up to 16 spaces.
 
 # SPACES=('•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•')
-SPACES=('1' '2' '3' '4' '5' '6' '7' '8' '9')
+SPACES=({1..16})
 
 # Choose your style. Options "NUMBER" and "CUSTOM".
 # NUMBER uses arabic neumerals e.g. 1, 2, 3, etc...
