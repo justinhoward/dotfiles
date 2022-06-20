@@ -12,7 +12,7 @@
 # Although very little of the original code remains, this plugin was inspired by James Won's "yabai/skhd helper" https://getbitbar.com/plugins/Tools/yabai_skhd.1s.sh
 
 # Sets unicode encoding to UTF-8. Fixes issues with displaying *many* but not *all* unicode charecters.
-export LANG="es_ES.UTF-8"
+export LANG="en_EN.UTF-8"
 
 # Exports the plugin to your $PATH to allow execution. Make sure you run `chmod +x yabai.1d.sh` after downloading
 export PATH=/usr/local/bin:$PATH
@@ -51,8 +51,11 @@ FONT="font='Hack Nerd Font' trim=true size=12 ansi=true"
 # Make sure you add '' around your elements
 # example: SPACES=('I' 'II' 'III' 'IV' 'V' 'VI' 'VII' 'VIII' 'IX' 'X' 'XI' 'XII' 'XIII' 'XIV' 'XV' 'XVI') will give you roman neumerals up to 16 spaces.
 
-# SPACES=('•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•' '•')
-SPACES=({1..16})
+SPACE_UNUSED='•'
+SPACE_USED='⦿'
+
+# The order that displays should appear in by index
+DISPLAYS=(3 1 2)
 
 # Choose weather or not you want to see the type of the current space. i.e. BSP, STACK, or FLOAT
 # Options, `true` or `false`
@@ -64,15 +67,6 @@ FLOAT="◈"
 SPACELEFT=""
 SPACERIGHT=""
 
-# Choose weather or not you want to see the type of the window. i.e. floating or managed
-# Options, `true` or `false`
-
-WINTYPE=false
-WINFLOAT="⦿"
-WINMANAGED="⦾"
-WINLEFT=" "
-WINRIGHT=" "
-
 # Set left and right separators for displays
 DISPLAYLEFT='['
 DISPLAYRIGHT='] '
@@ -81,51 +75,59 @@ DISPLAYRIGHT='] '
 # Don't edit anything below this point if you dont know what you're doing! #
 # -------------------------------------------------------------------------#
 
-CURRENT="$(yabai -m query --spaces --display | jq -r 'map(select(."has-focus" == true))[-1].index')"
-SPACES_COUNT="$(yabai -m query --spaces | jq -r '. | length')"
+current="$(yabai -m query --spaces --display | jq -r 'map(select(."has-focus" == true))[-1].index')"
+used_spaces="$(yabai -m query --windows | jq -r '[.[]["space"]] | unique | join(" ")')"
 
 if [ "$SPACETYPE" = true ]; then
   TYPE="$(yabai -m query --spaces --space | jq -r .type)"
 fi
 
-if [ "$WINTYPE" = true ]; then
-  WINDOW="$(yabai -m query --windows --window | jq -r .floating)" 2> /dev/null
-fi
+readarray -t all_display_spaces < <(yabai -m query --displays | jq -r '. | sort_by(.index)[] | [.index, .spaces[]] | join(" ")')
+string="$DEFAULT$LEFT" 
 
-readarray -t DISPLAY_SPACES < <(yabai -m query --displays | jq -r '.[].spaces |join(" ")')
-STRING="$DEFAULT$LEFT" 
+display_strs=()
+for display_str in "${all_display_spaces[@]}"; do 
+  readarray -d ' ' -t display_parts <<< "$display_str"
+  display_index="${display_parts[0]}"
+  display_spaces=("${display_parts[@]:1}")
+  display_str=''
 
-FIRST_SPACES=()
-LAST_SPACES=()
-for DISPLAY in "${DISPLAY_SPACES[@]}"; do 
-  readarray -d ' ' -t THIS_SPACES <<< "$DISPLAY"
-  FIRST_SPACES["${THIS_SPACES[0]}"]=1
-  LAST_SPACES["${THIS_SPACES[${#THIS_SPACES[@]} - 1]}"]=1
+  i=0
+  for space in "${display_spaces[@]}"; do
+    if [[ " ${used_spaces[*]} " = *" $space "* ]]; then
+      space_str="${SPACE_USED}"
+    else
+      space_str="${SPACE_UNUSED}"
+    fi
+
+    if [[ "$space" -eq "$current" ]]; then
+      space_str="$COLOR$SELECTLEFT$space_str$SELECTRIGHT$DEFAULT"
+    else
+      space_str="$DIV$space_str"
+    fi
+
+    if [[ "$i" -eq 0 ]]; then
+      space_str="$DISPLAYLEFT$space_str"
+    fi
+
+    if [[ "$i" -eq $(( ${#display_spaces[@]} - 1 )) ]]; then
+      space_str="$space_str$DISPLAYRIGHT"
+    else
+      space_str+=' '
+    fi
+
+    display_str+="$space_str"
+    i=$(( i + 1 ))
+  done
+
+  display_strs[${DISPLAYS[$display_index]}]="$display_str"
 done
 
-for i in $(seq 0 $(( SPACES_COUNT - 1))); do
-  SPACE_STR="${SPACES[$i]}"
-  if [ "$i" -eq "$CURRENT" ]; then
-    SPACE_STR="$COLOR$SELECTLEFT$SPACE_STR$SELECTRIGHT$DEFAULT"
-  else
-    SPACE_STR="$DIV$SPACE_STR"
-  fi
-
-  if [ -n "${FIRST_SPACES[i + 1]}" ]; then
-    SPACE_STR="$DISPLAYLEFT$SPACE_STR"
-  fi
-
-  if [ -n "${LAST_SPACES[i + 1]}" ]; then
-    SPACE_STR="$SPACE_STR$DISPLAYRIGHT"
-  else
-    SPACE_STR+=' '
-  fi
-
-  STRING+="$SPACE_STR"
+for dstr in "${display_strs[@]}"; do
+  string+="$dstr"
 done
 
-FINALSTRING="$STRING$RIGHT"
-
+string+="$RIGHT"
 
 if [[ $TYPE == bsp ]]; then
   TYPE=$BSP
@@ -137,26 +139,9 @@ else
   TYPE=''
 fi
 
-if [ -n "$WINDOW" ] && [[ "$WINDOW" -eq "0" ]]; then
-  WINDOW="$WINMANAGED"
-elif [ -n "$WINDOW" ] && [[ "$WINDOW" -eq "1" ]]; then
-  WINDOW="$WINFLOAT"
-else
-  WINDOW=''
-fi
+string=$string$SPACELEFT$TYPE$SPACERIGHT
 
-if [[ "$SPACETYPE" = true ]] && [[ "$WINTYPE" = true ]]; then
-  FINAL=$FINALSTRING$SPACELEFT$TYPE$SPACERIGHT$WINLEFT$WINDOW$WINRIGHT
-elif [[ "$SPACETYPE" = true ]]; then
-  FINAL=$FINALSTRING$SPACELEFT$TYPE$SPACERIGHT
-elif [[ "$WINTYPE" = true ]]; then
-  FINAL=$FINALSTRING$WINLEFT$WINDOW$WINRIGHT
-elif [[ "$SPACETYPE" = false ]] && [[ "$WINTYPE" = false ]]; then
-  FINAL=$FINALSTRING
-fi
-
-echo "$FINAL |" "${FONT[@]}"
-
+echo "$string |" "${FONT[@]}"
 echo "---"
 echo "Restart yabai & skhd | bash='$0' param1=restart terminal=false"
 echo "Stop yabai & skhd | bash='$0' param1=stop terminal=false"
