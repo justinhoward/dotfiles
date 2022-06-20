@@ -94,6 +94,7 @@ for display_str in "${all_display_spaces[@]}"; do
 
   i=0
   for space in "${display_spaces[@]}"; do
+    space="${space/$'\n'}"
     if [[ " ${used_spaces[*]} " = *" $space "* ]]; then
       space_str="${SPACE_USED}"
     else
