@@ -1,4 +1,4 @@
 if [[ "$dotfiles_platform" == 'osx' ]]; then
   drecommend skhd
-  dsymlink modules/skhd/skhdrc ~/.skhdrc
+  dsymlink modules/skhd/skhdrc ~/.config/skhd/skhdrc
 fi
