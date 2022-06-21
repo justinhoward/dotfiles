@@ -75,133 +75,199 @@
 # Apps
 #####################
 
-cmd - f1 : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
-cmd - f2 : /Applications/Firefox.app/Contents/MacOS/firefox
+cmd - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+
+:: app @
+alt - space ; app
+app < alt - space; default
+app < space; default
+
+app < return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d; skhd --key 'space'
+app < w : /Applications/Firefox.app/Contents/MacOS/firefox; skhd --key 'space'
+app < m : /Applications/Firefox.app/Contents/MacOS/firefox https://music.youtube.com; skhd --key 'space'
+app < s : /Applications/Slack.app/Contents/MacOS/Slack & skhd --key 'space'
+app < a : '/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop' & skhd --key 'space'
+
+#####################
+# Globals
+#####################
+
+# Disable cmd-h for hide
+cmd - h : true
 
 #####################
 # Yabai
 #####################
 
+# Mission control
+alt - m : yabai -m space --toggle mission-control
+alt + shift - m : yabai -m space --toggle show-desktop
+
 # focus window
-shift + ctrl - h : yabai -m window --focus west
-shift + ctrl - j : yabai -m window --focus south
-shift + ctrl - k : yabai -m window --focus north
-shift + ctrl - l : yabai -m window --focus east
+alt - h : type="$(yabai -m query --spaces --space | jq -re '.type')"; \
+  if [ "$type" = bsp ]; then \
+    yabai -m window --focus west; \
+  elif [ "$type" = stack ]; then \
+    yabai -m window --focus stack.last; \
+  else \
+    yabai -m window --focus "$(~/.config/skhd/scripts/yabai_next.sh first)"; \
+  fi
+alt - j : type="$(yabai -m query --spaces --space | jq -re '.type')"; \
+  if [ "$type" = bsp ]; then \
+    yabai -m window --focus south; \
+  elif [ "$type" = stack ]; then \
+    yabai -m window --focus stack.next; \
+  else \
+    yabai -m window --focus "$(~/.config/skhd/scripts/yabai_next.sh)"; \
+  fi
+alt - k : type="$(yabai -m query --spaces --space | jq -re '.type')"; \
+  if [ "$type" = bsp ]; then \
+    yabai -m window --focus north; \
+  elif [ "$type" = stack ]; then \
+    yabai -m window --focus stack.prev; \
+  else \
+    yabai -m window --focus "$(~/.config/skhd/scripts/yabai_next.sh -1)"; \
+  fi
+alt - l : type="$(yabai -m query --spaces --space | jq -re '.type')"; \
+  if [ "$type" = bsp ]; then \
+    yabai -m window --focus east; \
+  elif [ "$type" = stack ]; then \
+    yabai -m window --focus stack.first; \
+  else \
+    yabai -m window --focus "$(~/.config/skhd/scripts/yabai_next.sh last)"; \
+  fi
 
-# swap managed window
-shift + alt - h : yabai -m window --swap west
-shift + alt - j : yabai -m window --swap south
-shift + alt - k : yabai -m window --swap north
-shift + alt - l : yabai -m window --swap east
+alt - p : yabai -m window --focus "$(~/.config/skhd/scripts/yabai_next.sh -1)"
+alt - n : yabai -m window --focus "$(~/.config/skhd/scripts/yabai_next.sh)"
 
-# move managed window
-# shift + cmd - h : yabai -m window --warp east
+# move window
+alt + shift - h : type="$(yabai -m query --spaces --space | jq -re '.type')"; \
+  if [ "$type" = bsp ]; then \
+    yabai -m window --warp west; \
+  elif [ "$type" = stack ]; then \
+    true; \
+  else \
+    true; \
+  fi
+alt + shift - j : yabai -m window --warp south
+alt + shift - k : yabai -m window --warp north
+alt + shift - l : yabai -m window --warp east
+
+alt + shift - p : yabai -m window --warp "$(~/.config/skhd/scripts/yabai_next.sh -1)"
+alt + shift - n : yabai -m window --warp "$(~/.config/skhd/scripts/yabai_next.sh)"
 
 # balance size of windows
-# shift + alt - 0 : yabai -m space --balance
+alt - 0 : yabai -m space --balance
 
-# make floating window fill screen
-# shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
+# create desktop, move window and follow focus
+alt - return : yabai -m space --create && \
+  idx="$(yabai -m query --spaces --display | jq -er 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
+  yabai -m window --space "${idx}" && \
+  yabai -m space --focus "${idx}"
 
-# make floating window fill left-half of screen
-# shift + alt - left   : yabai -m window --grid 1:2:0:0:1:1
-
-# create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-# shift + cmd - n : yabai -m space --create && \
-#                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-#                   yabai -m window --space "${index}" && \
-#                   yabai -m space --focus "${index}"
+alt + shift - return : yabai -m space --destroy
 
 # fast focus desktop
-shift + ctrl - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" && yabai -m space --focus "$idx"
-shift + ctrl - 2 : idx="$(yabai -m query --spaces --display | jq -er '.[1].index')" && yabai -m space --focus "$idx"
-shift + ctrl - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" && yabai -m space --focus "$idx"
-shift + ctrl - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" && yabai -m space --focus "$idx"
-shift + ctrl - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" && yabai -m space --focus "$idx"
+alt - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" && yabai -m space --focus "$idx"
+alt - 2 : idx="$(yabai -m query --spaces --display | jq -er '.[1].index')" && yabai -m space --focus "$idx"
+alt - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" && yabai -m space --focus "$idx"
+alt - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" && yabai -m space --focus "$idx"
+alt - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" && yabai -m space --focus "$idx"
 
 # send window to desktop and follow focus
-shift + alt - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" \
+alt + shift - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" \
   && yabai -m window --space "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 2 : idx="$(yabai -m query --spaces --display | jq -er '.[1].index')" \
+alt + shift - 2 : idx="$(yabai -m query --spaces --display | jq -er '.[1].index')" \
   && yabai -m window --space "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" \
+alt + shift - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" \
   && yabai -m window --space "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" \
+alt + shift - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" \
   && yabai -m window --space "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" \
+alt + shift - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" \
   && yabai -m window --space "$idx" \
   && yabai -m space --focus "$idx"
 
 # move whole space to another space and follow focus
-shift + alt - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" \
+alt + shift + ctrl - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" \
   && yabai -m space --move "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 2 : idx="$(yabai -m query --spaces --display | jq -er '.[1].index')" \
+alt + shift + ctrl - 2 : idx="$(yabai -m query --spaces --display | jq -er '.[1].index')" \
   && yabai -m space --move "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" \
+alt + shift + ctrl - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" \
   && yabai -m space --move "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" \
+alt + shift + ctrl - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" \
   && yabai -m space --move "$idx" \
   && yabai -m space --focus "$idx"
-shift + alt - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" \
+alt + shift + ctrl - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" \
   && yabai -m space --move "$idx" \
   && yabai -m space --focus "$idx"
 
 # focus display
-shift + ctrl - w : yabai -m display --focus 1
-shift + ctrl - e : yabai -m display --focus 2
-shift + ctrl - q : yabai -m display --focus 3
+alt - q : yabai -m display --focus 3
+alt - w : yabai -m display --focus 1
+alt - e : yabai -m display --focus 2
 
 # send window to display and follow focus
-shift + alt - w : yabai -m window --display 1; yabai -m display --focus 1
-shift + alt - e : yabai -m window --display 2; yabai -m display --focus 2
-shift + alt - q : yabai -m window --display 3; yabai -m display --focus 3
+alt + shift - q : yabai -m window --display 3; yabai -m display --focus 3
+alt + shift - w : yabai -m window --display 1; yabai -m display --focus 1
+alt + shift - e : yabai -m window --display 2; yabai -m display --focus 2
 
 # move current space to display and follow focus
-shift + ctrl + alt - w : yabai -m space --display 1; yabai -m display --focus 1
-shift + ctrl + alt - e : yabai -m space --display 2; yabai -m display --focus 2
-shift + ctrl + alt - q : yabai -m space --display 3; yabai -m display --focus 3
-
-# move floating window
-# shift + ctrl - a : yabai -m window --move rel:-20:0
-# shift + ctrl - s : yabai -m window --move rel:0:20
+alt + shift + ctrl - w : yabai -m space --display 1; yabai -m display --focus 1
+alt + shift + ctrl - e : yabai -m space --display 2; yabai -m display --focus 2
+alt + shift + ctrl - q : yabai -m space --display 3; yabai -m display --focus 3
 
 # increase window size
-# shift + alt - a : yabai -m window --resize left:-20:0
-# shift + alt - w : yabai -m window --resize top:0:-20
-
-# decrease window size
-# shift + cmd - s : yabai -m window --resize bottom:0:-20
-# shift + cmd - w : yabai -m window --resize top:0:20
-
-# set insertion point in focused container
-# ctrl + alt - h : yabai -m window --insert west
-
-# toggle window zoom
-shift + alt - f : yabai -m window --toggle zoom-fullscreen
-
-# toggle window split type
-shift + alt - s : yabai -m window --toggle split
+alt - i : if [ "$(yabai -m query --windows --window | jq -re '."is-floating"')" = true ]; then \
+    yabai -m window --resize bottom_right:100:100; \
+    yabai -m window --resize top_left:-100:-100; \
+  else \
+    yabai -m window --ratio rel:0.1; \
+  fi
+alt - o : if [ "$(yabai -m query --windows --window | jq -re '."is-floating"')" = true ]; then \
+    yabai -m window --resize bottom_right:-100:-100; \
+    yabai -m window --resize top_left:100:100; \
+  else \
+    yabai -m window --ratio rel:-0.1; \
+  fi
 
 # float / unfloat window and center
-shift + alt - a : yabai -m window --toggle float;\
+alt + shift - a : yabai -m window --toggle float;\
   yabai -m window --grid 6:6:1:1:4:4;
 
-# set space layout type
-shift + alt - z : yabai -m space --layout bsp; \
-  open -gj 'swiftbar://refreshplugin?name=yabai'
-shift + alt - x : yabai -m space --layout stack; \
-  open -gj 'swiftbar://refreshplugin?name=yabai'
-shift + alt - c : yabai -m space --layout float; \
-  open -gj 'swiftbar://refreshplugin?name=yabai'
+# toggle window split type
+alt + shift - s : yabai -m window --toggle split
 
 # toggle sticky(+float), topmost, picture-in-picture
-shift + alt - p : yabai -m window --toggle sticky;\
+alt + shift - d : yabai -m window --toggle sticky;\
   yabai -m window --toggle topmost;\
   yabai -m window --toggle pip
+
+# toggle window zoom (fullscreen)
+alt + shift - f : yabai -m window --toggle zoom-fullscreen
+
+# set space layout type
+alt - z : yabai -m space --layout bsp; \
+  open -gj 'swiftbar://refreshplugin?name=yabai'
+alt - x : yabai -m space --layout stack; \
+  open -gj 'swiftbar://refreshplugin?name=yabai'
+alt - c : yabai -m space --layout float; \
+  open -gj 'swiftbar://refreshplugin?name=yabai'
+
+:: yabai_insert @
+# alt - ; to enter/exit yabai_insert mode
+alt - 0x29 ; yabai_insert
+yabai_insert < 0x29 ; default
+yabai_insert < alt - 0x29 ; default
+
+yabai_insert < h : yabai -m window --insert west; skhd --key "0x29"
+yabai_insert < j : yabai -m window --insert south; skhd --key "0x29"
+yabai_insert < k : yabai -m window --insert north; skhd --key "0x29"
+yabai_insert < l : yabai -m window --insert east; skhd --key "0x29"
+yabai_insert < s : yabai -m window --insert stack; skhd --key "0x29"

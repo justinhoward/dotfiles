@@ -29,7 +29,7 @@ yabai -m config window_border                off
 yabai -m config window_border_width          6
 yabai -m config active_window_border_color   0xff775759
 yabai -m config normal_window_border_color   0xff555555
-yabai -m config insert_feedback_color        0xffd75f5f
+yabai -m config insert_feedback_color        0x5525c613
 yabai -m config split_ratio                  0.50
 yabai -m config auto_balance                 off
 yabai -m config mouse_modifier               ctrl
@@ -45,12 +45,14 @@ yabai -m config left_padding                 0
 yabai -m config right_padding                0
 yabai -m config window_gap                   0
 
-refresh_xbar="open -gj 'swiftbar://refreshPlugin?name=yabai.1d.sh'"
+refresh_xbar="open -gj 'swiftbar://refreshplugin?name=yabai'"
 yabai -m signal --add event=space_changed action="$refresh_xbar"
 yabai -m signal --add event=display_added action="$refresh_xbar"
 yabai -m signal --add event=display_removed action="$refresh_xbar"
 yabai -m signal --add event=display_changed action="$refresh_xbar"
 yabai -m signal --add event=display_moved action="$refresh_xbar"
 yabai -m signal --add event=mission_control_exit action="$refresh_xbar"
+
+yabai -m rule --add app='Authy Desktop' sticky=on layer=above opacity=0.5
 
 echo "yabai configuration loaded.."

@@ -60,10 +60,9 @@ DISPLAYS=(3 1 2)
 # Choose weather or not you want to see the type of the current space. i.e. BSP, STACK, or FLOAT
 # Options, `true` or `false`
 
-SPACETYPE=true
-BSP="◇"
-STACK="◆"
-FLOAT="◈"
+BSP="﩯 "
+STACK=" "
+FLOAT=" "
 SPACELEFT=""
 SPACERIGHT=""
 
@@ -71,16 +70,10 @@ SPACERIGHT=""
 DISPLAYLEFT='['
 DISPLAYRIGHT='] '
 
-# -------------------------------------------------------------------------#
-# Don't edit anything below this point if you dont know what you're doing! #
-# -------------------------------------------------------------------------#
-
 current="$(yabai -m query --spaces --display | jq -r 'map(select(."has-focus" == true))[-1].index')"
 used_spaces="$(yabai -m query --windows | jq -r '[.[]["space"]] | unique | join(" ")')"
 
-if [ "$SPACETYPE" = true ]; then
-  TYPE="$(yabai -m query --spaces --space | jq -r .type)"
-fi
+TYPE="$(yabai -m query --spaces --space | jq -r .type)"
 
 readarray -t all_display_spaces < <(yabai -m query --displays | jq -r '. | sort_by(.index)[] | [.index, .spaces[]] | join(" ")')
 string="$DEFAULT$LEFT" 
