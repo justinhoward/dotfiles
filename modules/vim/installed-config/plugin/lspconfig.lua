@@ -40,11 +40,18 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.range_formatting()<cr>', opts)
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 local flags = {
   debounce_text_changes = 150,
+}
+
+-- Add cmp completion capabilities
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+-- Add ufo folding capability
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true
 }
 
 -- Default configs
@@ -56,6 +63,8 @@ for _, lsp in ipairs(servers) do
     flags = flags
   }
 end
+
+require('ufo').setup()
 
 -- Individual configs
 nvim_lsp.solargraph.setup {

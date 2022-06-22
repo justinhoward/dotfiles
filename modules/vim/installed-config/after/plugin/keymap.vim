@@ -100,8 +100,6 @@ map z#  <Plug>(asterisk-#)
 map gz* <Plug>(asterisk-g*)
 map gz# <Plug>(asterisk-g#)
 
-nmap <silent> <leader>z :FoldToggle<cr>
-
 " nvim DAP debugger
 nnoremap <silent> <F8> :lua require'dap'.continue()<CR>
 nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>

@@ -74,6 +74,8 @@ Plug 'kosayoda/nvim-lightbulb'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
+" LSP progress notifier
+Plug 'j-hui/fidget.nvim'
 " Completion
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -97,5 +99,8 @@ Plug 'ldelossa/gh.nvim'
 Plug 'ldelossa/litee.nvim'
 " Statusline
 Plug 'nvim-lualine/lualine.nvim'
+" Better folding using LSP
+Plug 'kevinhwang91/nvim-ufo'
+Plug 'kevinhwang91/promise-async'
 
 call plug#end()
