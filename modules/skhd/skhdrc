@@ -75,16 +75,16 @@
 # Apps
 #####################
 
-cmd - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+alt - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
 
 :: app @
 alt - space ; app
 app < alt - space; default
 app < space; default
 
-app < return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d; skhd --key 'space'
-app < w : /Applications/Firefox.app/Contents/MacOS/firefox; skhd --key 'space'
-app < m : /Applications/Firefox.app/Contents/MacOS/firefox https://music.youtube.com; skhd --key 'space'
+app < return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ & skhd --key 'space'
+app < w : /Applications/Firefox.app/Contents/MacOS/firefox & skhd --key 'space'
+app < m : /Applications/Firefox.app/Contents/MacOS/firefox https://music.youtube.com & skhd --key 'space'
 app < s : /Applications/Slack.app/Contents/MacOS/Slack & skhd --key 'space'
 app < a : '/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop' & skhd --key 'space'
 
@@ -160,12 +160,14 @@ alt + shift - n : yabai -m window --warp "$(~/.config/skhd/scripts/yabai_next.sh
 alt - 0 : yabai -m space --balance
 
 # create desktop, move window and follow focus
-alt - return : yabai -m space --create && \
+# alt - equals (plus)
+alt - 0x18 : yabai -m space --create && \
   idx="$(yabai -m query --spaces --display | jq -er 'map(select(."is-native-fullscreen" == false))[-1].index')" && \
   yabai -m window --space "${idx}" && \
   yabai -m space --focus "${idx}"
 
-alt + shift - return : yabai -m space --destroy
+# alt - minus
+alt - 0x1B : yabai -m space --destroy
 
 # fast focus desktop
 alt - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" && yabai -m space --focus "$idx"
