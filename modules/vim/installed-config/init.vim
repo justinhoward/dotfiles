@@ -99,8 +99,5 @@ Plug 'ldelossa/gh.nvim'
 Plug 'ldelossa/litee.nvim'
 " Statusline
 Plug 'nvim-lualine/lualine.nvim'
-" Better folding using LSP
-Plug 'kevinhwang91/nvim-ufo'
-Plug 'kevinhwang91/promise-async'
 
 call plug#end()

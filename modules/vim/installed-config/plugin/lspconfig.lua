@@ -48,12 +48,6 @@ local flags = {
 -- Add cmp completion capabilities
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
--- Add ufo folding capability
-capabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true
-}
-
 -- Default configs
 local servers = { 'ccls', 'tsserver', 'bashls', 'pylsp' }
 for _, lsp in ipairs(servers) do
@@ -63,8 +57,6 @@ for _, lsp in ipairs(servers) do
     flags = flags
   }
 end
-
-require('ufo').setup()
 
 -- Individual configs
 nvim_lsp.solargraph.setup {
