@@ -93,10 +93,6 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'theHamsta/nvim-dap-virtual-text'
 " Yankring and yank history
 Plug 'gbprod/yanky.nvim'
-" GH wrapper reviewing PRs, etc
-Plug 'ldelossa/gh.nvim'
-" Helper for gh.nvim
-Plug 'ldelossa/litee.nvim'
 " Statusline
 Plug 'nvim-lualine/lualine.nvim'
 
