@@ -5,3 +5,6 @@ install:
 
 update:
 	./scripts/update.sh
+
+lint:
+	git ls-files | grep '\.sh$$' | xargs shellcheck -e SC1071
