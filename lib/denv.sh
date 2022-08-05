@@ -21,8 +21,10 @@ function denv() {
   uname="$(uname)"
   if [ "$uname" = "Linux" ]; then
     dotfiles_platform=linux
+    dotfiles_opener=xdg-open
   elif [ "$uname" = "Darwin" ]; then
     dotfiles_platform=osx
+    dotfiles_opener=open
   elif [ "$uname" = "FreeBSD" ]; then
     dotfiles_platform=freebsd
   fi
@@ -38,6 +40,12 @@ function denv() {
     /dev/tty[0-9]*) ;;
     *) dotfiles_virtual=1 ;;
   esac
+
+  if [ "$dotfiles_platform" = linux ]; then
+    opener=xdg-open
+  elif [ "$dotfiles_platform" = osx ]; then
+    opener=open
+  fi
 
   [ -n "$ZDOTDIR" ] && dotfiles_zdir="$ZDOTDIR" || dotfiles_zdir="$HOME"
 }

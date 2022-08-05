@@ -36,6 +36,7 @@ devent_interactive=(
   ssh-agent
   osx-gnu
   dstask
+  websearch
   markdownlint
   jira-terminal
   git-aliases
