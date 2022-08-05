@@ -84,7 +84,7 @@ app < space; default
 
 app < return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ & skhd --key 'space'
 app < w : /Applications/Firefox.app/Contents/MacOS/firefox & skhd --key 'space'
-app < m : /Applications/Firefox.app/Contents/MacOS/firefox https://music.youtube.com & skhd --key 'space'
+app < m : /Applications/Firefox.app/Contents/MacOS/firefox --new-window https://music.youtube.com & skhd --key 'space'
 app < s : /Applications/Slack.app/Contents/MacOS/Slack & skhd --key 'space'
 app < a : '/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop' & skhd --key 'space'
 
