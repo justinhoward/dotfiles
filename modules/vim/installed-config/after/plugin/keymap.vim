@@ -1,4 +1,4 @@
-" Move between windows with alt hjkl from any mode
+" Move between next/previous with ctrl jk from any mode
 tnoremap <C-j> <C-\><C-N><C-w>w
 tnoremap <C-k> <C-\><C-N><C-w>p
 inoremap <C-j> <C-\><C-N><C-w>w
