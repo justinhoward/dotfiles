@@ -6,6 +6,9 @@ inoremap <C-k> <C-\><C-N><C-w>p
 nnoremap <C-j> <C-w>w
 nnoremap <C-k> <C-w>p
 
+nnoremap n nzz
+nnoremap N Nzz
+
 " Delete current buffer normally (removes splits)
 nnoremap <silent> <A-x> :bdelete<cr>
 
