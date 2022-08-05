@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Set the Prezto modules to load (browse modules).
 # The order matters.
 

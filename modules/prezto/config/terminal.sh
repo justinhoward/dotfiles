@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Auto set the tab and window titles.
 zstyle ':prezto:module:terminal' auto-title 'yes'
 

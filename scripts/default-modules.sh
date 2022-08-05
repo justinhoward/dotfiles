@@ -20,7 +20,6 @@ devent_interactive=(
   prezto
   editor
   xdg
-  sudo
   git
   less-colors
   vim

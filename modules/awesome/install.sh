@@ -1,3 +1,5 @@
-if [[ "$dotfiles_platform" == 'linux' ]]; then
-  dsymlink modules/awesome/installed-config ~/.config/awesome
-fi
+#!/usr/bin/env sh
+
+[ "$dotfiles_platform" = 'linux' ] || return
+
+dsymlink modules/awesome/installed-config ~/.config/awesome

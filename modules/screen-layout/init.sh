@@ -1,3 +1,5 @@
-if [[ -f ~/.screenlayout/default.sh ]]; then
-    source ~/.screenlayout/default.sh &
-fi
+#!/usr/bin/env sh
+
+[ -f ~/.screenlayout/default.sh ] || return
+
+. ~/.screenlayout/default.sh &

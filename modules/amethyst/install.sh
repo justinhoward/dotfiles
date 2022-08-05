@@ -1,3 +1,5 @@
-if [[ "$dotfiles_platform" == 'osx' ]]; then
-  dsymlink modules/amethyst/installed-config ~/.amethyst
-fi
+#!/usr/bin/env sh
+
+[ "$dotfiles_platform" = 'osx' ] || return
+
+dsymlink modules/amethyst/installed-config ~/.amethyst

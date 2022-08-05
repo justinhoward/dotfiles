@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 echo 'Updating vim plugins...'
 # Don't show the vim buffer and silence the
 # "not connected to a terminal" message

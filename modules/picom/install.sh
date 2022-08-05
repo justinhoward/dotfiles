@@ -1,3 +1,5 @@
-if [[ "$dotfiles_platform" == 'linux' ]]; then
-  dsymlink modules/picom/picom.conf ~/.config/picom/picom.conf
-fi
+#!/usr/bin/env sh
+
+[ "$dotfiles_platform" = 'linux' ] || return
+
+dsymlink modules/picom/picom.conf ~/.config/picom/picom.conf

@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 if dcheck nvim; then
   alias vi=nvim
   alias vim=nvim
