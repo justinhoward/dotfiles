@@ -1,4 +1,6 @@
-if dcheck rbenv; then
-  eval "$(rbenv init -)"
-  rehash
-fi
+#!/usr/bin/env sh
+
+dcheck rbenv || return
+
+eval "$(rbenv init -)"
+rehash

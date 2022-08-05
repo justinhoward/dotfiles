@@ -1,13 +1,10 @@
-if [[ "$dotfiles_shell" = "zsh" ]]; then
-    return
-fi
+#!/usr/bin/env sh
 
-if [[ -z "$dotfiles_interactive" ]]; then
-    return
-fi
+[ "$dotfiles_shell" = "zsh" ] && return
+[ -z "$dotfiles_interactive" ] && return
 
 # Start zsh if available
-if zsh_path=`command -v zsh`; then
+if zsh_path="$(command -v zsh)"; then
     export SHELL="$zsh_path"
     exec $SHELL -l
 fi

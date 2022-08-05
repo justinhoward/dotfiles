@@ -1,3 +1,5 @@
-if [[ "$dotfiles_platform" == 'linux' ]]; then
-  dsymlink modules/imwheel/imwheelrc ~/.imwheelrc
-fi
+#!/usr/bin/env sh
+
+[ "$dotfiles_platform" = 'linux' ] || return
+
+dsymlink modules/imwheel/imwheelrc ~/.imwheelrc

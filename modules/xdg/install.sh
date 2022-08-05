@@ -1,3 +1,5 @@
-if [[ "$dotfiles_platform" == 'linux' ]]; then
-  dsymlink modules/xdg/user-dirs.dirs ~/.config/user-dirs.dirs
-fi
+#!/usr/bin/env sh
+
+[ "$dotfiles_platform" = 'linux' ] || return
+
+dsymlink modules/xdg/user-dirs.dirs ~/.config/user-dirs.dirs

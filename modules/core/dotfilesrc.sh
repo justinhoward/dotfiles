@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 export DOTFILES_PATH="$HOME/.dotfiles"
 
-source "$DOTFILES_PATH/scripts/run.sh"
+. "$DOTFILES_PATH/scripts/run.sh"

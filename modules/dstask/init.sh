@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 alias t='dstask'
 alias ta='t add'
 alias tl='t log'

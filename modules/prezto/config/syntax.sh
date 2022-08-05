@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 zstyle ':prezto:module:syntax-highlighting' color 'yes'
 
 # Set syntax highlighters.

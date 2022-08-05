@@ -1,6 +1,8 @@
+#!/usr/bin/env sh
+
 dconfig kitty
 
-kitty_tmp=$(mktemp)
+kitty_tmp="$(mktemp)"
 kitty_conf="$HOME/.config/kitty/kitty.conf"
 envsubst < modules/kitty/rc/kitty.conf > "$kitty_tmp"
 

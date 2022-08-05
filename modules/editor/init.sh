@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 dcheck nvim && EDITOR=nvim || EDITOR=vim
 export EDITOR
 export VISUAL="$EDITOR"

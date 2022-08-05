@@ -1,3 +1,5 @@
-if [[ "$dotfiles_platform" == 'linux' ]]; then
-  dsymlink modules/xmonad/installed-config ~/.xmonad
-fi
+#!/usr/bin/env sh
+
+[ "$dotfiles_platform" = 'linux' ] || return
+
+dsymlink modules/xmonad/installed-config ~/.xmonad
