@@ -26,7 +26,7 @@ HIGHLIGHT=$'\e[30;47m'
 # The default text color
 DEFAULT_COLOR=$'\e[0;37m'
 # Swiftbar options
-OPTIONS="font='Hack Nerd Font' trim=true size=12 ansi=true"
+OPTIONS="font='Victor Mono' trim=true size=12 ansi=true"
 # Icon for space with no windows
 SPACE_UNUSED='•'
 # Icon for space with windows
