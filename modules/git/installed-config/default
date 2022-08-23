@@ -30,6 +30,10 @@
 
 [delta]
   line-numbers = true
+  plus-style = syntax "#394634"
+  plus-emph-style = "#181819" "#9ed072"
+  minus-style = syntax "#55393d"
+  minus-emph-style = "#181819" "#fc5d7c"
 
   # Delta defaults to a triple dot character which isn't currently
   # supported by the Hack font, and termite doesn't use fallbacks correctly
