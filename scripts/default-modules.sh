@@ -33,7 +33,6 @@ devent_interactive=(
   composer
   neomutt
   ssh-agent
-  osx-gnu
   dstask
   websearch
   markdownlint

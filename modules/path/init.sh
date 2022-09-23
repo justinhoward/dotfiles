@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
@@ -22,6 +22,31 @@ fi
 
 if [ -d "$HOME/bin" ]; then
   PATH="$HOME/bin:$PATH"
+fi
+
+# OS X GNU utils
+if [ "$dotfiles_platform" = 'osx' ] && dcheck brew; then
+  brew_prefix="$(brew --prefix)"
+  gnu_packages=(
+    coreutils
+    findutils
+    grep
+    gnu-sed
+    gnu-tar
+    gnu-getopt
+  )
+
+  for gnu_pkg in "${gnu_packages[@]}"; do
+    if [ -d "$brew_prefix/opt/$gnu_pkg/libexec/gnubin" ]; then
+      export PATH="$brew_prefix/opt/$gnu_pkg/libexec/gnubin:$PATH"
+      export MANPATH="$brew_prefix/opt/$gnu_pkg/libexec/gnuman:$MANPATH"
+    elif [ -d "$brew_prefix/opt/$gnu_pkg/bin" ]; then
+      export PATH="$brew_prefix/opt/$gnu_pkg/bin:$PATH"
+      export MANPATH="$brew_prefix/opt/$gnu_pkg/share/man:$MANPATH"
+    fi
+  done
+
+  unset brew_prefix gnu_packages gnu_pkg
 fi
 
 export PATH
