@@ -36,17 +36,16 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>}', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<cr>", opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
   buf_set_keymap('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-  buf_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
-  buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.range_formatting()<cr>', opts)
+  buf_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
+  buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 local flags = {
   debounce_text_changes = 150,
 }
 
 -- Add cmp completion capabilities
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Default configs
 local servers = { 'ccls', 'tsserver', 'bashls', 'pylsp', 'marksman' }
@@ -69,6 +68,70 @@ nvim_lsp.solargraph.setup {
   settings = {
     solargraph = {
       diagnostics = false
+    }
+  }
+}
+
+nvim_lsp.yamlls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = flags,
+  settings = {
+    yaml = {
+      schemaStore = {
+        url = "https://www.schemastore.org/api/json/catalog.json",
+        enable = true,
+      },
+      customTags = {
+        "!And scalar",
+        "!And mapping",
+        "!And sequence",
+        "!If scalar",
+        "!If mapping",
+        "!If sequence",
+        "!Not scalar",
+        "!Not mapping",
+        "!Not sequence",
+        "!Equals scalar",
+        "!Equals mapping",
+        "!Equals sequence",
+        "!Or scalar",
+        "!Or mapping",
+        "!Or sequence",
+        "!FindInMap scalar",
+        "!FindInMap mappping",
+        "!FindInMap sequence",
+        "!Base64 scalar",
+        "!Base64 mapping",
+        "!Base64 sequence",
+        "!Cidr scalar",
+        "!Cidr mapping",
+        "!Cidr sequence",
+        "!Ref scalar",
+        "!Ref mapping",
+        "!Ref sequence",
+        "!Sub scalar",
+        "!Sub mapping",
+        "!Sub sequence",
+        "!GetAtt scalar",
+        "!GetAtt mapping",
+        "!GetAtt sequence",
+        "!GetAZs scalar",
+        "!GetAZs mapping",
+        "!GetAZs sequence",
+        "!ImportValue scalar",
+        "!ImportValue mapping",
+        "!ImportValue sequence",
+        "!Select scalar",
+        "!Select mapping",
+        "!Select sequence",
+        "!Split scalar",
+        "!Split mapping",
+        "!Split sequence",
+        "!Join scalar",
+        "!Join mapping",
+        "!Join sequence"
+      }
     }
   }
 }
