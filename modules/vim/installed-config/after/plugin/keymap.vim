@@ -23,8 +23,8 @@ nnoremap <silent> <leader>E :NvimTreeFindFile<cr>
 nnoremap <leader>u :UndotreeToggle<cr>
 
 " Aerial file tree
-nnoremap <silent> <leader>o :AerialToggle<cr>
-nnoremap <silent> <leader>O :AerialToggle!<cr>
+nnoremap <silent> <leader>t :AerialToggle<cr>
+nnoremap <silent> <leader>T :AerialToggle!<cr>
 
 " Save file
 nnoremap <silent> <leader>w :w<cr>

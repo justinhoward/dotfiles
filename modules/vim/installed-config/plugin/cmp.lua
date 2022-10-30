@@ -113,6 +113,7 @@ cmp.setup({
     }),
   },
   sources = cmp.config.sources({
+    { name = 'orgmode' },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'treesitter' },

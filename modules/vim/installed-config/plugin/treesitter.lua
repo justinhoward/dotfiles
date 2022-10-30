@@ -3,6 +3,7 @@ require'nvim-treesitter.configs'.setup {
   -- Disabling for now since running this causes significant input lag
   highlight = {
     enable = true,              -- false will disable the whole extension
+    additional_vim_regex_highlighting = {'org'},
   },
   -- indent = {
   --   enable = true,
