@@ -6,5 +6,6 @@ install:
 update:
 	./scripts/update.sh
 
+check: lint
 lint:
 	git ls-files | grep '\.sh$$' | xargs shellcheck -e SC1071
