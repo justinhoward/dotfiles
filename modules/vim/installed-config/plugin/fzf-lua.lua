@@ -3,6 +3,7 @@ fzf_lua.setup({
   fzf_bin = 'sk',
   fzf_opts = {
     ['--layout'] = 'default',
+    ['--border'] = false,
   },
   files = {
     fd_opts = "--color=never --type f --hidden --no-ignore --exclude .git"
