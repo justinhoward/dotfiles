@@ -94,7 +94,8 @@ app < a : '/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop' & skhd 
 
 # Disable cmd-h for hide
 cmd - h : true
-f15 : osascript ~/.config/skhd/scripts/toggle_input_mute.scpt
+f15 : osascript ~/.config/skhd/scripts/toggle_input_mute.scpt; \
+  open -gj 'swiftbar://refreshplugin?name=input_mute'
 
 #####################
 # Yabai
