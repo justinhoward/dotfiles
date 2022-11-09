@@ -42,7 +42,7 @@ require('lualine').setup {
   },
   tabline = {
     lualine_a = {
-      { 'buffers', mode = 2 }
+      { 'buffers', mode = 2, max_length = function() return vim.o.columns end }
     }
   },
   extensions = {},
