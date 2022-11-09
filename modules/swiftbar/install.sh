@@ -1,4 +1,3 @@
-
 #!/usr/bin/env sh
 
 [ "$dotfiles_platform" = 'osx' ] || return
