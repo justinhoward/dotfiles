@@ -3,4 +3,4 @@
 
 [ "$dotfiles_platform" = 'osx' ] || return
 
-dsymlink modules/swiftbar/plugins/input_mute.10s.sh ~/.config/swiftbar/plugins/input_mute.10s.sh
+dsymlink modules/swiftbar/plugins ~/.config/swiftbar/plugins
