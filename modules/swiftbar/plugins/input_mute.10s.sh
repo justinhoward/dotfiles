@@ -11,13 +11,15 @@
 export LANG="en_EN.UTF-8"
 
 # Swiftbar options
-OPTIONS="font='Symbols Nerd Font' size=16"
+OPTIONS="font='Symbols Nerd Font' ansi=true size=16"
+RED=$'\e[31m'
+DEFAULT_COLOR=$'\e[0m'
 
 unmuted=''
 muted=''
 
 if [ "$(osascript -e 'input volume of (get volume settings)')" = 0 ]; then
-  string="$muted"
+  string="$RED$muted$DEFAULT_COLOR"
 else
   string="$unmuted"
 fi
