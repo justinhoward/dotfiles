@@ -33,7 +33,8 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'jremmen/vim-ripgrep'
 " File browser
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
 " Undo tree browser
 Plug 'mbbill/undotree'
 " File outline

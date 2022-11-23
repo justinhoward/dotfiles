@@ -6,6 +6,7 @@ inoremap <C-k> <C-\><C-N><C-w>p
 nnoremap <C-j> <C-w>w
 nnoremap <C-k> <C-w>p
 
+" Center screen after next/prev
 nnoremap n nzz
 nnoremap N Nzz
 
@@ -16,8 +17,9 @@ nnoremap <silent> <A-x> :bdelete<cr>
 nnoremap <silent> <leader>x :Bdelete<cr>
 
 " Nvim Tree
-nnoremap <silent> <leader>e :NvimTreeToggle<cr>
-nnoremap <silent> <leader>E :NvimTreeFindFile<cr>
+nnoremap <silent> <leader>e :Neotree toggle<cr>
+nnoremap <silent> <leader>E :Neotree reveal<cr>
+nnoremap <silent> <leader>hh :Neotree git_status float<cr>
 
 " UndoTree
 nnoremap <leader>u :UndotreeToggle<cr>
