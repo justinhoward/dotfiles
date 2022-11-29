@@ -52,7 +52,7 @@ Plug 'rafamadriz/friendly-snippets'
 " Context-aware split/join
 Plug 'andrewradev/splitjoin.vim'
 " Preview markdown files in browser
-Plug 'previm/previm'
+Plug 'ellisonleao/glow.nvim'
 " textobj for indentation
 Plug 'michaeljsmith/vim-indent-object'
 " Fancy CSV formatting
@@ -98,5 +98,7 @@ Plug 'gbprod/yanky.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 " Org mode
 Plug 'nvim-orgmode/orgmode'
+" Fun
+Plug 'eandrju/cellular-automaton.nvim'
 
 call plug#end()

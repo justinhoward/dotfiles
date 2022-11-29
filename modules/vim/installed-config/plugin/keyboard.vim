@@ -6,6 +6,3 @@ set ttimeoutlen=10
 
 " change leader key from \ to space
 let mapleader=' '
-
-" change backspace behavior to be more like a typical editor
-set backspace=indent,eol,start

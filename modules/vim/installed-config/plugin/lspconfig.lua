@@ -145,6 +145,7 @@ null_ls.setup({
     null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.code_actions.shellcheck,
     null_ls.builtins.diagnostics.cppcheck,
+    null_ls.builtins.diagnostics.cfn_lint,
     null_ls.builtins.diagnostics.erb_lint.with({
       command = 'bundle',
       ignore_stderr = true,
