@@ -69,7 +69,10 @@ nnoremap <silent> <leader>vi :IndentBlanklineToggle<cr>
 nnoremap <silent> <leader>vw :ToggleList<cr>
 
 " Markdown Preview
-nnoremap <silent> <leader>vm :PrevimOpen<cr>
+nnoremap <silent> <leader>vm :Glow<cr>
+
+" Color Highlighter
+nnoremap <silent> <leader>vc :CccHighlighterToggle<cr>
 
 " Quickfix
 nnoremap <silent> <leader>cc :QuickfixToggle<cr>

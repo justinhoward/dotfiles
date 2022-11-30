@@ -87,7 +87,7 @@ Plug 'ray-x/cmp-treesitter'
 Plug 'lukas-reineke/cmp-rg'
 Plug 'hrsh7th/nvim-cmp'
 " Color highlighter
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'uga-rosa/ccc.nvim'
 " DAP debugger client
 Plug 'mfussenegger/nvim-dap'
 " DAP virtual text hints
