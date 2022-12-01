@@ -10,6 +10,16 @@ nnoremap <C-k> <C-w>p
 nnoremap n nzz
 nnoremap N Nzz
 
+" Credit https://stackoverflow.com/a/39902725/4231110
+function! CenterSearch()
+  let cmdtype = getcmdtype()
+  if cmdtype == '/' || cmdtype == '?'
+    return "\<enter>zz"
+  endif
+  return "\<enter>"
+endfunction
+cnoremap <silent> <expr> <enter> CenterSearch()
+
 " Delete current buffer with bbye
 nnoremap <silent> <leader>x :Bdelete<cr>
 
