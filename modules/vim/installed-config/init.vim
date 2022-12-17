@@ -19,7 +19,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 " Repeat (.) support for vim-surround
 Plug 'tpope/vim-repeat'
-" Commment/uncomment
+" Comment/uncomment
 Plug 'numToStr/Comment.nvim'
 " Project-local vimrc files
 Plug 'embear/vim-localvimrc'
@@ -43,8 +43,6 @@ Plug 'stevearc/aerial.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 " FZF Fuzzy finder (requires fzf binary)
 Plug 'ibhagwan/fzf-lua'
-" Generate tag files automatically
-Plug 'ludovicchabant/vim-gutentags'
 " Snippet support
 Plug 'L3MON4D3/LuaSnip'
 " Snippet repository
@@ -83,8 +81,6 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'ray-x/cmp-treesitter'
-Plug 'lukas-reineke/cmp-rg'
 Plug 'hrsh7th/nvim-cmp'
 " Color highlighter
 Plug 'uga-rosa/ccc.nvim'
