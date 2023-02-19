@@ -25,7 +25,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gy', "<cmd>lua require('fzf-lua').lsp_typedefs()<cr>", opts)
   buf_set_keymap('n', 'gr', "<cmd>lua require('fzf-lua').lsp_references()<cr>", opts)
   buf_set_keymap('n', 'gi', "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
   buf_set_keymap('n', '<leader>fn', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
   buf_set_keymap('n', '<leader>fp', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
@@ -38,6 +37,13 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   buf_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
   buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
+
+  vim.keymap.set('n', 'K', function()
+      local winid = require('ufo').peekFoldedLinesUnderCursor()
+      if not winid then
+          vim.lsp.buf.hover()
+      end
+  end)
 end
 
 local flags = {

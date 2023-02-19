@@ -133,3 +133,8 @@ xnoremap gP <Plug>(YankyGPutBefore)
 " Cycle through yank ring
 nnoremap <c-n> <Plug>(YankyCycleForward)
 nnoremap <c-p> <Plug>(YankyCycleBackward)
+
+" Folding
+nmap <silent> zR :lua require'ufo'.openAllFolds()<cr>
+nmap <silent> zM :lua require'ufo'.closeAllFolds()<cr>
+nmap <silent> K :lua require'ufo'.peekFoldedLinesUnderCursor()<cr>
