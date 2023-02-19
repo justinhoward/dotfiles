@@ -1,5 +1,13 @@
 #!/usr/bin/env sh
 
+dcheck dstask || return
+
+if [ "$dotfiles_shell" = zsh ]; then
+  eval "$(dstask zsh-completion)"
+elif [ "$dotfiles_shell" = bash ]; then
+  eval "$(dstask bash-completion)"
+fi
+
 alias t='dstask'
 alias ta='t add'
 alias tl='t log'
