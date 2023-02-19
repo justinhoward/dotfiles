@@ -92,8 +92,6 @@ Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'gbprod/yanky.nvim'
 " Statusline
 Plug 'nvim-lualine/lualine.nvim'
-" Org mode
-Plug 'nvim-orgmode/orgmode'
 " Fun
 Plug 'eandrju/cellular-automaton.nvim'
 " Automatically generate swagger-ui

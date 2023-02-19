@@ -32,8 +32,8 @@ nnoremap <silent> <leader>hh :Neotree git_status float<cr>
 nnoremap <leader>u :UndotreeToggle<cr>
 
 " Aerial file tree
-nnoremap <silent> <leader>t :AerialToggle<cr>
-nnoremap <silent> <leader>T :AerialToggle!<cr>
+nnoremap <silent> <leader>o :AerialToggle<cr>
+nnoremap <silent> <leader>O :AerialToggle!<cr>
 
 " Save file
 nnoremap <silent> <leader>w :w<cr>
