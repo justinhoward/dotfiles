@@ -96,6 +96,8 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'nvim-orgmode/orgmode'
 " Fun
 Plug 'eandrju/cellular-automaton.nvim'
+" Automatically generate swagger-ui
+Plug 'vinnymeller/swagger-preview.nvim'
 " Modern fold indicators
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
