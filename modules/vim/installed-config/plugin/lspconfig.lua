@@ -44,6 +44,10 @@ local on_attach = function(client, bufnr)
           vim.lsp.buf.hover()
       end
   end)
+
+  -- Disable setting formatexpr from lsp
+  -- https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1131
+  vim.api.nvim_buf_set_option(bufnr, "formatexpr", "")
 end
 
 local flags = {
