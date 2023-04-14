@@ -25,8 +25,6 @@ Plug 'numToStr/Comment.nvim'
 Plug 'embear/vim-localvimrc'
 " Syntax for any language
 Plug 'sheerun/vim-polyglot'
-" Read editorconfig files
-Plug 'gpanders/editorconfig.nvim'
 " Show vertical indent guides
 Plug 'lukas-reineke/indent-blankline.nvim'
 " Search in vim with ripgrep
