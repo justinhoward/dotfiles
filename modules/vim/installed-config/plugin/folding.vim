@@ -3,3 +3,4 @@ set foldlevel=99
 set foldlevelstart=99
 set foldenable
 set foldopen=block,mark,percent,quickfix,search,tag,undo
+set fillchars=eob:\ ,fold:\ ,foldopen:,foldsep:\ ,foldclose:
