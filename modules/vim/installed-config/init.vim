@@ -88,6 +88,8 @@ Plug 'uga-rosa/ccc.nvim'
 Plug 'mfussenegger/nvim-dap'
 " DAP virtual text hints
 Plug 'theHamsta/nvim-dap-virtual-text'
+" Ruby DAP adapter
+Plug 'suketa/nvim-dap-ruby'
 " Yankring and yank history
 Plug 'gbprod/yanky.nvim'
 " Statusline

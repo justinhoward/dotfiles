@@ -119,6 +119,7 @@ nnoremap <silent> <leader>dc :lua require'dap'.set_breakpoint(vim.fn.input('Brea
 nnoremap <silent> <leader>dr :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
 nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+nnoremap <silent> <leader>dk :lua require'dap.ui.widgets'.hover()<CR>
 
 " Yanky yank ring
 nnoremap p <Plug>(YankyPutAfter)
