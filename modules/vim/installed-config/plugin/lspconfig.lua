@@ -58,7 +58,7 @@ local flags = {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Default configs
-local servers = { 'ccls', 'tsserver', 'bashls', 'pylsp', 'marksman' }
+local servers = { 'ccls', 'eslint', 'tsserver', 'bashls', 'pylsp', 'marksman', 'jsonls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
@@ -152,7 +152,6 @@ null_ls.setup({
   on_attach = on_attach,
   diagnostics_format = '[#{c}] #{m} (#{s})',
   sources = {
-    null_ls.builtins.code_actions.eslint_d,
     null_ls.builtins.code_actions.shellcheck,
     null_ls.builtins.diagnostics.codespell,
     null_ls.builtins.diagnostics.cppcheck,
@@ -165,7 +164,6 @@ null_ls.setup({
         require("null-ls").builtins.diagnostics.erb_lint._opts.args
       )
     }),
-    null_ls.builtins.diagnostics.eslint_d,
     null_ls.builtins.diagnostics.flake8,
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.markdownlint,
@@ -187,7 +185,6 @@ null_ls.setup({
       )
     }),
     null_ls.builtins.formatting.codespell,
-    null_ls.builtins.formatting.eslint_d,
     null_ls.builtins.formatting.prettier,
     null_ls.builtins.diagnostics.rubocop.with({
       command = 'bundle',

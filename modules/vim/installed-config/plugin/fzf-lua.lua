@@ -2,6 +2,7 @@ local fzf_lua = require('fzf-lua')
 fzf_lua.setup({
   fzf_bin = 'sk',
   fzf_opts = {
+    ['--no-separator'] = false,
     ['--layout'] = 'default',
     ['--border'] = false,
   },
