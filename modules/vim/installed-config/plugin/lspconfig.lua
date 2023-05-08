@@ -109,7 +109,7 @@ nvim_lsp.yamlls.setup {
         "!Or mapping",
         "!Or sequence",
         "!FindInMap scalar",
-        "!FindInMap mappping",
+        "!FindInMap mapping",
         "!FindInMap sequence",
         "!Base64 scalar",
         "!Base64 mapping",
@@ -185,7 +185,7 @@ null_ls.setup({
       )
     }),
     null_ls.builtins.formatting.codespell,
-    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettierd,
     null_ls.builtins.diagnostics.rubocop.with({
       command = 'bundle',
       args = vim.list_extend(
