@@ -1,5 +1,4 @@
-Justin Howard's Dotfiles
-===============================
+# Justin Howard's Dotfiles
 
 Most dotfiles solutions cater to a single environment like a certain shell. This
 project is intended to organize dotfiles for every environment including
@@ -10,8 +9,7 @@ Most of the flashy fun stuff in this setup comes from the
 [Prezto](https://github.com/sorin-ionescu/prezto) ZSH dotfile system.
 Be sure to check out what it can do.
 
-Installation
---------------------
+## Installation
 
 Clone the repository into your home directory
 
@@ -77,10 +75,11 @@ It is made up of three stages.
 - `init`
 - `postinit`
 
-For each stage, the `<stage>`.sh file will be tried first, and then the `<stage>`
-directory. If the `.sh` file exists, and it exits with a zero exit code, the directory will
-also be tried. If the directory exists, all files in it will be sourced. If neither the `.sh`
-file or the directory exist, the stage will be skipped.
+For each stage, the `<stage>`.sh file will be tried first, and then the
+`<stage>` directory. If the `.sh` file exists, and it exits with a zero exit
+code, the directory will also be tried. If the directory exists, all files in it
+will be sourced. If neither the `.sh` file or the directory exist, the stage
+will be skipped.
 
 #### Condition
 
@@ -88,9 +87,9 @@ If a `condition.sh` file exists in the module's directory,
 it will be run before the module is initialized. If the file
 exits with a non-zero exit code, the module will not be initialized.
 
-#### Installation
+#### Install
 
-During installation, the installer will try to run each module's
+When installing, the installer will try to run each module's
 `install.sh` file. This script should do any symlinking,
 copying, etc to set up module dependencies.
 
@@ -110,17 +109,19 @@ Dotfiles creates some variables that are helpful in determining what
 environment to run in order to conditionally load configurations.
 
 - `dotfiles_platform`: The name of the type of system. `osx`, 'linux', 'freebsd'
-- `dotfiles_shell`: The name of the running shell. `bash`, `sh`, `ksh`, `zsh`, or empty if unknown.
+- `dotfiles_shell`: The name of the running shell. `bash`, `sh`, `ksh`, `zsh`,
+   or empty if unknown.
 - `dotfiles_interactive`: `1` if the shell is interactive, empty if not
 - `dotfiles_login`: `1` if the shell is a login shell, empty if not
-- `dotfiles_virtual`: `1` if the shell is a virtual tty, empty if not
+- `dotfiles_virtual`: `1` if the shell is a virtual TTY, empty if not
 - `dotfiles_xorg`: `1` if the environment is the xorg window manager, empty if not
 
 ## Functions
 
 Dotfiles provides some utility functions for loading modules
 
-- `dbackup(path)`: Backs up the given path to path.bak if it exists. Does not back up symbolic links.
+- `dbackup(path)`: Backs up the given path to path.bak if it exists. Does not
+   back up symbolic links.
 - `dcheck(command)`: Checks if `command` is available. Returns a 0 code if it is.
 - `dcolors()`: Sets color code variables like `dred`, `dcyan`, `ddefault`, etc.
 - `dconfig(name)`: Uses `dload` to load configuration files in the `config` directory
@@ -131,11 +132,13 @@ Dotfiles provides some utility functions for loading modules
   to `dest` and renames it to `name`. Used for installing config files.
 - `dload(path)`: Provides the `.sh`, then directory loading sequence as used in each
   module load stage
-- `dmodload(name)`: Loads the `name` module. Does nothing if the module is already loaded.
+- `dmodload(name)`: Loads the `name` module. Does nothing if the module is
+   already loaded.
 - `drecommend(command)`: If command is not installed, prints a recommendation.
 - `dremove(path)`: Backs up and removes the file or directory at `path`.
 - `drequire(command)`: If command is not installed, prints an error and exits.
-- `dsymlink(target, link)`: Creates a symbolic link from the path `link` to `target`. If
-  link exists, it is backed up. `target` is a relative path from `$DOTFILES_PATH`.
+- `dsymlink(target, link)`: Creates a symbolic link from the path `link` to
+  `target`. If link exists, it is backed up. `target` is a relative path from
+  `$DOTFILES_PATH`.
 
 [Licensed](LICENSE.txt) under the MIT License.
