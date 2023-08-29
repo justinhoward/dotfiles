@@ -16,6 +16,7 @@ alias tn='t note'
 alias tm='t modify'
 alias te='t edit'
 alias ts='t start'
+alias tS='t stop'
 alias td='t done'
 alias tD='t remove'
 alias tp='t sync' # Push
