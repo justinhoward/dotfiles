@@ -32,10 +32,10 @@ SPACE_UNUSED='•'
 # Icon for space with windows
 SPACE_USED='⦿'
 # The order that displays should appear in by index
-DISPLAYS=(3 1 2)
+DISPLAYS=(1 3 2)
 # Layout icons
-BSP="﩯 "
-STACK=" "
+BSP="󰕰 "
+STACK="󰌨 "
 FLOAT=" "
 # Left and right separators for displays
 DISPLAY_LEFT='['
@@ -82,7 +82,7 @@ for display_str in "${all_display_spaces[@]}"; do
     i=$(( i + 1 ))
   done
 
-  display_strs[${DISPLAYS[$display_index]}]="$display_str"
+  display_strs[${DISPLAYS[$((display_index - 1))]}]="$display_str"
 done
 
 for dstr in "${display_strs[@]}"; do

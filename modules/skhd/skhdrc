@@ -162,9 +162,9 @@ alt + shift - n : yabai -m window --warp "$(~/.config/skhd/scripts/yabai_next.sh
 alt - 0 : yabai -m space --balance
 
 # create desktop, alt - equals (plus)
-alt - 0x18 : yabai -m space --create
+alt - 0x18 : yabai -m space --create | open -gj 'swiftbar://refreshplugin?name=yabai'
 # destroy desktop, alt - minus
-alt - 0x1B : yabai -m space --destroy
+alt - 0x1B : yabai -m space --destroy | open -gj 'swiftbar://refreshplugin?name=yabai'
 
 # fast focus desktop
 alt - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" && yabai -m space --focus "$idx"
@@ -198,19 +198,19 @@ alt + shift + ctrl - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4]
   && yabai -m space --move "$idx"
 
 # focus display
-alt - q : yabai -m display --focus 3
-alt - w : yabai -m display --focus 1
+alt - q : yabai -m display --focus 1
+alt - w : yabai -m display --focus 3
 alt - e : yabai -m display --focus 2
 
 # send window to display and follow focus
-alt + shift - q : yabai -m window --display 3
-alt + shift - w : yabai -m window --display 1
+alt + shift - q : yabai -m window --display 1
+alt + shift - w : yabai -m window --display 3
 alt + shift - e : yabai -m window --display 2
 
 # move current space to display and follow focus
-alt + shift + ctrl - w : yabai -m space --display 1
+alt + shift + ctrl - q : yabai -m space --display 1
+alt + shift + ctrl - w : yabai -m space --display 3
 alt + shift + ctrl - e : yabai -m space --display 2
-alt + shift + ctrl - q : yabai -m space --display 3
 
 # increase window size
 alt - i : if [ "$(yabai -m query --windows --window | jq -re '."is-floating"')" = true ]; then \

@@ -15,8 +15,8 @@ OPTIONS="font='Symbols Nerd Font' ansi=true size=16"
 RED=$'\e[31m'
 DEFAULT_COLOR=$'\e[0m'
 
-unmuted=''
-muted=''
+unmuted=''
+muted=''
 
 if [ "$(osascript -e 'input volume of (get volume settings)')" = 0 ]; then
   string="$RED$muted$DEFAULT_COLOR"

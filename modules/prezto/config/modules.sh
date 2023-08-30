@@ -13,9 +13,10 @@ zstyle ':prezto:load' pmodule \
   'history' \
   'history-substring-search' \
   'directory' \
-  'completion' \
+  'homebrew' \
   'git' \
   'node' \
   'pacman' \
+  'completion' \
   'syntax-highlighting' \
   'prompt' \

@@ -3,6 +3,7 @@
 # shellcheck disable=2034
 
 devent_load=(
+  homebrew
   path
   browser
   umask
@@ -23,7 +24,6 @@ devent_interactive=(
   git
   less-colors
   vim
-  aws-cli
   wdiff
   fzf
   zoxide
@@ -39,6 +39,7 @@ devent_interactive=(
   jira-terminal
   git-aliases
   exa
+  gpg
 )
 
 devent_xorg=(
