@@ -9,15 +9,15 @@
 
 # Inspired by https://github.com/SxC97/Yabai-Spaces
 
-# Sets unicode encoding to UTF-8. Fixes issues with displaying *many* but not *all* unicode charecters.
+# Sets unicode encoding to UTF-8. Fixes issues with displaying *many* but not *all* unicode characters.
 export LANG="en_EN.UTF-8"
 # Exports the plugin to your $PATH to allow execution. Make sure you run `chmod +x yabai.1d.sh` after downloading
 export PATH=/usr/local/bin:$PATH
 
 # Restarts yabai and skhd
 if [[ "$1" = "restart" ]]; then
-  brew services restart yabai
-  brew services restart skhd
+  yabai --restart-service
+  skhd --restart-service
   exit
 fi
 
@@ -26,7 +26,7 @@ HIGHLIGHT=$'\e[30;47m'
 # The default text color
 DEFAULT_COLOR=$'\e[0;37m'
 # Swiftbar options
-OPTIONS="font='Victor Mono' trim=true size=12 ansi=true"
+OPTIONS="font='Victor Mono' trim=true size=12 ansi=true refresh=true"
 # Icon for space with no windows
 SPACE_UNUSED='•'
 # Icon for space with windows
