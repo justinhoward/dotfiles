@@ -8,9 +8,9 @@ require('lualine').setup {
       {
         'diagnostics',
         symbols = {
-          error = ' ',
-          warn = ' ',
-          info = ' ',
+          error = '󰅚 ',
+          warn = ' ',
+          info = '󰋽 ',
           hint = ' '
         },
         diagnostics_color = {
