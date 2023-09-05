@@ -24,7 +24,7 @@ fi
 # The current space highlight color
 HIGHLIGHT=$'\e[30;47m'
 # The default text color
-DEFAULT_COLOR=$'\e[0;37m'
+DEFAULT_COLOR=$'\e[0m'
 # Swiftbar options
 OPTIONS="font='Victor Mono' trim=true size=12 ansi=true refresh=true"
 # Icon for space with no windows
