@@ -9,8 +9,12 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Refactoring and highlighting with treesitter
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
-" Monokai Color Scheme
+" Sonokai Color Scheme
 Plug 'sainnhe/sonokai'
+" Everforest color theme
+Plug 'sainnhe/everforest'
+" Update color scheme in response to system light/dark mode
+Plug 'f-person/auto-dark-mode.nvim'
 " Git tools
 Plug 'tpope/vim-fugitive'
 " GitHub extension for fugitive

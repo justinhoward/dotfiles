@@ -73,7 +73,7 @@ imap <expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev'      : '<S-
 smap <expr> <S-Tab> luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev'      : '<S-Tab>'
 
 " Indent Guides
-nnoremap <silent> <leader>vi :IndentBlanklineToggle<cr>
+nnoremap <silent> <leader>vi :IBLToggle<cr>
 
 " Whitespace
 nnoremap <silent> <leader>vw :ToggleList<cr>

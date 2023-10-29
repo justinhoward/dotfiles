@@ -29,6 +29,7 @@ devent_interactive=(
   zoxide
   ruby
   node
+  python
   docker
   composer
   neomutt
