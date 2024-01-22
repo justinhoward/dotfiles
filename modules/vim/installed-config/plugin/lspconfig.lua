@@ -67,6 +67,20 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+nvim_lsp.pylsp.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = flags,
+  settings = {
+    pylsp = {
+      plugins = {
+        autopep8 = { enabled = true },
+        pylint = { enabled = true }
+      }
+    }
+  }
+}
+
 -- Individual configs
 nvim_lsp.solargraph.setup {
   capabilities = capabilities,
@@ -161,17 +175,24 @@ null_ls.setup({
       ignore_stderr = true,
       args = vim.list_extend(
         { "exec", "erblint" },
-        require("null-ls").builtins.diagnostics.erb_lint._opts.args
+        null_ls.builtins.diagnostics.erb_lint._opts.args
       )
     }),
     null_ls.builtins.diagnostics.flake8,
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.markdownlint,
+    -- null_ls.builtins.diagnostics.pylint.with({
+    --   command = 'pipenv',
+    --   args = vim.list_extend(
+    --     { 'run', 'pylint' },
+    --     null_ls.builtins.formatting.rubocop._opts.args
+    --   )
+    -- }),
     null_ls.builtins.formatting.rubocop.with({
       command = 'bundle',
       args = vim.list_extend(
         { "exec", "rubocop" },
-        require("null-ls").builtins.formatting.rubocop._opts.args
+        null_ls.builtins.formatting.rubocop._opts.args
       )
     }),
     null_ls.builtins.diagnostics.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
@@ -181,7 +202,7 @@ null_ls.setup({
       ignore_stderr = true,
       args = vim.list_extend(
         { "exec", "erblint" },
-        require("null-ls").builtins.formatting.erb_lint._opts.args
+        null_ls.builtins.formatting.erb_lint._opts.args
       )
     }),
     null_ls.builtins.formatting.codespell,
@@ -190,7 +211,7 @@ null_ls.setup({
       command = 'bundle',
       args = vim.list_extend(
         { "exec", "rubocop" },
-        require("null-ls").builtins.diagnostics.rubocop._opts.args
+        null_ls.builtins.diagnostics.rubocop._opts.args
       )
     }),
     null_ls.builtins.formatting.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
