@@ -58,7 +58,7 @@ local flags = {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Default configs
-local servers = { 'ccls', 'eslint', 'tsserver', 'bashls', 'pylsp', 'marksman', 'jsonls' }
+local servers = { 'ccls', 'eslint', 'tsserver', 'bashls', 'pylsp', 'marksman', 'jsonls', 'sorbet' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
