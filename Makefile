@@ -19,7 +19,7 @@ check: lint
 
 .PHONY: lint
 lint: ## Check files with shellcheck
-	git ls-files | grep '\.sh$$' | xargs shellcheck -e SC1071
+	git ls-files | grep '\.sh$$' | xargs shellcheck
 
 .PHONY: help
 .DEFAULT_GOAL := help
