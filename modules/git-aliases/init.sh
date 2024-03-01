@@ -21,7 +21,7 @@ alias gSu='git submodule update --recursive'
 alias gba='git branch -a'
 alias gbr='git branch -r'
 alias gbg='git branch --merged master | grep -vE "^\*|^  master$"'
-alias gbG='git branch --merged master | grep -vE "^\*|^  master$" | xargs git branch -d'
+alias gbG='git branch --merged master | grep -vE "^\*|^  master$" | xargs -r git branch -d'
 
 # Index (i)
 alias giA='git add --all'
