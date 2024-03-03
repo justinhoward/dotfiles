@@ -39,7 +39,7 @@ devent_interactive=(
   markdownlint
   jira-terminal
   git-aliases
-  exa
+  eza
   gpg
 )
 
