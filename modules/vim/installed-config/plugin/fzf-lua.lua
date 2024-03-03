@@ -1,17 +1,11 @@
 local fzf_lua = require('fzf-lua')
+local actions = fzf_lua.actions
 fzf_lua.setup({
-  fzf_bin = 'sk',
-  fzf_opts = {
-    ['--no-separator'] = false,
-    ['--layout'] = 'default',
-    ['--border'] = false,
-  },
-  files = {
-    fd_opts = "--color=never --type f --hidden --no-ignore --exclude .git"
-  },
-  git = {
-    files = {
-      cmd = 'git ls-files --exclude-standard --others --cached'
+  'default',
+  grep = {
+    actions = {
+      ['ctrl-g'] = { actions.toggle_ignore },
+      ['ctrl-l'] = { actions.grep_lgrep }
     }
   },
   lsp = {
