@@ -12,16 +12,19 @@ alias glcl='gh-changelog'
 
 # Tag (t)
 alias gt='git tag --sort v:refname'
-alias gtl='git tag --sort -v:refname | head -1'
+alias gT='git tag --sort v:refname -n99'
+alias gtl='git describe --tags --abbrev=0'
+alias gtd='git show "$(gtl)" 2>/dev/null'
 
 # Submodule (S)
 alias gSu='git submodule update --recursive'
 
 # Branch (b)
+alias gdefault='git symbolic-ref --short refs/remotes/origin/HEAD | sed "s@^origin/@@" || git config --get init.defaultBranch'
 alias gba='git branch -a'
 alias gbr='git branch -r'
-alias gbg='git branch --merged master | grep -vE "^\*|^  master$"'
-alias gbG='git branch --merged master | grep -vE "^\*|^  master$" | xargs -r git branch -d'
+alias gbg='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$"'
+alias gbG='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$" | xargs -r git branch -d'
 
 # Index (i)
 alias giA='git add --all'
