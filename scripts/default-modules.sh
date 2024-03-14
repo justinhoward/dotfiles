@@ -27,8 +27,8 @@ devent_interactive=(
   wdiff
   fzf
   zoxide
+  mise
   ruby
-  node
   python
   docker
   composer

@@ -3,16 +3,6 @@
 # Disable the spring preloader for Rails
 export DISABLE_SPRING=1
 
-# Ruby version manager
-if dcheck frum; then
-  eval "$(frum init)"
-fi
-
-if [ "$dotfiles_platform" = 'osx' ] && [ -f /opt/homebrew/opt/chruby/share/chruby/chruby.sh ]; then
-  source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
-  source /opt/homebrew/opt/chruby/share/chruby/auto.sh
-fi
-
 alias rb='ruby'
 alias rbb='bundle'
 alias rbbc='bundle clean'
