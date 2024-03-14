@@ -26,6 +26,9 @@ alias gbr='git branch -r'
 alias gbg='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$"'
 alias gbG='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$" | xargs -r git branch -d'
 
+# Checkout (co)
+alias gcod='git checkout "$(gdefault)"'
+
 # Index (i)
 alias giA='git add --all'
 alias gip='git add --patch'
