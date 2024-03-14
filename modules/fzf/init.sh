@@ -1,11 +1,12 @@
 #!/usr/bin/env sh
 
-dcheck fzf || dcheck sk || return
+dcheck fzf || return
 
-if dcheck fzf && [ "$dotfiles_platform" = osx ]; then
-  if [ "$dotfiles_shell" = zsh ] || [ "$dotfiles_shell" = bash ]; then
-    . "/opt/homebrew/opt/fzf/shell/completion.$dotfiles_shell"
-    . "/opt/homebrew/opt/fzf/shell/key-bindings.$dotfiles_shell"
+if dcheck fzf; then
+  if [ "$dotfiles_shell" = zsh ]; then
+    eval "$(fzf --zsh)"
+  elif [ "$dotfiles_shell" = bash ]; then
+    eval "$(fzf --bash)"
   fi
 fi
 
