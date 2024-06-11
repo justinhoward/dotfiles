@@ -3,9 +3,9 @@ local auto_dark_mode = require('auto-dark-mode')
 
 vim.opt.termguicolors = true
 
-vim.go.sonokai_enable_italic = 1
-vim.go.everforest_enable_italic = 1
-vim.go.everforest_background = 'hard'
+vim.g.sonokai_enable_italic = 1
+vim.g.everforest_enable_italic = 1
+vim.g.everforest_background = 'hard'
 
 -- set color scheme from colors directory
 vim.cmd 'colorscheme sonokai'

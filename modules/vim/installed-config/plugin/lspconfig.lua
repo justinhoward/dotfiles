@@ -58,7 +58,16 @@ local flags = {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Default configs
-local servers = { 'ccls', 'eslint', 'tsserver', 'bashls', 'pylsp', 'marksman', 'jsonls', 'sorbet' }
+local servers = {
+  'ccls',
+  'eslint',
+  'tsserver',
+  'bashls',
+  'marksman',
+  'jsonls',
+  'ruff',
+  'terraformls'
+}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     capabilities = capabilities,
@@ -81,6 +90,13 @@ nvim_lsp.pylsp.setup {
   }
 }
 
+nvim_lsp.sorbet.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = flags,
+  cmd = { 'srb', 'tc', '--lsp' },
+}
+
 -- Individual configs
 nvim_lsp.solargraph.setup {
   capabilities = capabilities,
@@ -95,6 +111,14 @@ nvim_lsp.solargraph.setup {
     }
   }
 }
+
+-- This should work in theory, but isn't at the moment May 24
+-- nvim_lsp.rubocop.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
+--   flags = flags
+-- }
 
 nvim_lsp.yamlls.setup {
   capabilities = capabilities,
@@ -166,7 +190,6 @@ null_ls.setup({
   on_attach = on_attach,
   diagnostics_format = '[#{c}] #{m} (#{s})',
   sources = {
-    null_ls.builtins.code_actions.shellcheck,
     null_ls.builtins.diagnostics.codespell,
     null_ls.builtins.diagnostics.cppcheck,
     null_ls.builtins.diagnostics.cfn_lint,
@@ -178,16 +201,8 @@ null_ls.setup({
         null_ls.builtins.diagnostics.erb_lint._opts.args
       )
     }),
-    null_ls.builtins.diagnostics.flake8,
     null_ls.builtins.diagnostics.hadolint,
     null_ls.builtins.diagnostics.markdownlint,
-    -- null_ls.builtins.diagnostics.pylint.with({
-    --   command = 'pipenv',
-    --   args = vim.list_extend(
-    --     { 'run', 'pylint' },
-    --     null_ls.builtins.formatting.rubocop._opts.args
-    --   )
-    -- }),
     null_ls.builtins.formatting.rubocop.with({
       command = 'bundle',
       args = vim.list_extend(

@@ -23,8 +23,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 " Repeat (.) support for vim-surround
 Plug 'tpope/vim-repeat'
-" Comment/uncomment
-Plug 'numToStr/Comment.nvim'
 " Project-local vimrc files
 Plug 'embear/vim-localvimrc'
 " Syntax for any language
@@ -72,7 +70,7 @@ Plug 'neovim/nvim-lspconfig'
 " Show code action light bulb
 Plug 'kosayoda/nvim-lightbulb'
 " External linter support for lsp
-Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'nvimtools/none-ls.nvim'
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
 " LSP progress notifier

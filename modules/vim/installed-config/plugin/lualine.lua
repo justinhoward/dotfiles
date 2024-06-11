@@ -20,7 +20,7 @@ require('lualine').setup {
           hint = { fg = utils.extract_color_from_hllist('fg', { 'DiagnosticSignHint' }, nil) }
         },
         always_visible = true,
-        cond = function() return vim.lsp.buf.server_ready() end
+        -- cond = function() return vim.lsp.buf.server_ready() end
       }
     },
     lualine_c = {'filename'},

@@ -13,4 +13,4 @@ fzf_lua.setup({
   }
 })
 
-vim.cmd("FzfLua register_ui_select")
+fzf_lua.register_ui_select()
