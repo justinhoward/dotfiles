@@ -74,7 +74,7 @@ Plug 'nvimtools/none-ls.nvim'
 " Rust LSP extras
 Plug 'simrat39/rust-tools.nvim'
 " LSP progress notifier
-Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
+Plug 'j-hui/fidget.nvim'
 " Completion
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
