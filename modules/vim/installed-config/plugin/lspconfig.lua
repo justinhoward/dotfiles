@@ -98,19 +98,19 @@ nvim_lsp.sorbet.setup {
 }
 
 -- Individual configs
-nvim_lsp.solargraph.setup {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  flags = flags,
-  init_options = {
-    formatting = false
-  },
-  settings = {
-    solargraph = {
-      diagnostics = false
-    }
-  }
-}
+-- nvim_lsp.solargraph.setup {
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   flags = flags,
+--   init_options = {
+--     formatting = false
+--   },
+--   settings = {
+--     solargraph = {
+--       diagnostics = false
+--     }
+--   }
+-- }
 
 -- This should work in theory, but isn't at the moment May 24
 -- nvim_lsp.rubocop.setup {
