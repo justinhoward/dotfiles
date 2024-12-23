@@ -101,5 +101,7 @@ Plug 'vinnymeller/swagger-preview.nvim'
 " Modern fold indicators
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
+" GitHub Copilot
+Plug 'github/copilot.vim'
 
 call plug#end()
