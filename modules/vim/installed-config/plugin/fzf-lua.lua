@@ -13,7 +13,7 @@ fzf_lua.setup({
     }
   },
   lsp = {
-    jump_to_single_result = true
+    jump1 = true
   }
 })
 
