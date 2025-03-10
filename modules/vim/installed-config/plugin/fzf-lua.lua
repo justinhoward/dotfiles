@@ -1,7 +1,11 @@
 local fzf_lua = require('fzf-lua')
 local actions = fzf_lua.actions
 fzf_lua.setup({
-  'default',
+  files = {
+    actions = {
+      ['ctrl-g'] = { actions.toggle_ignore }
+    }
+  },
   grep = {
     actions = {
       ['ctrl-g'] = { actions.toggle_ignore },
