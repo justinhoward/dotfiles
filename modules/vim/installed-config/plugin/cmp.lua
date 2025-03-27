@@ -5,31 +5,31 @@ local t = function(str)
 end
 
 local kind_icons = {
-  text = "",
-  method = "",
-  ['function'] = "",
-  constructor = "",
-  field = "",
-  variable = "",
-  class = "ﴯ",
-  interface = "",
-  module = "",
-  property = "ﰠ",
-  unit = "",
-  value = "",
-  enum = "",
-  keyword = "",
-  snippet = "",
-  color = "",
-  file = "",
-  reference = "",
-  folder = "",
-  enumMember = "",
-  constant = "",
-  struct = "",
-  event = "",
-  operator = "",
-  typeParameter = ""
+  Text = "󰉿",
+  Method = "󰆧",
+  Function = "󰊕",
+  Constructor = "",
+  Field = "󰜢",
+  Variable = "󰀫",
+  Class = "󰠱",
+  Interface = "",
+  Module = "",
+  Property = "󰜢",
+  Unit = "󰑭",
+  Value = "󰎠",
+  Enum = "",
+  Keyword = "󰌋",
+  Snippet = "",
+  Color = "󰏘",
+  File = "󰈙",
+  Reference = "󰈇",
+  Folder = "󰉋",
+  EnumMember = "",
+  Constant = "󰏿",
+  Struct = "󰙅",
+  Event = "",
+  Operator = "󰆕",
+  TypeParameter = "",
 }
 
 cmp.setup({
@@ -125,7 +125,7 @@ cmp.setup({
   },
   formatting = {
     format = function(entry, vim_item)
-      vim_item.kind = string.format('%s %s', kind_icons[string.lower(vim_item.kind)], vim_item.kind)
+      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
       return vim_item
     end
   }
