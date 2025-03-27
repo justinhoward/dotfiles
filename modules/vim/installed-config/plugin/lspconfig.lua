@@ -2,13 +2,17 @@ local nvim_lsp = require('lspconfig')
 local null_ls = require('null-ls')
 local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
+vim.o.winborder = 'rounded'
+
 vim.fn.sign_define("DiagnosticSignError", { text = '󰅚 ', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define("DiagnosticSignWarn", { text = ' ', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define("DiagnosticSignInfo", { text = '󰋽 ', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define("DiagnosticSignHint", { text = ' ', texthl = 'DiagnosticSignHint' })
 
 vim.diagnostic.config {
-  severity_sort = true
+  severity_sort = true,
+  -- virtual_text = true,
+  virtual_lines = true
 }
 
 -- Use an on_attach function to only map the following keys
@@ -23,9 +27,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', "<cmd>lua require('fzf-lua').lsp_declarations()<cr>", opts)
   buf_set_keymap('n', 'gd', "<cmd>lua require('fzf-lua').lsp_definitions()<cr>", opts)
   buf_set_keymap('n', 'gy', "<cmd>lua require('fzf-lua').lsp_typedefs()<cr>", opts)
-  buf_set_keymap('n', 'gr', "<cmd>lua require('fzf-lua').lsp_references()<cr>", opts)
-  buf_set_keymap('n', 'gi', "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+  buf_set_keymap('n', 'grr', "<cmd>lua require('fzf-lua').lsp_references()<cr>", opts)
+  buf_set_keymap('n', 'gri', "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", opts)
   buf_set_keymap('n', '<leader>fn', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
   buf_set_keymap('n', '<leader>fp', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
   buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
@@ -33,8 +36,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>fA', "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<cr>", opts)
   buf_set_keymap('n', '<leader>]', "<cmd>lua require('fzf-lua').lsp_document_symbols()<cr>", opts)
   buf_set_keymap('n', '<leader>}', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<cr>", opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-  buf_set_keymap('n', '<leader>ra', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   buf_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
   buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
 
