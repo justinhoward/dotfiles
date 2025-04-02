@@ -1,3 +1,3 @@
-require('CopilotChat').setup {
+require('copilot').setup({
 
-}
+})

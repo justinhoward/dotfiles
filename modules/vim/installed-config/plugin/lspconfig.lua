@@ -1,6 +1,5 @@
 local nvim_lsp = require('lspconfig')
 local null_ls = require('null-ls')
-local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
 vim.o.winborder = 'rounded'
 
@@ -11,8 +10,7 @@ vim.fn.sign_define("DiagnosticSignHint", { text = ' ', texthl = 'DiagnosticSi
 
 vim.diagnostic.config {
   severity_sort = true,
-  -- virtual_text = true,
-  virtual_lines = true
+  virtual_text = true
 }
 
 -- Use an on_attach function to only map the following keys
@@ -56,7 +54,7 @@ local flags = {
 }
 
 -- Add cmp completion capabilities
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Default configs
 local servers = {
@@ -71,14 +69,14 @@ local servers = {
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-    capabilities = capabilities,
+    -- capabilities = capabilities,
     on_attach = on_attach,
     flags = flags
   }
 end
 
 nvim_lsp.pylsp.setup {
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   on_attach = on_attach,
   flags = flags,
   settings = {
@@ -92,7 +90,7 @@ nvim_lsp.pylsp.setup {
 }
 
 nvim_lsp.sorbet.setup {
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   on_attach = on_attach,
   flags = flags,
   cmd = { 'srb', 'tc', '--lsp' },
@@ -122,7 +120,7 @@ nvim_lsp.sorbet.setup {
 -- }
 
 nvim_lsp.yamlls.setup {
-  capabilities = capabilities,
+  -- capabilities = capabilities,
   on_attach = on_attach,
   flags = flags,
   settings = {

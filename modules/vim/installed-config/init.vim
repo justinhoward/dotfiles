@@ -76,12 +76,8 @@ Plug 'simrat39/rust-tools.nvim'
 " LSP progress notifier
 Plug 'j-hui/fidget.nvim'
 " Completion
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'hrsh7th/nvim-cmp'
+Plug 'saghen/blink.cmp', { 'tag': '*' }
+Plug 'fang2hou/blink-copilot'
 " Color highlighter
 Plug 'uga-rosa/ccc.nvim'
 " DAP debugger client
@@ -102,7 +98,7 @@ Plug 'vinnymeller/swagger-preview.nvim'
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
 " GitHub Copilot
-Plug 'github/copilot.vim'
-Plug 'CopilotC-Nvim/CopilotChat.nvim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'olimorris/codecompanion.nvim'
 
 call plug#end()
