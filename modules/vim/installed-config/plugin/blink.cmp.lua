@@ -15,6 +15,9 @@ require('blink.cmp').setup({
         score_offset = 100,
         async = true,
       }
+    },
+    per_filetype = {
+      codecompanion = { 'codecompanion', 'copilot' }
     }
   }
 })
