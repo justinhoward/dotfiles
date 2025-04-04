@@ -1,13 +1,16 @@
 require('blink.cmp').setup({
-  keymap = { preset = 'default' },
+  keymap = {
+    preset = 'default',
+    ['<C-j>'] = { 'snippet_forward', 'fallback' },
+  },
+  signature = { enabled = true },
   completion = {
     documentation = { auto_show = true },
-    ghost_text = {
-      enabled = true,
-    },
+    ghost_text = { enabled = false },
   },
+  snippets = { preset = 'luasnip' },
   sources = {
-    default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
+    default = { 'lsp', 'copilot', 'snippets', 'buffer' },
     providers = {
       copilot = {
         name = 'copilot',
@@ -20,4 +23,8 @@ require('blink.cmp').setup({
       codecompanion = { 'codecompanion', 'copilot' }
     }
   }
+})
+
+require('blink-copilot').setup({
+  max_completions = 2
 })
