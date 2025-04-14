@@ -32,7 +32,7 @@ SPACE_UNUSED='•'
 # Icon for space with windows
 SPACE_USED='⦿'
 # The order that displays should appear in by index
-DISPLAYS=(3 1 2)
+DISPLAYS=(1 3 2)
 # Layout icons
 BSP="󰕰 "
 STACK="󰌨 "
