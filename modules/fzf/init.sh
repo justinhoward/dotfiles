@@ -18,3 +18,13 @@ else
   dcheck gfind && find_cmd=gfind
   export FZF_DEFAULT_COMMAND="$find_cmd -path './.git' -prune -o -type f -printf '%P\n'"
 fi
+
+export FZF_DEFAULT_OPTS="
+  --height='80%'
+  --bind='alt-a:toggle-all'
+  --bind='alt-s:toggle-sort'
+  --bind='?:toggle-preview'
+  --bind='alt-w:toggle-preview-wrap'
+  --preview-window='right:60%'
+  --preview='bat {}'
+"

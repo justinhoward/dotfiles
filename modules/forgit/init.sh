@@ -1,9 +1,12 @@
-#!/usr/bin/env sh
-
-dcheck git-forgit || exit
 dcheck brew || exit
 
 export FORGIT_LOG_GRAPH_ENABLE=false
+
+if xargs --version | grep GNU > /dev/null; then
+  _xargs='xargs -r'
+else
+  _xargs='xargs'
+fi
 
 alias G=git-forgit
 alias Gia='git-forgit add'
@@ -25,3 +28,9 @@ alias Gir='git-forgit reset_head'
 alias Gcr='git-forgit revert_commit'
 alias Gs='git-forgit stash_push'
 alias Gsd='git-forgit stash_show'
+# shellcheck disable=SC2139
+alias GCl="gCl | grep . | fzf --exit-0 --multi --preview 'git diff --color=always {}' | $_xargs $EDITOR --"
+# shellcheck disable=SC2139
+alias GCa="gCl | grep . | fzf --exit-0 --multi --preview 'git diff --color=always {}' | $_xargs git add --"
+
+unset _xargs
