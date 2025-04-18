@@ -136,3 +136,11 @@ nnoremap <c-p> <Plug>(YankyCycleBackward)
 nmap <silent> zR :lua require'ufo'.openAllFolds()<cr>
 nmap <silent> zM :lua require'ufo'.closeAllFolds()<cr>
 nmap <silent> K :lua require'ufo'.peekFoldedLinesUnderCursor()<cr>
+
+" Avante
+nmap <silent> <leader>aa <Cmd>AvanteAsk<CR>
+vmap <silent> <leader>aa <Cmd>AvanteAsk<CR>
+nmap <silent> <leader>af <Cmd>AvanteFocus<CR>
+vmap <silent> <leader>af <Cmd>AvanteFocus<CR>
+nmap <silent> <leader>as <Cmd>AvanteStop<CR>
+vmap <silent> <leader>as <Cmd>AvanteStop<CR>

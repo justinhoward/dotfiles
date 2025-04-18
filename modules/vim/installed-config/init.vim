@@ -99,6 +99,10 @@ Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
 " GitHub Copilot
 Plug 'zbirenbaum/copilot.lua'
-Plug 'olimorris/codecompanion.nvim'
+Plug 'ravitemer/mcphub.nvim'
+
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+Plug 'stevearc/dressing.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
 
 call plug#end()
