@@ -16,26 +16,30 @@ vim.diagnostic.config {
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
   -- Mappings.
-  local opts = { noremap=true, silent=true }
+  local opts = { buffer = bufnr, noremap = true, silent = true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', "<cmd>lua require('fzf-lua').lsp_declarations()<cr>", opts)
-  buf_set_keymap('n', 'gd', "<cmd>lua require('fzf-lua').lsp_definitions()<cr>", opts)
-  buf_set_keymap('n', 'gy', "<cmd>lua require('fzf-lua').lsp_typedefs()<cr>", opts)
-  buf_set_keymap('n', 'grr', "<cmd>lua require('fzf-lua').lsp_references()<cr>", opts)
-  buf_set_keymap('n', 'gri', "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", opts)
-  buf_set_keymap('n', '<leader>fn', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
-  buf_set_keymap('n', '<leader>fp', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
-  buf_set_keymap('n', '<leader>ff', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
-  buf_set_keymap('n', '<leader>fa', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<cr>", opts)
-  buf_set_keymap('n', '<leader>fA', "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<cr>", opts)
-  buf_set_keymap('n', '<leader>]', "<cmd>lua require('fzf-lua').lsp_document_symbols()<cr>", opts)
-  buf_set_keymap('n', '<leader>}', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<cr>", opts)
-  buf_set_keymap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
-  buf_set_keymap('v', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
+  vim.keymap.set('n', 'gD', "<cmd>lua require('fzf-lua').lsp_declarations()<cr>", opts)
+  vim.keymap.set('n', 'gd', "<cmd>lua require('fzf-lua').lsp_definitions()<cr>", opts)
+  vim.keymap.set('n', 'gy', "<cmd>lua require('fzf-lua').lsp_typedefs()<cr>", opts)
+  vim.keymap.set('n', 'grr', "<cmd>lua require('fzf-lua').lsp_references()<cr>", opts)
+  vim.keymap.set('n', 'gri', "<cmd>lua require('fzf-lua').lsp_implementations()<cr>", opts)
+  vim.keymap.set('n', '<leader>fn', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+  vim.keymap.set('n', '<leader>fp', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+  vim.keymap.set('n', '<leader>ff', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
+  vim.keymap.set('n', '<leader>fa', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<cr>", opts)
+  vim.keymap.set('n', '<leader>fA', "<cmd>lua require('fzf-lua').lsp_workspace_diagnostics()<cr>", opts)
+  vim.keymap.set('n', '<leader>]', "<cmd>lua require('fzf-lua').lsp_document_symbols()<cr>", opts)
+  vim.keymap.set('n', '<leader>}', "<cmd>lua require('fzf-lua').lsp_workspace_symbols()<cr>", opts)
+  vim.keymap.set('n', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
+  vim.keymap.set('v', '<leader>rf', '<cmd>lua vim.lsp.buf.format { async = true }<cr>', opts)
+ --- toggle inlay hints
+	local function toggle_inlay_hints()
+		vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+	end
+
+  vim.keymap.set('n', '<leader>ri', toggle_inlay_hints, { buffer = bufnr, noremap = true, silent = true })
 
   vim.keymap.set('n', 'K', function()
       local winid = require('ufo').peekFoldedLinesUnderCursor()
