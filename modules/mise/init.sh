@@ -1,11 +1,15 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 dcheck mise || return
 
-if [ "$dotfiles_shell" = zsh ]; then
-  eval "$(mise activate zsh)"
-  eval "$(mise completion zsh)"
-elif [ "$dotfiles_shell" = bash ]; then
-  eval "$(mise activate bash)"
-  eval "$(mise completion bash)"
+[ "$dotfiles_shell" != zsh ] && [ "$dotfiles_shell" != bash ] && return
+
+eval "$(mise activate "$dotfiles_shell")"
+
+# Mise gets called twice, once in the login event, and another time
+# in the interactive event. We want to wait for the interactive event
+# to load completions
+if [ "$dotfiles_event" = "interactive" ]; then
+  eval "$(mise completion "$dotfiles_shell")"
 fi
+
