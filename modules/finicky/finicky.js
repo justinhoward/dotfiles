@@ -1,30 +1,19 @@
 const browser = "Firefox"
 
-module.exports = {
+export default {
   defaultBrowser: browser,
   options: {
     hideIcon: true
   },
   handlers: [
-    //////// Zoom ////////////
+    // zoom.us/join links open in Zoom app
     {
-      // Zoom links from zoom open in default
-      match: ({opener, url }) => opener.bundleid === "us.zoom.xos" && url.host.includes("zoom.us"),
-      browser: browser
+      match: /zoom\.us\/(join|j)\//,
+      browser: 'us.zoom.xos'
     },
+    // Open links from Slack in the background
     {
-      // Zoom links open in zoom 
-      match: [
-        "zoom.us/*",
-        finicky.matchDomains(/.*\zoom.us/),
-        /zoom.us\/j\//,
-      ],
-      browser: "us.zoom.xos"
-    },
-
-    //////// Slack ////////////
-    {
-      match: ({ opener }) => opener.bundleId === 'com.tinyspeck.slackmacgap',
+      match: (_, { opener }) => opener.bundleId === 'com.tinyspeck.slackmacgap',
       browser: {
         name: browser,
         openInBackground: true
