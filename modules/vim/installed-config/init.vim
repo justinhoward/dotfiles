@@ -97,12 +97,17 @@ Plug 'vinnymeller/swagger-preview.nvim'
 " Modern fold indicators
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
-" GitHub Copilot
+" AI Coders
+" ---
 Plug 'zbirenbaum/copilot.lua'
+"Plug 'olimorris/codecompanion.nvim'
 Plug 'ravitemer/mcphub.nvim'
-
-Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
-Plug 'stevearc/dressing.nvim'
-Plug 'MeanderingProgrammer/render-markdown.nvim'
+"Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+"Plug 'stevearc/dressing.nvim'
+"
+"Plug 'MeanderingProgrammer/render-markdown.nvim'
+"Plug 'sudo-tee/opencode.nvim'
+"Plug 'folke/snacks.nvim'
+" ---
 
 call plug#end()

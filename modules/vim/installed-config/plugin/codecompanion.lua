@@ -1,0 +1,39 @@
+-- require('codecompanion').setup({
+--   strategies = {
+--     chat = {
+--       adapter = 'copilot'
+--     },
+--     inline = {
+--       adapter = 'copilot'
+--     },
+--     cmd = {
+--       adapter = 'copilot'
+--     }
+--   },
+--   adapters = {
+--     copilot = function()
+--       return require('codecompanion.adapters').extend('copilot', {
+--           name = 'copilot-custom',
+--           schema = {
+--             model = {
+--               default = 'claude-3.7-sonnet'
+--             }
+--           }
+--       })
+--     end
+--   },
+--   extensions = {
+--     mcphub = {
+--       callback = "mcphub.extensions.codecompanion",
+--       opts = {
+--         show_result_in_chat = true,  -- Show mcp tool results in chat
+--         make_vars = true,            -- Convert resources to #variables
+--         make_slash_commands = true,  -- Add prompts as /slash commands
+--       }
+--     }
+--   }
+-- })
+
+-- vim.keymap.set({ "n", "v" }, "<Leader>ac", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+-- vim.keymap.set({ "n", "v" }, "<Leader>aa", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+-- vim.keymap.set("x", "ga", "<cmd>CodeCompanionCha-Add<cr>", { noremap = true, silent = true })
