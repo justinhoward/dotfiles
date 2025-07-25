@@ -72,7 +72,7 @@ Plug 'kosayoda/nvim-lightbulb'
 " External linter support for lsp
 Plug 'nvimtools/none-ls.nvim'
 " Rust LSP extras
-Plug 'simrat39/rust-tools.nvim'
+Plug 'mrcjkb/rustaceanvim', { 'tag': '*' }
 " LSP progress notifier
 Plug 'j-hui/fidget.nvim'
 " Completion

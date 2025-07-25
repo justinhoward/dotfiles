@@ -65,7 +65,9 @@ local servers = {
   'marksman',
   'jsonls',
   'ruff',
-  'terraformls'
+  'terraformls',
+-- Swift
+  'sourcekit'
 }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -231,17 +233,3 @@ null_ls.setup({
     null_ls.builtins.formatting.sqlfluff.with({ extra_args = {"--dialect", "mysql"}}),
   }
 })
-
--- Additional tools
-require('rust-tools').setup {
-    tools = { -- rust-tools options
-        hover_with_actions = false,
-        inlay_hints = {
-            parameter_hints_prefix = "◀ ",
-            other_hints_prefix  = "▶ ",
-        }
-    },
-    server = {
-      on_attach = on_attach,
-    }
-}
