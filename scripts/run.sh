@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+[ -n "$DOTFILES_LOADED" ] && return
 [ -z "$DOTFILES_PATH" ] && DOTFILES_PATH="$HOME/.dotfiles"
 . "$DOTFILES_PATH"/scripts/load.sh
 dconfig modules
@@ -16,6 +17,8 @@ else
     devent login
   fi
 fi
+
+DOTFILES_LOADED=1
 
 if [ -n "$dotfiles_xorg" ]; then
   devent xorg_exec

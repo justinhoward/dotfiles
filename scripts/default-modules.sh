@@ -9,6 +9,7 @@ devent_load=(
   umask
   language
   temp
+  mise
 )
 
 devent_login=(

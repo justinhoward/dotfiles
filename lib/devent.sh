@@ -10,6 +10,8 @@ devent() {
   reassign+='[@]}")'
   eval "$reassign"
   for module in "${event_modules[@]}"; do
+    dotfiles_event="$1"
     dmodload "$module"
+    unset dotfiles_event
   done
 }
