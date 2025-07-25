@@ -43,11 +43,11 @@ nnoremap <silent> <leader>p <cmd>lua require('fzf-lua').files()<cr>
 nnoremap <leader>y :YankyRingHistory<cr>
 
 " Find
-nnoremap <silent> <leader>ss <cmd>lua require('fzf-lua').live_grep_glob()<cr>
+nnoremap <silent> <leader>ss <cmd>lua require('fzf-lua').live_grep()<cr>
 vnoremap <silent> <leader>ss <cmd>lua require('fzf-lua').grep_visual()<cr>
 nnoremap <silent> <leader>sw <cmd>lua require('fzf-lua').grep_cword()<cr>
 nnoremap <silent> <leader>sW <cmd>lua require('fzf-lua').grep_cWORD()<cr>
-nnoremap <silent> <leader>sl <cmd>lua require('fzf-lua').live_grep_resume()<cr>
+nnoremap <silent> <leader>sl <cmd>lua require('fzf-lua').live_grep({ resume=true })<cr>
 
 " Lualine status line
 nmap <silent> <Leader>1 :LualineBuffersJump 1<cr>
