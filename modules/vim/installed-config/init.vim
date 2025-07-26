@@ -90,10 +90,6 @@ Plug 'suketa/nvim-dap-ruby'
 Plug 'gbprod/yanky.nvim'
 " Statusline
 Plug 'nvim-lualine/lualine.nvim'
-" Fun
-Plug 'eandrju/cellular-automaton.nvim'
-" Automatically generate swagger-ui
-Plug 'vinnymeller/swagger-preview.nvim'
 " Modern fold indicators
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
