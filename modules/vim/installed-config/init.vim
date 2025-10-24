@@ -26,7 +26,7 @@ Plug 'tpope/vim-repeat'
 " Project-local vimrc files
 Plug 'embear/vim-localvimrc'
 " Syntax for any language
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 " Show vertical indent guides
 Plug 'lukas-reineke/indent-blankline.nvim'
 " Search in vim with ripgrep
@@ -97,7 +97,7 @@ Plug 'kevinhwang91/promise-async'
 " ---
 Plug 'zbirenbaum/copilot.lua'
 "Plug 'olimorris/codecompanion.nvim'
-Plug 'ravitemer/mcphub.nvim'
+"Plug 'ravitemer/mcphub.nvim'
 "Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 "Plug 'stevearc/dressing.nvim'
 "
