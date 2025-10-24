@@ -9,6 +9,10 @@ else
   _xargs='xargs'
 fi
 
+# Default branches
+alias gdefault='git symbolic-ref --short refs/remotes/origin/HEAD | sed "s@^origin/@@" || git config --get init.defaultBranch'
+alias gRdefault='git rev-parse --abbrev-ref "$(gdefault)@{upstream}"'
+
 # Log (l)
 alias glp='git log --topo-order --stat --patch --full-diff --pretty=format:"${_git_log_medium_format}"'
 alias glf='git log --topo-order --name-status --pretty=format:${_git_log_medium_format}'
@@ -26,7 +30,6 @@ alias gtd='git show "$(gtl)" 2>/dev/null'
 alias gSu='git submodule update --recursive'
 
 # Branch (b)
-alias gdefault='git symbolic-ref --short refs/remotes/origin/HEAD | sed "s@^origin/@@" || git config --get init.defaultBranch'
 alias gba='git branch -a'
 alias gbr='git branch -r'
 alias gbg='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$"'
@@ -55,6 +58,9 @@ alias gCo='git checkout --ours --'
 alias gCO='gCo $(git --no-pager diff --name-only --diff-filter=U)'
 alias gCt='git checkout --theirs --'
 alias gCT='gCt $(git --no-pager diff --name-only --diff-filter=U)'
+
+# Rebase (r)
+alias grd='git rebase "$(gRdefault)"'
 
 # git-forgit
 # shellcheck disable=SC2139
