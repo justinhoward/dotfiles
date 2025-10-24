@@ -1,4 +1,4 @@
-local nvim_lsp = require('lspconfig')
+-- local nvim_lsp = require('lspconfig')
 local null_ls = require('null-ls')
 
 vim.o.winborder = 'rounded'
@@ -60,9 +60,6 @@ local flags = {
   debounce_text_changes = 150,
 }
 
--- Add cmp completion capabilities
--- local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
 -- Default configs
 local servers = {
   'ccls',
@@ -71,21 +68,21 @@ local servers = {
   'bashls',
   'marksman',
   'jsonls',
+  'ruby_lsp',
   'ruff',
   'terraformls',
 -- Swift
   'sourcekit'
 }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    -- capabilities = capabilities,
+  vim.lsp.config(lsp, {
     on_attach = on_attach,
     flags = flags
-  }
+  })
+  vim.lsp.enable(lsp)
 end
 
-nvim_lsp.pylsp.setup {
-  -- capabilities = capabilities,
+vim.lsp.config('pylsp', {
   on_attach = on_attach,
   flags = flags,
   settings = {
@@ -96,18 +93,18 @@ nvim_lsp.pylsp.setup {
       }
     }
   }
-}
+})
+vim.lsp.enable('pylsp')
 
-nvim_lsp.sorbet.setup {
-  -- capabilities = capabilities,
+vim.lsp.config('sorbet', {
   on_attach = on_attach,
   flags = flags,
   cmd = { 'srb', 'tc', '--lsp' },
-}
+})
+vim.lsp.enable('sorbet')
 
 -- Individual configs
--- nvim_lsp.solargraph.setup {
---   capabilities = capabilities,
+-- vim.lsp.config('solargraph', {
 --   on_attach = on_attach,
 --   flags = flags,
 --   init_options = {
@@ -118,18 +115,16 @@ nvim_lsp.sorbet.setup {
 --       diagnostics = false
 --     }
 --   }
--- }
+-- })
 
 -- This should work in theory, but isn't at the moment May 24
--- nvim_lsp.rubocop.setup {
---   capabilities = capabilities,
+-- vim.lsp.config('rubocop', {
 --   on_attach = on_attach,
 --   cmd = { 'bundle', 'exec', 'rubocop', '--lsp' },
 --   flags = flags
--- }
+-- })
 
-nvim_lsp.yamlls.setup {
-  -- capabilities = capabilities,
+vim.lsp.config('yamlls', {
   on_attach = on_attach,
   flags = flags,
   settings = {
@@ -190,7 +185,15 @@ nvim_lsp.yamlls.setup {
       }
     }
   }
-}
+})
+vim.lsp.enable('pylsp')
+
+vim.lsp.config('powershell_es', {
+  on_attach = on_attach,
+  flags = flags,
+  bundle_path = vim.fn.expand('$HOME/.local/share/powershell_editor_services'),
+})
+vim.lsp.enable('powershell_es')
 
 -- Null-ls
 null_ls.setup({
