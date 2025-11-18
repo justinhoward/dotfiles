@@ -2,8 +2,9 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = "all", -- one of "all"
   -- Disabling for now since running this causes significant input lag
   highlight = {
-    enable = true,              -- false will disable the whole extension
-    additional_vim_regex_highlighting = {'org'},
+    enable = true, -- false will disable the whole extension
+    additional_vim_regex_highlighting = false,
+    disable = { "dockerfile" }
   },
   -- indent = {
   --   enable = true,
