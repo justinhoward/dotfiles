@@ -1,4 +1,13 @@
--- require('codecompanion').setup({
+require('codecompanion').setup({
+  interactions = {
+    chat = {
+      adapter = {
+        name = "cursor_cli"
+      },
+    },
+  },
+})
+
 --   strategies = {
 --     chat = {
 --       adapter = 'copilot'

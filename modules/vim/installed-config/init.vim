@@ -94,7 +94,7 @@ Plug 'nvim-mini/mini.cursorword'
 " AI Coders
 " ---
 Plug 'zbirenbaum/copilot.lua'
-"Plug 'olimorris/codecompanion.nvim'
+Plug 'olimorris/codecompanion.nvim'
 "Plug 'ravitemer/mcphub.nvim'
 "Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 "Plug 'stevearc/dressing.nvim'
