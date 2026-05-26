@@ -4,7 +4,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 " Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'arborist-ts/arborist.nvim'
 " Sonokai Color Scheme
 Plug 'sainnhe/sonokai'
 " Everforest color theme
