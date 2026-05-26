@@ -69,7 +69,6 @@ local servers = {
   'marksman',
   'jsonls',
   'ruff',
-  'terraformls',
 -- Swift
   'sourcekit'
 }
@@ -80,6 +79,21 @@ for _, lsp in ipairs(servers) do
   })
   vim.lsp.enable(lsp)
 end
+
+local terraformls_capabilities = vim.lsp.protocol.make_client_capabilities()
+terraformls_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
+
+-- Work around a terraform-ls semantic token bug that freezes Neovim 0.12.
+-- Remove after https://github.com/hashicorp/terraform-ls/pull/2122 is released.
+vim.lsp.config('terraformls', {
+  on_attach = function(client, bufnr)
+    client.server_capabilities.semanticTokensProvider = nil
+    on_attach(client, bufnr)
+  end,
+  flags = flags,
+  capabilities = terraformls_capabilities,
+})
+vim.lsp.enable('terraformls')
 
 -- https://shopify.github.io/ruby-lsp/rails-add-on.html
 vim.lsp.config('ruby_lsp', {
