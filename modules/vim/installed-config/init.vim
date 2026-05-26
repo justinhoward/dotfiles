@@ -5,10 +5,6 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" textobj for treesitter queries
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-" Refactoring and highlighting with treesitter
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
 " Sonokai Color Scheme
 Plug 'sainnhe/sonokai'
 " Everforest color theme
@@ -93,6 +89,8 @@ Plug 'nvim-lualine/lualine.nvim'
 " Modern fold indicators
 Plug 'kevinhwang91/nvim-ufo'
 Plug 'kevinhwang91/promise-async'
+" Highlight current word
+Plug 'nvim-mini/mini.cursorword'
 " AI Coders
 " ---
 Plug 'zbirenbaum/copilot.lua'

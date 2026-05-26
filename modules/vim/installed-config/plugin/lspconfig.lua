@@ -68,7 +68,6 @@ local servers = {
   'bashls',
   'marksman',
   'jsonls',
-  'ruby_lsp',
   'ruff',
   'terraformls',
 -- Swift
@@ -81,6 +80,20 @@ for _, lsp in ipairs(servers) do
   })
   vim.lsp.enable(lsp)
 end
+
+-- https://shopify.github.io/ruby-lsp/rails-add-on.html
+vim.lsp.config('ruby_lsp', {
+  on_attach = on_attach,
+  flags = flags,
+  init_options = {
+    addonSettings = {
+      ['Ruby LSP Rails'] = {
+        enablePendingMigrationsPrompt = false,
+      },
+    },
+  },
+})
+vim.lsp.enable('ruby_lsp')
 
 vim.lsp.config('pylsp', {
   on_attach = on_attach,
