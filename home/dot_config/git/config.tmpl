@@ -77,10 +77,15 @@
 	navigate = true
 	# clickable commit hashes and file paths in terminals that support OSC 8.
 	hyperlinks = true
-	# No hardcoded plus/minus colors: delta queries the terminal background and
-	# picks matching light/dark defaults on every run, so diffs track the OS
-	# light/dark switch (kitty's *-theme.auto.conf) the same way nvim and bat do.
-	# Pin with `dark = true` / `light = true` if a terminal won't answer the query.
+	# Sonokai-tuned diff colors. delta can't switch custom *-styles by detected
+	# mode (auto-detection only changes its built-in defaults; per-mode styles
+	# need DELTA_FEATURES), so these dark greens/reds apply in both modes. delta
+	# still auto-picks its syntax theme by background; add `dark = true` to pin
+	# the full dark look in light mode too.
+	plus-style = syntax "#394634"
+	plus-emph-style = "#181819" "#9ed072"
+	minus-style = syntax "#55393d"
+	minus-emph-style = "#181819" "#fc5d7c"
 
 [commit]
 	gpgSign = true
