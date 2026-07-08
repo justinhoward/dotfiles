@@ -24,18 +24,15 @@ return {
     },
   },
   {
-    'uga-rosa/ccc.nvim',
-    cmd = { 'CccPick', 'CccHighlighterToggle', 'CccConvert' },
+    'MeanderingProgrammer/render-markdown.nvim',
+    -- In-buffer markdown rendering (replaces glow.nvim's terminal popup; no `glow`
+    -- binary needed). Parsers (markdown/markdown_inline) come from arborist, which
+    -- installs them eagerly via install_popular and explicitly supports this plugin.
+    -- Deliberately NOT depending on nvim-treesitter, which would conflict with arborist.
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    ft = 'markdown',
     keys = {
-      { '<leader>vc', '<cmd>CccHighlighterToggle<cr>', desc = 'Toggle color highlighter' },
-    },
-    opts = {},
-  },
-  {
-    'ellisonleao/glow.nvim',
-    cmd = 'Glow',
-    keys = {
-      { '<leader>vm', '<cmd>Glow<cr>', desc = 'Markdown preview' },
+      { '<leader>vm', '<cmd>RenderMarkdown toggle<cr>', desc = 'Toggle markdown render' },
     },
     opts = {},
   },
