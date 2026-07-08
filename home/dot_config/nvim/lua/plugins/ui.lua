@@ -30,7 +30,7 @@ return {
     -- installs them eagerly via install_popular and explicitly supports this plugin.
     -- Deliberately NOT depending on nvim-treesitter, which would conflict with arborist.
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    ft = 'markdown',
+    ft = { 'markdown', 'codecompanion' },
     keys = {
       { '<leader>vm', '<cmd>RenderMarkdown toggle<cr>', desc = 'Toggle markdown render' },
     },

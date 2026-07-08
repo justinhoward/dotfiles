@@ -32,6 +32,11 @@ opt.wildmode = 'longest:full,full'
 -- Persistent undo (swap/undo/backup live under the XDG state dir by default).
 opt.undofile = true
 
+-- Project-local config: auto-source .nvim.lua/.nvimrc/.exrc from the startup cwd,
+-- gated by Neovim's built-in trust prompt (persisted to stdpath('state')/trust and
+-- re-prompted if the file changes). Replaces the old vim-localvimrc plugin.
+opt.exrc = true
+
 -- Tags
 opt.tags = '.tags'
 

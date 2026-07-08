@@ -88,23 +88,6 @@ return {
     cmd = { 'Bdelete', 'Bwipeout' },
   },
 
-  -- Project-local .lvimrc files.
-  {
-    'embear/vim-localvimrc',
-    event = 'BufReadPre',
-    init = function()
-      -- Ask before sourcing a project .lvimrc, but persist the answer so each
-      -- file is only prompted once. Keep the decision file in the XDG state dir
-      -- ($XDG_STATE_HOME/nvim) instead of dropping a dotfile in $HOME.
-      vim.g.localvimrc_ask = 1
-      vim.g.localvimrc_persistent = 2
-      vim.g.localvimrc_persistence_file = vim.fn.stdpath('state') .. '/localvimrc_persistent'
-      -- Sandbox disabled so approved .lvimrc files run freely; the ask prompt
-      -- above is the trust gate.
-      vim.g.localvimrc_sandbox = 0
-    end,
-  },
-
   -- CSV formatting/alignment.
   {
     'chrisbra/csv.vim',
