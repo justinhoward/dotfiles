@@ -14,18 +14,20 @@ return {
     event = 'VeryLazy',
   },
 
-  -- Context-aware split/join.
+  -- Treesitter-aware split/join (replaces andrewradev/splitjoin.vim). Walks the
+  -- syntax tree, so Ruby do/end blocks, hashes, arrays, and args split correctly.
+  -- Uses the parsers arborist installs; nvim-treesitter is intentionally NOT a
+  -- dependency (that plugin conflicts with arborist — parsers alone suffice).
   {
-    'andrewradev/splitjoin.vim',
+    'Wansmer/treesj',
     keys = {
-      { 'gS', desc = 'Split construct onto multiple lines' },
-      { 'gJ', desc = 'Join construct onto one line' },
+      { 'gS', function() require('treesj').split() end, desc = 'Split construct onto multiple lines' },
+      { 'gJ', function() require('treesj').join() end, desc = 'Join construct onto one line' },
     },
-    init = function()
-      vim.g.splitjoin_ruby_curly_braces = 0
-      vim.g.splitjoin_ruby_hanging_args = 0
-      vim.g.splitjoin_python_brackets_on_separate_lines = 1
-    end,
+    opts = {
+      -- gS/gJ are defined above; skip treesj's <space>m/<space>j/<space>s defaults.
+      use_default_keymaps = false,
+    },
   },
 
   -- Better * / # search that keeps the cursor position.
