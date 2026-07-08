@@ -5,8 +5,14 @@ return {
     cmd = { 'ConformInfo' },
     config = function()
       require('conform').setup({
+        default_format_opts = {
+          -- Fall back to LSP formatting when no CLI formatter is configured.
+          lsp_format = 'fallback',
+        },
         formatters_by_ft = {
-          ruby = { 'rubocop' },
+          -- Ruby formatting is handled by ruby-lsp (rubocop in-process). Run
+          -- codespell first (via '*'), then the LSP formatter.
+          ruby = { lsp_format = 'last' },
           eruby = { 'erb_format' },
           sql = { 'sqlfluff' },
           javascript = { 'prettierd' },
@@ -28,11 +34,7 @@ return {
           ['*'] = { 'codespell' },
         },
         formatters = {
-          -- Ruby tooling runs through the project's bundle.
-          rubocop = {
-            command = 'bundle',
-            prepend_args = { 'exec', 'rubocop' },
-          },
+          -- erb tooling runs through the project's bundle.
           erb_format = {
             command = 'bundle',
             args = { 'exec', 'erblint', '--autocorrect', '$FILENAME' },
@@ -56,7 +58,7 @@ return {
       local lint = require('lint')
 
       lint.linters_by_ft = {
-        ruby = { 'rubocop' },
+        -- Ruby diagnostics come from ruby-lsp (rubocop in-process), not nvim-lint.
         eruby = { 'erb_lint' },
         dockerfile = { 'hadolint' },
         markdown = { 'markdownlint' },
@@ -68,9 +70,6 @@ return {
       }
 
       -- Ruby tooling runs through the project's bundle.
-      lint.linters.rubocop.cmd = 'bundle'
-      lint.linters.rubocop.args = vim.list_extend({ 'exec', 'rubocop' }, lint.linters.rubocop.args)
-
       lint.linters.erb_lint.cmd = 'bundle'
       lint.linters.erb_lint.args = vim.list_extend({ 'exec', 'erblint' }, lint.linters.erb_lint.args)
 

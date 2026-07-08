@@ -70,7 +70,9 @@ return {
           end, 'Toggle inlay hints')
 
           vim.keymap.set({ 'n', 'v' }, '<leader>rf', function()
-            require('conform').format({ async = true, lsp_format = 'fallback' })
+            -- lsp_format is set globally via conform's default_format_opts (and
+            -- per-filetype, e.g. Ruby uses 'last' to format via ruby-lsp).
+            require('conform').format({ async = true })
           end, { buffer = bufnr, silent = true, desc = 'Format buffer' })
 
           nmap('K', function()
