@@ -1,0 +1,11 @@
+{{- $name := promptStringOnce . "name" "Full name for git" -}}
+{{- $email := promptStringOnce . "email" "Git email" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "Git commit signing key (GPG key id; blank for none)" -}}
+
+# Per-machine data. Prompted once on `chezmoi init`, stored in your local
+# chezmoi config (NEVER committed). This replaces the old ~/.gitconfig
+# include-path split for per-machine user.* settings.
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    signingkey = {{ $signingkey | quote }}

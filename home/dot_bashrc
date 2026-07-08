@@ -1,0 +1,14 @@
+# ~/.bashrc — interactive bash only.
+# (Non-login interactive bash does not read ~/.profile, so load env here too.)
+[ -r "$HOME/.config/sh/env.sh" ] && . "$HOME/.config/sh/env.sh"
+
+command -v mise     >/dev/null 2>&1 && eval "$(mise activate bash)"
+command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
+command -v fzf      >/dev/null 2>&1 && eval "$(fzf --bash)"
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+
+# Shared, shell-agnostic aliases / snippets (same files zsh sources).
+for _rc in "$HOME"/.config/sh/rc.d/*.sh; do
+  [ -r "$_rc" ] && . "$_rc"
+done
+unset _rc

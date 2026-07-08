@@ -1,0 +1,125 @@
+# ~/.zshrc — interactive zsh only. zsh runs this file *only* for interactive
+# shells, so no `dotfiles_interactive` detection is needed — the file's
+# existence in the startup sequence is the condition.
+
+# --- History ---------------------------------------------------------------
+HISTFILE="$XDG_DATA_HOME/zsh/history"
+HISTSIZE=20000
+SAVEHIST=20000
+mkdir -p "${HISTFILE:h}" 2>/dev/null
+setopt EXTENDED_HISTORY SHARE_HISTORY INC_APPEND_HISTORY \
+       HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
+
+# --- Options (curated from prezto environment/directory modules) -----------
+setopt INTERACTIVE_COMMENTS   # allow `#` comments at the prompt
+setopt RC_QUOTES              # '' means a literal ' inside single quotes
+unsetopt CLOBBER              # `>`/`>>` won't truncate an existing file; use >|
+
+# --- Key bindings (curated from prezto editor module) ----------------------
+bindkey -e                    # emacs keymap
+
+# Word boundaries: drop `/` and `=` so ^W and Alt-←/→ act per path segment.
+WORDCHARS='*?_-.[]~&;!#$%^(){}<>'
+
+# Free ^S/^Q (XON/XOFF flow control) so they're usable as key bindings.
+[[ -t 0 ]] && stty -ixon 2>/dev/null
+
+# Smart URL quoting: auto-escape special chars in pasted / typed URLs.
+if [[ $TERM != dumb ]]; then
+  autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
+  autoload -Uz url-quote-magic          && zle -N self-insert   url-quote-magic
+fi
+
+# Edit the current line in $EDITOR (^X^E); Space expands !-history events.
+autoload -Uz edit-command-line; zle -N edit-command-line
+bindkey '^X^E' edit-command-line
+bindkey ' '    magic-space
+bindkey '^[m'  copy-prev-shell-word    # Esc-m: duplicate the previous word
+bindkey '^[e'  expand-cmd-path         # Esc-e: expand command to its full path
+bindkey '^[k'  backward-kill-line      # Esc-k: kill to start of line
+bindkey '^[_'  redo                    # Esc-_: redo
+bindkey '^Q'   push-line-or-edit       # ^Q: stash the line, type another, restore
+bindkey '^[[Z' reverse-menu-complete   # Shift-Tab: cycle completions backwards
+
+# ^X^S: insert `sudo ` at the front of the line.
+prepend-sudo() {
+  [[ "$BUFFER" != sudo\ * ]] && { BUFFER="sudo $BUFFER"; (( CURSOR += 5 )); }
+}
+zle -N prepend-sudo; bindkey '^X^S' prepend-sudo
+
+# Esc-;: toggle a leading `#` comment on the line.
+pound-toggle() {
+  if [[ "$BUFFER" = '#'* ]]; then
+    (( CURSOR > 0 )) && (( CURSOR -= 1 )); BUFFER="${BUFFER#\#}"
+  else
+    BUFFER="#$BUFFER"; (( CURSOR += 1 ))
+  fi
+}
+zle -N pound-toggle; bindkey '^[;' pound-toggle
+
+# ^Space: expand all aliases (including global aliases) on the line.
+glob-alias() { zle _expand_alias; zle expand-word; zle magic-space; }
+zle -N glob-alias; bindkey '^ ' glob-alias
+
+# --- Completion (cached compinit: rebuild at most once/day, else trust -C) --
+{{- if eq .chezmoi.os "darwin" }}
+fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
+{{- end }}
+autoload -Uz compinit
+_zcompdump="$XDG_CACHE_HOME/zsh/zcompdump"
+mkdir -p "${_zcompdump:h}" 2>/dev/null
+if [[ -n ${_zcompdump}(#qN.mh+24) ]]; then
+  compinit -d "$_zcompdump"
+else
+  compinit -C -d "$_zcompdump"
+fi
+# Compile the dump so subsequent shells load it from bytecode.
+if [[ -s $_zcompdump && ( ! -s ${_zcompdump}.zwc || $_zcompdump -nt ${_zcompdump}.zwc ) ]]; then
+  zcompile "$_zcompdump"
+fi
+unset _zcompdump
+
+# --- Cached tool init ------------------------------------------------------
+# _cache_eval <name> <cmd...>: cache a tool's init output, zcompile it, and
+# source it — avoiding a subprocess fork per tool on every startup. The cache
+# is regenerated only when it's missing or the tool's binary is newer.
+_zinit_cache="$XDG_CACHE_HOME/zsh/init"
+mkdir -p "$_zinit_cache" 2>/dev/null
+_cache_eval() {
+  local name="$1"; shift
+  local cache="$_zinit_cache/$name.zsh" bin
+  bin="$(command -v "$1")" || return
+  if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
+    "$@" >| "$cache" 2>/dev/null
+    zcompile "$cache" 2>/dev/null
+  fi
+  source "$cache"
+}
+
+# mise: hook mode for interactive use — manages PATH dynamically per-directory,
+# superseding the static shims dir from ~/.zshenv. NOT cached via _cache_eval:
+# `mise activate` bakes the live $PATH into its output, so a cached copy would
+# pin a stale, machine-specific PATH and clobber the one env.sh just built. The
+# single fork here is the correct trade-off for portable, always-current output.
+command -v mise   >/dev/null && eval "$(mise activate zsh)"
+command -v zoxide >/dev/null && _cache_eval zoxide zoxide init zsh
+command -v fzf    >/dev/null && _cache_eval fzf    fzf --zsh
+command -v dstask >/dev/null && _cache_eval dstask dstask zsh-completion
+command -v gpg    >/dev/null && export GPG_TTY="$TTY"
+
+# --- Plugins (sheldon; heavy plugins deferred via zsh-defer) ---------------
+command -v sheldon  >/dev/null && eval "$(sheldon source)"
+
+# history-substring-search: ^P/^N (home row, prezto parity) + arrows. Type a
+# substring, then ^P/^N cycles the matching history entries (keeps your text).
+bindkey '^P'   history-substring-search-up   2>/dev/null
+bindkey '^N'   history-substring-search-down 2>/dev/null
+bindkey '^[[A' history-substring-search-up   2>/dev/null
+bindkey '^[[B' history-substring-search-down 2>/dev/null
+
+# --- Prompt ----------------------------------------------------------------
+command -v starship >/dev/null && _cache_eval starship starship init zsh
+
+# --- Shell-agnostic aliases / snippets (shared with bash via rc.d) ---------
+for _rc in "$XDG_CONFIG_HOME"/sh/rc.d/*.sh(N); do . "$_rc"; done
+unset _rc

@@ -1,0 +1,34 @@
+# sheldon plugin manifest — the à la carte replacement for prezto's bundled
+# modules. `sheldon lock` clones/updates these; `sheldon source` (in ~/.zshrc)
+# emits the ordered sourcing code. Heavy plugins are wrapped in `zsh-defer` so
+# they load *after* the first prompt paints (the deferred-loading speed win).
+
+shell = "zsh"
+
+[templates]
+# Load a plugin asynchronously after startup via zsh-defer.
+defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+
+# --- Loader (must be sourced first, synchronously) -------------------------
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+# --- Completion UX (needs compinit, which ~/.zshrc runs before this) -------
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+# --- History search (replaces prezto history-substring-search) -------------
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+
+# --- Deferred: inline autosuggestions (fish-style; a prezto gap) -----------
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["defer"]
+
+# --- Deferred: syntax highlighting (replaces prezto syntax-highlighting) ---
+# fast-syntax-highlighting is quicker than the zsh-users highlighter prezto
+# ships; deferring it keeps it off the startup critical path.
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+apply = ["defer"]

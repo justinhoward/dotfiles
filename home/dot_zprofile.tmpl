@@ -1,0 +1,13 @@
+# ~/.zprofile — login zsh only. One-time, per-login setup (agents, sockets).
+# Interactive UX belongs in ~/.zshrc; always-on env belongs in ~/.zshenv.
+
+{{- if eq .chezmoi.os "linux" }}
+# ssh-agent socket provided by the systemd user service
+[ -n "$XDG_RUNTIME_DIR" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# gnome-keyring (gpg/ssh/secrets) for X sessions
+if command -v /usr/bin/gnome-keyring-daemon >/dev/null 2>&1; then
+  eval "$(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh 2>/dev/null)"
+  export SSH_AUTH_SOCK
+fi
+{{- end }}

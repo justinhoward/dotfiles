@@ -1,0 +1,13 @@
+# ~/.zshenv — sourced for EVERY zsh invocation: login, interactive,
+# non-interactive scripts, AND the Cursor/VS Code shell-environment resolver.
+#
+# Keep this fast and fork-free. Anything a GUI-spawned subprocess (linter,
+# language server, formatter, debug adapter, MCP server) needs on PATH must
+# be established here, because those processes never source .zprofile/.zshrc.
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+
+# Shared, POSIX, non-interactive-safe environment (PATH, mise shims, locale).
+[ -r "$XDG_CONFIG_HOME/sh/env.sh" ] && . "$XDG_CONFIG_HOME/sh/env.sh"
