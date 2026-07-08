@@ -51,6 +51,7 @@ return {
         { '<leader>s', group = 'search' },
         { '<leader>v', group = 'toggles/view' },
         { '<leader>a', group = 'ai' },
+        { 's', group = 'surround' },
       },
     },
   },

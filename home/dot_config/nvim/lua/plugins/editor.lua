@@ -1,17 +1,36 @@
 return {
-  -- Surround text objects, with dot-repeat support.
+  -- Surrounding pairs. Default mini mappings: sa (add), sd (delete), sr
+  -- (replace), sf/sF (find), sh (highlight), with n/l suffixes for next/last.
+  -- Shadows native `s` (substitute). Replaces tpope/vim-surround (+vim-repeat);
+  -- mini has native dot-repeat.
   {
-    'tpope/vim-surround',
-    dependencies = { 'tpope/vim-repeat' },
+    'nvim-mini/mini.surround',
     event = 'VeryLazy',
+    opts = {},
   },
 
-  -- Text objects
-  { 'michaeljsmith/vim-indent-object', event = 'VeryLazy' },
+  -- a/i text objects (brackets, quotes, function calls `f`, arguments `a`,
+  -- tags `t`, ...) plus custom indent (ii/ai) and line (il/al) objects via
+  -- mini.extra. Replaces michaeljsmith/vim-indent-object and kana/vim-textobj-line.
   {
-    'kana/vim-textobj-line',
-    dependencies = { 'kana/vim-textobj-user' },
+    'nvim-mini/mini.ai',
+    dependencies = { 'nvim-mini/mini.extra' },
     event = 'VeryLazy',
+    config = function()
+      local gen_ai = require('mini.extra').gen_ai_spec
+      require('mini.ai').setup({
+        custom_textobjects = {
+          i = gen_ai.indent(), -- ii / ai — indent scope (was vim-indent-object)
+          l = gen_ai.line(), -- il / al — current line (was vim-textobj-line)
+        },
+        mappings = {
+          -- Move last-search off il/al so those free up for the line textobject
+          -- above. Next-search stays on the default in/an.
+          around_last = 'aL',
+          inside_last = 'iL',
+        },
+      })
+    end,
   },
 
   -- Treesitter-aware split/join (replaces andrewradev/splitjoin.vim). Walks the
