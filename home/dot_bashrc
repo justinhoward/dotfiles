@@ -5,7 +5,10 @@
 command -v mise     >/dev/null 2>&1 && eval "$(mise activate bash)"
 command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
 command -v fzf      >/dev/null 2>&1 && eval "$(fzf --bash)"
-command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"
+
+# Prompt: zsh gets powerlevel10k; bash stays simple and dependency-free by
+# design (mirrors the old zsh-fancy / bash-basic split). blue user@host, cyan cwd.
+PS1='\[\e[1;34m\]\u@\h\[\e[0m\] \[\e[36m\]\w\[\e[0m\] \$ '
 
 # Shared, shell-agnostic aliases / snippets (same files zsh sources).
 for _rc in "$HOME"/.config/sh/rc.d/*.sh; do

@@ -117,8 +117,11 @@ bindkey '^N'   history-substring-search-down 2>/dev/null
 bindkey '^[[A' history-substring-search-up   2>/dev/null
 bindkey '^[[B' history-substring-search-down 2>/dev/null
 
-# --- Prompt ----------------------------------------------------------------
-command -v starship >/dev/null && _cache_eval starship starship init zsh
+# --- Prompt (powerlevel10k) ------------------------------------------------
+# The theme itself is loaded by sheldon above; this just applies the config.
+# (Instant prompt is intentionally not used — startup is already fast, and it
+# adds console-output caveats; POWERLEVEL9K_INSTANT_PROMPT=off in ~/.p10k.zsh.)
+[[ -r "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"
 
 # --- Shell-agnostic aliases / snippets (shared with bash via rc.d) ---------
 for _rc in "$XDG_CONFIG_HOME"/sh/rc.d/*.sh(N); do . "$_rc"; done

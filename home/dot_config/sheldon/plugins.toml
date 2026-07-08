@@ -13,6 +13,14 @@ defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
 [plugins.zsh-defer]
 github = "romkatv/zsh-defer"
 
+# --- Prompt (powerlevel10k; configured in ~/.p10k.zsh) ---------------------
+# Loaded synchronously (a prompt can't be deferred). p10k ships its own async
+# git backend (gitstatusd, downloaded on first run) and a built-in transient
+# prompt, so no extra prompt plugins are needed.
+[plugins.powerlevel10k]
+github = "romkatv/powerlevel10k"
+use = ["powerlevel10k.zsh-theme"]
+
 # --- Completion UX (needs compinit, which ~/.zshrc runs before this) -------
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
