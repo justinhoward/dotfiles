@@ -1,7 +1,14 @@
 ---
+# CI runs yamllint --strict, so the default preset's warning-level rules
+# (document-start, comments, truthy, …) are enforced as failures too — no soft
+# warning tier. Only genuine customizations are set below; nothing is disabled.
+extends: default
 rules:
+  # Require exactly one space inside flow braces: { foo: bar }.
   braces:
     min-spaces-inside: 1
     max-spaces-inside: 1
+  # Check values for accidental booleans, but not keys — otherwise GitHub
+  # Actions' `on:` key trips truthy on every workflow.
   truthy:
     check-keys: false

@@ -56,7 +56,8 @@ swiftbar, finicky) and Linux-only (systemd user units, XDG user-dirs).
 - **Write-once files** use chezmoi's `create_` prefix — e.g. kitty's
   `create_font_size.conf` is seeded with a default and then left alone, so each
   machine can set its own font size without the repo overwriting it.
-- **OS branches** are handled with Go templates (`{{ if eq .chezmoi.os "darwin" }}`).
+- **OS branches** are handled with Go templates
+  (`{{ if eq .chezmoi.os "darwin" }}`).
 
 ## Updating
 

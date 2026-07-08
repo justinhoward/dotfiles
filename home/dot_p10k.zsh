@@ -1,4 +1,10 @@
+#!/usr/bin/env zsh
 # ~/.p10k.zsh — Powerlevel10k configuration.
+#
+# The shebang above is never executed (this file is sourced, not run); it exists
+# only so shellcheck recognizes the file as zsh and skips it via SC1071, which
+# CI suppresses. Without it, shellcheck parses this as sh and errors on the zsh
+# anonymous-function `() { ... }` block below.
 #
 # Hand-written (not `p10k configure` output) to stay small and readable. It
 # reproduces the old prezto `justinhoward` powerline theme on p10k's fast async
