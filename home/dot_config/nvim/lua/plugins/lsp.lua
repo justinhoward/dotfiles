@@ -52,6 +52,16 @@ return {
           nmap('<leader>fA', fzf.lsp_workspace_diagnostics, 'Workspace diagnostics')
           nmap('<leader>]', fzf.lsp_document_symbols, 'Document symbols')
           nmap('<leader>}', fzf.lsp_workspace_symbols, 'Workspace symbols')
+          -- Rename / code action under the <leader>r "refactor" group (also on
+          -- the built-in grn/gra Neovim 0.11 defaults; these make them
+          -- discoverable in which-key alongside format/inlay-hints).
+          nmap('<leader>rn', vim.lsp.buf.rename, 'Rename symbol')
+          vim.keymap.set(
+            { 'n', 'x' },
+            '<leader>ra',
+            vim.lsp.buf.code_action,
+            { buffer = bufnr, silent = true, desc = 'Code action' }
+          )
           nmap('<leader>ri', function()
             vim.lsp.inlay_hint.enable(
               not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }),

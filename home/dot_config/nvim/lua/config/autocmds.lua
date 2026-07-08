@@ -22,8 +22,9 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- Vendored dependencies are not ours to lint.
-vim.api.nvim_create_autocmd('BufEnter', {
+-- Vendored dependencies are not ours to lint. Runs once per buffer load rather
+-- than on every BufEnter revisit.
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
   group = augroup('vendored'),
   pattern = { '*/vendor/bundle/*', '*/node_modules/*' },
   callback = function(args)
