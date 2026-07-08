@@ -41,7 +41,7 @@ Everything chezmoi manages lives under `home/`:
 - `dot_config/sh/rc.d/*.sh` — interactive aliases and helpers split by topic
   (core, git, homebrew, npm, …), sourced by both Zsh and Bash.
 - `dot_config/sheldon/plugins.toml` — Zsh plugins (zsh-defer, Powerlevel10k,
-  autosuggestions, history-substring-search, fast-syntax-highlighting).
+  fzf-tab, history-substring-search, autosuggestions, fast-syntax-highlighting).
 - `dot_p10k.zsh` — the prompt configuration.
 - `dot_config/…` — app configs (nvim, kitty, git, bat, ctags, …).
 - `run_*` — one-shot and on-change setup scripts.
