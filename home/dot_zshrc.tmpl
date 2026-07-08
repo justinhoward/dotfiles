@@ -17,6 +17,7 @@ unsetopt CLOBBER              # `>`/`>>` won't truncate an existing file; use >|
 
 # --- Key bindings (curated from prezto editor module) ----------------------
 bindkey -e                    # emacs keymap
+KEYTIMEOUT=1                  # 10ms multi-key timeout → snappy Esc (^[) bindings
 
 # Word boundaries: drop `/` and `=` so ^W and Alt-←/→ act per path segment.
 WORDCHARS='*?_-.[]~&;!#$%^(){}<>'

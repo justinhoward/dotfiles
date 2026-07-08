@@ -211,6 +211,10 @@ alias gwx='git rm -r'
 alias gwX='git rm -r --force'
 alias gwdt='git difftool'                  # custom
 
+# --- Word diff of arbitrary files/dirs (git as the engine, no repo needed) --
+# `wdiff a b` → colorized word-level diff; --no-index works outside any repo.
+alias wdiff="git --no-pager diff --color=auto --no-ext-diff --no-index --color-words '--word-diff-regex=[a-zA-Z0-9\-_]+'"
+
 # --- Worktree (W) — custom -------------------------------------------------
 alias gWa='git worktree add'
 alias gWp='git worktree prune'
