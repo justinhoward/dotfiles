@@ -45,12 +45,17 @@ current="$(yabai -m query --spaces --display | jq -r 'map(select(."has-focus" ==
 used_spaces="$(yabai -m query --windows | jq -r '[.[]["space"]] | unique | join(" ")')"
 layout="$(yabai -m query --spaces --space | jq -r .type)"
 
-readarray -t all_display_spaces < <(yabai -m query --displays | jq -r '. | sort_by(.index)[] | [.index, .spaces[]] | join(" ")')
+# Use a read loop instead of `readarray`/`mapfile` so the plugin works under
+# macOS system bash 3.2 (which SwiftBar may launch it with), not just bash 4+.
+all_display_spaces=()
+while IFS= read -r display_line; do
+  all_display_spaces+=("$display_line")
+done < <(yabai -m query --displays | jq -r '. | sort_by(.index)[] | [.index, .spaces[]] | join(" ")')
 string="$DEFAULT_COLOR" 
 
 display_strs=()
 for display_str in "${all_display_spaces[@]}"; do 
-  readarray -d ' ' -t display_parts <<< "$display_str"
+  read -r -a display_parts <<< "$display_str"
   display_index="${display_parts[0]}"
   display_spaces=("${display_parts[@]:1}")
   display_str=''

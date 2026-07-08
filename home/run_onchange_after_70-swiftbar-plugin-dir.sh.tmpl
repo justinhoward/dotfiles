@@ -1,0 +1,21 @@
+{{- if eq .chezmoi.os "darwin" -}}
+#!/usr/bin/env bash
+# Point SwiftBar at the chezmoi-managed plugin directory. Pre-chezmoi this was a
+# symlink whose folder was selected manually in SwiftBar; the migration deploys
+# the plugins as real files but SwiftBar still needs to be told where they live,
+# otherwise it prompts "select a plugin directory or quit" on launch.
+# run_onchange re-runs automatically whenever this rendered script changes.
+
+set -euo pipefail
+
+domain="com.ameba.SwiftBar"
+plugin_dir="$HOME/.config/swiftbar/plugins"
+
+# Only set it when unset or pointing at a path that no longer exists (e.g. the
+# old symlink target), so a deliberate user choice is never clobbered.
+current="$(defaults read "$domain" PluginDirectory 2>/dev/null || true)"
+if [ -z "$current" ] || [ ! -d "$current" ]; then
+  defaults write "$domain" PluginDirectory "$plugin_dir"
+  echo "dotfiles: set SwiftBar plugin directory to $plugin_dir"
+fi
+{{- end -}}
