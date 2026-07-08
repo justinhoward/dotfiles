@@ -31,10 +31,12 @@ return {
     -- Deliberately NOT depending on nvim-treesitter, which would conflict with arborist.
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     ft = { 'markdown', 'codecompanion' },
-    keys = {
-      { '<leader>vm', '<cmd>RenderMarkdown toggle<cr>', desc = 'Toggle markdown render' },
+    -- Toggled via the universal <leader>vf (see lua/config/keymaps.lua).
+    opts = {
+      -- ft above only loads the plugin; file_types controls where it renders, so
+      -- include codecompanion to render the AI chat buffer too, not just markdown.
+      file_types = { 'markdown', 'codecompanion' },
     },
-    opts = {},
   },
   {
     'folke/which-key.nvim',

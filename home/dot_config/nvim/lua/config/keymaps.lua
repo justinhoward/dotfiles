@@ -22,6 +22,24 @@ map('n', '<leader>x', '<cmd>Bdelete<cr>', { silent = true, desc = 'Delete buffer
 -- Reveal whitespace verbosity levels.
 map('n', '<leader>vw', '<cmd>ToggleList<cr>', { silent = true, desc = 'Cycle whitespace display' })
 
+-- Toggle the "fancy" in-buffer view for this filetype (markdown/codecompanion
+-- render, csv/tsv alignment). Add an entry to extend it to more views.
+local fancy_toggle = {
+  markdown = function() require('render-markdown').buf_toggle() end,
+  codecompanion = function() require('render-markdown').buf_toggle() end,
+  csv = function() require('csvview').toggle() end,
+  tsv = function() require('csvview').toggle() end,
+}
+map('n', '<leader>vf', function()
+  local ft = vim.bo.filetype
+  local fn = fancy_toggle[ft]
+  if fn then
+    fn()
+  else
+    vim.notify('No fancy view for filetype: ' .. (ft == '' and '(none)' or ft), vim.log.levels.INFO)
+  end
+end, { desc = 'Toggle fancy view' })
+
 -- Quickfix
 map('n', '<leader>cc', '<cmd>QuickfixToggle<cr>', { silent = true, desc = 'Toggle quickfix' })
 map('n', '<leader>co', '<cmd>copen<cr>', { silent = true, desc = 'Open quickfix' })

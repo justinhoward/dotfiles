@@ -2,7 +2,9 @@
 # ~/.config/nvim before the config moved to init.lua + lua/. chezmoi never
 # deletes files just because they left the source tree, so list them here.
 # Safe to drop once every machine has applied the migration.
+# NOTE: after/ is intentionally not listed anymore — it's a managed directory
+# again (after/ftplugin/{csv,tsv}.lua). Listing it here collided with the source
+# dir and produced a chezmoi "inconsistent state (…, remove)" error.
 .config/nvim/init.vim
 .config/nvim/plugin
 .config/nvim/ftdetect
-.config/nvim/after

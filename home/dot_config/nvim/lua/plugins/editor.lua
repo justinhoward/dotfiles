@@ -88,10 +88,18 @@ return {
     cmd = { 'Bdelete', 'Bwipeout' },
   },
 
-  -- CSV formatting/alignment.
+  -- CSV/TSV column alignment via virtual text (replaces chrisbra/csv.vim). Pure Lua,
+  -- no treesitter dependency. Auto-enabled per buffer in after/ftplugin/{csv,tsv}.lua.
   {
-    'chrisbra/csv.vim',
-    ft = 'csv',
+    'hat0uma/csvview.nvim',
+    ft = { 'csv', 'tsv' },
+    opts = {
+      keymaps = {
+        -- Field (cell) text objects: `if` inner, `af` outer.
+        textobject_field_inner = { 'if', mode = { 'o', 'x' } },
+        textobject_field_outer = { 'af', mode = { 'o', 'x' } },
+      },
+    },
   },
 
   -- Undo history browser.
