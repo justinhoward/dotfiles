@@ -52,6 +52,7 @@
   # --- status: red ✘ + exit code on the far left, only on failure -----------
   typeset -g POWERLEVEL9K_STATUS_OK=false           # success = absence of the ✘
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
+  typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false  # "INT", not "SIGINT(2)"
   typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=black
   typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=red
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
