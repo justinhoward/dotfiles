@@ -1,0 +1,18 @@
+{{- $name := promptStringOnce . "name" "Full name for git" -}}
+{{- $email := promptStringOnce . "email" "Git email" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "Git commit signing key (GPG key id; blank for none)" -}}
+
+# Source directory. This repo is cloned to ~/.dotfiles (see README) and uses a
+# .chezmoiroot of `home`. Emitted here so regenerating the config always restores
+# the pointer: a bare `chezmoi init` (which its own "config file template has
+# changed" warning tells you to run) would otherwise reset the source to the
+# default ~/.local/share/chezmoi and break every subsequent command.
+sourceDir = {{ (joinPath .chezmoi.homeDir ".dotfiles") | quote }}
+
+# Per-machine data. Prompted once on `chezmoi init`, stored in your local
+# chezmoi config (NEVER committed). This replaces the old ~/.gitconfig
+# include-path split for per-machine user.* settings.
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    signingkey = {{ $signingkey | quote }}

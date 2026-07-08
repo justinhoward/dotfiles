@@ -1,0 +1,226 @@
+# Git aliases — shell-agnostic (zsh + bash). This is the prezto `git` module's
+# base alias set (git-flow group removed; the six zsh-helper-backed aliases
+# gcl/gsX/gsL/gsr/gSm/gSx dropped) plus personal customizations layered on top,
+# so overrides win exactly as they did under prezto. Log *formats* now live
+# natively in ~/.config/git/config ([pretty] dot-medium/oneline/brief/cherry,
+# surfaced as `git l/ls/lo/lg/lb/lp/lf/ld`); the g* aliases below wrap those.
+command -v git >/dev/null 2>&1 || return
+
+# GNU xargs (-r, skip on empty input) for the fzf conflict pickers below.
+# Resolved at apply time: GNU xargs on Linux; on macOS prefer coreutils' gxargs
+# when installed, else BSD xargs. No runtime `xargs --version | grep` fork.
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if lookPath "gxargs" }}
+_xargs='gxargs -r'
+{{-   else }}
+_xargs='xargs'
+{{-   end }}
+{{- else }}
+_xargs='xargs -r'
+{{- end }}
+
+alias g='git'
+
+# --- Branch (b) ------------------------------------------------------------
+alias gb='git branch'
+alias gba='git branch -a'                  # custom (prezto: --all --verbose)
+alias gbc='git checkout -b'
+alias gbd='git branch --delete'
+alias gbD='git branch --delete --force'
+alias gbl='git branch --verbose'
+alias gbL='git branch --all --verbose'
+alias gbm='git branch --move'
+alias gbM='git branch --move --force'
+alias gbr='git branch -r'                  # custom (prezto: --move)
+alias gbR='git branch --move --force'
+alias gbs='git show-branch'
+alias gbS='git show-branch --all'
+alias gbv='git branch --verbose'
+alias gbV='git branch --verbose --verbose'
+alias gbx='git branch --delete'
+alias gbX='git branch --delete --force'
+# custom: list / delete branches already merged into the default branch
+alias gbg='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$"'
+alias gbG='git branch --merged "$(gdefault)" | grep -vE "^\*|^  $(gdefault)$" | xargs -r git branch -d'
+
+# --- Commit (c) ------------------------------------------------------------
+# The prezto `*S` gpg-sign variants (gcS/gcaS/gcmS/gcfS/gcFS) are dropped:
+# commit.gpgSign=true in git config already signs every commit.
+alias gc='git commit --verbose'
+alias gca='git commit --verbose --all'
+alias gcm='git commit --message'
+alias gcam='git commit --all --message'
+alias gco='git checkout'
+alias gcod='git checkout "$(gdefault)"'    # custom
+alias gcO='git checkout --patch'
+alias gcf='git commit --amend --reuse-message HEAD'
+alias gcF='git commit --verbose --amend'
+alias gcp='git cherry-pick --ff'
+alias gcP='git cherry-pick --no-commit'
+alias gcr='git revert'
+alias gcR='git reset "HEAD^"'
+alias gcs='git show'
+alias gcsS='git show --pretty=short --show-signature'
+alias gcy='git cherry --verbose --abbrev'
+alias gcY='git cherry --verbose'
+
+# --- Conflict (C) — custom set (name-only + status/mergetool helpers) ------
+alias gCl='git --no-pager diff --name-only --diff-filter=U | xargs git -c color.status=always status --short --'
+alias gCa='git add $(git --no-pager diff --name-only --diff-filter=U)'
+alias gCe='git mergetool $(git --no-pager diff --name-only --diff-filter=U)'
+alias gCo='git checkout --ours --'
+alias gCO='gCo $(git --no-pager diff --name-only --diff-filter=U)'
+alias gCt='git checkout --theirs --'
+alias gCT='gCt $(git --no-pager diff --name-only --diff-filter=U)'
+# custom: fzf conflict picker → $EDITOR / git add
+# shellcheck disable=SC2139
+alias GCl="gCl | fzf --ansi --exit-0 --multi --preview 'git diff --color=always {2}' --with-nth '[{1}] {-1}' --accept-nth -1 | $_xargs \$EDITOR --"
+# shellcheck disable=SC2139
+alias GCa="gCl | fzf --ansi --exit-0 --multi --preview 'git diff --color=always {2}' --with-nth '[{1}] {-1}' --accept-nth -1 | $_xargs git add --"
+
+# --- Data (d) --------------------------------------------------------------
+alias gd='git ls-files'
+alias gdc='git ls-files --cached'
+alias gdx='git ls-files --deleted'
+alias gdm='git ls-files --modified'
+alias gdu='git ls-files --other --exclude-standard'
+alias gdk='git ls-files --killed'
+alias gdi='git status --porcelain --short --ignored | sed -n "s/^!! //p"'
+
+# --- Fetch (f) -------------------------------------------------------------
+alias gf='git fetch'
+alias gfa='git fetch --all'
+alias gfc='git clone'
+alias gfcr='git clone --recurse-submodules'
+alias gfm='git pull'
+alias gfma='git pull --autostash'
+alias gfr='git pull --rebase'
+alias gfra='git pull --rebase --autostash'
+
+# --- Grep (g) --------------------------------------------------------------
+alias gg='git grep'
+alias ggi='git grep --ignore-case'
+alias ggl='git grep --files-with-matches'
+alias ggL='git grep --files-without-matches'
+alias ggv='git grep --invert-match'
+alias ggw='git grep --word-regexp'
+
+# --- Index (i) -------------------------------------------------------------
+alias gia='git add'
+alias giA='git add --all'                  # custom (prezto: --patch)
+alias giu='git add --update'
+alias gid='git diff --no-ext-diff --cached'
+alias giD='git diff --no-ext-diff --cached --word-diff'
+alias gii='git update-index --assume-unchanged'
+alias giI='git update-index --no-assume-unchanged'
+alias gir='git reset'
+alias giR='git reset --patch'
+alias gix='git rm -r --cached'
+alias giX='git rm -r --force --cached'
+alias gip='git add --patch'                # custom
+alias gidt='git difftool --cached'         # custom
+
+# --- Log (l) — formats defined in ~/.config/git/config ---------------------
+alias gl='git l'
+alias gls='git ls'
+alias glo='git lo'
+alias glg='git lg'
+alias glb='git lb'
+alias glc='git shortlog --summary --numbered'
+alias glS='git log --show-signature'
+alias glp='git lp'                         # custom (stat + patch, full diff)
+alias glf='git lf'                         # custom (name-status)
+alias gld='git ld'                         # custom (cherry; prezto gld → glp)
+alias glcl='gh-changelog'                  # custom
+
+# --- Merge (m) -------------------------------------------------------------
+alias gm='git merge'
+alias gmC='git merge --no-commit'
+alias gmF='git merge --no-ff'
+alias gma='git merge --abort'
+alias gmt='git mergetool'
+
+# --- Push (p) --------------------------------------------------------------
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gpF='git push --force'
+alias gpa='git push --all'
+alias gpA='git push --all && git push --tags'
+alias gpt='git push --tags'
+# gpc (set-upstream) dropped: push.autoSetupRemote=true makes plain `gp` set the
+# upstream on first push. gpp still wraps pull+push of the current branch.
+alias gpp='git pull origin "$(git branch --show-current)" && git push origin "$(git branch --show-current)"'
+
+# --- Rebase (r) ------------------------------------------------------------
+alias gr='git rebase'
+alias gra='git rebase --abort'
+alias grc='git rebase --continue'
+alias gri='git rebase --interactive'
+alias grs='git rebase --skip'
+alias grd='git rebase "$(gRdefault)"'      # custom
+
+# --- Remote (R) ------------------------------------------------------------
+alias gR='git remote'
+alias gRl='git remote --verbose'
+alias gRa='git remote add'
+alias gRx='git remote rm'
+alias gRm='git remote rename'
+alias gRu='git remote update'
+alias gRp='git remote prune'
+alias gRs='git remote show'
+alias gRb='gh browse'                      # modernized (prezto: git-hub-browse)
+
+# --- Stash (s) — modernized: `git stash push` supersedes the deprecated save --
+alias gs='git stash'
+alias gsa='git stash apply'
+alias gsx='git stash drop'
+alias gsl='git stash list'
+alias gsd='git stash show --patch --stat'
+alias gsp='git stash pop'
+alias gss='git stash push --include-untracked'
+alias gsS='git stash push --patch --no-keep-index'
+alias gsw='git stash push --include-untracked --keep-index'
+
+# --- Submodule (S) ---------------------------------------------------------
+alias gS='git submodule'
+alias gSa='git submodule add'
+alias gSf='git submodule foreach'
+alias gSi='git submodule init'
+alias gSI='git submodule update --init --recursive'
+alias gSl='git submodule status'
+alias gSs='git submodule sync'
+alias gSu='git submodule update --recursive'   # custom (prezto: --remote --recursive)
+
+# --- Tag (t) ---------------------------------------------------------------
+alias gt='git tag --sort v:refname'        # custom (prezto: git tag)
+alias gtl='git describe --tags --abbrev=0' # custom (prezto: git tag --list)
+alias gtv='git verify-tag'                 # gts (--sign) dropped: tag.gpgSign=true
+alias gT='git tag --sort v:refname -n99'   # custom
+alias gtd='git show "$(gtl)" 2>/dev/null'  # custom
+
+# --- Working copy (w) ------------------------------------------------------
+alias gws='git status --ignore-submodules=none --short'
+alias gwS='git status --ignore-submodules=none'
+alias gwd='git diff --no-ext-diff'
+alias gwD='git diff --no-ext-diff --word-diff'
+alias gwr='git reset --soft'
+alias gwR='git reset --hard'
+alias gwc='git clean --dry-run'
+alias gwC='git clean --force'
+alias gwx='git rm -r'
+alias gwX='git rm -r --force'
+alias gwdt='git difftool'                  # custom
+
+# --- Word diff of arbitrary files/dirs (git as the engine, no repo needed) --
+# `wdiff a b` → colorized word-level diff; --no-index works outside any repo.
+alias wdiff="git --no-pager diff --color=auto --no-ext-diff --no-index --color-words '--word-diff-regex=[a-zA-Z0-9\-_]+'"
+
+# --- Worktree (W) — custom -------------------------------------------------
+alias gWa='git worktree add'
+alias gWp='git worktree prune'
+
+# --- Default-branch helpers — custom ---------------------------------------
+alias gdefault='git symbolic-ref --short refs/remotes/origin/HEAD | sed "s@^origin/@@" || git config --get init.defaultBranch'
+alias gRdefault='git rev-parse --abbrev-ref "$(gdefault)@{upstream}"'
+
+unset _xargs

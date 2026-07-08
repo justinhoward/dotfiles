@@ -1,0 +1,13 @@
+# systemd user units + XDG user-dirs are Linux-only.
+{{ if ne .chezmoi.os "linux" -}}
+.config/systemd
+.config/user-dirs.dirs
+{{ end -}}
+
+# macOS window-manager / app configs are darwin-only.
+{{ if ne .chezmoi.os "darwin" -}}
+.config/yabai
+.config/skhd
+.config/swiftbar
+.config/finicky
+{{ end -}}

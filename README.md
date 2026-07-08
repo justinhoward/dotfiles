@@ -1,144 +1,91 @@
 # Justin Howard's Dotfiles
 
-Most dotfiles solutions cater to a single environment like a certain shell. This
-project is intended to organize dotfiles for every environment including
-non-interactive shells. It uses a module system like some other dotfile
-repositories.
+Cross-platform dotfiles for macOS and Linux, managed with
+[chezmoi][chezmoi]. One repository drives every shell context — interactive,
+login, and non-interactive — templated per-machine and per-OS so it installs
+cleanly on a fresh system and adapts to wherever it lands.
 
-Most of the flashy fun stuff in this setup comes from the
-[Prezto](https://github.com/sorin-ionescu/prezto) ZSH dotfile system.
-Be sure to check out what it can do.
+The interactive shell is Zsh with a fast startup path: [Powerlevel10k][p10k] for
+the prompt (async git via `gitstatusd`), [sheldon][sheldon] to manage plugins,
+and [mise][mise] for runtime versions. Bash gets a lightweight, dependency-free
+parallel setup. Shared environment and aliases are written once in POSIX `sh` and
+sourced by both shells.
 
-## Installation
+## Installing on a new machine
 
-Clone the repository into your home directory
+Install `git` and [chezmoi][chezmoi], then:
 
 ```bash
-git clone git@github.com:justinhoward/dotfiles.git ~/.dotfiles
+git clone https://github.com/justinhoward/dotfiles.git ~/.dotfiles
+chezmoi init --source="$HOME/.dotfiles"   # prompts once for per-machine data
+chezmoi diff                               # preview what will change
+chezmoi apply                              # write it out
 ```
 
-Run the install script. This will backup your existing dotfiles to `<name>.bak`
-and symlink to the ones in the dotfiles repository.
+This repo sets `sourceDir = ~/.dotfiles` and `.chezmoiroot = home`, so the actual
+chezmoi source lives in `~/.dotfiles/home`. `chezmoi init` prompts for per-machine
+data (git name / email / commit signing key) and stores it in your local chezmoi
+config, which is never committed. `run_` scripts then bootstrap the rest: they
+recommend any missing CLI tools, install the nvim plugins, and enable the
+ssh-agent user service on Linux.
+
+## How it's organized
+
+Everything chezmoi manages lives under `home/`:
+
+- `dot_zshenv`, `dot_zprofile.tmpl`, `dot_zshrc.tmpl` — the three Zsh contexts
+  (always-on env, login-only, interactive).
+- `dot_bashrc`, `dot_bash_profile`, `dot_profile` — Bash / POSIX parallels.
+- `dot_config/sh/env.sh` — shared POSIX environment for **all** shells (`PATH`,
+  XDG dirs, editor/pager, plus OS-specific blocks).
+- `dot_config/sh/rc.d/*.sh` — interactive aliases and helpers split by topic
+  (core, git, homebrew, npm, …), sourced by both Zsh and Bash.
+- `dot_config/sheldon/plugins.toml` — Zsh plugins (zsh-defer, Powerlevel10k,
+  autosuggestions, history-substring-search, fast-syntax-highlighting).
+- `dot_p10k.zsh` — the prompt configuration.
+- `dot_config/…` — app configs (nvim, kitty, git, bat, ctags, …).
+- `run_*` — one-shot and on-change setup scripts.
+
+OS-specific files are guarded in `home/.chezmoiignore` — macOS-only (yabai, skhd,
+swiftbar, finicky) and Linux-only (systemd user units, XDG user-dirs).
+
+## Per-machine customization
+
+- **Prompted data** (git identity, signing key) is captured by `chezmoi init` and
+  stored outside the repo.
+- **Write-once files** use chezmoi's `create_` prefix — e.g. kitty's
+  `create_font_size.conf` is seeded with a default and then left alone, so each
+  machine can set its own font size without the repo overwriting it.
+- **OS branches** are handled with Go templates (`{{ if eq .chezmoi.os "darwin" }}`).
+
+## Updating
 
 ```bash
-cd ~/.dotfiles
-make
+chezmoi update      # git pull in ~/.dotfiles, then apply
+```
+
+Or review before applying:
+
+```bash
+git -C ~/.dotfiles pull && chezmoi diff && chezmoi apply
 ```
 
 ## Fonts
 
-The default theme requires a patched
-[powerline font](https://github.com/powerline/fonts). You can install one,
-or change the theme to a different prezto theme.
+The prompt and terminal expect a [Nerd Font][nerdfonts]. See the runbooks:
 
-## Customizing
+- [runbooks/nerd-fonts.md](runbooks/nerd-fonts.md)
+- [runbooks/arch-linux-fonts.md](runbooks/arch-linux-fonts.md)
 
-Change what modules get loaded when by customizing `config/selected-modules.sh`.
+## Linting
 
-Prezto configuration can be found in the `config/prezto` directory.
-All files in this directory will be run immediately before prezto is loaded.
-
-## Updating
-
-To update `dotfiles` itself and all its modules, run `make update`.
-
-## Modules
-
-A module is a directory inside the `modules` directory. Modules can contain a
-mixture of scripts to load at runtime, installation scripts, and config files.
-
-### Events
-
-At runtime, modules are only loaded when an "event" is fired.
-The built in events are "load", "xorg", "interactive", "login", and "xorg_init".
-You can use `config/modules.sh` to change which modules are loaded during
-which events. Events are fired in the following order.
-
-- `load`: After the dotfiles library is loaded.
-- `xorg`: Only run in an X context
-- `interactive`: Only run if in an interactive shell
-- `login`: Only run if in a login shell
-- `xorg_init`: Only run in an X context.
-  This is last, so use it to exec your window manager.
-
-### Parts
-
-Modules can have runtime scripts, installation scripts, and
-configuration scripts.
-
-#### Initialization
-
-Initialization happens at runtime when an event is triggered and loads a module.
-It is made up of three stages.
-
-- `preinit`
-- `init`
-- `postinit`
-
-For each stage, the `<stage>`.sh file will be tried first, and then the
-`<stage>` directory. If the `.sh` file exists, and it exits with a zero exit
-code, the directory will also be tried. If the directory exists, all files in it
-will be sourced. If neither the `.sh` file or the directory exist, the stage
-will be skipped.
-
-#### Condition
-
-If a `condition.sh` file exists in the module's directory,
-it will be run before the module is initialized. If the file
-exits with a non-zero exit code, the module will not be initialized.
-
-#### Install
-
-When installing, the installer will try to run each module's
-`install.sh` file. This script should do any symlinking,
-copying, etc to set up module dependencies.
-
-You can also use an `install` directory to contain scripts to run
-during install. See `dload` for details.
-
-#### Configuration
-
-Your module can contain a `config.sh` script or `config` directory
-to be copied to `$DOTFILES_PATH/config` before installation. Your
-module should use `dconfig` to load those configuration files
-at runtime.
-
-## Environment
-
-Dotfiles creates some variables that are helpful in determining what
-environment to run in order to conditionally load configurations.
-
-- `dotfiles_platform`: The name of the type of system. `osx`, 'linux', 'freebsd'
-- `dotfiles_shell`: The name of the running shell. `bash`, `sh`, `ksh`, `zsh`,
-   or empty if unknown.
-- `dotfiles_interactive`: `1` if the shell is interactive, empty if not
-- `dotfiles_login`: `1` if the shell is a login shell, empty if not
-- `dotfiles_virtual`: `1` if the shell is a virtual TTY, empty if not
-- `dotfiles_xorg`: `1` if the environment is the xorg window manager, empty if not
-
-## Functions
-
-Dotfiles provides some utility functions for loading modules
-
-- `dbackup(path)`: Backs up the given path to path.bak if it exists. Does not
-   back up symbolic links.
-- `dcheck(command)`: Checks if `command` is available. Returns a 0 code if it is.
-- `dcolors()`: Sets color code variables like `dred`, `dcyan`, `ddefault`, etc.
-- `dconfig(name)`: Uses `dload` to load configuration files in the `config` directory
-- `denv()`: Sets the dotfiles\_\* variables described above
-- `devent(name)`: Runs the `name` event. If the `devent_<name>` variable is an array
-  of module names, those modules will be loaded. See `config/modules.sh`
-- `dinstall(source, name, dest)`: When `source` is a path, copies `$source` and `$source.sh`
-  to `dest` and renames it to `name`. Used for installing config files.
-- `dload(path)`: Provides the `.sh`, then directory loading sequence as used in each
-  module load stage
-- `dmodload(name)`: Loads the `name` module. Does nothing if the module is
-   already loaded.
-- `drecommend(command)`: If command is not installed, prints a recommendation.
-- `dremove(path)`: Backs up and removes the file or directory at `path`.
-- `drequire(command)`: If command is not installed, prints an error and exits.
-- `dsymlink(target, link)`: Creates a symbolic link from the path `link` to
-  `target`. If link exists, it is backed up. `target` is a relative path from
-  `$DOTFILES_PATH`.
+`shellcheck` runs in CI over the repo's shell scripts — see
+`.github/workflows/ci.yml`.
 
 [Licensed](LICENSE.txt) under the MIT License.
+
+[chezmoi]: https://www.chezmoi.io
+[p10k]: https://github.com/romkatv/powerlevel10k
+[sheldon]: https://github.com/rossmacarthur/sheldon
+[mise]: https://mise.jdx.dev
+[nerdfonts]: https://www.nerdfonts.com

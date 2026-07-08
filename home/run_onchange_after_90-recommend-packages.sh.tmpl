@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Runs on `chezmoi apply` whenever this file's contents change (the hash below
+# forces a re-run when the tool list changes). Mirrors the old `drecommend`
+# behavior: it SUGGESTS installs, it never forces them — matching the
+# "installable on a fresh system, but suggests package installs" requirement.
+# run_onchange re-runs automatically whenever this rendered script changes.
+
+set -euo pipefail
+
+recommend=(
+  sheldon mise eza fzf zoxide bat nvim jq git-delta
+)
+
+missing=()
+for tool in "${recommend[@]}"; do
+  command -v "$tool" >/dev/null 2>&1 || missing+=("$tool")
+done
+
+if [ "${#missing[@]}" -eq 0 ]; then
+  echo "dotfiles: all recommended tools present."
+  exit 0
+fi
+
+echo "dotfiles: recommended tools not found: ${missing[*]}"
+{{- if eq .chezmoi.os "darwin" }}
+echo "  install with: brew install ${missing[*]}"
+{{- else }}
+echo "  install via your package manager, e.g.: <pkg-manager> install ${missing[*]}"
+{{- end }}

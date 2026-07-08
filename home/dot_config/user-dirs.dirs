@@ -1,0 +1,12 @@
+# XDG user directories — custom lowercase layout (Desktop = $HOME). Managed by
+# chezmoi; edit in the dotfiles repo, not here. `xdg-user-dirs-update` reads this
+# on login and only creates missing dirs — it won't move files already in the
+# capitalized defaults, so relocate those by hand if you switch a live machine.
+XDG_DESKTOP_DIR="$HOME/"
+XDG_DOCUMENTS_DIR="$HOME/docs/"
+XDG_DOWNLOAD_DIR="$HOME/downloads/"
+XDG_MUSIC_DIR="$HOME/music/"
+XDG_PICTURES_DIR="$HOME/pictures/"
+XDG_PUBLICSHARE_DIR="$HOME/public/"
+XDG_TEMPLATES_DIR="$HOME/.doc-templates/"
+XDG_VIDEOS_DIR="$HOME/videos/"

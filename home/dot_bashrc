@@ -1,0 +1,18 @@
+# ~/.bashrc — interactive bash only.
+# (Non-login interactive bash does not read ~/.profile, so load env here too.)
+[ -r "$HOME/.config/sh/env.sh" ] && . "$HOME/.config/sh/env.sh"
+
+command -v mise     >/dev/null 2>&1 && eval "$(mise activate bash)"
+command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
+command -v fzf      >/dev/null 2>&1 && eval "$(fzf --bash)"
+command -v gpg      >/dev/null 2>&1 && export GPG_TTY="$(tty)"   # zsh sets this in ~/.zshrc
+
+# Prompt: zsh gets powerlevel10k; bash stays simple and dependency-free by
+# design (mirrors the old zsh-fancy / bash-basic split). blue user@host, cyan cwd.
+PS1='\[\e[1;34m\]\u@\h\[\e[0m\] \[\e[36m\]\w\[\e[0m\] \$ '
+
+# Shared, shell-agnostic aliases / snippets (same files zsh sources).
+for _rc in "$HOME"/.config/sh/rc.d/*.sh; do
+  [ -r "$_rc" ] && . "$_rc"
+done
+unset _rc
