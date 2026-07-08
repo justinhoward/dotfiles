@@ -17,7 +17,7 @@ if command -v mise >/dev/null 2>&1 && { [ -t 1 ] || [ -t 2 ]; }; then
 fi
 command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
 command -v fzf      >/dev/null 2>&1 && eval "$(fzf --bash)"
-command -v gpg      >/dev/null 2>&1 && export GPG_TTY="$(tty)"   # zsh sets this in ~/.zshrc
+command -v gpg      >/dev/null 2>&1 && { GPG_TTY="$(tty)"; export GPG_TTY; }  # zsh sets this in ~/.zshrc
 
 # Prompt: zsh gets powerlevel10k; bash stays simple and dependency-free by
 # design (mirrors the old zsh-fancy / bash-basic split). blue user@host, cyan cwd.
