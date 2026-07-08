@@ -6,10 +6,8 @@ tell app "System Events"
 
   if darkMode then
     set pictureFilename to "dark.png"
-    do shell script "/Applications/kitty.app/Contents/MacOS/kitten themes --reload-in=all sonokai"
   else
     set pictureFilename to "light.png"
-    do shell script "/Applications/kitty.app/Contents/MacOS/kitten themes --reload-in=all Everforest Light Hard"
   end if
 
   set picturePath to POSIX path of (path to home folder) & "/.config/skhd/resources/" & pictureFilename
@@ -17,12 +15,8 @@ tell app "System Events"
   tell every desktop
     set picture to picturePath
   end tell
-
-  if darkMode then
-    set themeName to "sonokai"
-  else
-    set themeName to "Everforest Light Hard"
-  end if
-
-  do shell script "/Applications/kitty.app/Contents/MacOS/kitten themes --reload-in=all " & themeName
 end tell
+
+-- Kitty colors are intentionally not touched here. The *-theme.auto.conf files
+-- in ~/.config/kitty make kitty follow the OS appearance on its own, so calling
+-- `kitten themes` would be redundant and would rewrite (chezmoi-managed) kitty.conf.
