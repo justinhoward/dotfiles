@@ -5,6 +5,7 @@
 command -v mise     >/dev/null 2>&1 && eval "$(mise activate bash)"
 command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
 command -v fzf      >/dev/null 2>&1 && eval "$(fzf --bash)"
+command -v gpg      >/dev/null 2>&1 && export GPG_TTY="$(tty)"   # zsh sets this in ~/.zshrc
 
 # Prompt: zsh gets powerlevel10k; bash stays simple and dependency-free by
 # design (mirrors the old zsh-fancy / bash-basic split). blue user@host, cyan cwd.

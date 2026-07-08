@@ -1,0 +1,17 @@
+#!/bin/sh
+# Bootstrap and sync nvim plugins (vim-plug). This is a run_onchange script: the
+# init.vim hash below is part of the script body, so chezmoi re-runs it whenever
+# the plugin list changes — installing/cleaning plugins on `chezmoi apply`.
+# init.vim sha256: {{ include "dot_config/nvim/init.vim" | sha256sum }}
+
+command -v nvim >/dev/null 2>&1 || exit 0
+
+plug="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
+if [ ! -f "$plug" ]; then
+  echo "Installing vim-plug..."
+  curl -fLo "$plug" --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || exit 0
+fi
+
+echo "Syncing nvim plugins (PlugInstall)..."
+nvim --headless "+PlugInstall --sync" +qall >/dev/null 2>&1 || true
