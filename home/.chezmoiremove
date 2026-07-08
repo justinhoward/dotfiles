@@ -1,0 +1,8 @@
+# Legacy Neovim config removed in the lazy.nvim/Lua migration. These lived in
+# ~/.config/nvim before the config moved to init.lua + lua/. chezmoi never
+# deletes files just because they left the source tree, so list them here.
+# Safe to drop once every machine has applied the migration.
+.config/nvim/init.vim
+.config/nvim/plugin
+.config/nvim/ftdetect
+.config/nvim/after

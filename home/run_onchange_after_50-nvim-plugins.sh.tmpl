@@ -1,17 +1,39 @@
 #!/bin/sh
-# Bootstrap and sync nvim plugins (vim-plug). This is a run_onchange script: the
-# init.vim hash below is part of the script body, so chezmoi re-runs it whenever
-# the plugin list changes — installing/cleaning plugins on `chezmoi apply`.
-# init.vim sha256: {{ include "dot_config/nvim/init.vim" | sha256sum }}
+# Bootstrap and sync Neovim plugins (lazy.nvim). This is a run_onchange script:
+# the plugin-spec hashes below make chezmoi re-run it whenever the plugin set
+# changes, so plugins are installed/updated/cleaned on `chezmoi apply`.
+# lazy.nvim itself is cloned by init.lua (lua/config/lazy.lua) on first launch.
+#
+# plugin spec hashes:
+#   ai.lua:          {{ include "dot_config/nvim/lua/plugins/ai.lua" | sha256sum }}
+#   colorscheme.lua: {{ include "dot_config/nvim/lua/plugins/colorscheme.lua" | sha256sum }}
+#   completion.lua:  {{ include "dot_config/nvim/lua/plugins/completion.lua" | sha256sum }}
+#   dap.lua:         {{ include "dot_config/nvim/lua/plugins/dap.lua" | sha256sum }}
+#   editor.lua:      {{ include "dot_config/nvim/lua/plugins/editor.lua" | sha256sum }}
+#   explorer.lua:    {{ include "dot_config/nvim/lua/plugins/explorer.lua" | sha256sum }}
+#   finder.lua:      {{ include "dot_config/nvim/lua/plugins/finder.lua" | sha256sum }}
+#   git.lua:         {{ include "dot_config/nvim/lua/plugins/git.lua" | sha256sum }}
+#   lint-format.lua: {{ include "dot_config/nvim/lua/plugins/lint-format.lua" | sha256sum }}
+#   lsp.lua:         {{ include "dot_config/nvim/lua/plugins/lsp.lua" | sha256sum }}
+#   statusline.lua:  {{ include "dot_config/nvim/lua/plugins/statusline.lua" | sha256sum }}
+#   treesitter.lua:  {{ include "dot_config/nvim/lua/plugins/treesitter.lua" | sha256sum }}
+#   ui.lua:          {{ include "dot_config/nvim/lua/plugins/ui.lua" | sha256sum }}
 
 command -v nvim >/dev/null 2>&1 || exit 0
+command -v git >/dev/null 2>&1 || exit 0
 
-plug="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"
-if [ ! -f "$plug" ]; then
-  echo "Installing vim-plug..."
-  curl -fLo "$plug" --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim || exit 0
+echo "Syncing Neovim plugins (lazy.nvim)..."
+nvim --headless "+Lazy! sync" +qa >/dev/null 2>&1 || true
+
+# Clean up legacy vim-plug artifacts now that lazy.nvim manages plugins.
+data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/nvim"
+if [ -d "$data_dir/plugged" ]; then
+  rm -rf "$data_dir/plugged"
+fi
+if [ -f "$data_dir/site/autoload/plug.vim" ]; then
+  rm -f "$data_dir/site/autoload/plug.vim"
 fi
 
-echo "Syncing nvim plugins (PlugInstall)..."
-nvim --headless "+PlugInstall --sync" +qall >/dev/null 2>&1 || true
+# Exit cleanly: the guards above return non-zero when the legacy artifacts are
+# already gone, which would otherwise make chezmoi think this script failed.
+exit 0
