@@ -1,3 +1,9 @@
+# shellcheck shell=bash
 # ~/.bash_profile — login bash. Delegate to the POSIX env, then interactive rc.
+# ~/.profile sources the shared env.sh; flag that so ~/.bashrc skips a redundant
+# re-source of the same file in this login shell (env.sh is idempotent, so this
+# is purely to avoid the wasted second pass). The flag is a plain, un-exported
+# shell var: child shells don't inherit it and load env.sh normally.
 [ -r "$HOME/.profile" ] && . "$HOME/.profile"
+_bashrc_env_loaded=1
 [ -r "$HOME/.bashrc" ]  && . "$HOME/.bashrc"

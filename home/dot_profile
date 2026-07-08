@@ -1,2 +1,3 @@
+# shellcheck shell=sh
 # ~/.profile — POSIX login shells (sh, and bash via ~/.bash_profile).
 [ -r "$HOME/.config/sh/env.sh" ] && . "$HOME/.config/sh/env.sh"

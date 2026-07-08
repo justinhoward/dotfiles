@@ -1,6 +1,13 @@
+# shellcheck shell=bash
 # ~/.bashrc — interactive bash only.
-# (Non-login interactive bash does not read ~/.profile, so load env here too.)
-[ -r "$HOME/.config/sh/env.sh" ] && . "$HOME/.config/sh/env.sh"
+# Non-login interactive bash does not read ~/.profile, so load env here too —
+# unless a login ~/.bash_profile already sourced it via ~/.profile in this same
+# process (it sets _bashrc_env_loaded to say so). env.sh itself is left fully
+# re-sourceable; this only skips the bash login double-load.
+if [ -z "${_bashrc_env_loaded-}" ] && [ -r "$HOME/.config/sh/env.sh" ]; then
+  . "$HOME/.config/sh/env.sh"
+fi
+unset _bashrc_env_loaded
 
 # Real interactive terminals only — gate on a TTY so an IDE shell-env resolver
 # (interactive but non-tty) keeps the static shims dir from env.sh in front,
