@@ -2,7 +2,12 @@
 # (Non-login interactive bash does not read ~/.profile, so load env here too.)
 [ -r "$HOME/.config/sh/env.sh" ] && . "$HOME/.config/sh/env.sh"
 
-command -v mise     >/dev/null 2>&1 && eval "$(mise activate bash)"
+# Real interactive terminals only — gate on a TTY so an IDE shell-env resolver
+# (interactive but non-tty) keeps the static shims dir from env.sh in front,
+# resolving tool versions per-directory. See ~/.zshrc for the full rationale.
+if command -v mise >/dev/null 2>&1 && { [ -t 1 ] || [ -t 2 ]; }; then
+  eval "$(mise activate bash)"
+fi
 command -v zoxide   >/dev/null 2>&1 && eval "$(zoxide init bash)"
 command -v fzf      >/dev/null 2>&1 && eval "$(fzf --bash)"
 command -v gpg      >/dev/null 2>&1 && export GPG_TTY="$(tty)"   # zsh sets this in ~/.zshrc

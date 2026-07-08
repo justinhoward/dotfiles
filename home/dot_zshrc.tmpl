@@ -97,12 +97,23 @@ _cache_eval() {
   source "$cache"
 }
 
-# mise: hook mode for interactive use — manages PATH dynamically per-directory,
-# superseding the static shims dir from ~/.zshenv. NOT cached via _cache_eval:
-# `mise activate` bakes the live $PATH into its output, so a cached copy would
-# pin a stale, machine-specific PATH and clobber the one env.sh just built. The
-# single fork here is the correct trade-off for portable, always-current output.
-command -v mise   >/dev/null && eval "$(mise activate zsh)"
+# mise: hook mode for REAL interactive terminals only — manages PATH dynamically
+# per-directory, superseding the static shims dir from ~/.zshenv. NOT cached via
+# _cache_eval: `mise activate` bakes the live $PATH into its output, so a cached
+# copy would pin a stale, machine-specific PATH and clobber the one env.sh built.
+#
+# Gate on a TTY. Cursor/VS Code resolve the environment they hand to GUI
+# subprocesses (linters, LSPs, MCP servers) by running this rc file in an
+# interactive but NON-tty shell (stdio is piped), and typically from `/` rather
+# than the workspace. If `mise activate` ran there it would bake the *global*
+# tool version to the front of PATH, ahead of the shims — so an extension like
+# the rubocop LSP running `bundle` inside a project would inherit that global
+# Ruby instead of the project's. Skipping activate leaves the static shims dir in
+# front (see ~/.zshenv + ~/.zprofile), which resolves the right version per
+# directory at exec time via the process's real cwd.
+if command -v mise >/dev/null && { [[ -t 1 ]] || [[ -t 2 ]]; }; then
+  eval "$(mise activate zsh)"
+fi
 command -v zoxide >/dev/null && _cache_eval zoxide zoxide init zsh
 command -v fzf    >/dev/null && _cache_eval fzf    fzf --zsh
 command -v dstask >/dev/null && _cache_eval dstask dstask zsh-completion
