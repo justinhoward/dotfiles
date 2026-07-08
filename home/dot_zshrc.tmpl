@@ -7,7 +7,9 @@ HISTFILE="$XDG_DATA_HOME/zsh/history"
 HISTSIZE=20000
 SAVEHIST=20000
 mkdir -p "${HISTFILE:h}" 2>/dev/null
-setopt EXTENDED_HISTORY SHARE_HISTORY INC_APPEND_HISTORY \
+# SHARE_HISTORY already imports/appends incrementally and supersedes
+# INC_APPEND_HISTORY, so the latter isn't listed (it would be redundant).
+setopt EXTENDED_HISTORY SHARE_HISTORY \
        HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
 
 # --- Options (curated from prezto environment/directory modules) -----------
