@@ -7,13 +7,30 @@
 
 set -euo pipefail
 
+# Each entry is "binary|package": the binary probed with `command -v`, and the
+# package name suggested when it's absent. They differ for a few tools — the
+# executable is `rg`/`delta`/`nvim` but the formula is `ripgrep`/`git-delta`/
+# `neovim` — so detect on the binary and suggest the installable name.
 recommend=(
-  sheldon mise eza fzf zoxide bat nvim jq delta
+  "sheldon|sheldon"
+  "mise|mise"
+  "eza|eza"
+  "fzf|fzf"
+  "zoxide|zoxide"
+  "bat|bat"
+  "nvim|neovim"
+  "jq|jq"
+  "delta|git-delta"
+  "rg|ripgrep"       # fzf-lua grep backend
+  "fd|fd"            # fzf-lua file backend
+  "gh|gh"            # gRb (gh browse) + gh-changelog aliases
 )
 
 missing=()
-for tool in "${recommend[@]}"; do
-  command -v "$tool" >/dev/null 2>&1 || missing+=("$tool")
+for entry in "${recommend[@]}"; do
+  bin="${entry%%|*}"
+  pkg="${entry##*|}"
+  command -v "$bin" >/dev/null 2>&1 || missing+=("$pkg")
 done
 
 if [ "${#missing[@]}" -eq 0 ]; then
