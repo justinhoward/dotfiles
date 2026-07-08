@@ -11,6 +11,12 @@
 [core]
 	pager = delta
 
+[interactive]
+	# Colorize `git add -p` / `git add -i` hunks with delta too (the gip/giR/gcO
+	# patch-staging aliases). --color-only keeps delta's decorations out of the
+	# text git feeds back to the patch parser.
+	diffFilter = delta --color-only
+
 [init]
 	# preserve the historical default branch name (git's own default is `main`).
 	defaultBranch = master
@@ -54,6 +60,8 @@
 [diff]
 	tool = nvimdiff
 	colorMoved = default
+	# don't flag pure re-indentation as a moved block (pairs with colorMoved).
+	colorMovedWS = allow-indentation-change
 	# histogram produces more readable diffs than the default myers algorithm.
 	algorithm = histogram
 
@@ -65,10 +73,14 @@
 
 [delta]
 	line-numbers = true
-	plus-style = syntax "#394634"
-	plus-emph-style = "#181819" "#9ed072"
-	minus-style = syntax "#55393d"
-	minus-emph-style = "#181819" "#fc5d7c"
+	# n / N jump between diff sections (files, hunks).
+	navigate = true
+	# clickable commit hashes and file paths in terminals that support OSC 8.
+	hyperlinks = true
+	# No hardcoded plus/minus colors: delta queries the terminal background and
+	# picks matching light/dark defaults on every run, so diffs track the OS
+	# light/dark switch (kitty's *-theme.auto.conf) the same way nvim and bat do.
+	# Pin with `dark = true` / `light = true` if a terminal won't answer the query.
 
 [commit]
 	gpgSign = true
@@ -90,6 +102,17 @@
 [pull]
 	# refuse non-fast-forward pulls; rebase/merge must be explicit.
 	ff = only
+
+[rebase]
+	# auto-order fixup!/squash! commits when rebasing (pairs with the gcf amend
+	# workflow + `git commit --fixup`).
+	autosquash = true
+	# stash a dirty worktree around a rebase and restore it after (gfra did this
+	# per-pull; make it the default for gr/grd/gri too).
+	autostash = true
+	# when a rebase rewrites a branch that others are stacked on, move their tips
+	# too — keeps stacked branches consistent (git 2.38+).
+	updateRefs = true
 
 [rerere]
 	# reuse recorded conflict resolutions across repeated rebases/merges.
