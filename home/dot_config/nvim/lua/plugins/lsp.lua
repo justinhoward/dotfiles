@@ -134,24 +134,6 @@ return {
               url = 'https://www.schemastore.org/api/json/catalog.json',
               enable = true,
             },
-            customTags = {
-              '!And scalar', '!And mapping', '!And sequence',
-              '!If scalar', '!If mapping', '!If sequence',
-              '!Not scalar', '!Not mapping', '!Not sequence',
-              '!Equals scalar', '!Equals mapping', '!Equals sequence',
-              '!Or scalar', '!Or mapping', '!Or sequence',
-              '!FindInMap scalar', '!FindInMap mapping', '!FindInMap sequence',
-              '!Base64 scalar', '!Base64 mapping', '!Base64 sequence',
-              '!Cidr scalar', '!Cidr mapping', '!Cidr sequence',
-              '!Ref scalar', '!Ref mapping', '!Ref sequence',
-              '!Sub scalar', '!Sub mapping', '!Sub sequence',
-              '!GetAtt scalar', '!GetAtt mapping', '!GetAtt sequence',
-              '!GetAZs scalar', '!GetAZs mapping', '!GetAZs sequence',
-              '!ImportValue scalar', '!ImportValue mapping', '!ImportValue sequence',
-              '!Select scalar', '!Select mapping', '!Select sequence',
-              '!Split scalar', '!Split mapping', '!Split sequence',
-              '!Join scalar', '!Join mapping', '!Join sequence',
-            },
           },
         },
       })
@@ -175,9 +157,9 @@ return {
         automatic_enable = false,
       })
       require('mason-tool-installer').setup({
-        -- cfn-lint and cppcheck are intentionally omitted: they are still wired
-        -- up in nvim-lint but only run if present on PATH, so they don't lint
-        -- every YAML/C file by surprise. Add them here to have Mason manage them.
+        -- cppcheck is intentionally omitted: it's still wired up in nvim-lint but
+        -- only runs if present on PATH, so it doesn't lint every C file by
+        -- surprise. Add it here to have Mason manage it.
         ensure_installed = {
           'codespell',
           'hadolint',

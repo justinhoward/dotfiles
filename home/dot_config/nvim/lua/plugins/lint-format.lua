@@ -63,8 +63,7 @@ return {
         dockerfile = { 'hadolint' },
         markdown = { 'markdownlint' },
         sql = { 'sqlfluff' },
-        yaml = { 'yamllint', 'cfn_lint' },
-        json = { 'cfn_lint' },
+        yaml = { 'yamllint' },
         c = { 'cppcheck' },
         cpp = { 'cppcheck' },
       }
