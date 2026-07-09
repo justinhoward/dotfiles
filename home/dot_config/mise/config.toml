@@ -1,0 +1,8 @@
+[settings]
+# Read .ruby-version and .terraform-version files
+idiomatic_version_file_enable_tools = ["terraform", "ruby"]
+# Only install manually with `mise install`
+not_found_auto_install = false
+
+[settings.ruby]
+compile = false
