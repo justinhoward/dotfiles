@@ -1,0 +1,12 @@
+{
+  "scope": "global",
+  "embeddingProvider": "github-copilot",
+  "indexing": {
+    "autoIndex": true,
+    "watchFiles": true,
+    "requireProjectMarker": false
+  },
+  "search": {
+    "maxResults": 15
+  }
+}

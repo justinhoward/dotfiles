@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@rama_nigg/open-cursor@latest"],
+  "plugin": ["@rama_nigg/open-cursor@latest", "opencode-codebase-index"],
   "lsp": true,
   "permission": {
     "edit": "allow",
@@ -83,7 +83,13 @@
         "timeout": 600000,
         "chunkTimeout": 600000
       }
-    }
+    },
+    "amazon-bedrock": {
+      "options": {
+        "region": "us-east-1",
+        "profile": "psai"
+      }
+    },
   },
   "mcp": {
     "atlassian": {
