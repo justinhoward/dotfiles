@@ -46,6 +46,7 @@ return {
         { '<leader>c', group = 'quickfix' },
         { '<leader>d', group = 'debug' },
         { '<leader>f', group = 'lsp/diagnostics' },
+        { '<leader>g', group = 'git' },
         { '<leader>h', group = 'git hunks' },
         { '<leader>r', group = 'refactor' },
         { '<leader>s', group = 'search' },
