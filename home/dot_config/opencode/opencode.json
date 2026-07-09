@@ -8,6 +8,7 @@
       "*": "ask"
     },
     "webfetch": "allow",
+    "websearch": "allow",
     "bash": {
       "*": "ask",
       "ls": "allow",
@@ -48,7 +49,33 @@
       "rm -rf *": "deny",
       "git push --force*": "deny",
       "git reset --hard*": "deny"
-    }
+    },
+    "atlassian_*": "allow",
+    "atlassian_add*": "ask",
+    "atlassian_create*": "ask",
+    "atlassian_edit*": "ask",
+    "atlassian_update*": "ask",
+    "atlassian_transition*": "ask",
+    "circleci_*_list": "allow",
+    "circleci_*list-categories": "allow",
+    "circleci_*_get": "allow",
+    "circleci_*_validate": "allow",
+    "circleci_*_process": "allow",
+    "circleci_*_pack": "allow",
+    "circleci_*_source": "allow",
+    "circleci_*_diff": "allow",
+    "circleci_*_fetch": "allow",
+    "circleci_*_logs": "allow",
+    "circleci_*_decide": "allow",
+    "circleci_*_me": "allow",
+    "circleci_*_id": "allow",
+    "circleci_*_runs": "allow",
+    "circleci_*_version": "allow",
+    "circleci_*artifact": "allow",
+    "circleci_*_task": "allow",
+    "circleci_*_output": "allow",
+    "circleci_*_output_get": "allow",
+    "circleci_*_output_list": "allow"
   },
   "provider": {
     "github-copilot": {
