@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": ["@rama_nigg/open-cursor@latest"],
+  "lsp": true,
+  "provider": {
+    "github-copilot": {
+      "options": {
+        "timeout": 600000,
+        "chunkTimeout": 600000
+      }
+    }
+  },
+  "mcp": {
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp",
+      "enabled": true
+    },
+    "circleci": {
+      "type": "local",
+      "command": ["/opt/homebrew/bin/circleci", "mcp", "start"],
+      "enabled": true
+    }
+  }
+}
