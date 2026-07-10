@@ -91,6 +91,7 @@
       }
     },
   },
+  "disabled_providers": ["opencode"],
   "mcp": {
     "atlassian": {
       "type": "remote",
