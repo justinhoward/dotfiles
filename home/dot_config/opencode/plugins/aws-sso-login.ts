@@ -53,7 +53,9 @@ export const AwsSsoLogin: Plugin = async ({ $, client }) => {
     )
     // Foreground: the AWS CLI opens the browser and waits for you to finish.
     // Let this throw on failure so the guard below can allow a retry.
-    await $`aws sso login --profile ${AWS_PROFILE}`
+    // .quiet() captures the CLI's output instead of writing it to the terminal,
+    // which would otherwise corrupt opencode's TUI (overlapping the input box).
+    await $`aws sso login --profile ${AWS_PROFILE}`.quiet()
     await log("info", `aws sso login for "${AWS_PROFILE}" completed.`)
   }
 

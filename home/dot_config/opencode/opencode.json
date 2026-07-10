@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@rama_nigg/open-cursor@latest", "opencode-codebase-index"],
+  "plugin": ["@rama_nigg/open-cursor@latest"],
   "lsp": true,
   "permission": {
     "edit": "allow",
