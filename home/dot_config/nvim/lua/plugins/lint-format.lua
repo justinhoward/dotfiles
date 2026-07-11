@@ -34,11 +34,15 @@ return {
           ['*'] = { 'codespell' },
         },
         formatters = {
-          -- erb tooling runs through the project's bundle.
+          -- erb tooling runs through the project's bundle. Only run when the
+          -- project actually bundles erb_lint, so unrelated repos don't error.
           erb_format = {
             command = 'bundle',
             args = { 'exec', 'erblint', '--autocorrect', '$FILENAME' },
             stdin = false,
+            condition = function(_, ctx)
+              return require('config.bundle').has_gem(ctx.dirname, 'erb_lint')
+            end,
           },
           sqlfluff = {
             command = 'sqlfluff',
@@ -74,10 +78,39 @@ return {
 
       lint.linters.sqlfluff.args = vim.list_extend(lint.linters.sqlfluff.args, { '--dialect', 'mysql' })
 
+      -- A linter is only runnable if its command actually resolves: a plain
+      -- executable must be on PATH, and bundle-based linters (erb_lint) must be
+      -- present in the project's Gemfile.lock. This keeps missing tooling a
+      -- silent skip instead of a per-run error notification.
+      local function runnable(name)
+        if name == 'erb_lint' then
+          return require('config.bundle').has_gem(vim.fn.expand('%:p:h'), 'erb_lint')
+        end
+        local linter = lint.linters[name]
+        if type(linter) == 'function' then
+          linter = linter()
+        end
+        local cmd = linter and linter.cmd
+        if type(cmd) == 'function' then
+          cmd = cmd()
+        end
+        return type(cmd) == 'string' and vim.fn.executable(cmd) == 1
+      end
+
       local function run_lint()
-        lint.try_lint()
+        local runnable_fts = {}
+        for _, name in ipairs(lint.linters_by_ft[vim.bo.filetype] or {}) do
+          if runnable(name) then
+            runnable_fts[#runnable_fts + 1] = name
+          end
+        end
+        if #runnable_fts > 0 then
+          lint.try_lint(runnable_fts)
+        end
         -- codespell runs everywhere, regardless of filetype.
-        lint.try_lint('codespell')
+        if runnable('codespell') then
+          lint.try_lint('codespell')
+        end
       end
 
       vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost', 'InsertLeave' }, {

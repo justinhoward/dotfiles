@@ -3,9 +3,6 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      'mason-org/mason.nvim',
-      'mason-org/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
       'saghen/blink.cmp',
     },
     config = function()
@@ -111,10 +108,39 @@ return {
             },
           },
         },
+        -- ruby-lsp is a global (per-Ruby) install; not every project's Ruby has
+        -- it. Only start when `ruby-lsp` actually resolves on PATH, so projects
+        -- missing it just have no Ruby LSP instead of a loud spawn error. (The
+        -- default cmd is a function, which bypasses Neovim's executable check,
+        -- so we gate on activation here -- mirrors the Sorbet gate.)
+        root_dir = function(bufnr, on_dir)
+          if vim.fn.executable('ruby-lsp') == 1 then
+            on_dir(vim.fs.root(bufnr, { 'Gemfile', '.git' }) or vim.fn.getcwd())
+          end
+        end,
       })
 
+      -- Sorbet: prefer the project's bundled `srb` so type diagnostics honor
+      -- Gemfile.lock; fall back to a global `srb` outside a bundle. Only start
+      -- in real Sorbet projects (sorbet/config): the default Gemfile/.git
+      -- markers would make Neovim try to spawn `srb` on every Ruby buffer and
+      -- error loudly when Sorbet isn't installed. (A function cmd bypasses
+      -- Neovim's executable check, so gating on start is what keeps it quiet.)
+      -- Sorbet is bundle-only: it starts only when the project bundles Sorbet
+      -- (checked via Gemfile.lock in root_dir), and runs through `bundle exec`
+      -- so type diagnostics match the bundled version. Gating on activation --
+      -- rather than inside cmd -- is what keeps it quiet in non-Sorbet projects:
+      -- a function cmd bypasses Neovim's executable check, so if we let it start
+      -- without Sorbet it would try to spawn `srb` and error loudly.
       vim.lsp.config('sorbet', {
-        cmd = { 'srb', 'tc', '--lsp' },
+        cmd = function(dispatchers, config)
+          return vim.lsp.rpc.start(
+            { 'bundle', 'exec', 'srb', 'tc', '--lsp' },
+            dispatchers,
+            { cwd = config.root_dir or vim.fn.getcwd() }
+          )
+        end,
+        root_dir = require('config.bundle').root_if_bundled({ 'sorbet', 'sorbet-static-and-runtime' }),
       })
 
       local terraform_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -138,38 +164,12 @@ return {
         },
       })
 
-      require('mason').setup()
-      require('mason-lspconfig').setup({
-        -- Servers Mason can install cleanly. Ruby (ruby_lsp/sorbet via bundle),
-        -- ccls, sourcekit, and powershell_es are provided by the system toolchain.
-        ensure_installed = {
-          'bashls',
-          'eslint',
-          'jsonls',
-          'marksman',
-          'pylsp',
-          'ruff',
-          'terraformls',
-          'ts_ls',
-          'yamlls',
-        },
-        -- Enablement is driven explicitly below for full control.
-        automatic_enable = false,
-      })
-      require('mason-tool-installer').setup({
-        -- cppcheck is intentionally omitted: it's still wired up in nvim-lint but
-        -- only runs if present on PATH, so it doesn't lint every C file by
-        -- surprise. Add it here to have Mason manage it.
-        ensure_installed = {
-          'codespell',
-          'hadolint',
-          'markdownlint',
-          'prettierd',
-          'sqlfluff',
-          'stylua',
-        },
-      })
-
+      -- Tooling (LSP servers, formatters, linters) is provided by the
+      -- environment -- brew for global binaries, bundle exec for Ruby, and
+      -- node_modules / self-resolving servers for JS -- not auto-installed by
+      -- Neovim. Check availability with :checkhealth vim.lsp (servers) and
+      -- :checkhealth conform (formatters); nvim-lint has no healthcheck, so a
+      -- missing linter binary just skips silently (see plugins/lint-format.lua).
       vim.lsp.enable({
         'ccls',
         'eslint',

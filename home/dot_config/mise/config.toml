@@ -1,3 +1,19 @@
+[tools]
+# Global runtime baseline. Projects override per-directory via .tool-versions /
+# .ruby-version; these are the defaults outside a project (and the base the
+# backend tools below build against). Without them, bare `ruby` falls back to
+# the ancient system Ruby.
+node = "22.22.0"
+ruby = "3.4.9"
+python = "3.13.14"
+
+# Non-project-sensitive CLIs not available via brew. Project-sensitive tooling
+# (ruby-lsp, rubocop, sorbet, prettier, typescript, ...) is intentionally NOT
+# here -- it comes from the project's bundle / node_modules. Declared here for
+# reproducibility; installed per-machine on demand via `mise install`
+# (not_found_auto_install is off).
+"npm:npm-check-updates" = "latest"
+
 [settings]
 # Read .ruby-version and .terraform-version files
 idiomatic_version_file_enable_tools = ["terraform", "ruby"]
