@@ -6,6 +6,7 @@
 node = "22.22.0"
 ruby = "3.4.9"
 python = "3.13.14"
+rust = "latest"
 
 # Non-project-sensitive CLIs not available via brew. Project-sensitive tooling
 # (ruby-lsp, rubocop, sorbet, prettier, typescript, ...) is intentionally NOT
