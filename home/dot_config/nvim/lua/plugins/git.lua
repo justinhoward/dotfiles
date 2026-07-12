@@ -64,8 +64,9 @@ return {
       end,
     },
   },
+  { 'rickhowe/diffchar.vim' },
   {
-    'sindrets/diffview.nvim',
+    'dlyongemallo/diffview.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
     -- Changeset-level review surface. gitsigns handles per-hunk review inside a single
     -- buffer; diffview shows the whole diff at once with a file panel — the piece that was
@@ -73,9 +74,20 @@ return {
     -- agent changed, jump into any file to refine it with LSP, then stage with the gitsigns
     -- maps above. `:DiffviewOpen` alone shows uncommitted changes; pass a range (e.g.
     -- `:DiffviewOpen main...HEAD` or `HEAD~2`) to review committed work.
-    cmd = { 'DiffviewOpen', 'DiffviewClose', 'DiffviewFileHistory', 'DiffviewToggleFiles' },
+    cmd = {
+      'DiffviewOpen',
+      'DiffviewToggle',
+      'DiffviewClose',
+      'DiffviewFileHistory',
+      'DiffViewLog',
+      'DiffviewDiffFiles',
+      'DiffviewToggleFiles',
+      'DiffviewMergeFiles',
+      'DiffviewFocusFiles',
+      'DiffviewRefresh',
+    },
     keys = {
-      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Diff view (uncommitted changes)' },
+      { '<leader>gd', '<cmd>DiffviewToggle<cr>', desc = 'Diff view toggle' },
       { '<leader>gc', '<cmd>DiffviewClose<cr>', desc = 'Close diff view' },
       { '<leader>gl', '<cmd>DiffviewFileHistory %<cr>', desc = 'File history (current file)' },
       { '<leader>gL', '<cmd>DiffviewFileHistory<cr>', desc = 'File history (repo)' },
