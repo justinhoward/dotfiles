@@ -16,7 +16,7 @@ python = "3.13.14"
 
 [settings]
 # Read .ruby-version and .terraform-version files
-idiomatic_version_file_enable_tools = ["terraform", "ruby"]
+idiomatic_version_file_enable_tools = ["terraform", "ruby", "node"]
 # Only install manually with `mise install`
 not_found_auto_install = false
 
