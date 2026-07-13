@@ -42,6 +42,15 @@ return {
     'folke/which-key.nvim',
     event = 'VeryLazy',
     opts = {
+      -- which-key's `<auto>` triggers refuse single lowercase-letter prefixes
+      -- except `g`/`z` (see is_safe in which-key/buf.lua), so mini.surround's
+      -- `s` prefix never pops up on its own. Register `s` as a manual trigger
+      -- (manual triggers skip that single-letter guard) to force the menu.
+      triggers = {
+        { '<auto>', mode = 'nxso' },
+        { 's', mode = 'n' },
+        { 's', mode = 'x' },
+      },
       spec = {
         { '<leader>c', group = 'quickfix' },
         { '<leader>d', group = 'debug' },
