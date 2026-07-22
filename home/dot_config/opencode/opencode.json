@@ -92,6 +92,20 @@
     },
   },
   "disabled_providers": ["opencode"],
+  "agent": {
+    "explore": {
+      "model": "github-copilot/gpt-5.4-mini"
+    },
+    "scout": {
+      "model": "github-copilot/claude-haiku-4.5"
+    },
+    "title": {
+      "model": "github-copilot/gpt-5.4-mini"
+    },
+    "summary": {
+      "model": "github-copilot/gpt-5.4-mini"
+    }
+  },
   "mcp": {
     "atlassian": {
       "type": "remote",
