@@ -1,6 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["@rama_nigg/open-cursor@latest"],
+  "plugin": [
+    "@rama_nigg/open-cursor@latest",
+    "@fencesandbox/opencode-fence"
+  ],
   "lsp": true,
   "permission": {
     "edit": "allow",
@@ -89,7 +92,7 @@
         "region": "us-east-1",
         "profile": "psai"
       }
-    },
+    }
   },
   "disabled_providers": ["opencode"],
   "agent": {

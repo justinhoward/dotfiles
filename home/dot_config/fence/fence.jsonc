@@ -1,0 +1,124 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fencesandbox/fence/main/docs/schema/fence.schema.json",
+
+  // General-purpose Fence policy — machine-wide baseline for every project.
+  //
+  // Built on the `code` template, which already supplies 39 allowed domains,
+  // 13 credential denyRead globs, 26 allowWrite paths (including "." and
+  // "/tmp"), 35 command denies, `useDefaults: true`, allowLocalBinding, and
+  // allowLocalOutbound. Inspect it with: fence config show --template code
+  //
+  // Everything here is either an addition to, or a gap-fill for, that template.
+  // Project configs should use `"extends": "@base"` to layer on top of this.
+  // Slice fields (domains, paths, commands) are appended and deduplicated.
+  "extends": "code",
+
+  "network": {
+    "allowedDomains": [
+      // GAP-FILL: the `code` template has no rubygems domain at all, so
+      // Bundler fails without this in any Ruby project.
+      "rubygems.org",
+      "*.rubygems.org",
+
+      // Private/paid registries. Safe to keep here because this dotfiles
+      // repo is private; move them to a repo-local config if that changes.
+      "gems.contribsys.com",
+      "npm.pkg.github.com",
+      "npm.fontawesome.com",
+
+      // CI + observability CLIs
+      "circleci.com",
+      "api.circleci.com",
+      "api.datadoghq.com"
+    ],
+
+    // Needed so git can authenticate via ssh-agent, because the `code`
+    // template denies reading ~/.ssh/id_*. The narrower `allowUnixSockets`
+    // is not usable: it does not support globs, and SSH_AUTH_SOCK is a
+    // per-boot random path (/var/run/com.apple.launchd.*/Listeners), so no
+    // literal path can be committed.
+    //
+    // TRADEOFF: permits every Unix socket, including the Docker daemon
+    // socket. Acceptable for an accident-prevention posture; not appropriate
+    // if you are defending against a deliberately hostile process.
+    "allowAllUnixSockets": true
+  },
+
+  // Fence's SSH policy is allowlist-mode with an empty default list, which
+  // makes git-over-SSH hang for the full timeout. Allowlisting the host plus
+  // the two pack commands makes fetch/clone work; `git push` stays blocked by
+  // the inherited command.deny. Verified: ls-remote returns 1100+ refs.
+  "ssh": {
+    "allowedHosts": ["github.com"],
+    "allowedCommands": ["git-upload-pack", "git-receive-pack"]
+  },
+
+  "command": {
+    // Additions only. The template already denies git push/reset/clean/
+    // rebase/merge, sudo, the gh write-surface, and every *publish* command.
+    "deny": [
+      // Local infra changes are almost always accidental.
+      "terraform apply",
+      "terraform destroy",
+      "git branch -D",
+
+      // -v wipes database/search volumes.
+      "docker compose down -v",
+      "docker-compose down -v",
+
+      // Rails DB destruction. Inert in non-Rails projects.
+      //
+      // Fence does not descend into exec-wrappers, so `bundle exec rails
+      // db:drop` is NOT matched by a `rails db:drop` rule. Each realistic
+      // invocation form must be enumerated — any new destructive rake task
+      // needs all three prefixes.
+      "rails db:drop",
+      "bin/rails db:drop",
+      "bundle exec rails db:drop",
+      "rake db:drop",
+      "bin/rake db:drop",
+      "bundle exec rake db:drop",
+      "rails db:reset",
+      "bin/rails db:reset",
+      "bundle exec rails db:reset",
+      "rake db:reset",
+      "bin/rake db:reset",
+      "bundle exec rake db:reset"
+    ]
+  },
+
+  "filesystem": {
+    // "." and "/tmp" are deliberately omitted — the `code` template already
+    // grants both. These are package-manager caches it does not cover.
+    "allowWrite": [
+      "~/.bundle",
+      "~/.npm"
+    ],
+
+    // The template covers ~/.ssh/id_*, ~/.aws/**, ~/.docker/**, ~/.gnupg/**,
+    // ~/.kube/**, ~/.netrc, ~/.git-credentials, ~/.cargo/credentials*, and
+    // ~/.pypirc. ~/.npmrc is the one credential file it misses.
+    //
+    // NOTE: repo-level .npmrc is deliberately NOT denied here. Doing so would
+    // break `npm install` in every project that has one (7 files across 6
+    // repos on this machine). Deny it per-project where the tradeoff is wanted.
+    "denyRead": [
+      "~/.npmrc"
+    ],
+
+    // Keep a shell command from clobbering the policy that governs it.
+    //
+    // The bare filenames only match cwd-relative paths — verified: appending to
+    // ./fence.jsonc is blocked, but `cp` to ~/.config/fence/fence.jsonc
+    // succeeded until the absolute globs below were added. chezmoi runs outside
+    // the sandbox, so `chezmoi apply` is unaffected.
+    //
+    // NOTE: not a lock — opencode's write/edit tools bypass Fence entirely.
+    "denyWrite": [
+      "fence.jsonc",
+      "fence.json",
+      "~/.config/fence/**",
+      "~/.dotfiles/home/dot_config/fence/**"
+    ]
+  }
+}
