@@ -117,8 +117,9 @@
     "denyWrite": [
       "fence.jsonc",
       "fence.json",
-      "~/.config/fence/**",
-      "~/.dotfiles/home/dot_config/fence/**"
+      // Do not allow agents to change config directory. They can change dotfiles
+      // in this repo, but cannot apply them.
+      "~/.config/**"
     ]
   }
 }
