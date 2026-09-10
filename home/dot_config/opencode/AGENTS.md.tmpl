@@ -1,0 +1,8 @@
+# Global agent instructions
+{{ if eq .chezmoi.os "darwin" }}
+## Shell environment
+
+Despite `darwin`, GNU coreutils shadow the BSD defaults in `PATH` (Homebrew
+`gnubin`). Assume GNU syntax for `sed`, `grep`, `tar`, `find`, `date`, etc.
+Notably: `sed -i 's/…/…/' file` (bare `-i`); the BSD `sed -i '' …` is wrong.
+{{ end -}}

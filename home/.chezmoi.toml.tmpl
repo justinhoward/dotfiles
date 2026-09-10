@@ -1,6 +1,7 @@
 {{- $name := promptStringOnce . "name" "Full name for git" -}}
 {{- $email := promptStringOnce . "email" "Git email" -}}
 {{- $signingkey := promptStringOnce . "signingkey" "Git commit signing key (GPG key id; blank for none)" -}}
+{{- $psqrMcpUrl := promptStringOnce . "psqrMcpUrl" "ParentSquare MCP gateway URL (blank to disable)" "" -}}
 
 # Source directory. This repo is cloned to ~/.dotfiles (see README) and uses a
 # .chezmoiroot of `home`. Emitted here so regenerating the config always restores
@@ -16,3 +17,4 @@ sourceDir = {{ (joinPath .chezmoi.homeDir ".dotfiles") | quote }}
     name = {{ $name | quote }}
     email = {{ $email | quote }}
     signingkey = {{ $signingkey | quote }}
+    psqrMcpUrl = {{ $psqrMcpUrl | quote }}

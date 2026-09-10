@@ -7,13 +7,15 @@
   "permission": {
     "edit": "allow",
     "external_directory": {
-      "*": "ask"
+      "*": "ask",
+      "/tmp": "allow"
     },
     "webfetch": "allow",
     "websearch": "allow",
     "bash": {
       "*": "ask",
-      "fence": "allow"
+      "fence *": "allow",
+      "/opt/homebrew/bin/fence *": "allow"
       // "ls": "allow",
       // "ls *": "allow",
       // "pwd": "allow",
@@ -119,6 +121,11 @@
       "type": "local",
       "command": ["/opt/homebrew/bin/circleci", "mcp", "start"],
       "enabled": true
-    }
+    }{{ if .psqrMcpUrl }},
+    "psqr": {
+      "type": "remote",
+      "url": {{ .psqrMcpUrl | quote }},
+      "enabled": true
+    }{{ end }}
   }
 }
