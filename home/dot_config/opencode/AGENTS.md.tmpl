@@ -5,4 +5,29 @@
 Despite `darwin`, GNU coreutils shadow the BSD defaults in `PATH` (Homebrew
 `gnubin`). Assume GNU syntax for `sed`, `grep`, `tar`, `find`, `date`, etc.
 Notably: `sed -i 's/…/…/' file` (bare `-i`); the BSD `sed -i '' …` is wrong.
-{{ end -}}
+{{ end }}
+## Sandbox (Fence)
+
+Every bash command runs inside a Fence sandbox. It is policy, not a bug:
+
+- "blocked by sandbox command policy" means the command is denied. Do not
+  work around it (wrappers, `sh -c`, alternate syntax, invoking `fence`
+  yourself); use the tools below or ask the user.
+- Network is limited to an allowlist; other hosts fail to connect.
+- Writes are limited to the project, `/tmp`, and package caches;
+  `~/.config` is read-only.
+  Credentials (`~/.ssh` keys, `~/.gnupg`, `~/.aws`, ...) are unreadable.
+
+Git and GitHub, where bash is blocked:
+
+- Commit: `git_commit` tool. Commits are GPG-signed and the sandbox cannot
+  reach the key. Stage with `git add` in bash first.
+- Push: `git_push` tool (current branch only). After amending or rebasing
+  pushed commits, use `force: true`; it refuses to drop remote commits you
+  have not fetched and integrated.
+- GitHub API (PRs, review comments, issues, CI): `github_*` MCP tools, not
+  `gh api` or gh write commands.
+- `reset`, `rebase`, `merge`, `clean`, `checkout --`, and `branch -D` are
+  blocked with no alternative; ask the user. Read-only git, `add`, `fetch`,
+  and creating/switching branches work in bash as usual.
+

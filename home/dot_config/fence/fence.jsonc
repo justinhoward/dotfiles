@@ -62,6 +62,11 @@
       "terraform destroy",
       "git branch -D",
 
+      // Commits are GPG-signed and this sandbox denies ~/.gnupg, so a bash
+      // `git commit` would only fail at signing time. Denying it up front
+      // points the agent at OpenCode's git_commit tool instead.
+      "git commit",
+
       // -v wipes database/search volumes.
       "docker compose down -v",
       "docker-compose down -v",

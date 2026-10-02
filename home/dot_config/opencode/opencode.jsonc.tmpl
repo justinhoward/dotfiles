@@ -8,7 +8,8 @@
     "edit": "allow",
     "external_directory": {
       "*": "ask",
-      "/tmp": "allow"
+      "/tmp": "allow",
+      "/var/folders/qh": "allow" // temp dirs on mac
     },
     "webfetch": "allow",
     "websearch": "allow",
@@ -16,71 +17,90 @@
       "*": "ask",
       "fence *": "allow",
       "/opt/homebrew/bin/fence *": "allow"
-      // "ls": "allow",
-      // "ls *": "allow",
-      // "pwd": "allow",
-      // "cat *": "allow",
-      // "head *": "allow",
-      // "tail *": "allow",
-      // "echo *": "allow",
-      // "which *": "allow",
-      // "wc *": "allow",
-      // "tree": "allow",
-      // "tree *": "allow",
-      // "rg *": "allow",
-      // "grep *": "allow",
-      // "find *": "allow",
-      // "fd *": "allow",
-      // "git status": "allow",
-      // "git status *": "allow",
-      // "git diff": "allow",
-      // "git diff *": "allow",
-      // "git log": "allow",
-      // "git log *": "allow",
-      // "git show *": "allow",
-      // "git branch": "allow",
-      // "git branch *": "allow",
-      // "git remote": "allow",
-      // "git remote *": "allow",
-      // "git blame *": "allow",
-      // "git stash list": "allow",
-      // "git rev-parse *": "allow",
-      // "git ls-files": "allow",
-      // "git ls-files *": "allow",
-      // "git fetch": "allow",
-      // "git fetch *": "allow",
-      // "sudo": "deny",
-      // "sudo *": "deny",
-      // "rm -rf *": "deny",
-      // "git push --force*": "deny",
-      // "git reset --hard*": "deny"
     },
-    "atlassian_*": "allow",
-    "atlassian_add*": "ask",
-    "atlassian_create*": "ask",
-    "atlassian_edit*": "ask",
-    "atlassian_update*": "ask",
-    "atlassian_transition*": "ask",
-    "circleci_*_list": "allow",
-    "circleci_*list-categories": "allow",
-    "circleci_*_get": "allow",
-    "circleci_*_validate": "allow",
-    "circleci_*_process": "allow",
-    "circleci_*_pack": "allow",
-    "circleci_*_source": "allow",
-    "circleci_*_diff": "allow",
-    "circleci_*_fetch": "allow",
-    "circleci_*_logs": "allow",
-    "circleci_*_decide": "allow",
-    "circleci_*_me": "allow",
-    "circleci_*_id": "allow",
-    "circleci_*_runs": "allow",
-    "circleci_*_version": "allow",
-    "circleci_*artifact": "allow",
-    "circleci_*_task": "allow",
-    "circleci_*_output": "allow",
-    "circleci_*_output_get": "allow",
-    "circleci_*_output_list": "allow"
+    // OpenCode's built-in default is "*": "allow", so MCP tools a rule does
+    // not mention run without asking. A "deny" also removes the tool from
+    // what the model is sent, so for MCP servers without a server-side tool
+    // filter, deny everything and re-enable what's needed. Tools a server
+    // adds later stay hidden until listed here.
+
+    // Atlassian: Jira issues only. Confluence, Rovo search (spends Rovo
+    // credits; JQL search covers Jira) and ARI fetch are removed.
+    "atlassian_*": "deny",
+    "atlassian_getAccessibleAtlassianResources": "allow", // cloudId for every call
+    "atlassian_atlassianUserInfo": "allow",
+    "atlassian_getJiraIssue": "allow",
+    "atlassian_searchJiraIssuesUsingJql": "allow",
+    "atlassian_getTransitionsForJiraIssue": "allow",
+    "atlassian_getIssueLinkTypes": "allow",
+    "atlassian_getJiraIssueRemoteIssueLinks": "allow",
+    "atlassian_getVisibleJiraProjects": "allow",
+    "atlassian_getJiraProjectIssueTypesMetadata": "allow",
+    "atlassian_getJiraIssueTypeMetaWithFields": "allow",
+    "atlassian_lookupJiraAccountId": "allow",
+    "atlassian_createJiraIssue": "ask",
+    "atlassian_editJiraIssue": "ask",
+    "atlassian_addCommentToJiraIssue": "ask",
+    "atlassian_createIssueLink": "ask",
+    "atlassian_transitionJiraIssue": "ask",
+    "atlassian_addWorklogToJiraIssue": "ask",
+
+    // CircleCI: the CLI's MCP exposes the whole CLI (~160 tools, including
+    // contexts, secrets, orbs, runners, deploys and raw API access). Keep CI
+    // debugging and config checks.
+    "circleci_*": "deny",
+    "circleci_circleci_run_list": "allow",
+    "circleci_circleci_run_get": "allow",
+    "circleci_circleci_run_watch": "allow",
+    "circleci_circleci_my_runs": "allow",
+    "circleci_circleci_workflow_list": "allow",
+    "circleci_circleci_workflow_get": "allow",
+    "circleci_circleci_job_get": "allow",
+    "circleci_circleci_job_output_get": "allow",
+    "circleci_circleci_job_output_list": "allow",
+    "circleci_circleci_testresult_list": "allow",
+    "circleci_circleci_testresult_get": "allow",
+    "circleci_circleci_config_validate": "allow",
+    "circleci_circleci_config_process": "allow",
+    // Ask: --output writes downloaded files anywhere, outside Fence.
+    "circleci_circleci_job_artifact": "ask",
+    "circleci_circleci_workflow_rerun": "ask",
+    "circleci_circleci_workflow_cancel": "ask",
+
+    // GitHub MCP: the approval-gated path for GitHub API work, since Fence
+    // denies `gh api` and the gh write-surface in bash outright (Fence has no
+    // "ask" verdict). Rules are last-match-wins: default every tool to ask,
+    // then allow the read-only ones. Tools we never want (destructive, issues,
+    // releases, org/team/collaborator admin reads) are removed server-side via
+    // --exclude-tools in the mcp block below, which also saves context.
+    "github_*": "ask",
+    "github_get_*": "allow",
+    "github_list_*": "allow",
+    "github_search_*": "allow",
+    "github_pull_request_read": "allow", // includes inline review threads
+    "github_actions_list": "allow",
+    // One tool covering run details plus billable usage and signed
+    // artifact/log download URLs. Approval is per tool, not per method;
+    // actions_list, get_job_logs and pull_request_read (get_check_runs)
+    // still cover CI debugging without prompting.
+    "github_actions_get": "ask",
+
+    // Custom tools (tools/git.ts), running outside Fence. `git push` and
+    // `git commit` stay denied in bash by Fence.
+    //   - git_push: current branch to origin, never the default branch.
+    //     Force pushes (force: true, after amend/rebase) use
+    //     --force-with-lease and --force-if-includes and ask with pattern
+    //     "force:<branch>", so approving a branch's normal pushes for the
+    //     session does not also approve forcing it.
+    //   - git_commit: signs staged changes with the GPG key Fence hides from
+    //     bash. The tool asks with pattern "new" or "amend", so new commits
+    //     go through and amends prompt. Amending a commit already on another
+    //     remote branch (e.g. origin/main) is refused.
+    "git_push": "ask",
+    "git_commit": {
+      "*": "allow",
+      "amend": "ask"
+    }
   },
   "provider": {
     "github-copilot": {
@@ -98,11 +118,31 @@
   },
   "disabled_providers": ["opencode"],
   "agent": {
+    // Read-only subagents don't need GitHub, CircleCI, Jira, the git write
+    // tools, or file edits. Their built-in permissions start with
+    // "*": "deny", but the global rules above are appended after it and
+    // re-enable those tools (e.g. "edit": "allow" covers edit, write and
+    // apply_patch); denying again here removes them from these agents'
+    // requests.
     "explore": {
-      "model": "github-copilot/gpt-5.4-mini"
+      "model": "github-copilot/gpt-5.4-mini",
+      "permission": {
+        "github_*": "deny",
+        "circleci_*": "deny",
+        "git_*": "deny",
+        "atlassian_*": "deny",
+        "edit": "deny"
+      }
     },
     "scout": {
-      "model": "github-copilot/claude-haiku-4.5"
+      "model": "github-copilot/claude-haiku-4.5",
+      "permission": {
+        "github_*": "deny",
+        "circleci_*": "deny",
+        "git_*": "deny",
+        "atlassian_*": "deny",
+        "edit": "deny"
+      }
     },
     "title": {
       "model": "github-copilot/gpt-5.4-mini"
@@ -120,6 +160,23 @@
     "circleci": {
       "type": "local",
       "command": ["/opt/homebrew/bin/circleci", "mcp", "start"],
+      "enabled": true
+    },
+    // Runs in opencode's process, outside Fence, so OpenCode permissions are
+    // the only gate. Token: GITHUB_MCP_TOKEN (e.g. a fine-grained PAT scoped
+    // to specific repos) if set, else the gh CLI's token. The gh token is
+    // already readable from fenced bash, so this doesn't widen exposure.
+    //
+    // Tool definitions are sent with every request, so the set is trimmed
+    // (~28k -> ~17k tokens). No issues toolset (we don't use GitHub issues),
+    // but --tools adds back the two issue-comment tools, which are how
+    // top-level PR comments work in GitHub's API.
+    "github": {
+      "type": "local",
+      "command": [
+        "/bin/sh", "-c",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=\"${GITHUB_MCP_TOKEN:-$(/opt/homebrew/bin/gh auth token)}\" exec /opt/homebrew/bin/github-mcp-server stdio --toolsets=context,repos,pull_requests,actions --tools=add_issue_comment,update_issue_comment --exclude-tools=merge_pull_request,push_files,create_or_update_file,delete_file,create_repository,fork_repository,list_releases,get_release_by_tag,get_latest_release,list_tags,get_tag,get_teams,get_team_members,list_repository_collaborators,search_repositories"
+      ],
       "enabled": true
     }{{ if .psqrMcpUrl }},
     "psqr": {
