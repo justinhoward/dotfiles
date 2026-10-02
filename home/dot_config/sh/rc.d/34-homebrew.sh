@@ -3,6 +3,16 @@
 # brew is present (macOS or Linuxbrew).
 command -v brew >/dev/null 2>&1 || return
 
+if [ "${HOMEBREW_PREFIX-}" = /opt/homebrew ]; then
+  # Wrap the brew command to set a basic PATH
+  # This ensures that it runs in a clean build environment without things like
+  # gnu coreutils.
+  brew() {
+    PATH="$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin" \
+      command "$HOMEBREW_PREFIX/bin/brew" "$@"
+  }
+fi
+
 alias brewc='brew cleanup'
 alias brewi='brew install'
 alias brewL='brew leaves'
