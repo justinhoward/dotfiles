@@ -8,7 +8,8 @@ Notably: `sed -i 's/…/…/' file` (bare `-i`); the BSD `sed -i '' …` is wron
 {{ end }}
 ## Sandbox (Fence)
 
-Every bash command runs inside a Fence sandbox. It is policy, not a bug:
+Every bash command already runs inside a Fence sandbox; never add a `fence`
+prefix yourself. The sandbox is policy, not a bug:
 
 - "blocked by sandbox command policy" means the command is denied. Do not
   work around it (wrappers, `sh -c`, alternate syntax, invoking `fence`
