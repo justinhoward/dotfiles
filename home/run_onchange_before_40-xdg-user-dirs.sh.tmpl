@@ -1,6 +1,7 @@
 {{- if eq .chezmoi.os "linux" -}}
 #!/bin/sh
-# Ensure the configured dirs exist on every apply, before installing the config.
+# Create configured dirs on first apply and when this script or its config changes,
+# before installing the config.
 # Otherwise xdg-user-dirs-update can reset missing dirs to $HOME on login.
 set -eu
 
