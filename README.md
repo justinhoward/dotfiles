@@ -49,6 +49,11 @@ Everything chezmoi manages lives under `home/`:
 OS-specific files are guarded in `home/.chezmoiignore` — macOS-only (yabai, skhd,
 swiftbar, finicky) and Linux-only (systemd user units, XDG user-dirs).
 
+Linux desktops and headless servers share a lowercase user-directory layout
+(`~/desktop`, `~/docs`, `~/downloads`, …), created during apply. See
+[runbooks/linux-xdg-user-dirs.md](runbooks/linux-xdg-user-dirs.md) for migration
+from the default capitalized folders.
+
 ## Per-machine customization
 
 - **Prompted data** (git identity, signing key) is captured by `chezmoi init` and

@@ -1,8 +1,9 @@
-# XDG user directories — custom lowercase layout (Desktop = $HOME). Managed by
-# chezmoi; edit in the dotfiles repo, not here. `xdg-user-dirs-update` reads this
-# on login and only creates missing dirs — it won't move files already in the
-# capitalized defaults, so relocate those by hand if you switch a live machine.
-XDG_DESKTOP_DIR="$HOME/"
+# XDG user directories — shared lowercase layout for Linux desktops and servers.
+# Managed by chezmoi; edit in the dotfiles repo, not here. The setup script creates
+# these dirs before applying this file: `xdg-user-dirs-update` resets missing
+# configured dirs to $HOME on login. Existing files in the capitalized defaults
+# must be relocated by hand; see runbooks/linux-xdg-user-dirs.md in the repo.
+XDG_DESKTOP_DIR="$HOME/desktop/"
 XDG_DOCUMENTS_DIR="$HOME/docs/"
 XDG_DOWNLOAD_DIR="$HOME/downloads/"
 XDG_MUSIC_DIR="$HOME/music/"
