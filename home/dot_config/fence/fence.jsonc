@@ -54,8 +54,10 @@
   },
 
   "command": {
-    // Additions only. The template already denies git push/reset/clean/
+    // The template already denies git push/reset/clean/
     // rebase/merge, sudo, the gh write-surface, and every *publish* command.
+    // Allow rebasing and merging as exceptions to the inherited deny rules.
+    "allow": ["git rebase", "git merge"],
     "deny": [
       // Local infra changes are almost always accidental.
       "terraform apply",

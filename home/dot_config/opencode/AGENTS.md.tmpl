@@ -28,7 +28,6 @@ Git and GitHub, where bash is blocked:
   have not fetched and integrated.
 - GitHub API (PRs, review comments, issues, CI): `github_*` MCP tools, not
   `gh api` or gh write commands.
-- `reset`, `rebase`, `merge`, `clean`, `checkout --`, and `branch -D` are
+- `reset`, `clean`, `checkout --`, and `branch -D` are
   blocked with no alternative; ask the user. Read-only git, `add`, `fetch`,
-  and creating/switching branches work in bash as usual.
-
+  `rebase`, `merge`, and creating/switching branches work in bash as usual.
