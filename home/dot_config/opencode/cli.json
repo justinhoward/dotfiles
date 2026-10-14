@@ -1,0 +1,20 @@
+{
+  "$schema": "https://opencode.ai/v2/cli.json",
+  "theme": {
+    "name": "system"
+  },
+  "diffs": {
+    "wrap": "word"
+  },
+  "session": {
+    "sidebar": "hide",
+    "scrollbar": true,
+    "thinking": "show"
+  },
+  "animations": true,
+  "keybinds": {
+    "app.exit": "ctrl+d,<leader>q",
+    "input.submit": "ctrl+s,ctrl+return",
+    "input.newline": "return,shift+return,alt+return,ctrl+j"
+  }
+}

@@ -8,3 +8,13 @@
 .config/nvim/init.vim
 .config/nvim/plugin
 .config/nvim/ftdetect
+
+# OpenCode V1 -> V2 migration. The skill moved to skills/ (V2's preferred
+# location; the old skill/ would otherwise be discovered too and double-register
+# the review-board skill), the git tool became plugins/git.ts (the old
+# tools/git.ts uses the V1 plugin API and won't run on V2), and tui.jsonc was
+# replaced by cli.json. chezmoi doesn't delete files that leave the source tree,
+# so list the stale target paths here. Safe to drop once every machine applied.
+.config/opencode/skill
+.config/opencode/tools
+.config/opencode/tui.jsonc
