@@ -2,7 +2,7 @@ import { Plugin } from "@opencode/plugin"
 import { spawnSync } from "node:child_process"
 
 /**
- * Fence sandbox integration for the bash tool, plus history cleanup.
+ * Fence sandbox integration for the V2 shell tool, plus history cleanup.
  *
  * This replaces the `@fencesandbox/opencode-fence` package, which only ships a
  * V1-plugin build (peer `@opencode-ai/plugin`) and so fails to load on V2 with
@@ -14,13 +14,13 @@ import { spawnSync } from "node:child_process"
  *
  * Two halves, both keyed off the same `fence -c '...'` wrapper:
  *
- *  1. wrap (tool.execute.before): route each `bash` command through
+ *  1. wrap (tool.execute.before): route each `shell` command through
  *     `fence --opencode-pre-tool-use`. Fence may deny it (the command is
  *     blocked), wrap it (rewrite to run inside `fence -c "..."`, inheriting
  *     Fence's filesystem/network policy), or allow it unchanged.
  *
  *  2. unwrap (session request hooks): hide that wrapper from the model's view
- *     of its own bash history, so it does not learn to copy `fence -c '...'`
+ *     of its own shell history, so it does not learn to copy `fence -c '...'`
  *     into new commands. Edits the outgoing request only; the command still
  *     runs wrapped.
  */
@@ -119,7 +119,7 @@ function runFence(request: FenceRequest): FenceDecision {
 }
 
 // ---------------------------------------------------------------------------
-// Unwrap helpers (hide the fence wrapper from the model's bash history).
+// Unwrap helpers (hide the fence wrapper from the model's shell history).
 // ---------------------------------------------------------------------------
 
 const WRAPPED = /^(?:\S*\/)?fence -c ('[\s\S]*)$/
@@ -143,23 +143,24 @@ const unwrap = (command: string): string | undefined => {
   return m ? decode(m[1]) : undefined
 }
 
-// Request kinds whose outgoing messages should be unwrapped. The bash tool
+// Request kinds whose outgoing messages should be unwrapped. The shell tool
 // history appears in each one, so register the same transform on all of them.
 const KINDS = ["context", "compaction", "generate", "title"] as const
 
 export default Plugin.define({
   id: "fence",
   async setup(ctx) {
-    // 1. Wrap each bash command through Fence before it runs.
+    // 1. Wrap each shell command through Fence before it runs.
     await ctx.tool.hook("execute.before", (event) => {
-      if (event.tool !== "bash") return
-      const args = event.input as { command?: unknown; cwd?: unknown }
+      if (event.tool !== "shell") return
+      const args = event.input as { command?: unknown; workdir?: unknown }
       const command = typeof args.command === "string" ? args.command : ""
       if (command.trim() === "") return
-      const cwd = typeof args.cwd === "string" ? args.cwd : undefined
+      const cwd = typeof args.workdir === "string" ? args.workdir : undefined
 
       const result = runFence({
         hook_event_name: "PreToolUse",
+        // Fence's helper still uses the Claude-shaped "Bash" protocol name.
         tool_name: "Bash",
         tool_input: cwd === undefined ? { command } : { command, cwd },
       })
@@ -175,13 +176,13 @@ export default Plugin.define({
       // "allow" (or suppressed wrap): leave args.command alone.
     })
 
-    // 2. Unwrap the fence wrapper from the model's view of its bash history.
+    // 2. Unwrap the fence wrapper from the model's view of its shell history.
     for (const kind of KINDS) {
       await ctx.session.hook(kind, (event) => {
         for (const message of event.messages) {
           if (!Array.isArray(message.content)) continue
           for (const part of message.content as Array<Record<string, unknown>>) {
-            if (part.type !== "tool-call" || part.name !== "bash") continue
+            if (part.type !== "tool-call" || part.name !== "shell") continue
             const input = part.input as { command?: unknown } | undefined
             if (typeof input?.command !== "string") continue
             const inner = unwrap(input.command)
