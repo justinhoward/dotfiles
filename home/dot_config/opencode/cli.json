@@ -16,5 +16,14 @@
     "app.exit": "ctrl+d,<leader>q",
     "input.submit": "ctrl+s,ctrl+return",
     "input.newline": "return,shift+return,alt+return,ctrl+j"
+  },
+  "tabs": {
+    "mode": "off"
+  },
+  "prompt": {
+    "image_preview": true
+  },
+  "terminal": {
+    "copy": "manual"
   }
 }
