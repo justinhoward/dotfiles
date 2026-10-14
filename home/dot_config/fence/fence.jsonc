@@ -69,6 +69,9 @@
       // points the agent at OpenCode's git_commit tool instead.
       "git commit",
 
+      // Deny keychain access
+      "security",
+
       // -v wipes database/search volumes.
       "docker compose down -v",
       "docker-compose down -v",

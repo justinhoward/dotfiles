@@ -55,6 +55,31 @@
     { "action": "atlassian_transitionJiraIssue", "resource": "*", "effect": "ask" },
     { "action": "atlassian_addWorklogToJiraIssue", "resource": "*", "effect": "ask" },
 
+    // Community Slack MCP acts as the signed-in user, outside Fence. Default
+    // deny, then approval-gate the explicit read + messaging toolset. Keep in
+    // sync with SLACK_MCP_ENABLED_TOOLS below. New tools stay denied.
+    { "action": "slack_*", "resource": "*", "effect": "deny" },
+    { "action": "slack_conversations_history", "resource": "*", "effect": "ask" },
+    { "action": "slack_conversations_replies", "resource": "*", "effect": "ask" },
+    { "action": "slack_conversations_search_messages", "resource": "*", "effect": "ask" },
+    { "action": "slack_conversations_unreads", "resource": "*", "effect": "ask" },
+    { "action": "slack_channels_list", "resource": "*", "effect": "ask" },
+    { "action": "slack_channels_me", "resource": "*", "effect": "ask" },
+    { "action": "slack_users_search", "resource": "*", "effect": "ask" },
+    { "action": "slack_usergroups_list", "resource": "*", "effect": "ask" },
+    { "action": "slack_attachment_get_data", "resource": "*", "effect": "ask" },
+    { "action": "slack_saved_list", "resource": "*", "effect": "ask" },
+    { "action": "slack_conversations_add_message", "resource": "*", "effect": "ask" },
+    { "action": "slack_reactions_add", "resource": "*", "effect": "ask" },
+    { "action": "slack_reactions_remove", "resource": "*", "effect": "ask" },
+
+    // Only the MCP launcher needs Keychain access. Do not permit the agent's
+    // shell to retrieve/dump generic-password entries (including Slack tokens).
+    { "action": "shell", "resource": "security find-generic-password *", "effect": "deny" },
+    { "action": "shell", "resource": "/usr/bin/security find-generic-password *", "effect": "deny" },
+    { "action": "shell", "resource": "security dump-keychain *", "effect": "deny" },
+    { "action": "shell", "resource": "/usr/bin/security dump-keychain *", "effect": "deny" },
+
     // CircleCI: the CLI's MCP exposes the whole CLI (~160 tools, including
     // contexts, secrets, orbs, runners, deploys and raw API access). Keep CI
     // debugging and config checks.
@@ -140,6 +165,7 @@
         { "action": "circleci_*", "resource": "*", "effect": "deny" },
         { "action": "git_*", "resource": "*", "effect": "deny" },
         { "action": "atlassian_*", "resource": "*", "effect": "deny" },
+        { "action": "slack_*", "resource": "*", "effect": "deny" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
     },
@@ -150,6 +176,7 @@
         { "action": "circleci_*", "resource": "*", "effect": "deny" },
         { "action": "git_*", "resource": "*", "effect": "deny" },
         { "action": "atlassian_*", "resource": "*", "effect": "deny" },
+        { "action": "slack_*", "resource": "*", "effect": "deny" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
     },
@@ -165,6 +192,19 @@
       "atlassian": {
         "type": "remote",
         "url": "https://mcp.atlassian.com/v1/mcp"
+      },
+      // macOS: browser-session tokens are read from Keychain by the launcher,
+      // not inherited by OpenCode or its shell tool. No secrets in this repo.
+      // Uses the Homebrew binary; see runbooks/opencode-slack-mcp.md for the catalog.
+      "slack": {
+        "type": "local",
+        "command": ["/bin/sh", "-c", "exec \"$HOME/.config/opencode/slack-mcp.sh\""],
+        // The server loads channel/user caches before accepting stdio requests.
+        "timeout": { "startup": 300000 },
+        "environment": {
+          "SLACK_MCP_ENABLED_TOOLS": "conversations_history,conversations_replies,conversations_search_messages,conversations_unreads,channels_list,channels_me,users_search,usergroups_list,attachment_get_data,saved_list,conversations_add_message,reactions_add,reactions_remove",
+          "SLACK_MCP_LOG_LEVEL": "warn"
+        }
       },
       "circleci": {
         "type": "local",
