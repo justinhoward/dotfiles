@@ -159,7 +159,7 @@
     // apply_patch); denying again here removes them from these agents'
     // requests.
     "explore": {
-      "model": "github-copilot/gpt-6-luna",
+      "model": "amazon-bedrock/us.openai.gpt-6.1-sol",
       "permissions": [
         { "action": "github_*", "resource": "*", "effect": "deny" },
         { "action": "circleci_*", "resource": "*", "effect": "deny" },
@@ -170,7 +170,9 @@
       ]
     },
     "scout": {
-      "model": "github-copilot/gemini-3.8-flash",
+      "mode": "all",
+      "description": "Quick, read-only codebase searches, file and symbol lookups, and concise summaries. Use explore for deeper investigation.",
+      "model": "amazon-bedrock/us.anthropic.claude-haiku-5-5#low",
       "permissions": [
         { "action": "github_*", "resource": "*", "effect": "deny" },
         { "action": "circleci_*", "resource": "*", "effect": "deny" },
@@ -181,10 +183,10 @@
       ]
     },
     "title": {
-      "model": "github-copilot/gpt-6-luna"
+      "model": "amazon-bedrock/us.openai.gpt-6.1-sol"
     },
     "summary": {
-      "model": "github-copilot/gpt-6-luna"
+      "model": "amazon-bedrock/us.openai.gpt-6.1-sol"
     }
   },
   "mcp": {
