@@ -46,9 +46,52 @@ test('every shell rule is inside the message/editor exclusion scope', () => {
 });
 
 test('native glyphs are not flattened by whole-control filters or image resets', () => {
-  assert.doesNotMatch(css, /(?:^|[;{])\s*(?:-webkit-)?filter\s*:/);
+  const filters = rules(css).filter(entry => /(?:^|;)\s*(?:-webkit-)?filter\s*:/.test(entry.body));
+  assert.deepEqual(filters.map(entry => entry.selectors), [
+    ':is(.aaZ, .HM, .I5) :is(.aaB, .aaC, .a1, .aA7, .eT, .eU, .J-Z-M-I-JG):not(:has(svg)), :is(.aaZ, .HM, .I5) .az2 .J-JN-M-I-JG',
+  ], 'Only the composer\'s legacy glyph layers may be filtered');
+  assert.match(filters[0].body, /filter:\s*brightness\(0\) invert\(1\)\s*!important/);
+  assert.match(filters[0].body, /mix-blend-mode:\s*difference\s*!important/);
   assert.doesNotMatch(rule('.T-I'), /background-image\s*:/);
   assert.doesNotMatch(rule('.G-atb .T-I, .G-atb .bzn, .G-atb .amJ'), /background-image\s*:/);
+});
+
+test('Compose shares Calendar Create sizing without resizing Send or other primary actions', () => {
+  const calendar = fs.readFileSync(new URL('../home/dot_config/stylus/calendar-terminal.user.css', import.meta.url), 'utf8');
+  const height = rule(':root', outside).match(/--terminal-compose-height:\s*([^;]+);/)[1];
+  assert.equal(height, calendar.match(/--terminal-create-height:\s*([^;]+);/)[1]);
+  const compose = rule('.aeN .z0 > .T-I.T-I-KE');
+  assert.match(compose, /height:\s*var\(--terminal-compose-height\)\s*!important/);
+  assert.match(compose, /min-height:\s*0\s*!important/);
+  assert.match(compose, /padding-block:\s*4px\s*!important/);
+  assert.match(compose, /line-height:\s*1\.25\s*!important/);
+  assert.match(compose, /box-sizing:\s*border-box\s*!important/);
+  assert.doesNotMatch(rule('.T-I.T-I-KE, .T-I.T-I-atl, .btA .Uo'), /(?:^|;)\s*(?:height|width|padding|line-height)\s*:/);
+});
+
+test('Compose fills the expanded sidebar with gutters while preserving collapsed width and native glyphs', () => {
+  const wrapper = rule('.aeN:not(.bhZ) .z0:has(> .T-I.T-I-KE)');
+  assert.match(wrapper, /padding-inline:\s*16px\s*!important/);
+  assert.match(wrapper, /box-sizing:\s*border-box\s*!important/);
+  const stretch = rule('.aeN:not(.bhZ) .z0 > .T-I.T-I-KE');
+  assert.match(stretch, /width:\s*100%\s*!important/);
+  assert.match(stretch, /min-width:\s*0\s*!important/);
+  assert.match(stretch, /margin-inline:\s*0\s*!important/);
+  assert.match(stretch, /padding-inline:\s*12px\s*!important/);
+  assert.match(rule('.aeN:not(.bhZ) .z0 > .T-I.T-I-KE::before'), /margin-inline:\s*0 8px\s*!important/);
+  for (const entry of rules(shell).filter(entry => entry.selectors.includes('.z0'))) {
+    assert.doesNotMatch(entry.body, /(?:^|;)\s*(?:display|visibility|position|z-index|pointer-events|transform|background(?:-image|-size)?|content)\s*:/);
+    if (/(?:^|;)\s*(?:width|min-width|padding-inline|margin-inline)\s*:/.test(entry.body)) {
+      assert.ok(entry.selectors.startsWith('.aeN:not(.bhZ)'), 'Do not stretch or reposition collapsed Compose');
+    }
+  }
+});
+
+test('Compose wrappers reclaim fixed FAB height without changing native vertical margins', () => {
+  const wrappers = rule('.aeN .aic:has(.z0 > .T-I.T-I-KE), .aeN .z0:has(> .T-I.T-I-KE)');
+  assert.match(wrappers, /height:\s*auto\s*!important/);
+  assert.match(wrappers, /min-height:\s*0\s*!important/);
+  assert.doesNotMatch(wrappers, /(?:^|;)\s*(?:margin[\w-]*|padding[\w-]*|width|position|display)\s*:/);
 });
 
 test('inbox separators paint at the row edge without adding cell borders', () => {
@@ -230,5 +273,41 @@ test('advanced-search surfaces and labels have paired colors without repositioni
   }
   const fixture = fs.readFileSync(new URL('fixtures/gmail-advanced-search.html', import.meta.url), 'utf8');
   for (const classes of ['ZF-Av', 'SK ZF-zT', 'ZZ', 'lJ', 'lN', 'w-Pw']) assert.ok(fixture.includes(`class="${classes}"`));
+  assert.doesNotMatch(fixture, /<script|<iframe|https?:|data-message-id=|jslog=|[\w.+-]+@[\w.-]+/i);
+});
+
+test('recipient and title fields keep native geometry instead of acquiring generic inset boxes', () => {
+  const fields = rule('.aoT, .aoD input, .aoD textarea, :is(.AD, .aaZ, .HM, .I5) :is(input, textarea)');
+  assert.match(fields, /background-color:\s*transparent\s*!important/);
+  assert.match(fields, /color:\s*var\(--terminal-fg\)\s*!important/);
+  assert.doesNotMatch(fields, /(?:^|;)\s*(?:border|padding|margin|height|width|outline|position|display)\s*:/);
+  const generic = rules(shell).find(entry => entry.selectors.startsWith(':is(input:not([type="checkbox"]'));
+  assert.ok(generic);
+  for (const owner of ['.AD', '.aaZ', '.HM', '.I5', '.aoD']) {
+    assert.ok(generic.selectors.includes(`${owner} *`), `Composer fields must be excluded: ${owner}`);
+  }
+});
+
+test('composer toolbar surfaces and states remain readable without changing controls or Send', () => {
+  const prefix = ':is(.aaZ, .HM, .I5)';
+  assert.match(rule(`${prefix} :is(.btC, .aZ .J-Z)`), /background-color:\s*var\(--terminal-surface\)\s*!important/);
+  assert.match(rule(`${prefix} :is(.J-Z-I, .J-Z-M-I, .wG, .az2)`), /color:\s*var\(--terminal-fg\)\s*!important/);
+  assert.match(rule(`${prefix} :is(.J-Z-I-KO, .J-Z-M-I-KO, .wG.e9, [aria-pressed="true"])`), /background-color:\s*var\(--terminal-selected\)\s*!important/);
+  assert.match(rule(`${prefix} :is(.J-Z-I-JE, .J-Z-M-I-JE, [aria-disabled="true"])`), /color:\s*var\(--terminal-disabled\)\s*!important/);
+  assert.match(rule(`${prefix} :is(.aDh, .btC, .aZ) svg.aoH`), /fill:\s*currentColor\s*!important/);
+  for (const entry of rules(shell).filter(entry => entry.selectors.startsWith(prefix))) {
+    assert.doesNotMatch(entry.body, /(?:^|;)\s*(?:height|width|padding|margin|position|display|visibility|background-image|background-size|opacity)\s*:/);
+    assert.doesNotMatch(entry.selectors, /\.T-I|\.Uo|\.Am|\.Ar|\.a3s|contenteditable/);
+  }
+});
+
+test('composer fixture covers external recipient fields, legacy/SVG glyphs, states and editor exclusions', () => {
+  const fixture = fs.readFileSync(new URL('fixtures/gmail-composer.html', import.meta.url), 'utf8');
+  for (const classes of ['AD', 'aaZ', 'bAs', 'vO', 'aaA aaB eN', 'aaA aaC eN', 'J-Z-I J-Z-I-KO', 'J-Z-I J-Z-I-JE', 'T-I T-I-atl', 'HM', 'I5']) {
+    assert.ok(fixture.includes(`class="${classes}"`), `Missing composer structure: ${classes}`);
+  }
+  assert.ok(fixture.includes('contenteditable="true"'));
+  assert.ok(fixture.includes('class="eK" style="background-color:#123456"'));
+  assert.ok(fixture.includes('<div class="a1"><svg class="aoH"'));
   assert.doesNotMatch(fixture, /<script|<iframe|https?:|data-message-id=|jslog=|[\w.+-]+@[\w.-]+/i);
 });

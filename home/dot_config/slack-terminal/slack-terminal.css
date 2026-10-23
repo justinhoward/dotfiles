@@ -1,4 +1,4 @@
-/* Slack / terminal, v1.1.1. Local CSS for the Slack-only DevTools watcher.
+/* Slack / terminal, v1.1.2. Local CSS for the Slack-only DevTools watcher.
    Sonokai dark / Everforest light, following system appearance. */
 :root {
   color-scheme: light dark !important;
@@ -335,6 +335,14 @@ pre, code { font-variant-ligatures: none !important; }
 
 .p-message_pane a:not(.c-button), .c-message_kit__text a {
   color: var(--terminal-blue) !important;
+}
+
+/* The split send button's dropdown uses Texty tokens, not sk_button_primary.
+   Theme both halves and their hover states without changing disabled styling. */
+.c-wysiwyg_container {
+  --TextyTheme-send-bg: var(--terminal-blue) !important;
+  --TextyTheme-send-bg-hover: var(--terminal-blue) !important;
+  --TextyTheme-send-fg: var(--terminal-on-accent) !important;
 }
 
 .c-button--primary:not(:disabled, [aria-disabled="true"]),

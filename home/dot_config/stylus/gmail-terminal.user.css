@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Gmail / terminal
 @namespace    github.com/justinhoward/dotfiles
-@version      1.0.6
+@version      1.0.8
 @description  Flat, square Gmail in Victor Mono. Sonokai dark / Everforest light.
 @license      MIT
 @preprocessor default
@@ -25,6 +25,7 @@
     --terminal-size: var(--fontSize, 13px);
     --terminal-header-height: 56px;
     --terminal-header-control-size: 40px;
+    --terminal-compose-height: calc(max(24px, var(--terminal-size) * 1.25) + 8px);
     --terminal-bg: light-dark(#fffbef, #2c2e34);
     --terminal-surface: light-dark(#f2efdf, #282a30);
     --terminal-inset: light-dark(#f8f5e4, #222327);
@@ -431,6 +432,42 @@
       color: var(--terminal-disabled) !important;
     }
 
+    /* Match Calendar's compact Create button, not other primary actions such
+       as Send. Keep the pencil's native image and collapsed icon-only width. */
+    .aeN .z0 > .T-I.T-I-KE {
+      height: var(--terminal-compose-height) !important;
+      min-height: 0 !important;
+      padding-block: 4px !important;
+      line-height: 1.25 !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Reclaim the fixed FAB space in both wrappers, retaining native vertical
+       margins and sidebar positioning rather than leaving a tall blank band. */
+    .aeN .aic:has(.z0 > .T-I.T-I-KE),
+    .aeN .z0:has(> .T-I.T-I-KE) {
+      height: auto !important;
+      min-height: 0 !important;
+    }
+
+    /* Fill the expanded sidebar between 16px gutters. bhZ is the collapsed
+       rail; leave its width, hover expansion and icon spacing to Gmail. */
+    .aeN:not(.bhZ) .z0:has(> .T-I.T-I-KE) {
+      padding-inline: 16px !important;
+      box-sizing: border-box !important;
+    }
+
+    .aeN:not(.bhZ) .z0 > .T-I.T-I-KE {
+      width: 100% !important;
+      min-width: 0 !important;
+      margin-inline: 0 !important;
+      padding-inline: 12px !important;
+    }
+
+    .aeN:not(.bhZ) .z0 > .T-I.T-I-KE::before {
+      margin-inline: 0 8px !important;
+    }
+
     /* Toolbar controls may paint their glyph on the control itself. Keep native
        images/masks and use text colors, never a filter on the entire button. */
     .G-atb .T-I, .G-atb .bzn, .G-atb .amJ {
@@ -691,14 +728,58 @@
 
     .Hp, .zu, .J-Z .J-Z-I, .J-Z .J-Z-M-I { color: var(--terminal-fg) !important; }
 
-    .aoT, .aoD input, .aoD textarea {
+    .aoT, .aoD input, .aoD textarea,
+    :is(.AD, .aaZ, .HM, .I5) :is(input, textarea) {
       background-color: transparent !important;
       color: var(--terminal-fg) !important;
     }
 
+    /* Composer controls also paint local surfaces, selected states and SVGs.
+       Keep their hit targets, menu anchors and editor formatting native. */
+    :is(.aaZ, .HM, .I5) :is(.btC, .aZ .J-Z) {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    :is(.aaZ, .HM, .I5) :is(.J-Z-I, .J-Z-M-I, .wG, .az2) {
+      background-color: transparent !important;
+      color: var(--terminal-fg) !important;
+      border-color: transparent !important;
+    }
+
+    :is(.aaZ, .HM, .I5) :is(.J-Z-I, .J-Z-M-I, .wG, .az2):is(:hover, .J-Z-I-JW, .J-Z-M-I-JW):not(.J-Z-I-JE, .J-Z-M-I-JE, [aria-disabled="true"]) {
+      background-color: var(--terminal-hover) !important;
+    }
+
+    :is(.aaZ, .HM, .I5) :is(.J-Z-I-KO, .J-Z-M-I-KO, .wG.e9, [aria-pressed="true"]) {
+      background-color: var(--terminal-selected) !important;
+      color: var(--terminal-blue) !important;
+    }
+
+    :is(.aaZ, .HM, .I5) :is(.J-Z-I-JE, .J-Z-M-I-JE, [aria-disabled="true"]) {
+      color: var(--terminal-disabled) !important;
+    }
+
+    :is(.aaZ, .HM, .I5) :is(.aDh, .btC, .aZ) svg.aoH {
+      color: inherit !important;
+      fill: currentColor !important;
+    }
+
+    /* Legacy monochrome sprites ignore color/currentColor. Whiten only their
+       glyph layers, then difference-blend against the toolbar's actual fill:
+       dark ink on light surfaces, light ink on dark ones, including forced
+       appearance. Never filter whole controls, Send, SVGs or email/editor HTML. */
+    :is(.aaZ, .HM, .I5) :is(.aaB, .aaC, .a1, .aA7, .eT, .eU, .J-Z-M-I-JG):not(:has(svg)),
+    :is(.aaZ, .HM, .I5) .az2 .J-JN-M-I-JG {
+      filter: brightness(0) invert(1) !important;
+      mix-blend-mode: difference !important;
+    }
+
     /* Native fields, excluding nested search/compose fields. Documents and
-       editors are already excluded by the scope, including signature fields. */
-    :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="submit"], [type="button"], [type="file"]), textarea, select):not(#gb *, .aoD *, .aoT) {
+       editors are already excluded by the scope, including signature fields.
+       Recipient/title inputs live outside aoD; don't add a second field border. */
+    :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="submit"], [type="button"], [type="file"]), textarea, select):not(#gb *, .AD *, .aaZ *, .HM *, .I5 *, .aoD *, .aoT) {
       background-color: var(--terminal-inset) !important;
       color: var(--terminal-fg) !important;
       border: 1px solid var(--terminal-border) !important;

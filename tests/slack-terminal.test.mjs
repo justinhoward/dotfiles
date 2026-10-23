@@ -277,6 +277,17 @@ test('theme keeps controls visible and uses the existing palette', () => {
   assert.match(code, /\.c-tooltip__tip__arrow\s*\{\s*display:\s*none\s*!important\s*;\s*\}/);
 });
 
+test('split send controls share the accent palette in normal and hover states', () => {
+  const code = sourceCSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  const composer = [...code.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+    .find(([, selector]) => selector.trim() === '.c-wysiwyg_container');
+  assert.ok(composer, 'The composer must override Slack’s shared send tokens.');
+  assert.match(composer[2], /--TextyTheme-send-bg:\s*var\(--terminal-blue\) !important;/);
+  assert.match(composer[2], /--TextyTheme-send-bg-hover:\s*var\(--terminal-blue\) !important;/);
+  assert.match(composer[2], /--TextyTheme-send-fg:\s*var\(--terminal-on-accent\) !important;/);
+  assert.doesNotMatch(composer[2], /--TextyTheme-send-(?:bg|fg)-disabled:|(?:^|[;{])\s*(?:background|color)\s*:/);
+});
+
 test('tooltip/popover positioning shells cannot acquire an opaque fill or border', () => {
   const code = sourceCSS.replace(/\/\*[\s\S]*?\*\//g, '');
   const blocks = [...code.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, declarations]) => ({ selector: selector.trim(), declarations }));
