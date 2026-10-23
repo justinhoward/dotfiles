@@ -25,5 +25,9 @@
   },
   "terminal": {
     "copy": "manual"
+  },
+  "attention": {
+    "notifications": true,
+    "sound": true
   }
 }
