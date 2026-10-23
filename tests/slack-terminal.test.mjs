@@ -277,6 +277,22 @@ test('theme keeps controls visible and uses the existing palette', () => {
   assert.match(code, /\.c-tooltip__tip__arrow\s*\{\s*display:\s*none\s*!important\s*;\s*\}/);
 });
 
+test('rich-text roots and sibling composer placeholders use the message typography', () => {
+  const code = sourceCSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  const blocks = [...code.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  for (const selector of ['.p-rich_text_block', '.c-texty_input__placeholder', '.ql-placeholder']) {
+    const block = blocks.find(([, selectors, declarations]) =>
+      selectors.split(',').map(value => value.trim()).includes(selector) &&
+      declarations.includes('font-size:'));
+    assert.ok(block, `${selector} must normalize its own font size rather than rely on body inheritance.`);
+    assert.match(block[2], /font-family:\s*var\(--terminal-font\) !important;/);
+    assert.match(block[2], /font-size:\s*var\(--terminal-size\) !important;/);
+    assert.match(block[2], /line-height:\s*var\(--terminal-line-height\) !important;/);
+    assert.doesNotMatch(block[1], /\*|\.p-rich_text_block\s+\S/,
+      'Normalize the root, not every descendant: emoji and icons keep their own sizes.');
+  }
+});
+
 test('split send controls share the accent palette in normal and hover states', () => {
   const code = sourceCSS.replace(/\/\*[\s\S]*?\*\//g, '');
   const composer = [...code.matchAll(/([^{}]+)\{([^{}]*)\}/g)]

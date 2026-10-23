@@ -1,4 +1,4 @@
-/* Slack / terminal, v1.1.2. Local CSS for the Slack-only DevTools watcher.
+/* Slack / terminal, v1.1.3. Local CSS for the Slack-only DevTools watcher.
    Sonokai dark / Everforest light, following system appearance. */
 :root {
   color-scheme: light dark !important;
@@ -115,9 +115,17 @@ body, button, input, textarea, select, [contenteditable="true"],
 
 .c-message_kit__message, .c-message_kit__blocks, .c-message__message_blocks,
 .c-message_kit__sender, .c-block_kit, .p-section_block, .p-actions_block,
-.p-rich_text_section, .p-plain_text_element,
+.p-rich_text_block, .p-rich_text_section, .p-plain_text_element,
 .c-message_attachment__body, .c-message_attachment__pretext,
 .c-message_attachment__text, .c-message_attachment__field_value {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-size) !important;
+  line-height: var(--terminal-line-height) !important;
+}
+
+/* Lists and quotes inherit from p-rich_text_block, not p-rich_text_section.
+   The placeholder is a sibling of the editor, so it needs its own typography. */
+.c-texty_input__placeholder, .ql-placeholder {
   font-family: var(--terminal-font) !important;
   font-size: var(--terminal-size) !important;
   line-height: var(--terminal-line-height) !important;
