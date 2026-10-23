@@ -56,8 +56,7 @@
   "command": {
     // The template already denies git push/reset/clean/
     // rebase/merge, sudo, the gh write-surface, and every *publish* command.
-    // Allow rebasing and merging as exceptions to the inherited deny rules.
-    "allow": ["git rebase", "git merge"],
+    // Signed history operations go through the narrow OpenCode tools instead.
     "deny": [
       // Local infra changes are almost always accidental.
       "terraform apply",
@@ -68,6 +67,8 @@
       // `git commit` would only fail at signing time. Denying it up front
       // points the agent at OpenCode's git_commit tool instead.
       "git commit",
+      "git rebase",
+      "git merge",
 
       // Deny keychain access
       "security",

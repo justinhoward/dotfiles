@@ -120,8 +120,8 @@
     // still cover CI debugging without prompting.
     { "action": "github_actions_get", "resource": "*", "effect": "ask" },
 
-    // Custom tools (plugins/git.ts), running outside Fence. `git push` and
-    // `git commit` stay denied in bash by Fence. The tools call
+    // Custom tools (plugins/git.ts), running outside Fence. `git push`,
+    // `git commit`, `git rebase`, and `git merge` stay denied in bash. Tools call
     // ctx.permission.assert with the resources below.
     //   - git_push: current branch to origin, never the default branch.
     //     Force pushes (force: true, after amend/rebase) use
@@ -132,9 +132,14 @@
     //     bash. The tool asks with resource "new" or "amend", so new commits
     //     go through and amends prompt. Amending a commit already on another
     //     remote branch (e.g. origin/main) is refused.
+    //   - git_rebase/git_merge: signed start/continue, explicit abort (and
+    //     rebase skip). Each action asks with resource "<action>:<branch>",
+    //     so approving continuation never also approves destructive recovery.
     { "action": "git_push", "resource": "*", "effect": "ask" },
     { "action": "git_commit", "resource": "*", "effect": "allow" },
-    { "action": "git_commit", "resource": "amend", "effect": "ask" }
+    { "action": "git_commit", "resource": "amend", "effect": "ask" },
+    { "action": "git_rebase", "resource": "*", "effect": "ask" },
+    { "action": "git_merge", "resource": "*", "effect": "ask" }
   ],
   "providers": {
     "github-copilot": {

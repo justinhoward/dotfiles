@@ -26,8 +26,16 @@ Git and GitHub, where bash is blocked:
 - Push: `git_push` tool (current branch only). After amending or rebasing
   pushed commits, use `force: true`; it refuses to drop remote commits you
   have not fetched and integrated.
+- Rebase/merge: `git_rebase` / `git_merge` tools so every recreated commit
+  can be GPG-signed. Rebase supports `onto`, `upstream`, and `branch` (both
+  positional arguments), plus typed flags. Fetch first: shared-history and
+  default-branch checks use local remote-tracking refs. Resolve conflicts
+  and stage with `git add` in bash, then use the same tool with
+  `action: "continue"`, not `git_commit`. Abort/skip must be intentional:
+  they can discard conflict-resolution work. Squash merges are the exception:
+  they have no merge state; resolve/stage and finish with `git_commit`.
 - GitHub API (PRs, review comments, issues, CI): `github_*` MCP tools, not
   `gh api` or gh write commands.
 - `reset`, `clean`, `checkout --`, and `branch -D` are
   blocked with no alternative; ask the user. Read-only git, `add`, `fetch`,
-  `rebase`, `merge`, and creating/switching branches work in bash as usual.
+  and creating/switching branches work in bash as usual.
