@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         GitHub / terminal
 @namespace    github.com/justinhoward/dotfiles
-@version      1.0.1
+@version      1.0.2
 @description  Flat, square GitHub in Victor Mono. Sonokai dark / Everforest light.
 @license      MIT
 @preprocessor default
@@ -276,12 +276,14 @@
     font-family: var(--terminal-font) !important;
   }
 
+  /* The legacy selection textarea must match the highlighted text's metrics. */
   .markdown-body, .blob-code, .blob-num, .react-code-text,
+  #read-only-cursor-text-area,
   .cm-editor, .cm-scroller {
     font-size: var(--terminal-size) !important;
   }
 
-  pre, code, .blob-code, .react-code-text {
+  pre, code, .blob-code, .react-code-text, #read-only-cursor-text-area {
     font-variant-ligatures: none !important;
   }
 
@@ -370,10 +372,13 @@
     border-bottom-color: var(--terminal-blue) !important;
   }
 
-  /* Inputs need a boundary, but nested inputs must not gain a second one. */
-  .form-control, .form-select, .TextInput-wrapper, textarea,
-  [class*="prc-components-TextInputWrapper-"],
-  [class*="prc-components-TextInputBaseWrapper-"] {
+  /* Inputs need a boundary, but nested inputs must not gain a second one.
+     Code views layer a transparent textarea over syntax highlighting. Leave
+     both renderers' paint/borders native, including the newer plain-text mode. */
+  :is(.form-control, .form-select, .TextInput-wrapper, textarea,
+      [class*="prc-components-TextInputWrapper-"],
+      [class*="prc-components-TextInputBaseWrapper-"]):not(:where(
+      #read-only-cursor-text-area, textarea[class*="Textarea__"])) {
     background-color: var(--terminal-inset) !important;
     color: var(--terminal-fg) !important;
     border-width: 1px !important;

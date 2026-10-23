@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-color-mode="dark">
+<meta charset="utf-8">
+<title>GitHub code selection layers</title>
+<style>
+  /* Reduced public GitHub code-view styles. The legacy renderer uses inline
+     paint/metrics; the newer renderer uses CSS modules and a plain-text state. */
+  :root {
+    --fontStack-monospace: ui-monospace, monospace;
+    --text-body-size-small: 12px;
+    --fgColor-default: #1f2328;
+  }
+  body { margin: 24px; }
+  .code-view { position: relative; margin-bottom: 24px; }
+  .react-code-text {
+    font-family: var(--fontStack-monospace);
+    font-size: var(--text-body-size-small);
+    white-space: pre;
+    line-height: 20px;
+  }
+  .pl-k { color: var(--prettylights-syntax-keyword, #cf222e); }
+  .pl-s { color: var(--prettylights-syntax-string, #0a3069); }
+  .Source__HnrBmh { position: relative; height: 40px; }
+  .Block__XcS9j5, .Textarea__Wm0Vhs {
+    box-sizing: border-box;
+    font: normal 400 var(--text-body-size-small) var(--fontStack-monospace);
+    font-kerning: none;
+    font-variant-ligatures: none;
+    line-height: 20px;
+    white-space: pre;
+  }
+  .Textarea__Wm0Vhs {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    color: transparent;
+    resize: none;
+    caret-color: var(--fgColor-default);
+    background: transparent;
+    border: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .Textarea__Wm0Vhs.plainText__p1L5A3 { color: var(--fgColor-default); }
+</style>
+<body>
+  <section class="code-view" aria-label="Legacy highlighted code">
+    <div class="react-code-text"><span class="pl-k">FROM</span> example/runtime:latest</div>
+    <div class="react-code-text"><span class="pl-k">CMD</span> [<span class="pl-s">"example.handler"</span>]</div>
+    <textarea id="read-only-cursor-text-area" class="react-blob-print-hide"
+      aria-label="file content" aria-readonly="true" spellcheck="false"
+      style="position:absolute;top:0;left:0;width:100%;height:40px;padding:0;resize:none;background-color:unset;color:transparent;border:none;font-size:12px;line-height:20px">FROM example/runtime:latest
+CMD ["example.handler"]</textarea>
+  </section>
+  <section class="code-view Source__HnrBmh" aria-label="New highlighted code">
+    <div class="Block__XcS9j5"><span class="pl-k">FROM</span> example/runtime:latest</div>
+    <div class="Block__XcS9j5"><span class="pl-k">CMD</span> [<span class="pl-s">"example.handler"</span>]</div>
+    <textarea id="new-code-layer" class="Textarea__Wm0Vhs"
+      aria-label="file content" aria-readonly="true" spellcheck="false">FROM example/runtime:latest
+CMD ["example.handler"]</textarea>
+  </section>
+  <section class="code-view Source__HnrBmh" aria-label="New plain-text code">
+    <textarea id="plain-code-layer" class="Textarea__Wm0Vhs plainText__p1L5A3"
+      aria-label="file content" aria-readonly="true" spellcheck="false">FROM example/runtime:latest
+CMD ["example.handler"]</textarea>
+  </section>
+  <label>Comment <textarea id="comment" class="form-control">Ordinary comment text</textarea></label>
+  <label>Other readonly field <textarea id="readonly-field" readonly>Ordinary readonly text</textarea></label>
+</body>
+</html>
