@@ -321,6 +321,41 @@ test('tooltip/popover positioning shells cannot acquire an opaque fill or border
   assert.match(menu.selector, /\[role="menu"\]:not\(\.c-popover, \.p-popover\)/);
 });
 
+test('thread/DM pane wrappers and overview row shells are borderless without stripping control borders', () => {
+  const code = sourceCSS.replace(/\/\*[\s\S]*?\*\//g, '');
+  const blocks = [...code.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+  const borderless = blocks.filter(([, , declarations]) => /\bborder:\s*0 !important;/.test(declarations));
+  for (const selector of [
+    '.p-flexpane:has(.p-threads_flexpane)',
+    '.p-threads_flexpane',
+    '.p-view_contents:has(.p-threads_flexpane)',
+    '.p-workspace__secondary_view:has(.p-threads_flexpane)',
+    '.p-workspace__primary_view:has(.p-threads_view)',
+    '.p-client_workspace__tabpanel:has(.p-threads_flexpane, .p-threads_view, .p-dms_page_header)',
+    '.p-client_workspace__tabpanel:has(.p-threads_flexpane, .p-dms_page_header) .p-view_contents',
+    '.p-flexpane:has(.p-threads_flexpane) .p-flexpane_header',
+    '.p-workspace__primary_view:has(.p-threads_view) .p-view_header',
+    '.p-client_workspace__tabpanel:has(.p-threads_view) .p-view_header',
+    '.p-threads_view_root', '.p-threads_view_reply', '.p-threads_view__footer',
+    '.p-threads_view_load_older_message', '.p-threads_view_load_newer_message',
+    '.p-threads_view [class*="loadOlderMessages__"]',
+    '.p-threads_view [class*="loadNewerMessages__"]',
+    '.p-threads_view__unread_divider--nested',
+    '.p-threads_view .p-multi_thread_background__drag_overlay',
+  ]) assert.ok(borderless.some(([, selectors]) => selectors.includes(selector)), selector);
+
+  const threads = borderless.filter(([, selectors]) => /threads|flexpane/.test(selectors));
+  for (const [, selectors, declarations] of threads) {
+    assert.doesNotMatch(selectors, /\*(?!\s*=)|\.c-wysiwyg_container|\.c-button|:focus|separator_line|divider_line|\[role="dialog"\]/);
+    assert.doesNotMatch(declarations, /background|outline|padding|margin|height/);
+  }
+  const composer = blocks.find(([, selectors, declarations]) =>
+    selectors.includes('.c-wysiwyg_container,') && /\bborder:/.test(declarations));
+  assert.match(composer[2], /border: 1px solid var\(--terminal-border\) !important;/);
+  const focusedComposer = blocks.find(([, selectors]) => selectors.trim() === '.c-wysiwyg_container:focus-within');
+  assert.match(focusedComposer[2], /border-color: var\(--terminal-blue\) !important;/);
+});
+
 test('watcher reloads CSS, retains valid edits, disables despite invalid CSS, and stops without quitting Slack', async t => {
   const options = { ...fixture(t), port: 49152, appPid: 9001, sessionId: 'test-watch-session' };
   fs.mkdirSync(options.stateDir);

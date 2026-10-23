@@ -1,4 +1,4 @@
-/* Slack / terminal, v1.1.3. Local CSS for the Slack-only DevTools watcher.
+/* Slack / terminal, v1.1.5. Local CSS for the Slack-only DevTools watcher.
    Sonokai dark / Everforest light, following system appearance. */
 :root {
   color-scheme: light dark !important;
@@ -407,6 +407,35 @@ input::placeholder, textarea::placeholder,
   background-color: var(--terminal-surface) !important;
   color: var(--terminal-fg) !important;
   border: 1px solid var(--terminal-border) !important;
+}
+
+/* Thread and DM surfaces are separated by background colors, not rectangles.
+   Slack's view shell can be role="dialog" and pick up the modal border above.
+   Remove both that border and the adjacent list's divider, not real dialogs. */
+.p-flexpane:has(.p-threads_flexpane), .p-threads_flexpane,
+.p-view_contents:has(.p-threads_flexpane),
+.p-workspace__secondary_view:has(.p-threads_flexpane),
+.p-workspace__primary_view:has(.p-threads_view),
+.p-client_workspace__tabpanel:has(.p-threads_flexpane, .p-threads_view, .p-dms_page_header),
+.p-client_workspace__tabpanel:has(.p-threads_flexpane, .p-dms_page_header) .p-view_contents {
+  border: 0 !important;
+}
+
+.p-flexpane:has(.p-threads_flexpane) .p-flexpane_header,
+.p-workspace__primary_view:has(.p-threads_view) .p-view_header,
+.p-client_workspace__tabpanel:has(.p-threads_view) .p-view_header {
+  border: 0 !important;
+}
+
+/* Overview cards assemble their outline from individual virtual-list rows.
+   Target those shells only: composers, controls and unread lines keep borders. */
+.p-threads_view_root, .p-threads_view_reply, .p-threads_view__footer,
+.p-threads_view_load_older_message, .p-threads_view_load_newer_message,
+.p-threads_view [class*="loadOlderMessages__"],
+.p-threads_view [class*="loadNewerMessages__"],
+.p-threads_view__unread_divider--nested,
+.p-threads_view .p-multi_thread_background__drag_overlay {
+  border: 0 !important;
 }
 
 .c-menu_item__li--highlighted,
