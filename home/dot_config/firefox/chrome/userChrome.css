@@ -1,0 +1,194 @@
+/* Firefox / terminal, v1.0.0. Browser UI, not a Stylus userstyle.
+   Enable toolkit.legacyUserProfileCustomizations.stylesheets in about:config.
+   Install all three CSS files in the active Firefox profile's chrome/ folder. */
+@import url("terminal-palette.css");
+
+:root {
+  --lwt-accent-color: var(--terminal-bg) !important;
+  --lwt-accent-color-inactive: var(--terminal-bg) !important;
+  --lwt-text-color: var(--terminal-fg) !important;
+  --toolbox-background-color: var(--terminal-bg) !important;
+  --toolbox-background-color-inactive: var(--terminal-bg) !important;
+  --toolbox-text-color: var(--terminal-fg) !important;
+  --toolbox-text-color-inactive: var(--terminal-muted) !important;
+  --toolbar-background-color: var(--terminal-bg) !important;
+  --toolbar-text-color: var(--terminal-fg) !important;
+  --toolbar-color-scheme: var(--terminal-appearance) !important;
+  --tab-selected-color-scheme: var(--terminal-appearance) !important;
+  --tab-background-color-selected: var(--terminal-hover) !important;
+  --tab-text-color-selected: var(--terminal-fg) !important;
+  --tab-border-radius: 0 !important;
+  --tab-box-shadow-selected: none !important;
+  --tab-group-line-thickness: 1px !important;
+  --tab-group-label-highlight-thickness: 1px !important;
+  --toolbarbutton-background-color-hover: var(--terminal-hover) !important;
+  --toolbarbutton-background-color-active: var(--terminal-hover) !important;
+  --toolbarbutton-border-radius: 0 !important;
+  --toolbar-field-background-color: var(--terminal-inset) !important;
+  --toolbar-field-background-color-focus: var(--terminal-inset) !important;
+  --toolbar-field-text-color: var(--terminal-fg) !important;
+  --toolbar-field-text-color-focus: var(--terminal-fg) !important;
+  --toolbar-field-border-color: var(--terminal-border) !important;
+  --toolbar-field-border-color-focus: var(--terminal-blue) !important;
+  --urlbar-background-color: var(--terminal-inset) !important;
+  --urlbar-background-color-focus: var(--terminal-inset) !important;
+  --urlbar-input-container-border-width: 1px !important;
+  --urlbar-input-container-border-width-open: 1px !important;
+  --urlbar-background-border-radius: 0 !important;
+  --urlbar-background-border-top-radius-open: 0 !important;
+  --urlbar-background-box-shadow-open: none !important;
+  --urlbar-border-radius: 0 !important;
+  --urlbarview-border-radius: 0 !important;
+  --urlbarview-background-color-hover: var(--terminal-hover) !important;
+  --urlbarview-background-color-selected: var(--terminal-hover) !important;
+  --urlbarview-text-color-selected: var(--terminal-fg) !important;
+  --urlbarview-text-color-secondary: var(--terminal-muted) !important;
+  --urlbarview-text-color-action: var(--terminal-blue) !important;
+  --urlbarview-separator-color: var(--terminal-border) !important;
+  --urlbar-box-background-color: var(--terminal-surface) !important;
+  --urlbar-box-background-color-hover: var(--terminal-hover) !important;
+  --urlbar-box-background-color-active: var(--terminal-hover) !important;
+  --urlbar-box-background-color-focus: var(--terminal-surface) !important;
+  --urlbar-box-text-color: var(--terminal-fg) !important;
+  --sidebar-background-color: var(--terminal-bg) !important;
+  --sidebar-text-color: var(--terminal-fg) !important;
+  --sidebar-border-color: var(--terminal-border) !important;
+  --sidebar-divider-color: var(--terminal-border) !important;
+  --tabs-navbar-separator-color: var(--terminal-border) !important;
+  --chrome-content-separator-color: var(--terminal-border) !important;
+  --content-area-shadow: none !important;
+}
+
+/* This stylesheet only applies to browser chrome, not web-page documents.
+   Keep native widget sizes, layout, window controls and drag regions. */
+*, *::before, *::after {
+  color-scheme: inherit !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+:root, #navigator-toolbox, toolbar, .tab-label, #urlbar-input,
+#searchbar, .searchbar-textbox, findbar, menu, menuitem, panel, tooltip,
+button, input, textarea, select, .toolbarbutton-text, .subviewbutton {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-size) !important;
+}
+
+#navigator-toolbox, #TabsToolbar, #nav-bar, #PersonalToolbar, #toolbar-menubar {
+  background-color: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-fg) !important;
+}
+
+#navigator-toolbox {
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+/* A small terminal-style cursor line on the active tab, in either orientation.
+   Container stripes, group labels, audio indicators and close buttons stay. */
+.tab-background {
+  border: 0 solid transparent !important;
+  border-bottom-width: 1px !important;
+}
+
+.tabbrowser-tab:hover > .tab-stack > .tab-background {
+  background-color: var(--terminal-surface) !important;
+}
+
+.tabbrowser-tab:is([visuallyselected], [multiselected]) > .tab-stack > .tab-background,
+.tab-background:is([selected], [multiselected]) {
+  background-color: var(--terminal-hover) !important;
+  border-bottom-color: var(--terminal-blue) !important;
+}
+
+.tabbrowser-tab:is([visuallyselected], [multiselected]) .tab-content {
+  color: var(--terminal-fg) !important;
+}
+
+/* Support both the older #urlbar-background and current class-based markup. */
+#urlbar-background, .urlbar-background, .urlbarView-background,
+.searchbar-textbox {
+  background-color: var(--terminal-inset) !important;
+  border-width: 1px !important;
+  border-color: var(--terminal-border) !important;
+}
+
+#urlbar[focused] :is(#urlbar-background, .urlbar-background) {
+  border-color: var(--terminal-blue) !important;
+}
+
+.urlbarView {
+  color: var(--terminal-fg) !important;
+}
+
+.urlbarView-row:is([selected], :hover) .urlbarView-row-inner {
+  background-color: var(--terminal-hover) !important;
+  color: var(--terminal-fg) !important;
+}
+
+.urlbarView-row:is([selected], :hover) :is(.urlbarView-title, .urlbarView-action, .urlbarView-url) {
+  color: var(--terminal-fg) !important;
+}
+
+/* Shadow-DOM popup surfaces need an explicit border without elevation.
+   Native macOS menu-bar menus remain controlled by the operating system. */
+panel::part(content), menupopup::part(content) {
+  background-color: var(--terminal-surface) !important;
+  color: var(--terminal-fg) !important;
+  border: 1px solid var(--terminal-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+panel, menupopup {
+  --panel-background-color: var(--terminal-surface) !important;
+  --panel-text-color: var(--terminal-fg) !important;
+  --panel-border-color: var(--terminal-border) !important;
+  --panel-border-radius: 0 !important;
+}
+
+tooltip {
+  background-color: var(--terminal-surface) !important;
+  color: var(--terminal-fg) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+menuitem:not([disabled="true"])[_moz-menuactive="true"],
+menu:not([disabled="true"])[_moz-menuactive="true"],
+.subviewbutton:not([disabled]):is(:hover, [checked="true"]) {
+  background-color: var(--terminal-hover) !important;
+  color: var(--terminal-fg) !important;
+}
+
+menuseparator, toolbarseparator {
+  border-color: var(--terminal-border) !important;
+  border-width: 1px !important;
+}
+
+sidebar-main, #sidebar-main, #sidebar-box, #sidebar-panel-header, #sidebar-header {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-fg) !important;
+}
+
+findbar {
+  background-color: var(--terminal-surface) !important;
+  color: var(--terminal-fg) !important;
+  border-top: 1px solid var(--terminal-border) !important;
+}
+
+#statuspanel-label {
+  background-color: var(--terminal-inset) !important;
+  color: var(--terminal-muted) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+:focus-visible {
+  outline: 1px solid var(--terminal-blue) !important;
+  outline-offset: 2px !important;
+}
+
+/* Tab keyboard navigation focuses the tab list, not each background node. */
+#tabbrowser-tabs[tablist-has-focus] .tabbrowser-tab.tablist-keyboard-focus > .tab-stack > .tab-background {
+  outline: 1px solid var(--terminal-blue) !important;
+}

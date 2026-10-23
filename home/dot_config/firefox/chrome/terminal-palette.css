@@ -1,0 +1,116 @@
+/* Firefox / terminal — shared palette, v1.0.0.
+   Used by both userChrome.css and userContent.css. No remote imports.
+   Appearance: light dark = system, dark = Sonokai, light = Everforest. */
+
+@-moz-document url-prefix("chrome://"), url("about:newtab"), url("about:home"),
+  url-prefix("about:preferences"), url-prefix("about:addons"), url-prefix("about:downloads") {
+  :root {
+    --terminal-appearance: light dark;
+    --terminal-font: "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace;
+    --terminal-size: 13px;
+    color-scheme: var(--terminal-appearance) !important;
+
+    /* Same colors as the GitHub and Jira styles. */
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-yellow: light-dark(#8a6300, #e7c664);
+    --terminal-purple: light-dark(#9a4680, #b39df3);
+    --terminal-orange: light-dark(#a15a20, #f39660);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-tint-base: light-dark(#fffbef, #282a30);
+
+    /* Firefox's shared design tokens: always pair fills and foregrounds. */
+    --background-color-canvas: var(--terminal-bg) !important;
+    --background-color-box: var(--terminal-surface) !important;
+    --background-color-dimmed: var(--terminal-hover) !important;
+    --background-color-dimmed-further: var(--terminal-hover) !important;
+    --background-color-overlay: color-mix(in srgb, var(--terminal-inset) 65%, transparent) !important;
+    --background-color-critical: color-mix(in srgb, var(--terminal-red) 4%, var(--terminal-tint-base)) !important;
+    --background-color-warning: color-mix(in srgb, var(--terminal-yellow) 4%, var(--terminal-tint-base)) !important;
+    --background-color-success: color-mix(in srgb, var(--terminal-green) 4%, var(--terminal-tint-base)) !important;
+    --background-color-information: color-mix(in srgb, var(--terminal-blue) 4%, var(--terminal-tint-base)) !important;
+    --text-color: var(--terminal-fg) !important;
+    --text-color-deemphasized: var(--terminal-muted) !important;
+    --text-color-disabled: var(--terminal-disabled) !important;
+    --text-color-error: var(--terminal-red) !important;
+    --text-color-accent-primary-selected: var(--terminal-on-accent) !important;
+    --text-color-list-item-hover: var(--terminal-fg) !important;
+    --icon-color: var(--terminal-fg) !important;
+    --icon-color-critical: var(--terminal-red) !important;
+    --icon-color-warning: var(--terminal-yellow) !important;
+    --icon-color-success: var(--terminal-green) !important;
+    --icon-color-information: var(--terminal-blue) !important;
+    --color-accent-primary: var(--terminal-blue) !important;
+    --color-accent-primary-hover: var(--terminal-blue) !important;
+    --color-accent-primary-active: var(--terminal-blue) !important;
+    --color-accent-primary-selected: var(--terminal-blue) !important;
+    --color-accent-attention: var(--terminal-green) !important;
+    --link-color: var(--terminal-blue) !important;
+    --link-color-hover: var(--terminal-blue) !important;
+    --link-color-active: var(--terminal-blue) !important;
+    --link-color-visited: var(--terminal-purple) !important;
+    --border-color: var(--terminal-border) !important;
+    --border-color-deemphasized: var(--terminal-border) !important;
+    --border-color-interactive: var(--terminal-border) !important;
+    --border-color-selected: var(--terminal-blue) !important;
+    --border-color-error: var(--terminal-red) !important;
+    --border-width: 1px !important;
+    --focus-outline-color: var(--terminal-blue) !important;
+    --focus-outline-width: 1px !important;
+    --focus-outline: 1px solid var(--terminal-blue) !important;
+    --button-background-color: var(--terminal-surface) !important;
+    --button-background-color-hover: var(--terminal-hover) !important;
+    --button-background-color-active: var(--terminal-hover) !important;
+    --button-text-color: var(--terminal-fg) !important;
+    --button-background-color-primary: var(--terminal-blue) !important;
+    --button-background-color-primary-hover: var(--terminal-blue) !important;
+    --button-background-color-primary-active: var(--terminal-blue) !important;
+    --button-text-color-primary: var(--terminal-on-accent) !important;
+    --button-background-color-destructive: var(--terminal-red) !important;
+    --button-background-color-destructive-hover: var(--terminal-red) !important;
+    --button-background-color-destructive-active: var(--terminal-red) !important;
+    --button-text-color-destructive: var(--terminal-on-accent) !important;
+    --button-border-color: transparent !important;
+    --button-border-radius: 0 !important;
+    --button-font-size: var(--terminal-size) !important;
+    --input-text-background-color: var(--terminal-inset) !important;
+    --input-text-color: var(--terminal-fg) !important;
+    --input-text-border-color: var(--terminal-border) !important;
+    --input-text-border-radius: 0 !important;
+    --input-search-border-radius: 0 !important;
+    --panel-background-color: var(--terminal-surface) !important;
+    --panel-text-color: var(--terminal-fg) !important;
+    --panel-border-color: var(--terminal-border) !important;
+    --panel-separator-color: var(--terminal-border) !important;
+    --panel-border-radius: 0 !important;
+    --panel-menuitem-border-radius: 0 !important;
+    --panel-box-shadow: none !important;
+    --popup-background-color: var(--terminal-surface) !important;
+    --popup-border-color: var(--terminal-border) !important;
+    --popup-border-radius: 0 !important;
+    --card-background-color: var(--terminal-surface) !important;
+    --card-border-color: var(--terminal-border) !important;
+    --card-border-radius: 0 !important;
+    --card-border-radius-compact: 0 !important;
+    --card-box-shadow: none !important;
+    --card-box-shadow-hover: none !important;
+    --border-radius-xsmall: 0 !important;
+    --border-radius-small: 0 !important;
+    --border-radius-medium: 0 !important;
+    --border-radius-large: 0 !important;
+    --border-radius-circle: 0 !important;
+    --box-shadow-level-1: none !important;
+    --box-shadow-level-2: none !important;
+    --box-shadow-level-3: none !important;
+    --box-shadow-level-4: none !important;
+  }
+}

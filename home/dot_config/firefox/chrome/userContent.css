@@ -1,0 +1,95 @@
+/* Firefox / terminal, v1.0.0. Only Firefox-owned pages, never ordinary websites.
+   The imported palette is also document-scoped, including its color-scheme. */
+@import url("terminal-palette.css");
+
+@-moz-document url("about:newtab"), url("about:home"),
+  url-prefix("about:preferences"), url-prefix("about:addons"), url-prefix("about:downloads") {
+  :root, body.activity-stream {
+    --newtab-background-color: var(--terminal-bg) !important;
+    --newtab-background-color-secondary: var(--terminal-surface) !important;
+    --newtab-background-card: var(--terminal-surface) !important;
+    --newtab-text-primary-color: var(--terminal-fg) !important;
+    --newtab-contextual-text-primary-color: var(--terminal-fg) !important;
+    --newtab-text-secondary-color: var(--terminal-muted) !important;
+    --newtab-contextual-text-secondary-color: var(--terminal-muted) !important;
+    --newtab-text-topic-label-color: var(--terminal-purple) !important;
+    --newtab-wordmark-color: var(--terminal-fg) !important;
+    --newtab-weather-background-color: var(--terminal-surface) !important;
+    --newtab-element-hover-color: var(--terminal-hover) !important;
+    --newtab-element-active-color: var(--terminal-hover) !important;
+    --newtab-element-secondary-color: var(--terminal-surface) !important;
+    --newtab-element-secondary-hover-color: var(--terminal-hover) !important;
+    --newtab-element-secondary-active-color: var(--terminal-hover) !important;
+    --newtab-button-static-background: var(--terminal-surface) !important;
+    --newtab-button-static-focus-background: var(--terminal-surface) !important;
+    --newtab-button-static-hover-background: var(--terminal-hover) !important;
+    --newtab-button-static-active-background: var(--terminal-hover) !important;
+    --newtab-primary-action-background: var(--terminal-blue) !important;
+    --newtab-primary-action-background-pocket: var(--terminal-blue) !important;
+    --newtab-primary-element-text-color: var(--terminal-on-accent) !important;
+    --content-search-handoff-ui-background-color: var(--terminal-inset) !important;
+    --content-search-handoff-ui-color: var(--terminal-fg) !important;
+    --content-search-handoff-ui-caret-color: var(--terminal-blue) !important;
+    --content-search-handoff-ui-fakefocus-border-color: var(--terminal-blue) !important;
+    --lists-surface-color: var(--terminal-surface) !important;
+    --lists-text-color: var(--terminal-fg) !important;
+    --lists-button-background: var(--terminal-blue) !important;
+    --lists-button-background-hover: var(--terminal-blue) !important;
+    --lists-button-background-active: var(--terminal-blue) !important;
+    --lists-button-text-color: var(--terminal-on-accent) !important;
+  }
+
+  *, *::before, *::after {
+    color-scheme: inherit !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body {
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    font-family: var(--terminal-font) !important;
+    caret-color: var(--terminal-blue);
+    scrollbar-color: var(--terminal-border) var(--terminal-bg);
+    scrollbar-width: thin;
+  }
+
+  body, button, input, textarea, select {
+    font-family: var(--terminal-font) !important;
+    font-size: var(--terminal-size) !important;
+  }
+
+  h1, h2, h3, h4, h5, h6, label, .top-site-outer .title {
+    font-family: var(--terminal-font) !important;
+  }
+
+  /* Keep normal new-tab content and settings controls, rather than hiding them.
+     Disable a wallpaper in Firefox's settings if you prefer a plain background. */
+  .search-wrapper .search-handoff-button, .search-wrapper input {
+    background-color: var(--terminal-inset) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  .search-wrapper .search-handoff-button:focus-within,
+  .search-wrapper input:focus-visible {
+    outline: 1px solid var(--terminal-blue) !important;
+  }
+
+  .context-menu, .customize-menu {
+    background-color: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  ::selection {
+    background-color: light-dark(#f0f2d4, #3b3e48) !important;
+    color: var(--terminal-fg) !important;
+  }
+}

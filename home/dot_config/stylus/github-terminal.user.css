@@ -1,0 +1,498 @@
+/* ==UserStyle==
+@name         GitHub / terminal
+@namespace    github.com/justinhoward/dotfiles
+@version      1.0.1
+@description  Flat, square GitHub in Victor Mono. Sonokai dark / Everforest light.
+@license      MIT
+@preprocessor default
+@var select appearance "Appearance" {
+  "system:Follow system*": "light dark",
+  "dark:Sonokai (dark)": "dark",
+  "light:Everforest (light)": "light"
+}
+@var text fontFamily "Font family" "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace
+@var range fontSize "Text size" [13, 11, 18, 1, "px"]
+==/UserStyle== */
+
+@-moz-document url-prefix("https://github.com/") {
+  /* light-dark() follows Firefox's appearance, not GitHub's account theme.
+     Base colors come from kitty/themes/{sonokai,everforest-light}.conf.
+     Light-mode UI accents are darkened for readable links and status text. */
+  :root {
+    color-scheme: var(--appearance, light dark) !important;
+
+    --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
+    --terminal-size: var(--fontSize, 13px);
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-yellow: light-dark(#8a6300, #e7c664);
+    --terminal-purple: light-dark(#9a4680, #b39df3);
+    --terminal-orange: light-dark(#a15a20, #f39660);
+    --terminal-cyan: light-dark(#247955, #76cce0);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-add: light-dark(#edf0d4, #394634);
+    --terminal-delete: light-dark(#f9e4df, #55393d);
+    --terminal-add-word: light-dark(#d9e3b0, #526d3b);
+    --terminal-delete-word: light-dark(#efc8c2, #80434f);
+  }
+
+  /* Also override nested theme scopes used by dialogs and React components. */
+  :root, [data-color-mode], [data-theme] {
+    --fontStack-system: var(--terminal-font) !important;
+    --fontStack-sansSerif: var(--terminal-font) !important;
+    --fontStack-monospace: var(--terminal-font) !important;
+    --body-font: var(--terminal-font) !important;
+    --text-body-size-small: calc(var(--terminal-size) - 1px) !important;
+    --text-body-size-medium: var(--terminal-size) !important;
+    --text-body-size-large: calc(var(--terminal-size) + 1px) !important;
+    --borderRadius-small: 0 !important;
+    --borderRadius-medium: 0 !important;
+    --borderRadius-large: 0 !important;
+    --borderRadius-full: 0 !important;
+    --borderWidth-thin: 1px !important;
+    --borderWidth-thick: 1px !important;
+
+    --bgColor-default: var(--terminal-bg) !important;
+    --bgColor-muted: var(--terminal-surface) !important;
+    --bgColor-inset: var(--terminal-inset) !important;
+    --bgColor-emphasis: var(--terminal-fg) !important;
+    --bgColor-disabled: var(--terminal-surface) !important;
+    --bgColor-neutral-muted: var(--terminal-hover) !important;
+    --bgColor-neutral-emphasis: var(--terminal-muted) !important;
+    --bgColor-accent-emphasis: var(--terminal-blue) !important;
+    --bgColor-accent-muted: color-mix(in srgb, var(--terminal-blue) 12%, var(--terminal-bg)) !important;
+    --bgColor-success-emphasis: var(--terminal-green) !important;
+    --bgColor-success-muted: var(--terminal-add) !important;
+    --bgColor-danger-emphasis: var(--terminal-red) !important;
+    --bgColor-danger-muted: var(--terminal-delete) !important;
+    --bgColor-attention-emphasis: var(--terminal-yellow) !important;
+    --bgColor-attention-muted: color-mix(in srgb, var(--terminal-yellow) 12%, var(--terminal-bg)) !important;
+    --bgColor-done-emphasis: var(--terminal-purple) !important;
+    --bgColor-done-muted: color-mix(in srgb, var(--terminal-purple) 12%, var(--terminal-bg)) !important;
+    --bgColor-severe-emphasis: var(--terminal-orange) !important;
+    --bgColor-severe-muted: color-mix(in srgb, var(--terminal-orange) 12%, var(--terminal-bg)) !important;
+    --bgColor-sponsors-emphasis: var(--terminal-purple) !important;
+    --bgColor-sponsors-muted: var(--bgColor-done-muted) !important;
+
+    --fgColor-default: var(--terminal-fg) !important;
+    --fgColor-muted: var(--terminal-muted) !important;
+    --fgColor-neutral: var(--terminal-muted) !important;
+    --fgColor-disabled: var(--terminal-disabled) !important;
+    --fgColor-onEmphasis: var(--terminal-on-accent) !important;
+    --fgColor-accent: var(--terminal-blue) !important;
+    --fgColor-link: var(--terminal-blue) !important;
+    --fgColor-success: var(--terminal-green) !important;
+    --fgColor-danger: var(--terminal-red) !important;
+    --fgColor-attention: var(--terminal-yellow) !important;
+    --fgColor-done: var(--terminal-purple) !important;
+    --fgColor-severe: var(--terminal-orange) !important;
+    --fgColor-sponsors: var(--terminal-purple) !important;
+
+    --borderColor-default: var(--terminal-border) !important;
+    --borderColor-muted: var(--terminal-border) !important;
+    --borderColor-emphasis: var(--terminal-muted) !important;
+    --borderColor-translucent: var(--terminal-border) !important;
+    --borderColor-accent-emphasis: var(--terminal-blue) !important;
+    --borderColor-accent-muted: var(--terminal-blue) !important;
+    --borderColor-success-emphasis: var(--terminal-green) !important;
+    --borderColor-success-muted: var(--terminal-green) !important;
+    --borderColor-danger-emphasis: var(--terminal-red) !important;
+    --borderColor-danger-muted: var(--terminal-red) !important;
+    --borderColor-attention-emphasis: var(--terminal-yellow) !important;
+    --borderColor-attention-muted: var(--terminal-yellow) !important;
+    --borderColor-done-emphasis: var(--terminal-purple) !important;
+    --borderColor-done-muted: var(--terminal-purple) !important;
+    --borderColor-severe-emphasis: var(--terminal-orange) !important;
+    --borderColor-severe-muted: var(--terminal-orange) !important;
+    --borderColor-sponsors-emphasis: var(--terminal-purple) !important;
+    --borderColor-sponsors-muted: var(--terminal-purple) !important;
+    --focus-outline-color: var(--terminal-blue) !important;
+    --focus-outlineColor: var(--terminal-blue) !important;
+
+    --header-bgColor: var(--terminal-bg) !important;
+    --header-fgColor-default: var(--terminal-fg) !important;
+    --header-fgColor-logo: var(--terminal-fg) !important;
+    --header-borderColor-divider: var(--terminal-border) !important;
+    --headerSearch-bgColor: var(--terminal-inset) !important;
+    --headerSearch-borderColor: var(--terminal-border) !important;
+    --overlay-bgColor: var(--terminal-surface) !important;
+    --overlay-backdrop-bgColor: color-mix(in srgb, var(--terminal-inset) 65%, transparent) !important;
+    --tooltip-bgColor: var(--terminal-surface) !important;
+    --tooltip-fgColor: var(--terminal-fg) !important;
+
+    --control-bgColor-rest: var(--terminal-surface) !important;
+    --control-bgColor-hover: var(--terminal-hover) !important;
+    --control-bgColor-active: var(--terminal-hover) !important;
+    --control-checked-bgColor-rest: var(--terminal-blue) !important;
+    --control-checked-bgColor-hover: var(--terminal-blue) !important;
+    --control-checked-bgColor-active: var(--terminal-blue) !important;
+    --control-checked-fgColor-rest: var(--terminal-on-accent) !important;
+    --control-transparent-bgColor-hover: var(--terminal-hover) !important;
+    --control-transparent-bgColor-active: var(--terminal-hover) !important;
+    --control-transparent-bgColor-selected: var(--terminal-hover) !important;
+    --controlKnob-bgColor-rest: var(--terminal-fg) !important;
+    --controlKnob-bgColor-checked: var(--terminal-on-accent) !important;
+    --controlTrack-bgColor-rest: var(--terminal-inset) !important;
+    --controlTrack-bgColor-hover: var(--terminal-hover) !important;
+    --controlTrack-bgColor-active: var(--terminal-hover) !important;
+
+    --button-primary-bgColor-rest: var(--terminal-green) !important;
+    --button-primary-bgColor-hover: color-mix(in srgb, var(--terminal-green) 85%, var(--terminal-fg)) !important;
+    --button-primary-bgColor-active: var(--button-primary-bgColor-hover) !important;
+    --button-primary-bgColor-disabled: var(--terminal-surface) !important;
+    --button-primary-borderColor-disabled: transparent !important;
+    --button-primary-fgColor-rest: var(--terminal-on-accent) !important;
+    --button-primary-iconColor-rest: var(--terminal-on-accent) !important;
+    --button-primary-fgColor-disabled: var(--terminal-disabled) !important;
+    --button-danger-fgColor-rest: var(--terminal-red) !important;
+    --button-danger-bgColor-hover: var(--terminal-red) !important;
+    --button-danger-bgColor-active: var(--terminal-red) !important;
+    --button-danger-fgColor-hover: var(--terminal-on-accent) !important;
+    --button-danger-fgColor-active: var(--terminal-on-accent) !important;
+    --button-danger-iconColor-hover: var(--terminal-on-accent) !important;
+    --button-outline-fgColor-rest: var(--terminal-blue) !important;
+    --button-outline-fgColor-hover: var(--terminal-blue) !important;
+    --button-outline-bgColor-rest: var(--terminal-surface) !important;
+    --button-outline-bgColor-hover: var(--terminal-hover) !important;
+    --button-outline-bgColor-active: var(--terminal-blue) !important;
+    --button-outline-fgColor-active: var(--terminal-on-accent) !important;
+    --button-inactive-bgColor: var(--terminal-surface) !important;
+    --button-inactive-fgColor: var(--terminal-disabled) !important;
+    --buttonCounter-default-bgColor-rest: var(--terminal-hover) !important;
+    --buttonCounter-primary-bgColor-rest: transparent !important;
+    --buttonCounter-primary-fgColor-rest: var(--terminal-on-accent) !important;
+    --button-star-iconColor: var(--terminal-yellow) !important;
+
+    /* Syntax colors: Sonokai's pink keywords, green strings, violet constants. */
+    --prettylights-syntax-comment: var(--terminal-muted) !important;
+    --prettylights-syntax-constant: var(--terminal-purple) !important;
+    --prettylights-syntax-constantOtherReferenceLink: var(--terminal-blue) !important;
+    --prettylights-syntax-entity: var(--terminal-blue) !important;
+    --prettylights-syntax-entityTag: var(--terminal-red) !important;
+    --prettylights-syntax-keyword: var(--terminal-red) !important;
+    --prettylights-syntax-storageModifierImport: var(--terminal-fg) !important;
+    --prettylights-syntax-string: var(--terminal-green) !important;
+    --prettylights-syntax-stringRegexp: var(--terminal-cyan) !important;
+    --prettylights-syntax-variable: var(--terminal-orange) !important;
+    --prettylights-syntax-bracketHighlighterAngle: var(--terminal-muted) !important;
+    --prettylights-syntax-bracketHighlighterUnmatched: var(--terminal-red) !important;
+    --prettylights-syntax-carriageReturn-bg: var(--terminal-red) !important;
+    --prettylights-syntax-carriageReturn-text: var(--terminal-on-accent) !important;
+    --prettylights-syntax-markup-heading: var(--terminal-blue) !important;
+    --prettylights-syntax-markup-list: var(--terminal-yellow) !important;
+    --prettylights-syntax-markup-bold: var(--terminal-fg) !important;
+    --prettylights-syntax-markup-italic: var(--terminal-fg) !important;
+    --prettylights-syntax-markup-inserted-bg: var(--terminal-add) !important;
+    --prettylights-syntax-markup-inserted-text: var(--terminal-green) !important;
+    --prettylights-syntax-markup-deleted-bg: var(--terminal-delete) !important;
+    --prettylights-syntax-markup-deleted-text: var(--terminal-red) !important;
+    --prettylights-syntax-markup-changed-bg: var(--bgColor-attention-muted) !important;
+    --prettylights-syntax-markup-changed-text: var(--terminal-yellow) !important;
+    --prettylights-syntax-markup-ignored-bg: var(--terminal-surface) !important;
+    --prettylights-syntax-markup-ignored-text: var(--terminal-muted) !important;
+    --prettylights-syntax-metaDiffRange: var(--terminal-purple) !important;
+    --prettylights-syntax-sublimeLinterGutterMark: var(--terminal-border) !important;
+
+    /* Keep diff semantics and word-level highlights, rather than flattening them. */
+    --diffBlob-additionNum-bgColor: var(--terminal-add) !important;
+    --diffBlob-additionWord-bgColor: var(--terminal-add-word) !important;
+    --diffBlob-deletionNum-bgColor: var(--terminal-delete) !important;
+    --diffBlob-deletionWord-bgColor: var(--terminal-delete-word) !important;
+    --diffBlob-hunkNum-bgColor-rest: var(--bgColor-accent-muted) !important;
+
+    /* Legacy Primer pages still use these names. */
+    --color-canvas-default: var(--terminal-bg) !important;
+    --color-canvas-subtle: var(--terminal-surface) !important;
+    --color-canvas-inset: var(--terminal-inset) !important;
+    --color-canvas-overlay: var(--terminal-surface) !important;
+    --color-fg-default: var(--terminal-fg) !important;
+    --color-fg-muted: var(--terminal-muted) !important;
+    --color-fg-subtle: var(--terminal-muted) !important;
+    --color-fg-on-emphasis: var(--terminal-on-accent) !important;
+    --color-border-default: var(--terminal-border) !important;
+    --color-border-muted: var(--terminal-border) !important;
+    --color-accent-fg: var(--terminal-blue) !important;
+    --color-accent-emphasis: var(--terminal-blue) !important;
+    --color-accent-subtle: var(--bgColor-accent-muted) !important;
+    --color-success-fg: var(--terminal-green) !important;
+    --color-success-emphasis: var(--terminal-green) !important;
+    --color-success-subtle: var(--terminal-add) !important;
+    --color-danger-fg: var(--terminal-red) !important;
+    --color-danger-emphasis: var(--terminal-red) !important;
+    --color-danger-subtle: var(--terminal-delete) !important;
+    --color-attention-fg: var(--terminal-yellow) !important;
+    --color-done-fg: var(--terminal-purple) !important;
+    --color-header-bg: var(--terminal-bg) !important;
+    --color-header-text: var(--terminal-fg) !important;
+    --color-header-logo: var(--terminal-fg) !important;
+    --color-btn-bg: var(--terminal-surface) !important;
+    --color-btn-text: var(--terminal-fg) !important;
+    --color-btn-border: transparent !important;
+    --color-btn-hover-bg: var(--terminal-hover) !important;
+    --color-btn-hover-border: transparent !important;
+    --color-btn-active-bg: var(--terminal-hover) !important;
+    --color-btn-primary-bg: var(--terminal-green) !important;
+    --color-btn-primary-text: var(--terminal-on-accent) !important;
+    --color-btn-primary-hover-bg: var(--button-primary-bgColor-hover) !important;
+    --color-btn-danger-text: var(--terminal-red) !important;
+    --color-btn-danger-hover-bg: var(--terminal-red) !important;
+    --color-btn-danger-hover-text: var(--terminal-on-accent) !important;
+  }
+
+  /* Square geometry, no elevation. Don't zero all borders: tables, inputs,
+     labels and diff separators still need their own boundaries. */
+  *, *::before, *::after {
+    color-scheme: inherit !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body {
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    font-family: var(--terminal-font) !important;
+    font-size: var(--terminal-size) !important;
+    caret-color: var(--terminal-blue);
+    scrollbar-color: var(--terminal-border) var(--terminal-bg);
+    scrollbar-width: thin;
+  }
+
+  /* Keep root rem units at GitHub's default; only text gets the chosen size. */
+  html { font-size: 16px !important; }
+
+  button, input, select, textarea, pre, code, kbd, samp,
+  .markdown-body, .text-mono, .blob-code, .blob-num, .react-code-text,
+  .cm-editor, .cm-scroller {
+    font-family: var(--terminal-font) !important;
+  }
+
+  .markdown-body, .blob-code, .blob-num, .react-code-text,
+  .cm-editor, .cm-scroller {
+    font-size: var(--terminal-size) !important;
+  }
+
+  pre, code, .blob-code, .react-code-text {
+    font-variant-ligatures: none !important;
+  }
+
+  ::selection {
+    background-color: light-dark(#f0f2d4, #3b3e48) !important;
+    color: var(--terminal-fg) !important;
+  }
+
+  /* One flat header, one thin separator. Search and all actions stay visible. */
+  .Header, .AppHeader, .HeaderMktg, .pagehead {
+    background: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  .UnderlineNav, [class*="prc-UnderlineNav-UnderlineWrapper-"] {
+    background: var(--terminal-bg) !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  .UnderlineNav-item, [class*="prc-UnderlineNav-UnderlineNavItem-"] {
+    font-size: var(--terminal-size) !important;
+  }
+
+  .UnderlineNav-item.selected::after,
+  .UnderlineNav-item[aria-current]::after,
+  [class*="prc-UnderlineNav-UnderlineNavItem-"][aria-current]::after {
+    height: 1px !important;
+    background: var(--terminal-blue) !important;
+  }
+
+  /* Flatten structural cards; preserve row and section separators. */
+  .Box:not(.Box--overlay), .file, .timeline-comment,
+  [class*="OverviewTable__"], [class*="prc-DataTable-TableContainer-"] {
+    border: 0 !important;
+  }
+
+  .Box-header, .file-header, .timeline-comment-header,
+  [class*="OverviewHeaderRow__"] {
+    background: var(--terminal-surface) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  .Box-row, .react-directory-row {
+    border-bottom-width: 1px !important;
+    border-color: var(--terminal-border) !important;
+  }
+
+  .Box-row:hover, .react-directory-row:hover {
+    background-color: var(--terminal-surface) !important;
+  }
+
+  .timeline-comment::before, .timeline-comment::after {
+    display: none !important;
+  }
+
+  /* Buttons use a flat fill instead of an outline. Retain native disabled,
+     primary, danger, loading and notification states. */
+  .btn, .Button, [class*="prc-Button-ButtonBase-"] {
+    border-color: transparent !important;
+    background-image: none !important;
+    font-size: var(--terminal-size) !important;
+    font-weight: 500 !important;
+  }
+
+  /* Primer shares the knob background between switches and segmented tabs.
+     Tabs need a text-safe selected fill; keep the bright switch knob intact. */
+  .SegmentedControl, [class*="prc-SegmentedControl-SegmentedControl-"] {
+    --controlKnob-bgColor-rest: var(--terminal-hover) !important;
+    --controlKnob-borderColor-rest: var(--terminal-border) !important;
+    color: var(--terminal-fg) !important;
+  }
+
+  .SegmentedControl-item--selected .Button,
+  [class*="prc-SegmentedControl-Button-"][aria-pressed="true"] {
+    color: var(--terminal-fg) !important;
+  }
+
+  /* Older notification filters use subnav rather than SegmentedControl. */
+  .subnav-item:is(.selected, [aria-selected="true"], [aria-current]:not([aria-current="false"])) {
+    background-color: var(--terminal-hover) !important;
+    color: var(--terminal-fg) !important;
+    border-color: var(--terminal-border) !important;
+    border-bottom-color: var(--terminal-blue) !important;
+  }
+
+  /* Inputs need a boundary, but nested inputs must not gain a second one. */
+  .form-control, .form-select, .TextInput-wrapper, textarea,
+  [class*="prc-components-TextInputWrapper-"],
+  [class*="prc-components-TextInputBaseWrapper-"] {
+    background-color: var(--terminal-inset) !important;
+    color: var(--terminal-fg) !important;
+    border-width: 1px !important;
+    border-color: var(--terminal-border) !important;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: var(--terminal-muted) !important;
+    opacity: 1 !important;
+  }
+
+  .TextInput-wrapper:focus-within,
+  [class*="prc-components-TextInputWrapper-"]:focus-within,
+  [class*="prc-components-TextInputBaseWrapper-"]:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Wrapped fields show focus on the wrapper, not a second clipped ring. */
+  .TextInput-wrapper input:focus-visible,
+  [class*="prc-components-TextInputWrapper-"] input:focus-visible,
+  [class*="prc-components-TextInputBaseWrapper-"] input:focus-visible {
+    outline: none !important;
+  }
+
+  :is(.form-control, .form-select, textarea):disabled,
+  .TextInput-wrapper[data-disabled],
+  [class*="prc-components-TextInputBaseWrapper-"][data-disabled] {
+    background-color: var(--terminal-surface) !important;
+    color: var(--terminal-disabled) !important;
+  }
+
+  :is(input, textarea, select):is([aria-invalid="true"], :user-invalid),
+  :is(.TextInput-wrapper, [class*="prc-components-TextInputBaseWrapper-"])[data-validation="error"] {
+    border-color: var(--terminal-red) !important;
+    outline-color: var(--terminal-red) !important;
+  }
+
+  :is(.TextInput-wrapper, [class*="prc-components-TextInputBaseWrapper-"])[data-validation="success"] {
+    border-color: var(--terminal-green) !important;
+  }
+
+  input[type="checkbox"], input[type="radio"], progress {
+    accent-color: var(--terminal-blue) !important;
+  }
+
+  /* Floating surfaces are the exception to borderless cards: without shadows
+     they need a single-pixel outline to separate them from the page. */
+  dialog, [role="dialog"], .Box--overlay, .dropdown-menu,
+  .SelectMenu-modal, .Popover-message,
+  [class*="prc-Overlay-Overlay-"], [class*="prc-Dialog-Dialog-"] {
+    background-color: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  [class*="prc-Dialog-Header-"] {
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  /* Modern, custom-element and legacy pseudo-element tooltips all use the
+     same surface/text pair, rather than an inverted white slab in dark mode. */
+  [role="tooltip"], tool-tip, .tooltipped::after,
+  [class*="prc-TooltipV2-Tooltip-"] {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  :is([role="tooltip"], tool-tip, [class*="prc-TooltipV2-Tooltip-"]) kbd {
+    background-color: var(--terminal-inset) !important;
+    color: var(--terminal-fg) !important;
+    border-color: var(--terminal-border) !important;
+  }
+
+  /* Keyboard focus is never removed with the shadows. */
+  :focus-visible {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Quiet typography instead of oversized document headings and pill counts. */
+  .markdown-body { line-height: 1.65 !important; }
+
+  .markdown-body h1, .markdown-body h2 {
+    font-size: 1.25em !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  .markdown-body h3, .markdown-body h4,
+  .markdown-body h5, .markdown-body h6 {
+    font-size: 1em !important;
+    font-weight: 600 !important;
+  }
+
+  .markdown-body blockquote {
+    color: var(--terminal-muted) !important;
+    border-left: 1px solid var(--terminal-border) !important;
+  }
+
+  .markdown-body hr {
+    height: 1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background-color: var(--terminal-border) !important;
+  }
+
+  .markdown-body pre, .markdown-body code, kbd {
+    background-color: var(--terminal-inset) !important;
+  }
+
+  .Counter, [class*="prc-CounterLabel-CounterLabel-"] {
+    background: transparent !important;
+    color: var(--terminal-muted) !important;
+    border: 0 !important;
+    font-weight: 400 !important;
+  }
+
+  .Counter::before, [class*="prc-CounterLabel-CounterLabel-"]::before { content: "["; }
+  .Counter::after, [class*="prc-CounterLabel-CounterLabel-"]::after { content: "]"; }
+}

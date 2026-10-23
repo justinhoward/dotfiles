@@ -1,0 +1,256 @@
+/* Slack / terminal, v1.0.3. Local CSS for the Slack-only DevTools watcher.
+   Sonokai dark / Everforest light, following system appearance. */
+:root {
+  color-scheme: light dark !important;
+  --terminal-font: "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace;
+  --terminal-size: 13px;
+  --terminal-bg: light-dark(#fffbef, #2c2e34);
+  --terminal-surface: light-dark(#f2efdf, #282a30);
+  --terminal-inset: light-dark(#f8f5e4, #222327);
+  --terminal-hover: light-dark(#eae8d8, #3b3e48);
+  --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+  --terminal-muted: light-dark(#60706b, #a1a7ae);
+  --terminal-border: light-dark(#dedccd, #454852);
+  --terminal-blue: light-dark(#25739b, #76cce0);
+  --terminal-green: light-dark(#637300, #9ed072);
+  --terminal-red: light-dark(#b83a39, #fc5d7c);
+  --terminal-yellow: light-dark(#8a6300, #e7c664);
+  --terminal-purple: light-dark(#9a4680, #b39df3);
+  --terminal-on-accent: light-dark(#fffbef, #181819);
+}
+
+/* Slack's legacy color tokens are comma-separated RGB components, not colors.
+   Keep these separate from light-dark() values so rgba(token, alpha) works. */
+:root, body, .sk-client-theme--dark, .sk-client-theme--light {
+  --terminal-rgb-bg: 255, 251, 239;
+  --terminal-rgb-surface: 242, 239, 223;
+  --terminal-rgb-hover: 234, 232, 216;
+  --terminal-rgb-fg: 92, 106, 114;
+  --terminal-rgb-muted: 96, 112, 107;
+  --terminal-rgb-blue: 37, 115, 155;
+  --terminal-rgb-on-accent: 255, 251, 239;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root, body, .sk-client-theme--dark, .sk-client-theme--light {
+    --terminal-rgb-bg: 44, 46, 52;
+    --terminal-rgb-surface: 40, 42, 48;
+    --terminal-rgb-hover: 59, 62, 72;
+    --terminal-rgb-fg: 226, 226, 227;
+    --terminal-rgb-muted: 161, 167, 174;
+    --terminal-rgb-blue: 118, 204, 224;
+    --terminal-rgb-on-accent: 24, 24, 25;
+  }
+}
+
+:root, body, .sk-client-theme--dark, .sk-client-theme--light {
+  --sk_primary_background: var(--terminal-rgb-bg) !important;
+  --sk_primary_foreground: var(--terminal-rgb-fg) !important;
+  --sk_inverted_background: var(--terminal-rgb-blue) !important;
+  --sk_inverted_foreground: var(--terminal-rgb-on-accent) !important;
+  --sk_foreground_max: var(--terminal-rgb-fg) !important;
+  --sk_foreground_high: var(--terminal-rgb-fg) !important;
+  --sk_foreground_low: var(--terminal-rgb-fg) !important;
+  --sk_foreground_min: var(--terminal-rgb-fg) !important;
+  --sk_foreground_max_solid: var(--terminal-rgb-fg) !important;
+  --sk_foreground_high_solid: var(--terminal-rgb-muted) !important;
+  --sk_foreground_low_solid: var(--terminal-rgb-hover) !important;
+  --sk_foreground_min_solid: var(--terminal-rgb-surface) !important;
+  --sk_highlight: var(--terminal-rgb-blue) !important;
+  --sk_highlight_hover: var(--terminal-rgb-blue) !important;
+  --sk_highlight_accent: var(--terminal-rgb-blue) !important;
+  --sk_button_primary: var(--terminal-rgb-blue) !important;
+  --sk_button_primary_hover: var(--terminal-rgb-blue) !important;
+  --sk_button_primary_text: var(--terminal-rgb-on-accent) !important;
+  --sk_focus_ring: var(--terminal-rgb-blue) !important;
+  --sk_a11y_focus_ring: var(--terminal-rgb-blue) !important;
+  --p-channel_sidebar__column-bg: var(--terminal-bg) !important;
+  --p-channel_sidebar__text-color: var(--terminal-fg) !important;
+  --p-channel_sidebar__item-hover-bg: var(--terminal-surface) !important;
+  --p-channel_sidebar__item-selected-bg: var(--terminal-hover) !important;
+  --p-channel_sidebar__item-selected-color: var(--terminal-fg) !important;
+}
+
+/* Preserve all native dimensions, ordering, controls, unread states, media,
+   and scroll behavior. Never blanket-recolor SVGs or override icon fonts. */
+*, *::before, *::after {
+  color-scheme: inherit !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+html, body {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-fg) !important;
+  font-family: var(--terminal-font) !important;
+  caret-color: var(--terminal-blue);
+  scrollbar-color: var(--terminal-border) var(--terminal-bg);
+  scrollbar-width: thin;
+}
+
+body, button, input, textarea, select, [contenteditable="true"],
+.p-channel_sidebar, .p-top_nav, .p-view_header,
+.c-message_kit__text, .c-message__body, .c-message__sender_link,
+.p-rich_text_section, .c-menu, .c-tooltip__tip {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-size) !important;
+}
+
+h1, h2, h3, h4, h5, h6, pre, code, kbd {
+  font-family: var(--terminal-font) !important;
+}
+
+pre, code { font-variant-ligatures: none !important; }
+
+.p-client_container, .p-workspace, .p-workspace__primary_view,
+.p-view_contents, .p-message_pane, #col_messages {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-fg) !important;
+}
+
+.p-top_nav, .p-client_workspace, .p-ia4_client_header,
+.p-view_header, .p-channel_header, .p-message_pane__top_bar {
+  background-color: var(--terminal-bg) !important;
+  background-image: none !important;
+  color: var(--terminal-fg) !important;
+  border-color: var(--terminal-border) !important;
+}
+
+.p-view_header, .p-channel_header {
+  border-bottom: 1px solid var(--terminal-border) !important;
+}
+
+.p-workspace__sidebar, .p-channel_sidebar, .p-sidebar,
+.p-ia4_sidebar, .p-ia4_sidebar_header, #col_channels {
+  background-color: var(--terminal-surface) !important;
+  color: var(--terminal-fg) !important;
+  border-color: var(--terminal-border) !important;
+}
+
+.p-tab_rail, .p-team_sidebar, .p-control_strip {
+  background-color: var(--terminal-inset) !important;
+  background-image: none !important;
+  color: var(--terminal-fg) !important;
+}
+
+.p-channel_sidebar__link, .p-channel_sidebar__channel,
+.p-channel_sidebar__section_heading, .p-channel_sidebar__name {
+  color: var(--terminal-fg) !important;
+}
+
+.p-channel_sidebar__link:hover {
+  background-color: var(--terminal-hover) !important;
+}
+
+.p-channel_sidebar__link--selected,
+.p-channel_sidebar__link[aria-selected="true"],
+[role="treeitem"][aria-selected="true"],
+[role="tab"][aria-selected="true"] {
+  background-color: var(--terminal-hover) !important;
+  color: var(--terminal-fg) !important;
+}
+
+.c-message_kit__message:not([class*="highlight"], [class*="selected"], [class*="mention"]),
+.c-message_kit__background:not([class*="highlight"], [class*="selected"], [class*="mention"]) {
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-fg) !important;
+}
+
+.c-message_kit__background--hover, .c-message_kit__message:hover {
+  background-color: var(--terminal-surface) !important;
+}
+
+.c-timestamp, .c-timestamp__label {
+  color: var(--terminal-muted) !important;
+}
+
+.p-message_pane a:not(.c-button), .c-message_kit__text a {
+  color: var(--terminal-blue) !important;
+}
+
+.c-button--primary:not(:disabled, [aria-disabled="true"]),
+[data-qa="texty_send_button"]:not(:disabled, [aria-disabled="true"]) {
+  background-color: var(--terminal-blue) !important;
+  color: var(--terminal-on-accent) !important;
+  border-color: transparent !important;
+}
+
+.c-unread_badge {
+  background-color: var(--terminal-blue) !important;
+  color: var(--terminal-on-accent) !important;
+}
+
+.c-wysiwyg_container, .p-message_input__input_container:not(:has(.c-wysiwyg_container)),
+.p-top_nav__search, .p-top_nav__search__container {
+  background-color: var(--terminal-inset) !important;
+  color: var(--terminal-fg) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+.c-wysiwyg_container:focus-within {
+  outline: 1px solid var(--terminal-blue) !important;
+  outline-offset: 2px !important;
+}
+
+input::placeholder, textarea::placeholder,
+.c-texty_input__placeholder, .ql-placeholder {
+  color: var(--terminal-muted) !important;
+}
+
+/* Popover shells cover the viewport to position their children. Never paint
+   those layers: doing so obscures the entire workspace when a tip/menu opens. */
+[role="dialog"]:not(.c-popover, .p-popover),
+[role="menu"]:not(.c-popover, .p-popover),
+[role="listbox"]:not(.c-popover, .p-popover),
+.c-menu, .p-flexpane {
+  background-color: var(--terminal-surface) !important;
+  color: var(--terminal-fg) !important;
+  border: 1px solid var(--terminal-border) !important;
+}
+
+.c-menu_item__li--highlighted,
+[role="option"][aria-selected="true"] {
+  background-color: var(--terminal-hover) !important;
+  color: var(--terminal-fg) !important;
+}
+
+.c-tooltip__tip, [role="tooltip"] {
+  --sk_inverted_foreground: var(--terminal-rgb-fg) !important;
+  --sk_inverted_background: var(--terminal-rgb-surface) !important;
+  color: var(--terminal-fg) !important;
+}
+
+/* The role can be on an unpainted positioning wrapper. Fill and outline only
+   Slack's visible tip. */
+.c-tooltip__tip {
+  --background: var(--terminal-surface) !important;
+  --foreground: var(--terminal-fg) !important;
+  background-color: var(--terminal-surface) !important;
+  border: 1px solid var(--terminal-border) !important;
+  /* Slack adds a drop-shadow filter in dark mode, separate from box-shadow. */
+  filter: none !important;
+}
+
+/* The rotated decorative arrow overlaps the rectangle's border. With no
+   drop-shadow outline it creates a gap; omit it for an uninterrupted box. */
+.c-tooltip__tip__arrow {
+  display: none !important;
+}
+
+pre, code, kbd {
+  background-color: var(--terminal-inset) !important;
+  color: var(--terminal-fg) !important;
+}
+
+blockquote { border-left: 1px solid var(--terminal-border) !important; }
+
+:focus-visible {
+  outline: 1px solid var(--terminal-blue) !important;
+  outline-offset: 2px !important;
+}
+
+::selection {
+  background-color: light-dark(#f0f2d4, #3b3e48) !important;
+  color: var(--terminal-fg) !important;
+}

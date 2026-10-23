@@ -10,4 +10,5 @@
 .config/skhd
 .config/swiftbar
 .config/finicky
+.config/slack-terminal
 {{ end -}}

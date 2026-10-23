@@ -1,0 +1,656 @@
+/* ==UserStyle==
+@name         Jira / terminal
+@namespace    github.com/justinhoward/dotfiles
+@version      1.0.1
+@description  Flat, square Jira Cloud in Victor Mono. Sonokai dark / Everforest light.
+@license      MIT
+@preprocessor default
+@var select appearance "Appearance" {
+  "system:Follow system*": "light dark",
+  "dark:Sonokai (dark)": "dark",
+  "light:Everforest (light)": "light"
+}
+@var text fontFamily "Font family" "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace
+@var range fontSize "Text size" [13, 11, 18, 1, "px"]
+==/UserStyle== */
+
+/* Jira routes only: don't also restyle Confluence, Atlassian login or admin.
+   For a custom Jira hostname, add url-prefix("https://your-jira-host/"). */
+@-moz-document regexp("https://[^/]+\\.atlassian\\.net/(?:[?#].*|(?:jira|browse|secure|plugins/servlet|projects|issues|servicedesk)(?:[/?#].*)?)?") {
+  :root {
+    color-scheme: var(--appearance, light dark) !important;
+
+    /* Keep these in sync with github-terminal.user.css. */
+    --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
+    --terminal-size: var(--fontSize, 13px);
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-yellow: light-dark(#8a6300, #e7c664);
+    --terminal-purple: light-dark(#9a4680, #b39df3);
+    --terminal-orange: light-dark(#a15a20, #f39660);
+    --terminal-cyan: light-dark(#247955, #76cce0);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-add: light-dark(#edf0d4, #394634);
+    --terminal-delete: light-dark(#f9e4df, #55393d);
+
+    /* Quiet colored surfaces for lozenges, selected rows and messages.
+       Use a darker base in dark mode to retain contrast for Sonokai pink. */
+    --terminal-tint-base: light-dark(#fffbef, #282a30);
+    --terminal-soft-blue: color-mix(in srgb, var(--terminal-blue) 4%, var(--terminal-tint-base));
+    --terminal-soft-green: color-mix(in srgb, var(--terminal-green) 4%, var(--terminal-tint-base));
+    --terminal-soft-red: color-mix(in srgb, var(--terminal-red) 4%, var(--terminal-tint-base));
+    --terminal-soft-yellow: color-mix(in srgb, var(--terminal-yellow) 4%, var(--terminal-tint-base));
+    --terminal-soft-purple: color-mix(in srgb, var(--terminal-purple) 4%, var(--terminal-tint-base));
+    --terminal-soft-orange: color-mix(in srgb, var(--terminal-orange) 4%, var(--terminal-tint-base));
+    --terminal-soft-cyan: color-mix(in srgb, var(--terminal-cyan) 4%, var(--terminal-tint-base));
+  }
+
+  /* Atlaskit tokens, including nested theme scopes and portaled components.
+     Pair bold fills with inverse text/icons; never blanket-recolor all SVGs. */
+  :root, [data-theme], [data-color-mode] {
+    --ds-text: var(--terminal-fg) !important;
+    --ds-text-subtle: var(--terminal-muted) !important;
+    --ds-text-subtlest: var(--terminal-muted) !important;
+    --ds-text-disabled: var(--terminal-disabled) !important;
+    --ds-text-inverse: var(--terminal-on-accent) !important;
+    --ds-text-selected: var(--terminal-blue) !important;
+    --ds-text-brand: var(--terminal-blue) !important;
+    --ds-text-danger: var(--terminal-red) !important;
+    --ds-text-danger-bolder: var(--terminal-red) !important;
+    --ds-text-warning: var(--terminal-yellow) !important;
+    --ds-text-warning-bolder: var(--terminal-yellow) !important;
+    --ds-text-warning-inverse: var(--terminal-on-accent) !important;
+    --ds-text-success: var(--terminal-green) !important;
+    --ds-text-success-bolder: var(--terminal-green) !important;
+    --ds-text-discovery: var(--terminal-purple) !important;
+    --ds-text-discovery-bolder: var(--terminal-purple) !important;
+    --ds-text-information: var(--terminal-blue) !important;
+    --ds-text-information-bolder: var(--terminal-blue) !important;
+    --ds-link: var(--terminal-blue) !important;
+    --ds-link-pressed: var(--terminal-blue) !important;
+    --ds-link-visited: var(--terminal-purple) !important;
+    --ds-link-visited-pressed: var(--terminal-purple) !important;
+    --ds-icon: var(--terminal-fg) !important;
+    --ds-icon-subtle: var(--terminal-muted) !important;
+    --ds-icon-subtlest: var(--terminal-muted) !important;
+    --ds-icon-disabled: var(--terminal-disabled) !important;
+    --ds-icon-inverse: var(--terminal-on-accent) !important;
+    --ds-icon-selected: var(--terminal-blue) !important;
+    --ds-icon-brand: var(--terminal-blue) !important;
+    --ds-icon-danger: var(--terminal-red) !important;
+    --ds-icon-warning: var(--terminal-yellow) !important;
+    --ds-icon-warning-inverse: var(--terminal-on-accent) !important;
+    --ds-icon-success: var(--terminal-green) !important;
+    --ds-icon-discovery: var(--terminal-purple) !important;
+    --ds-icon-information: var(--terminal-blue) !important;
+
+    --ds-surface: var(--terminal-bg) !important;
+    --ds-surface-hovered: var(--terminal-surface) !important;
+    --ds-surface-pressed: var(--terminal-hover) !important;
+    --ds-surface-container: var(--terminal-surface) !important;
+    --ds-surface-container-hovered: var(--terminal-hover) !important;
+    --ds-surface-container-pressed: var(--terminal-hover) !important;
+    --ds-surface-raised: var(--terminal-surface) !important;
+    --ds-surface-raised-hovered: var(--terminal-hover) !important;
+    --ds-surface-raised-pressed: var(--terminal-hover) !important;
+    --ds-surface-overlay: var(--terminal-surface) !important;
+    --ds-surface-overlay-hovered: var(--terminal-hover) !important;
+    --ds-surface-overlay-pressed: var(--terminal-hover) !important;
+    --ds-surface-sunken: var(--terminal-inset) !important;
+    --ds-rovo-surface-overlay: var(--terminal-surface) !important;
+    --ds-rovo-surface-overlay-hovered: var(--terminal-hover) !important;
+    --ds-rovo-surface-overlay-pressed: var(--terminal-hover) !important;
+    --ds-elevation-surface-current: var(--terminal-bg) !important;
+    --ds-background-input: var(--terminal-inset) !important;
+    --ds-background-input-hovered: var(--terminal-inset) !important;
+    --ds-background-input-pressed: var(--terminal-inset) !important;
+    --ds-background-disabled: var(--terminal-surface) !important;
+    --ds-background-neutral: var(--terminal-surface) !important;
+    --ds-background-neutral-hovered: var(--terminal-hover) !important;
+    --ds-background-neutral-pressed: var(--terminal-hover) !important;
+    --ds-background-neutral-subtle: transparent !important;
+    --ds-background-neutral-subtle-hovered: var(--terminal-hover) !important;
+    --ds-background-neutral-subtle-pressed: var(--terminal-hover) !important;
+    --ds-background-neutral-bold: var(--terminal-fg) !important;
+    --ds-background-neutral-bold-hovered: var(--terminal-fg) !important;
+    --ds-background-neutral-bold-pressed: var(--terminal-fg) !important;
+    --ds-background-inverse-subtle: color-mix(in srgb, var(--terminal-on-accent) 12%, transparent) !important;
+    --ds-background-inverse-subtle-hovered: color-mix(in srgb, var(--terminal-on-accent) 18%, transparent) !important;
+    --ds-background-inverse-subtle-pressed: color-mix(in srgb, var(--terminal-on-accent) 22%, transparent) !important;
+    --ds-background-selected: var(--terminal-soft-blue) !important;
+    --ds-background-selected-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-selected-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-selected-bold: var(--terminal-blue) !important;
+    --ds-background-selected-bold-hovered: var(--terminal-blue) !important;
+    --ds-background-selected-bold-pressed: var(--terminal-blue) !important;
+    --ds-background-brand-subtlest: var(--terminal-soft-blue) !important;
+    --ds-background-brand-subtlest-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-brand-subtlest-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-brand-bold: var(--terminal-blue) !important;
+    --ds-background-brand-bold-hovered: color-mix(in srgb, var(--terminal-blue) 85%, var(--terminal-fg)) !important;
+    --ds-background-brand-bold-pressed: var(--ds-background-brand-bold-hovered) !important;
+    --ds-background-brand-boldest: var(--terminal-blue) !important;
+    --ds-background-brand-boldest-hovered: var(--terminal-blue) !important;
+    --ds-background-brand-boldest-pressed: var(--terminal-blue) !important;
+    --ds-rovo-background-brand-bold: var(--terminal-blue) !important;
+    --ds-rovo-background-brand-bold-hovered: var(--ds-background-brand-bold-hovered) !important;
+    --ds-rovo-background-brand-bold-pressed: var(--ds-background-brand-bold-hovered) !important;
+
+    --ds-background-danger: var(--terminal-soft-red) !important;
+    --ds-background-danger-hovered: var(--terminal-soft-red) !important;
+    --ds-background-danger-pressed: var(--terminal-soft-red) !important;
+    --ds-background-danger-subtler: var(--terminal-soft-red) !important;
+    --ds-background-danger-subtler-hovered: var(--terminal-soft-red) !important;
+    --ds-background-danger-subtler-pressed: var(--terminal-soft-red) !important;
+    --ds-background-danger-subtle: var(--terminal-soft-red) !important;
+    --ds-background-danger-bold: var(--terminal-red) !important;
+    --ds-background-danger-bold-hovered: var(--terminal-red) !important;
+    --ds-background-danger-bold-pressed: var(--terminal-red) !important;
+    --ds-background-warning: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-hovered: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-pressed: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-subtler: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-subtler-hovered: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-subtler-pressed: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-subtle: var(--terminal-soft-yellow) !important;
+    --ds-background-warning-bold: var(--terminal-yellow) !important;
+    --ds-background-warning-bold-hovered: var(--terminal-yellow) !important;
+    --ds-background-warning-bold-pressed: var(--terminal-yellow) !important;
+    --ds-background-success: var(--terminal-soft-green) !important;
+    --ds-background-success-hovered: var(--terminal-soft-green) !important;
+    --ds-background-success-pressed: var(--terminal-soft-green) !important;
+    --ds-background-success-subtler: var(--terminal-soft-green) !important;
+    --ds-background-success-subtler-hovered: var(--terminal-soft-green) !important;
+    --ds-background-success-subtler-pressed: var(--terminal-soft-green) !important;
+    --ds-background-success-subtle: var(--terminal-soft-green) !important;
+    --ds-background-success-bold: var(--terminal-green) !important;
+    --ds-background-success-bold-hovered: var(--terminal-green) !important;
+    --ds-background-success-bold-pressed: var(--terminal-green) !important;
+    --ds-background-discovery: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-subtler: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-subtler-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-subtler-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-subtle: var(--terminal-soft-purple) !important;
+    --ds-background-discovery-bold: var(--terminal-purple) !important;
+    --ds-background-discovery-bold-hovered: var(--terminal-purple) !important;
+    --ds-background-discovery-bold-pressed: var(--terminal-purple) !important;
+    --ds-background-information: var(--terminal-soft-blue) !important;
+    --ds-background-information-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-information-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-information-subtler: var(--terminal-soft-blue) !important;
+    --ds-background-information-subtler-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-information-subtler-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-information-subtle: var(--terminal-soft-blue) !important;
+    --ds-background-information-bold: var(--terminal-blue) !important;
+    --ds-background-information-bold-hovered: var(--terminal-blue) !important;
+    --ds-background-information-bold-pressed: var(--terminal-blue) !important;
+
+    --ds-border: var(--terminal-border) !important;
+    --ds-border-bold: var(--terminal-muted) !important;
+    --ds-border-disabled: var(--terminal-border) !important;
+    --ds-border-input: var(--terminal-border) !important;
+    --ds-border-input-search: var(--terminal-border) !important;
+    --ds-border-inverse: var(--terminal-on-accent) !important;
+    --ds-border-focused: var(--terminal-blue) !important;
+    --ds-border-selected: var(--terminal-blue) !important;
+    --ds-border-brand: var(--terminal-blue) !important;
+    --ds-border-danger: var(--terminal-red) !important;
+    --ds-border-danger-subtle: var(--terminal-red) !important;
+    --ds-border-warning: var(--terminal-yellow) !important;
+    --ds-border-warning-subtle: var(--terminal-yellow) !important;
+    --ds-border-success: var(--terminal-green) !important;
+    --ds-border-success-subtle: var(--terminal-green) !important;
+    --ds-border-discovery: var(--terminal-purple) !important;
+    --ds-border-discovery-subtle: var(--terminal-purple) !important;
+    --ds-border-information: var(--terminal-blue) !important;
+    --ds-border-information-subtle: var(--terminal-blue) !important;
+    --ds-blanket: color-mix(in srgb, var(--terminal-inset) 65%, transparent) !important;
+    --ds-blanket-selected: color-mix(in srgb, var(--terminal-blue) 12%, transparent) !important;
+    --ds-blanket-danger: color-mix(in srgb, var(--terminal-red) 12%, transparent) !important;
+    --ds-shadow-raised: none !important;
+    --ds-shadow-overlay: none !important;
+    --ds-shadow-overflow: none !important;
+
+    --ds-font-family-body: var(--terminal-font) !important;
+    --ds-font-family-heading: var(--terminal-font) !important;
+    --ds-font-family-code: var(--terminal-font) !important;
+    --ds-font-family-brand-body: var(--terminal-font) !important;
+    --ds-font-family-brand-heading: var(--terminal-font) !important;
+    --ds-font-body: normal 400 var(--terminal-size)/1.5 var(--terminal-font) !important;
+    --ds-font-body-small: normal 400 calc(var(--terminal-size) - 1px)/1.5 var(--terminal-font) !important;
+    --ds-font-body-large: normal 400 calc(var(--terminal-size) + 1px)/1.5 var(--terminal-font) !important;
+    --ds-font-code: normal 400 var(--terminal-size)/1.5 var(--terminal-font) !important;
+    --ds-font-heading-xxlarge: normal 600 calc(var(--terminal-size) + 7px)/1.4 var(--terminal-font) !important;
+    --ds-font-heading-xlarge: normal 600 calc(var(--terminal-size) + 5px)/1.4 var(--terminal-font) !important;
+    --ds-font-heading-large: normal 600 calc(var(--terminal-size) + 3px)/1.4 var(--terminal-font) !important;
+    --ds-font-heading-medium: normal 600 calc(var(--terminal-size) + 2px)/1.4 var(--terminal-font) !important;
+    --ds-font-heading-small: normal 600 var(--terminal-size)/1.4 var(--terminal-font) !important;
+    --ds-font-heading-xsmall: normal 600 var(--terminal-size)/1.4 var(--terminal-font) !important;
+    --ds-font-heading-xxsmall: normal 600 calc(var(--terminal-size) - 1px)/1.4 var(--terminal-font) !important;
+    --ds-font-metric-large: normal 600 calc(var(--terminal-size) + 5px)/1.4 var(--terminal-font) !important;
+    --ds-font-metric-medium: normal 600 calc(var(--terminal-size) + 3px)/1.4 var(--terminal-font) !important;
+    --ds-font-metric-small: normal 600 var(--terminal-size)/1.4 var(--terminal-font) !important;
+    --ds-font-weight-bold: 600 !important;
+    --ds-radius-xsmall: 0 !important;
+    --ds-radius-small: 0 !important;
+    --ds-radius-medium: 0 !important;
+    --ds-radius-large: 0 !important;
+    --ds-radius-xlarge: 0 !important;
+    --ds-radius-xxlarge: 0 !important;
+    --ds-radius-full: 0 !important;
+    --ds-radius-tile: 0 !important;
+    --ds-border-width: 1px !important;
+    --ds-border-width-selected: 1px !important;
+    --ds-border-width-focused: 1px !important;
+
+    --ds-background-code-default: var(--terminal-inset) !important;
+    --ds-background-code-gutter: var(--terminal-surface) !important;
+    --ds-background-code-highlight: var(--terminal-hover) !important;
+    --ds-background-code-added-line: var(--terminal-add) !important;
+    --ds-background-code-added-highlight: var(--terminal-add) !important;
+    --ds-background-code-removed-line: var(--terminal-delete) !important;
+    --ds-background-code-removed-highlight: var(--terminal-delete) !important;
+    --ds-border-code: var(--terminal-border) !important;
+    --ds-text-code-default: var(--terminal-fg) !important;
+    --ds-text-code-comments: var(--terminal-muted) !important;
+    --ds-text-code-gutter: var(--terminal-muted) !important;
+    --ds-text-code-keywords: var(--terminal-red) !important;
+    --ds-text-code-strings: var(--terminal-green) !important;
+    --ds-text-code-functions: var(--terminal-blue) !important;
+    --ds-text-code-numbers: var(--terminal-purple) !important;
+    --ds-text-code-operators: var(--terminal-fg) !important;
+    --ds-text-code-tags: var(--terminal-red) !important;
+    --ds-text-code-accent-1: var(--terminal-orange) !important;
+    --ds-text-code-accent-2: var(--terminal-purple) !important;
+  }
+
+  /* Complete accent families: don't leave native light/dark backgrounds behind
+     when Firefox's appearance differs from Jira's account theme. */
+  :root, [data-theme], [data-color-mode] {
+    --ds-text-accent-lime: var(--terminal-green) !important;
+    --ds-text-accent-lime-bolder: var(--terminal-green) !important;
+    --ds-icon-accent-lime: var(--terminal-green) !important;
+    --ds-border-accent-lime: var(--terminal-green) !important;
+    --ds-border-accent-lime-subtle: var(--terminal-green) !important;
+    --ds-background-accent-lime-subtlest: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtlest-hovered: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtlest-pressed: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtler: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtler-hovered: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtler-pressed: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtle: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtle-hovered: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-subtle-pressed: var(--terminal-soft-green) !important;
+    --ds-background-accent-lime-bolder: var(--terminal-green) !important;
+    --ds-background-accent-lime-bolder-hovered: var(--terminal-green) !important;
+    --ds-background-accent-lime-bolder-pressed: var(--terminal-green) !important;
+    --ds-text-accent-red: var(--terminal-red) !important;
+    --ds-text-accent-red-bolder: var(--terminal-red) !important;
+    --ds-icon-accent-red: var(--terminal-red) !important;
+    --ds-border-accent-red: var(--terminal-red) !important;
+    --ds-border-accent-red-subtle: var(--terminal-red) !important;
+    --ds-background-accent-red-subtlest: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtlest-hovered: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtlest-pressed: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtler: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtler-hovered: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtler-pressed: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtle: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtle-hovered: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-subtle-pressed: var(--terminal-soft-red) !important;
+    --ds-background-accent-red-bolder: var(--terminal-red) !important;
+    --ds-background-accent-red-bolder-hovered: var(--terminal-red) !important;
+    --ds-background-accent-red-bolder-pressed: var(--terminal-red) !important;
+    --ds-text-accent-orange: var(--terminal-orange) !important;
+    --ds-text-accent-orange-bolder: var(--terminal-orange) !important;
+    --ds-icon-accent-orange: var(--terminal-orange) !important;
+    --ds-border-accent-orange: var(--terminal-orange) !important;
+    --ds-border-accent-orange-subtle: var(--terminal-orange) !important;
+    --ds-background-accent-orange-subtlest: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtlest-hovered: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtlest-pressed: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtler: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtler-hovered: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtler-pressed: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtle: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtle-hovered: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-subtle-pressed: var(--terminal-soft-orange) !important;
+    --ds-background-accent-orange-bolder: var(--terminal-orange) !important;
+    --ds-background-accent-orange-bolder-hovered: var(--terminal-orange) !important;
+    --ds-background-accent-orange-bolder-pressed: var(--terminal-orange) !important;
+    --ds-text-accent-yellow: var(--terminal-yellow) !important;
+    --ds-text-accent-yellow-bolder: var(--terminal-yellow) !important;
+    --ds-icon-accent-yellow: var(--terminal-yellow) !important;
+    --ds-border-accent-yellow: var(--terminal-yellow) !important;
+    --ds-border-accent-yellow-subtle: var(--terminal-yellow) !important;
+    --ds-background-accent-yellow-subtlest: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtlest-hovered: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtlest-pressed: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtler: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtler-hovered: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtler-pressed: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtle: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtle-hovered: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-subtle-pressed: var(--terminal-soft-yellow) !important;
+    --ds-background-accent-yellow-bolder: var(--terminal-yellow) !important;
+    --ds-background-accent-yellow-bolder-hovered: var(--terminal-yellow) !important;
+    --ds-background-accent-yellow-bolder-pressed: var(--terminal-yellow) !important;
+    --ds-text-accent-green: var(--terminal-green) !important;
+    --ds-text-accent-green-bolder: var(--terminal-green) !important;
+    --ds-icon-accent-green: var(--terminal-green) !important;
+    --ds-border-accent-green: var(--terminal-green) !important;
+    --ds-border-accent-green-subtle: var(--terminal-green) !important;
+    --ds-background-accent-green-subtlest: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtlest-hovered: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtlest-pressed: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtler: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtler-hovered: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtler-pressed: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtle: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtle-hovered: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-subtle-pressed: var(--terminal-soft-green) !important;
+    --ds-background-accent-green-bolder: var(--terminal-green) !important;
+    --ds-background-accent-green-bolder-hovered: var(--terminal-green) !important;
+    --ds-background-accent-green-bolder-pressed: var(--terminal-green) !important;
+    --ds-text-accent-teal: var(--terminal-cyan) !important;
+    --ds-text-accent-teal-bolder: var(--terminal-cyan) !important;
+    --ds-icon-accent-teal: var(--terminal-cyan) !important;
+    --ds-border-accent-teal: var(--terminal-cyan) !important;
+    --ds-border-accent-teal-subtle: var(--terminal-cyan) !important;
+    --ds-background-accent-teal-subtlest: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtlest-hovered: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtlest-pressed: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtler: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtler-hovered: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtler-pressed: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtle: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtle-hovered: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-subtle-pressed: var(--terminal-soft-cyan) !important;
+    --ds-background-accent-teal-bolder: var(--terminal-cyan) !important;
+    --ds-background-accent-teal-bolder-hovered: var(--terminal-cyan) !important;
+    --ds-background-accent-teal-bolder-pressed: var(--terminal-cyan) !important;
+    --ds-text-accent-blue: var(--terminal-blue) !important;
+    --ds-text-accent-blue-bolder: var(--terminal-blue) !important;
+    --ds-icon-accent-blue: var(--terminal-blue) !important;
+    --ds-border-accent-blue: var(--terminal-blue) !important;
+    --ds-border-accent-blue-subtle: var(--terminal-blue) !important;
+    --ds-background-accent-blue-subtlest: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtlest-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtlest-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtler: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtler-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtler-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtle: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtle-hovered: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-subtle-pressed: var(--terminal-soft-blue) !important;
+    --ds-background-accent-blue-bolder: var(--terminal-blue) !important;
+    --ds-background-accent-blue-bolder-hovered: var(--terminal-blue) !important;
+    --ds-background-accent-blue-bolder-pressed: var(--terminal-blue) !important;
+    --ds-text-accent-purple: var(--terminal-purple) !important;
+    --ds-text-accent-purple-bolder: var(--terminal-purple) !important;
+    --ds-icon-accent-purple: var(--terminal-purple) !important;
+    --ds-border-accent-purple: var(--terminal-purple) !important;
+    --ds-border-accent-purple-subtle: var(--terminal-purple) !important;
+    --ds-background-accent-purple-subtlest: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtlest-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtlest-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtler: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtler-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtler-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtle: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtle-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-subtle-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-accent-purple-bolder: var(--terminal-purple) !important;
+    --ds-background-accent-purple-bolder-hovered: var(--terminal-purple) !important;
+    --ds-background-accent-purple-bolder-pressed: var(--terminal-purple) !important;
+    --ds-text-accent-magenta: var(--terminal-purple) !important;
+    --ds-text-accent-magenta-bolder: var(--terminal-purple) !important;
+    --ds-icon-accent-magenta: var(--terminal-purple) !important;
+    --ds-border-accent-magenta: var(--terminal-purple) !important;
+    --ds-border-accent-magenta-subtle: var(--terminal-purple) !important;
+    --ds-background-accent-magenta-subtlest: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtlest-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtlest-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtler: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtler-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtler-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtle: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtle-hovered: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-subtle-pressed: var(--terminal-soft-purple) !important;
+    --ds-background-accent-magenta-bolder: var(--terminal-purple) !important;
+    --ds-background-accent-magenta-bolder-hovered: var(--terminal-purple) !important;
+    --ds-background-accent-magenta-bolder-pressed: var(--terminal-purple) !important;
+    --ds-text-accent-gray: var(--terminal-muted) !important;
+    --ds-text-accent-gray-bolder: var(--terminal-fg) !important;
+    --ds-icon-accent-gray: var(--terminal-muted) !important;
+    --ds-border-accent-gray: var(--terminal-border) !important;
+    --ds-border-accent-gray-subtle: var(--terminal-border) !important;
+    --ds-background-accent-gray-subtlest: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtlest-hovered: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtlest-pressed: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtler: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtler-hovered: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtler-pressed: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtle: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtle-hovered: var(--terminal-surface) !important;
+    --ds-background-accent-gray-subtle-pressed: var(--terminal-surface) !important;
+    --ds-background-accent-gray-bolder: var(--terminal-fg) !important;
+    --ds-background-accent-gray-bolder-hovered: var(--terminal-fg) !important;
+    --ds-background-accent-gray-bolder-pressed: var(--terminal-fg) !important;
+  }
+
+  *, *::before, *::after {
+    color-scheme: inherit !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Keep rem-based layout measurements intact; customize text, not grid sizes. */
+  html { font-size: 16px !important; }
+  html, body {
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    font-family: var(--terminal-font) !important;
+    caret-color: var(--terminal-blue);
+    scrollbar-color: var(--terminal-border) var(--terminal-bg);
+    scrollbar-width: thin;
+  }
+  body { font-size: var(--terminal-size) !important; }
+
+  button, input, select, textarea, h1, h2, h3, h4, h5, h6,
+  pre, code, kbd, samp, .ak-renderer-document, .ProseMirror {
+    font-family: var(--terminal-font) !important;
+  }
+
+  button, input, select, textarea, .ak-renderer-document, .ProseMirror {
+    font-size: var(--terminal-size) !important;
+  }
+
+  button {
+    background-image: none !important;
+    border-color: transparent !important;
+    font-weight: 500 !important;
+  }
+
+  pre, code { font-variant-ligatures: none !important; }
+
+  ::selection {
+    background-color: light-dark(#f0f2d4, #3b3e48) !important;
+    color: var(--terminal-fg) !important;
+  }
+
+  header[role="banner"], #header {
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  /* Selected controls always get a matching foreground, not an inverse white
+     fill with inherited white text. Disabled/loading behavior stays native. */
+  [role="tab"][aria-selected="true"],
+  button[aria-pressed="true"]:not(:disabled, [aria-disabled="true"]) {
+    --ds-text-inverse: var(--terminal-fg) !important;
+    --ds-icon-inverse: var(--terminal-fg) !important;
+    background-color: var(--terminal-hover) !important;
+    color: var(--terminal-fg) !important;
+  }
+
+  [role="tab"][aria-selected="true"] {
+    border-bottom: 1px solid var(--terminal-blue) !important;
+  }
+
+  [role="option"][aria-selected="true"]:not([aria-disabled="true"]),
+  tr[aria-selected="true"] {
+    background-color: var(--terminal-soft-blue) !important;
+    color: var(--terminal-fg) !important;
+  }
+
+  /* Text-field wrappers own their boundary: don't add a second input border. */
+  [data-ds--text-field--container] {
+    background-color: var(--terminal-inset) !important;
+    border-width: 1px !important;
+  }
+
+  [data-ds--text-field--container]:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  [data-ds--text-field--container] input:focus-visible {
+    outline: none !important;
+  }
+
+  input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="submit"], [type="button"]),
+  textarea, select {
+    color: var(--terminal-fg) !important;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: var(--terminal-muted) !important;
+    opacity: 1 !important;
+  }
+
+  input:disabled, textarea:disabled, select:disabled,
+  [data-ds--text-field--container][data-disabled="true"] {
+    color: var(--terminal-disabled) !important;
+  }
+
+  :is(input, textarea, select):is([aria-invalid="true"], :user-invalid),
+  [data-ds--text-field--container][data-invalid="true"] {
+    border-color: var(--terminal-red) !important;
+    outline-color: var(--terminal-red) !important;
+  }
+
+  input[type="checkbox"], input[type="radio"], progress {
+    accent-color: var(--terminal-blue) !important;
+  }
+
+  /* Floating surfaces need a boundary now that their shadows are gone. */
+  dialog, [role="dialog"], [role="alertdialog"], [role="menu"],
+  [role="listbox"], [role="tooltip"] {
+    background-color: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  [role="tooltip"] {
+    /* Current Atlaskit puts the role on a popover host, with a presentation
+       child painted using neutral-bold. Override that fill as well as inverse
+       text, so both the host and visible child use the same readable pair. */
+    --ds-background-neutral-bold: var(--terminal-surface) !important;
+    --ds-background-neutral-bold-hovered: var(--terminal-surface) !important;
+    --ds-background-neutral-bold-pressed: var(--terminal-surface) !important;
+    --ds-text-inverse: var(--terminal-fg) !important;
+    --ds-icon-inverse: var(--terminal-fg) !important;
+  }
+
+  kbd, [role="tooltip"] kbd {
+    background-color: var(--terminal-inset) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  dialog::backdrop { background-color: var(--ds-blanket) !important; }
+
+  :focus-visible {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Keep board dimensions, ordering, drag/drop zones and configured color
+     strips. Only add thin separators; don't flatten status/priority children. */
+  [data-component-selector="platform-board-kit.ui.column.draggable-column"],
+  .ghx-column {
+    border-right: 1px solid var(--terminal-border) !important;
+  }
+
+  [data-testid="platform-board-kit.common.ui.column-header.header.column-header-container"] {
+    background-color: var(--terminal-bg) !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  [data-testid="platform-board-kit.ui.swimlane.swimlane-wrapper"],
+  .ghx-swimlane {
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  [data-component-selector="platform-board-kit.ui.column.draggable-column"]
+  [data-testid="software-context-menu.ui.context-menu.children-wrapper"] > div,
+  .ghx-issue {
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  .ghx-issue {
+    background-color: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border-left-width: 1px !important;
+  }
+
+  .ghx-issue.ghx-selected {
+    background-color: var(--terminal-soft-blue) !important;
+    border-bottom-color: var(--terminal-blue) !important;
+  }
+
+  thead th {
+    background-color: var(--terminal-surface) !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+
+  .ak-renderer-document, .ProseMirror { line-height: 1.65 !important; }
+
+  :is(.ak-renderer-document, .ProseMirror) :is(h1, h2) {
+    font-size: 1.25em !important;
+    font-weight: 600 !important;
+  }
+
+  :is(.ak-renderer-document, .ProseMirror) :is(h3, h4, h5, h6) {
+    font-size: 1em !important;
+    font-weight: 600 !important;
+  }
+
+  :is(.ak-renderer-document, .ProseMirror) blockquote {
+    border-left: 1px solid var(--terminal-border) !important;
+  }
+
+  :is(.ak-renderer-document, .ProseMirror) pre {
+    background-color: var(--terminal-inset) !important;
+  }
+
+  hr {
+    height: 1px !important;
+    border: 0 !important;
+    background-color: var(--terminal-border) !important;
+  }
+}
