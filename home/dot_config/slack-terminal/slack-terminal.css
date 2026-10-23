@@ -1,9 +1,16 @@
-/* Slack / terminal, v1.0.3. Local CSS for the Slack-only DevTools watcher.
+/* Slack / terminal, v1.1.1. Local CSS for the Slack-only DevTools watcher.
    Sonokai dark / Everforest light, following system appearance. */
 :root {
   color-scheme: light dark !important;
   --terminal-font: "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace;
   --terminal-size: 13px;
+  --terminal-title-size: calc(var(--terminal-size) + 1px);
+  --terminal-meta-size: calc(var(--terminal-size) - 1px);
+  --terminal-sidebar-size: calc(var(--terminal-size) - 1px);
+  --terminal-line-height: 1.45;
+  --terminal-header-height: 40px;
+  --terminal-message-padding-y: 4px;
+  --terminal-message-padding-x: 12px;
   --terminal-bg: light-dark(#fffbef, #2c2e34);
   --terminal-surface: light-dark(#f2efdf, #282a30);
   --terminal-inset: light-dark(#f8f5e4, #222327);
@@ -71,8 +78,9 @@
   --p-channel_sidebar__item-selected-color: var(--terminal-fg) !important;
 }
 
-/* Preserve all native dimensions, ordering, controls, unread states, media,
-   and scroll behavior. Never blanket-recolor SVGs or override icon fonts. */
+/* Preserve ordering, controls, unread states and scroll behavior. Density
+   changes below target individual surfaces, never every element's padding.
+   Never blanket-recolor SVGs or override icon fonts. */
 *, *::before, *::after {
   color-scheme: inherit !important;
   border-radius: 0 !important;
@@ -95,6 +103,166 @@ body, button, input, textarea, select, [contenteditable="true"],
 .p-rich_text_section, .c-menu, .c-tooltip__tip {
   font-family: var(--terminal-font) !important;
   font-size: var(--terminal-size) !important;
+}
+
+/* Slack mixes inherited 13px text with hardcoded 15px message containers and
+   18px titles. Normalize the actual containers, not every span/icon globally. */
+:root, body {
+  --font-family-default: var(--terminal-font) !important;
+  --font-family-lato: var(--terminal-font) !important;
+  --font-family-monospace: var(--terminal-font) !important;
+}
+
+.c-message_kit__message, .c-message_kit__blocks, .c-message__message_blocks,
+.c-message_kit__sender, .c-block_kit, .p-section_block, .p-actions_block,
+.p-rich_text_section, .p-plain_text_element,
+.c-message_attachment__body, .c-message_attachment__pretext,
+.c-message_attachment__text, .c-message_attachment__field_value {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-size) !important;
+  line-height: var(--terminal-line-height) !important;
+}
+
+.p-view_header__channel_title, .p-ia4_sidebar_header,
+.p-ia4_sidebar_header__title, .p-channel_header__channel_name,
+.c-message_attachment__title, .c-message_attachment__title_link {
+  font-family: var(--terminal-font) !important;
+  font-size: var(--terminal-title-size) !important;
+  line-height: 1.4 !important;
+}
+
+.p-channel_sidebar__section_heading,
+.p-channel_sidebar__section_heading :is([class*="sectionHeadingLabel"], [class*="overflowEllipsis"]) {
+  font-size: var(--terminal-sidebar-size) !important;
+  line-height: 24px !important;
+}
+
+.p-channel_sidebar, .p-channel_sidebar__link,
+.p-channel_sidebar__name, .p-channel_sidebar__placeholder {
+  font-size: var(--terminal-sidebar-size) !important;
+}
+
+.c-timestamp, .c-timestamp__label, .c-badge,
+.c-reaction__count, .p-tab_rail__button__label,
+.c-message_attachment__footer, .c-message_attachment__footer_text {
+  font-size: var(--terminal-meta-size) !important;
+}
+
+/* These headers are flex children, not fixed-position virtual-list rows. */
+.p-view_header, .p-ia4_sidebar_header:not(.p-ia4_sidebar_header--withSubtitle) {
+  height: var(--terminal-header-height) !important;
+  min-height: var(--terminal-header-height) !important;
+  padding-inline: 10px !important;
+}
+
+.p-view_contents [class*="channel_tab_bar__"] {
+  height: 32px !important;
+  min-height: 32px !important;
+  padding-inline: 10px !important;
+  align-items: center !important;
+}
+
+.p-view_contents [class*="channel_tab_bar__"] .c-tabs__tab {
+  height: 32px !important;
+  min-height: 32px !important;
+  padding-block: 0 !important;
+}
+
+/* Slack's label wrapper still had 8px vertical padding after the bar shrank.
+   Size and center the button, content wrapper and label as a single unit. */
+.p-view_contents [class*="channel_tab_bar__"] .c-tabs__tab_content {
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.p-view_contents [class*="channel_tab_bar__"] [class*="channel_tab_label__"] {
+  height: 32px !important;
+  padding: 0 8px !important;
+  align-items: center !important;
+}
+
+/* Keep sidebar row heights intact: their absolute offsets are supplied by JS.
+   Trim horizontal whitespace and typography without invalidating that cache. */
+.p-channel_sidebar__link, .p-channel_sidebar__section_heading {
+  padding-inline: 4px !important;
+}
+
+.p-channel_sidebar__section_heading {
+  margin-inline: 4px !important;
+}
+
+/* Chat rows are content-measured. Keep avatars and attachment previews intact,
+   and remove the old negative-margin/padding compensation as one pair. */
+.p-message_pane .c-message_kit__gutter,
+.p-threads_flexpane .c-message_kit__gutter {
+  padding: var(--terminal-message-padding-y) var(--terminal-message-padding-x) !important;
+}
+
+.p-message_pane .c-message_kit__gutter__right,
+.p-threads_flexpane .c-message_kit__gutter__right {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.c-message_kit__blocks .p-section_block {
+  margin-block: 4px !important;
+}
+
+.c-message_kit__blocks .p-actions_block {
+  margin-block: 2px 4px !important;
+}
+
+.c-message_kit__blocks .p-actions_block__action {
+  margin-block: 4px 0 !important;
+  margin-inline-end: 6px !important;
+}
+
+.p-actions_block .c-input_text {
+  margin-bottom: 0 !important;
+}
+
+/* Compact controls still have at least 24px click targets. Don't resize emoji
+   and media assets or generic icon-only buttons to compensate for font sizes. */
+.c-button--small, .p-actions_block .c-select_input {
+  height: auto !important;
+  min-height: 26px !important;
+  padding: 2px 8px !important;
+  line-height: 1.4 !important;
+}
+
+.c-reaction {
+  padding-inline: 6px !important;
+  margin-inline-end: 3px !important;
+}
+
+.c-wysiwyg_container .ql-editor {
+  min-height: 32px !important;
+  padding: 4px 10px !important;
+  line-height: var(--terminal-line-height) !important;
+}
+
+.c-wysiwyg_container .c-wysiwyg_container__footer {
+  height: 32px !important;
+  min-height: 32px !important;
+}
+
+.p-tab_rail__button {
+  height: auto !important;
+  min-height: 56px !important;
+}
+
+.p-tab_rail__button .c-tabs__tab_content {
+  padding-block: 4px !important;
+  font-size: var(--terminal-meta-size) !important;
+}
+
+.p-tab_rail__button__icon {
+  height: 32px !important;
+}
+
+.p-tab_rail__button__label {
+  line-height: 1.25 !important;
 }
 
 h1, h2, h3, h4, h5, h6, pre, code, kbd {
@@ -182,15 +350,31 @@ pre, code { font-variant-ligatures: none !important; }
 }
 
 .c-wysiwyg_container, .p-message_input__input_container:not(:has(.c-wysiwyg_container)),
-.p-top_nav__search, .p-top_nav__search__container {
+.p-top_nav__search__container {
   background-color: var(--terminal-inset) !important;
   color: var(--terminal-fg) !important;
   border: 1px solid var(--terminal-border) !important;
 }
 
 .c-wysiwyg_container:focus-within {
-  outline: 1px solid var(--terminal-blue) !important;
-  outline-offset: 2px !important;
+  border-color: var(--terminal-blue) !important;
+  outline: none !important;
+}
+
+/* Each composite field owns one border. Don't give the nested search button
+   or rich-text editor another rectangle on top of the wrapper's focus state. */
+.p-top_nav__search__container .p-top_nav__search {
+  background-color: var(--terminal-inset) !important;
+  border: 0 !important;
+}
+
+.p-top_nav__search__container:focus-within {
+  border-color: var(--terminal-blue) !important;
+}
+
+.c-wysiwyg_container .ql-editor:focus-visible,
+.p-top_nav__search__container .p-top_nav__search:focus-visible {
+  outline: none !important;
 }
 
 input::placeholder, textarea::placeholder,

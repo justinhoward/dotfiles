@@ -1,0 +1,477 @@
+/* ==UserStyle==
+@name         Google Calendar / terminal
+@namespace    github.com/justinhoward/dotfiles
+@version      1.0.5
+@description  Flat, square Google Calendar in Victor Mono. Sonokai dark / Everforest light.
+@license      MIT
+@preprocessor default
+@var select appearance "Appearance" {
+  "system:Follow system*": "light dark",
+  "dark:Sonokai (dark)": "dark",
+  "light:Everforest (light)": "light"
+}
+@var text fontFamily "Font family" "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace
+@var range fontSize "Text size" [13, 11, 18, 1, "px"]
+==/UserStyle== */
+
+/* Calendar web routes only; no Google account pages or cross-origin add-ons. */
+@-moz-document url-prefix("https://calendar.google.com/calendar/") {
+  :root {
+    color-scheme: var(--appearance, light dark) !important;
+
+    /* Keep the shared palette in sync with github-terminal.user.css. */
+    --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
+    --terminal-size: var(--fontSize, 13px);
+    --terminal-header-height: 56px;
+    --terminal-header-control-size: 40px;
+    --terminal-create-height: calc(max(24px, var(--terminal-size) * 1.25) + 8px);
+    --terminal-create-space: calc(var(--terminal-create-height) + 28px);
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-yellow: light-dark(#8a6300, #e7c664);
+    --terminal-purple: light-dark(#9a4680, #b39df3);
+    --terminal-orange: light-dark(#a15a20, #f39660);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-selected: light-dark(#e8efeb, #303e44);
+    --terminal-soft-green: color-mix(in srgb, var(--terminal-green) 4%, var(--terminal-surface));
+    --terminal-soft-red: color-mix(in srgb, var(--terminal-red) 4%, var(--terminal-surface));
+    --terminal-soft-yellow: color-mix(in srgb, var(--terminal-yellow) 4%, var(--terminal-surface));
+    --terminal-soft-purple: color-mix(in srgb, var(--terminal-purple) 4%, var(--terminal-surface));
+    --terminal-soft-orange: color-mix(in srgb, var(--terminal-orange) 4%, var(--terminal-surface));
+  }
+
+  /* Calendar defines theme tokens on body.DO879e, not just :root. The Google
+     header defines a further nested theme. Override those actual scopes so
+     app theme classes cannot leave a native light/dark toolbar or dialog. */
+  :root, body.DO879e, #gb {
+    --gm3-sys-color-background: var(--terminal-bg) !important;
+    --gm3-sys-color-on-background: var(--terminal-fg) !important;
+    --gm3-sys-color-surface: var(--terminal-bg) !important;
+    --gm3-sys-color-surface-bright: var(--terminal-bg) !important;
+    --gm3-sys-color-surface-dim: var(--terminal-inset) !important;
+    --gm3-sys-color-surface-variant: var(--terminal-border) !important;
+    --gm3-sys-color-surface-container-lowest: var(--terminal-inset) !important;
+    --gm3-sys-color-surface-container-low: var(--terminal-bg) !important;
+    --gm3-sys-color-surface-container: var(--terminal-surface) !important;
+    --gm3-sys-color-surface-container-high: var(--terminal-hover) !important;
+    --gm3-sys-color-surface-container-highest: var(--terminal-border) !important;
+    --gm3-sys-color-on-surface: var(--terminal-fg) !important;
+    --gm3-sys-color-on-surface-variant: var(--terminal-muted) !important;
+    --gm3-sys-color-outline: var(--terminal-border) !important;
+    --gm3-sys-color-outline-variant: var(--terminal-border) !important;
+    --gm3-sys-color-surface-tint: var(--terminal-blue) !important;
+    --gm3-sys-color-inverse-surface: var(--terminal-surface) !important;
+    --gm3-sys-color-inverse-on-surface: var(--terminal-fg) !important;
+    --gm3-sys-color-inverse-primary: var(--terminal-blue) !important;
+
+    --gm3-sys-color-primary: var(--terminal-blue) !important;
+    --gm3-sys-color-on-primary: var(--terminal-on-accent) !important;
+    --gm3-sys-color-primary-container: var(--terminal-selected) !important;
+    --gm3-sys-color-on-primary-container: var(--terminal-fg) !important;
+    --gm3-sys-color-primary-fixed: var(--terminal-selected) !important;
+    --gm3-sys-color-primary-fixed-dim: var(--terminal-selected) !important;
+    --gm3-sys-color-on-primary-fixed: var(--terminal-fg) !important;
+    --gm3-sys-color-on-primary-fixed-variant: var(--terminal-blue) !important;
+    --gm3-sys-color-secondary: var(--terminal-blue) !important;
+    --gm3-sys-color-on-secondary: var(--terminal-on-accent) !important;
+    --gm3-sys-color-secondary-container: var(--terminal-selected) !important;
+    --gm3-sys-color-on-secondary-container: var(--terminal-fg) !important;
+    --gm3-sys-color-secondary-fixed: var(--terminal-selected) !important;
+    --gm3-sys-color-secondary-fixed-dim: var(--terminal-selected) !important;
+    --gm3-sys-color-on-secondary-fixed: var(--terminal-fg) !important;
+    --gm3-sys-color-on-secondary-fixed-variant: var(--terminal-blue) !important;
+    --gm3-sys-color-tertiary: var(--terminal-green) !important;
+    --gm3-sys-color-on-tertiary: var(--terminal-on-accent) !important;
+    --gm3-sys-color-tertiary-container: var(--terminal-soft-green) !important;
+    --gm3-sys-color-on-tertiary-container: var(--terminal-green) !important;
+    --gm3-sys-color-tertiary-fixed: var(--terminal-soft-green) !important;
+    --gm3-sys-color-tertiary-fixed-dim: var(--terminal-soft-green) !important;
+    --gm3-sys-color-on-tertiary-fixed: var(--terminal-green) !important;
+    --gm3-sys-color-on-tertiary-fixed-variant: var(--terminal-green) !important;
+    --gm3-sys-color-error: var(--terminal-red) !important;
+    --gm3-sys-color-on-error: var(--terminal-on-accent) !important;
+    --gm3-sys-color-error-container: var(--terminal-soft-red) !important;
+    --gm3-sys-color-on-error-container: var(--terminal-red) !important;
+
+    --cal-sys-color-now-indicator: var(--terminal-red) !important;
+    --cal-sys-color-helper-variant: var(--terminal-muted) !important;
+    --cal-sys-color-bubble-banner: var(--terminal-surface) !important;
+    --cal-sys-color-scrollbar: var(--terminal-border) !important;
+    --cal-sys-color-scrollbar-hover: var(--terminal-muted) !important;
+    --cal-sys-color-scrollbar-active: var(--terminal-fg) !important;
+    --cal-sys-color-warning: var(--terminal-yellow) !important;
+    --cal-sys-color-warning-container: var(--terminal-soft-yellow) !important;
+    --cal-sys-color-on-warning: var(--terminal-on-accent) !important;
+    --cal-sys-color-on-warning-container: var(--terminal-yellow) !important;
+    --cal-sys-color-conflict: var(--terminal-orange) !important;
+    --cal-sys-color-conflict-container: var(--terminal-soft-orange) !important;
+    --cal-sys-color-on-conflict: var(--terminal-on-accent) !important;
+    --cal-sys-color-on-conflict-container: var(--terminal-orange) !important;
+    --cal-sys-color-success: var(--terminal-green) !important;
+    --cal-sys-color-success-container: var(--terminal-soft-green) !important;
+    --cal-sys-color-on-success: var(--terminal-on-accent) !important;
+    --cal-sys-color-on-success-container: var(--terminal-green) !important;
+    --cal-sys-color-night: var(--terminal-purple) !important;
+    --cal-sys-color-night-container: var(--terminal-soft-purple) !important;
+    --cal-sys-color-on-night: var(--terminal-on-accent) !important;
+    --cal-sys-color-on-night-container: var(--terminal-purple) !important;
+    --cal-sys-color-everyone-available: var(--terminal-green) !important;
+    --cal-sys-color-time-slot-non-conflicting-chip-background: var(--terminal-soft-green) !important;
+    --cal-sys-color-time-slot-non-conflicting-chip-hover-background: var(--terminal-soft-green) !important;
+    --cal-sys-color-time-slot-non-conflicting-chip-inner-edge: var(--terminal-green) !important;
+    --cal-sys-color-time-slot-conflicting-chip-background: var(--terminal-soft-yellow) !important;
+    --cal-sys-color-time-slot-conflicting-chip-hover-background: var(--terminal-soft-yellow) !important;
+    --cal-sys-color-time-slot-conflicting-chip-inner-edge: var(--terminal-yellow) !important;
+
+    --gm3-text-field-filled-container-color: var(--terminal-inset) !important;
+    --gm3-text-field-filled-disabled-input-text-color: var(--terminal-disabled) !important;
+    --gm3-text-field-outlined-disabled-input-text-color: var(--terminal-disabled) !important;
+    --gm3-menu-container-color: var(--terminal-surface) !important;
+    --gm3-menu-surface-container-color: var(--terminal-surface) !important;
+    --gm3-menu-list-item-disabled-label-text-color: var(--terminal-disabled) !important;
+    --gm3-list-list-item-disabled-label-text-color: var(--terminal-disabled) !important;
+
+    --og-bar-background: var(--terminal-bg) !important;
+    --og-bar-color: var(--terminal-fg) !important;
+    --og-logo-color: var(--terminal-fg) !important;
+    --og-link-color: var(--terminal-fg) !important;
+    --og-svg-color: var(--terminal-fg) !important;
+    --og-theme-color: var(--terminal-fg) !important;
+    --og-search-form-input-color: var(--terminal-fg) !important;
+    --og-search-form-placeholder-color: var(--terminal-muted) !important;
+    --og-search-form-svg-color: var(--terminal-fg) !important;
+    --og-transparent-theme-searchform-background: var(--terminal-inset) !important;
+  }
+
+  /* Keep layout units, event hit targets, hidden accessibility headings and
+     drag/resize affordances native. No blanket borders, colors or SVG fills. */
+  *, *::before, *::after {
+    color-scheme: inherit !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html { font-size: 16px !important; }
+  html, body {
+    background: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    font-family: var(--terminal-font) !important;
+    caret-color: var(--terminal-blue);
+  }
+  body { font-size: var(--terminal-size) !important; }
+
+  /* Material icon ligatures must keep their font, including nested spans.
+     Rich-text editor contents also keep their chosen formatting. */
+  *:not(:where(.google-material-icons, .google-material-icons *, .google-material-icons-filled, .google-material-icons-filled *, .material-icons-extended, .material-icons-extended *, svg, svg *, [contenteditable="true"], [contenteditable="true"] *)) {
+    font-family: var(--terminal-font) !important;
+  }
+
+  :is(button, input, select, textarea,
+  .AeBiU-vQzf8d, .FOBRw-vQzf8d, .mUIrbf-vQzf8d, .HhUn9,
+  .aqdrmf-rymPhb-fpDzbe-fmcmS, .aqdrmf-rymPhb-JMEf7e,
+  .mkaajd, .aIwHYe, .az313e, .mqTdDf, .toUqff,
+  .NCyou, .WPEztb, .fWMZdd, .gpQ66b, .wO6pL, .H4QSac, .tWjOu):not(:where(.PTdDEc, .vEJ0bc, [data-eventchip], [data-eventchip] *)) {
+    font-size: var(--terminal-size) !important;
+  }
+
+  .gb_2d, .UyW9db, .rBpBVc { font-size: calc(var(--terminal-size) + 3px) !important; }
+  .nSCxEf { font-size: calc(var(--terminal-size) + 3px) !important; }
+
+  /* Snapshot's actual outer surfaces; token-based descendants follow without
+     painting arbitrary divs, event chips, calendar swatches or chart segments. */
+  #gb, .tEhMVd, .pSp5K, .KKOvEb, .SGWAac, .hEtGGf, .lYYbjc, .mXmivb, .pbeTDb,
+  .Kk7lMc-DWWcKd-OomVLb-haAclf, .Kk7lMc-QWPxkf-LgbsSe-haAclf {
+    background-color: var(--terminal-bg) !important;
+  }
+
+  #gb { border-bottom: 1px solid var(--terminal-border) !important; }
+  .hEtGGf:after { background-image: linear-gradient(to left, var(--terminal-bg), transparent) !important; }
+
+  /* Compact the actual Google bar, not popup/drawer contents. Match Gmail's
+     56px bar / native 48px rows; don't resize search internals or scale icons.
+     Keep Calendar's floating event-editor/propose-time header native. */
+  @media screen {
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] {
+      height: var(--terminal-header-height) !important;
+      min-height: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd {
+      padding: 3px 8px !important;
+      box-sizing: border-box !important;
+      align-items: center !important;
+    }
+
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd :is(.gb_2d, .gb_Ad) {
+      line-height: var(--terminal-header-control-size) !important;
+      margin-block: 0 !important;
+      top: 0 !important;
+    }
+
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .gb_5c { top: 0 !important; }
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd img.gb_bd { margin-block: 0 !important; }
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .gb_7c { align-items: center !important; }
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .gb_Cd { padding-inline-end: 12px !important; }
+
+    /* Native width is 24px content-box. Pair both 40px border-box dimensions
+       so 8px padding still leaves a full 24px menu glyph, not an 8px SVG. */
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .gb_cd {
+      width: var(--terminal-header-control-size) !important;
+      height: var(--terminal-header-control-size) !important;
+      padding: 8px !important;
+      margin-inline: 2px !important;
+      box-sizing: border-box !important;
+    }
+
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .gb_Hd { padding-block: 0 !important; }
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .gb_9a {
+      height: var(--terminal-header-control-size) !important;
+      margin-block: 0 !important;
+      padding-block: 0 !important;
+    }
+
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .AeBiU-LgbsSe { padding-inline: 12px !important; }
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .UZLCCd { margin-inline-end: 8px !important; }
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) #gb[role="banner"] > .gb_Vd .uW9umb { padding-inline: 4px !important; }
+
+    /* Native SGWAac subtracts 64px even when the header is shorter. Reclaim
+       those pixels without changing grid/event units, or print layouts. */
+    body:not([data-viewfamily="EVENT_EDIT"], [data-viewfamily="PROPOSE_TIME"]) .KKOvEb:has(> #gb[role="banner"]) > .SGWAac {
+      height: calc(100% - var(--terminal-header-height)) !important;
+    }
+
+    /* The optional secondary banner accounts for the other 47px of 111px. */
+    body.lzJw2b[data-viewfamily="EVENT"] .KKOvEb:has(> #gb[role="banner"]) > .SGWAac {
+      height: calc(100% - var(--terminal-header-height) - 47px) !important;
+    }
+  }
+
+  #gb form[role="search"] {
+    background: var(--terminal-inset) !important;
+    color: var(--terminal-fg) !important;
+    /* Paint a boundary without changing the native form's box dimensions. */
+    outline: 1px solid var(--terminal-border) !important;
+    outline-offset: -1px !important;
+  }
+
+  #gb form[role="search"] input {
+    background: transparent !important;
+    color: var(--terminal-fg) !important;
+  }
+
+  #gb form[role="search"]:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+
+  #gb form[role="search"] input:focus-visible { outline: none !important; }
+
+  /* Outlined, filled, text and icon buttons from the captured Material UI.
+     Date buttons are excluded from nUt0vb recoloring: today/selection tokens
+     already provide paired fills/text. Do not target all role=button elements. */
+  .AeBiU-LgbsSe, .VAKbPe {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border-color: transparent !important;
+  }
+
+  .pYTkkf-Bz112c-LgbsSe, .nUt0vb:not(.sOjuj, .nSCxEf) {
+    color: var(--terminal-fg) !important;
+  }
+  .pYTkkf-Bz112c-LgbsSe { background: transparent !important; }
+
+  .mUIrbf-LgbsSe { color: var(--terminal-blue) !important; }
+
+  .FOBRw-LgbsSe, .nUt0vb.gPr58d {
+    background: var(--terminal-blue) !important;
+    color: var(--terminal-on-accent) !important;
+    border-color: transparent !important;
+  }
+
+  .nUt0vb:not(.sOjuj, .nSCxEf) > .x5FT4e, .nUt0vb.gPr58d .bjMtic {
+    color: inherit !important;
+  }
+
+  /* Create floats outside the 256px sidebar. Fill its inner 224px width,
+     keeping the native 16px gutters, not 100% of the page-sized parent. Leave
+     collapsed/narrow-drawer positioning and the popup menu's width native. */
+  .dwlvNd:has(.nUt0vb.gPr58d):not(.K36rb *, .KMkTad *) {
+    width: calc(256px - 32px) !important;
+  }
+
+  .dwlvNd:not(.K36rb *, .KMkTad *) > .tB5Jxf-xl07Ob-XxIAqe-OWXEXe-oYxtQd,
+  .dwlvNd:not(.K36rb *, .KMkTad *) .nUt0vb.gPr58d {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Replace the 56px FAB with text/icon height plus 4px vertical padding.
+     Keep native ripple/focus layers, the dropdown arrow and menu anchoring. */
+  .dwlvNd .nUt0vb.gPr58d {
+    height: var(--terminal-create-height) !important;
+    min-height: 0 !important;
+    padding: 4px 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .dwlvNd .nUt0vb.gPr58d > .x5FT4e {
+    padding: 0 !important;
+    font-size: inherit !important;
+    line-height: 1.25 !important;
+  }
+
+  .dwlvNd .nUt0vb.gPr58d .bjMtic { gap: 8px !important; }
+
+  /* Reclaim the matching sidebar spacer, and move its decorative edge fades
+     with it. Only event views with the current Create button use this sizing. */
+  body[data-viewfamily="EVENT"] .KKOvEb:has(> .dwlvNd .nUt0vb.gPr58d) .QQYuzf .LXjtcc {
+    height: var(--terminal-create-space) !important;
+  }
+
+  body[data-viewfamily="EVENT"] .KKOvEb:has(> .dwlvNd .nUt0vb.gPr58d) .hEtGGf:before,
+  body[data-viewfamily="EVENT"] .KKOvEb:has(> .dwlvNd .nUt0vb.gPr58d) .hEtGGf:after {
+    top: var(--terminal-create-space) !important;
+  }
+
+  :is(.AeBiU-LgbsSe, .VAKbPe, .pYTkkf-Bz112c-LgbsSe):hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--terminal-hover) !important;
+  }
+
+  .VAKbPe[aria-checked="true"], .wc0xVe .nUt0vb.aOXrUc {
+    background: var(--terminal-selected) !important;
+    color: var(--terminal-blue) !important;
+  }
+
+  :is(.AeBiU-LgbsSe, .FOBRw-LgbsSe, .mUIrbf-LgbsSe, .pYTkkf-Bz112c-LgbsSe, .nUt0vb, .VAKbPe):is(:disabled, [aria-disabled="true"]) {
+    color: var(--terminal-disabled) !important;
+  }
+
+  .AeBiU-vQzf8d, .FOBRw-vQzf8d, .mUIrbf-vQzf8d, .HhUn9, .VAKbPe .oOsXNe,
+  .AeBiU-kBDsod-Rtc0Jf, .FOBRw-kBDsod-Rtc0Jf, .pYTkkf-Bz112c-kBDsod-Rtc0Jf {
+    color: inherit !important;
+  }
+
+  :is(.AeBiU-LgbsSe, .FOBRw-LgbsSe, .pYTkkf-Bz112c-LgbsSe, .nUt0vb.dg8yV) svg.NMm5M,
+  .nUt0vb.dg8yV .x5FT4e svg {
+    color: inherit !important;
+    fill: currentColor !important;
+  }
+
+  .VAKbPe svg { color: inherit !important; }
+  .VAKbPe .SQAIec { stroke: currentColor !important; }
+
+  /* Existing grid lines, including the hourly pseudo-elements. Don't change
+     grid spacing or column widths: inline event coordinates depend on them. */
+  .BiKU4b, .sJ9Raf:after, .INK2ed, .gZ8fdb, .E42vBe, .qLWd9c {
+    border-color: var(--terminal-border) !important;
+  }
+
+  /* Filled-event text normally uses gm3 surface as ink. Preserve Google's
+     native ink for its native event palette, independently of our appearance.
+     Explicit white/dark contrast variants and dimmed previews stay native;
+     declined/pending-event inline colors, outlines and strikes are untouched. */
+  body.DO879e { --terminal-event-ink: #ffffff; }
+  body.DO879e.CcsDpe { --terminal-event-ink: #131314; }
+  @media (prefers-color-scheme: dark) {
+    body.DO879e.PC2yOb { --terminal-event-ink: #131314; }
+  }
+
+  [data-eventchip] :is(.lhydbb, .qeMtzb).EiZ8Dd:not(.Gt6oUd, .qqMC3e, .UflSff) {
+    color: var(--terminal-event-ink) !important;
+    fill: var(--terminal-event-ink) !important;
+  }
+
+  /* Short meetings may be only 14px tall; enlarge UI text, not event labels
+     beyond their native compact size. Never set line-height or chip dimensions. */
+  .GTG3wb[data-eventchip], .GTG3wb[data-eventchip] :is(.lhydbb, .qeMtzb) {
+    font-size: min(var(--terminal-size), 12px) !important;
+  }
+
+  /* Stacked month/all-day rows use em offsets, not just font-size for text.
+     PTdDEc/vEJ0bc must retain their 24px row unit (20px in compact density),
+     even when a slot is a button. The native token also covers 16px working-
+     location slots. Shrinking this unit while bars stay 22/18px tall overlaps
+     rows. Size only the visible KF4T6b chip text, not its positioning wrapper. */
+  .PTdDEc, .vEJ0bc {
+    font-size: var(--cal-stacked-layout-chip-container-height, 24px) !important;
+  }
+
+  .KF4T6b { font-size: min(var(--terminal-size), 12px) !important; }
+
+  /* Menus and tooltips often paint their visible child, not the ARIA host. */
+  dialog, [role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"], [role="tooltip"],
+  .tB5Jxf-xl07Ob-XxIAqe, .ne2Ple-z59Tgd, .OFaVze, .pIQtMd {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  /* Nested lists/content share their floating wrapper's single boundary. */
+  .tB5Jxf-xl07Ob-XxIAqe [role="menu"],
+  .OFaVze .pIQtMd, .OFaVze [role="listbox"] { border: 0 !important; }
+
+  [role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"] {
+    color: var(--terminal-fg) !important;
+  }
+
+  :is([role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]):hover {
+    background-color: var(--terminal-hover) !important;
+  }
+
+  :is([role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"])[aria-disabled="true"] {
+    color: var(--terminal-disabled) !important;
+  }
+
+  a { color: var(--terminal-blue) !important; }
+  #gb a[role="button"] { color: var(--terminal-fg) !important; }
+
+  input, textarea, select { color: var(--terminal-fg) !important; }
+  input::placeholder, textarea::placeholder { color: var(--terminal-muted) !important; opacity: 1 !important; }
+  input:disabled, textarea:disabled, select:disabled { color: var(--terminal-disabled) !important; }
+
+  :is(input, textarea, select):is([aria-invalid="true"], :user-invalid) {
+    outline-color: var(--terminal-red) !important;
+    border-color: var(--terminal-red) !important;
+  }
+
+  /* The field wrapper owns its boundary and native error/disabled indicators. */
+  .Fgl6fe-fmcmS-yrriRe:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+  .Fgl6fe-fmcmS-yrriRe input:focus-visible { outline: none !important; }
+
+  :focus-visible { outline: 1px solid var(--terminal-blue) !important; outline-offset: 2px !important; }
+  ::selection { background-color: var(--terminal-selected) !important; color: var(--terminal-fg) !important; }
+
+  /* Match Gmail's scrollbars. Firefox controls native thumb corner geometry;
+     WebKit/Chromium allow square CSS thumbs after standard-style overrides. */
+  * { scrollbar-color: var(--terminal-border) var(--terminal-bg); scrollbar-width: thin; }
+
+  @supports selector(::-webkit-scrollbar) {
+    * { scrollbar-color: auto !important; scrollbar-width: auto !important; }
+    *::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+    *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner {
+      background: var(--terminal-bg) !important;
+      border-radius: 0 !important;
+    }
+    *::-webkit-scrollbar-thumb {
+      background: var(--terminal-border) !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    *::-webkit-scrollbar-thumb:hover { background: var(--terminal-muted) !important; }
+  }
+}

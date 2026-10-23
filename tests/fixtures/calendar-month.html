@@ -1,0 +1,53 @@
+<!doctype html>
+<!-- Synthetic regression fixture using the native stylesheet's stacked-layout
+     selectors and density tokens. Button slots deliberately exercise the generic
+     control-font rule; this is not a captured month DOM or a rendering test. -->
+<html lang="en">
+<head><style>
+  .PTdDEc {
+    position: relative;
+    font-size: 24px;
+    --cal-stacked-layout-chip-container-height: 24px;
+    --cal-stacked-layout-chip-height: 22px;
+  }
+  .Defj0e .PTdDEc {
+    font-size: 20px;
+    --cal-stacked-layout-chip-container-height: 20px;
+    --cal-stacked-layout-chip-height: 18px;
+  }
+  .vEJ0bc { position: absolute; height: var(--cal-stacked-layout-chip-container-height); }
+  .KF4T6b {
+    height: var(--cal-stacked-layout-chip-height);
+    line-height: calc(var(--cal-stacked-layout-chip-height) - 2px);
+    font-size: 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+</style></head>
+<body class="DO879e GrxScd CcsDpe" data-viewfamily="EVENT" data-viewkey="MONTH">
+  <main data-period-type="month">
+    <section aria-label="Default density">
+      <div class="PTdDEc" style="height:4em">
+        <button class="vEJ0bc" data-eventchip style="top:0em;left:0;width:100%">
+          <span class="KF4T6b" style="background-color:#4b99d2"><span class="nHqeVd"><span class="WBi6vc">Example multi-day event</span></span></span>
+        </button>
+        <button class="vEJ0bc" data-eventchip style="top:1em;left:0;width:100%">
+          <span class="KF4T6b" style="background-color:#8a67a0"><span class="nHqeVd"><span class="WBi6vc">Second multi-day event</span></span></span>
+        </button>
+        <div class="vEJ0bc" data-eventchip style="top:2em;left:0;width:14.2857%">
+          <div class="KF4T6b smECzc"><span class="ZWOtn"><span class="VlNR9e" style="border-color:#4b99d2"></span></span><span class="nHqeVd"><span class="DvyQhe">9am</span><span class="WBi6vc">Timed example</span></span></div>
+        </div>
+        <div class="vEJ0bc KCIIIb" style="top:3em;left:0;width:14.2857%"><button class="KF4T6b KCIIIb">3 more</button></div>
+      </div>
+    </section>
+    <section class="Defj0e" aria-label="Compact density">
+      <div class="PTdDEc" style="height:3em">
+        <button class="vEJ0bc" data-eventchip style="top:0em;left:0;width:100%"><span class="KF4T6b" style="background-color:#4b99d2"><span class="WBi6vc">Compact first event</span></span></button>
+        <button class="vEJ0bc" data-eventchip style="top:1em;left:0;width:100%"><span class="KF4T6b" style="background-color:#8a67a0"><span class="WBi6vc">Compact second event</span></span></button>
+        <div class="vEJ0bc KCIIIb" style="top:2em;left:0;width:14.2857%"><button class="KF4T6b KCIIIb">2 more</button></div>
+      </div>
+    </section>
+  </main>
+</body></html>

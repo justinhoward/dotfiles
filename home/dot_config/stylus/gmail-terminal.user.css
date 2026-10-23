@@ -1,0 +1,895 @@
+/* ==UserStyle==
+@name         Gmail / terminal
+@namespace    github.com/justinhoward/dotfiles
+@version      1.0.6
+@description  Flat, square Gmail in Victor Mono. Sonokai dark / Everforest light.
+@license      MIT
+@preprocessor default
+@var select appearance "Appearance" {
+  "system:Follow system*": "light dark",
+  "dark:Sonokai (dark)": "dark",
+  "light:Everforest (light)": "light"
+}
+@var text fontFamily "Font family" "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace
+@var range fontSize "Text size" [13, 11, 18, 1, "px"]
+==/UserStyle== */
+
+/* Gmail only, including Workspace accounts and compose pop-outs. Google
+   account pages, Calendar, Drive and cross-origin side-panel apps are excluded. */
+@-moz-document url-prefix("https://mail.google.com/mail/") {
+  :root {
+    color-scheme: var(--appearance, light dark) !important;
+
+    /* Keep these in sync with github-terminal.user.css. */
+    --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
+    --terminal-size: var(--fontSize, 13px);
+    --terminal-header-height: 56px;
+    --terminal-header-control-size: 40px;
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-selected: light-dark(#e8efeb, #303e44);
+  }
+
+  /* A real scope boundary protects every rule below, including generic field
+     rules and Gmail classes that also appear in pasted/quoted email HTML.
+     Inherited text defaults are reset on the document roots outside the scope. */
+  @scope (:root) to (.a3s, [contenteditable="true"]) {
+    /* Gmail mixes hardcoded Closure UI with token-based Material components.
+       Map semantic colors at its actual nested theme scopes, not just :root:
+       bkL/qp can be dark while IU/a98/r4 and side-panel roots reset to light.
+       These private tokens are observed in the capture, not a public API. */
+    :root, body, #gb, .bkL, .qp, .GYfbG, .MxSLJe, .ZdZJp, .cSrKee,
+    .aqe, .bGV, .nptvo, .o9kyXe, .RuSUmb, .aXR-Jw,
+    .IU, .a98, .r4, .fp0W3e, .IrJs2b, .Npriae, .Z3l91d {
+      --gm3-sys-color-background: var(--terminal-bg) !important;
+      --gm3-sys-color-on-background: var(--terminal-fg) !important;
+      --gm3-sys-color-surface: var(--terminal-bg) !important;
+      --gm3-sys-color-surface-bright: var(--terminal-bg) !important;
+      --gm3-sys-color-surface-dim: var(--terminal-inset) !important;
+      --gm3-sys-color-surface-variant: var(--terminal-border) !important;
+      --gm3-sys-color-surface-container-lowest: var(--terminal-inset) !important;
+      --gm3-sys-color-surface-container-low: var(--terminal-bg) !important;
+      --gm3-sys-color-surface-container: var(--terminal-surface) !important;
+      --gm3-sys-color-surface-container-high: var(--terminal-hover) !important;
+      --gm3-sys-color-surface-container-highest: var(--terminal-border) !important;
+      --gm3-sys-color-on-surface: var(--terminal-fg) !important;
+      --gm3-sys-color-on-surface-variant: var(--terminal-muted) !important;
+      --gm3-sys-color-outline: var(--terminal-muted) !important;
+      --gm3-sys-color-outline-variant: var(--terminal-border) !important;
+      --gm3-sys-color-surface-tint: var(--terminal-blue) !important;
+      --gm3-sys-color-inverse-surface: var(--terminal-surface) !important;
+      --gm3-sys-color-inverse-on-surface: var(--terminal-fg) !important;
+      --gm3-sys-color-inverse-primary: var(--terminal-blue) !important;
+      --gm3-sys-color-primary: var(--terminal-blue) !important;
+      --gm3-sys-color-on-primary: var(--terminal-on-accent) !important;
+      --gm3-sys-color-primary-container: var(--terminal-selected) !important;
+      --gm3-sys-color-on-primary-container: var(--terminal-blue) !important;
+      --gm3-sys-color-primary-fixed: var(--terminal-selected) !important;
+      --gm3-sys-color-primary-fixed-dim: var(--terminal-selected) !important;
+      --gm3-sys-color-on-primary-fixed: var(--terminal-fg) !important;
+      --gm3-sys-color-on-primary-fixed-variant: var(--terminal-blue) !important;
+      --gm3-sys-color-secondary: var(--terminal-blue) !important;
+      --gm3-sys-color-on-secondary: var(--terminal-on-accent) !important;
+      --gm3-sys-color-secondary-container: var(--terminal-selected) !important;
+      --gm3-sys-color-on-secondary-container: var(--terminal-fg) !important;
+      --gm3-sys-color-error: var(--terminal-red) !important;
+      --gm3-sys-color-on-error: var(--terminal-on-accent) !important;
+      --gm3-sys-color-error-container: color-mix(in srgb, var(--terminal-red) 4%, var(--terminal-surface)) !important;
+      --gm3-sys-color-on-error-container: var(--terminal-red) !important;
+      --gm3-sys-color-tertiary: var(--terminal-green) !important;
+      --gm3-sys-color-on-tertiary: var(--terminal-on-accent) !important;
+      --gm3-sys-color-tertiary-container: color-mix(in srgb, var(--terminal-green) 4%, var(--terminal-surface)) !important;
+      --gm3-sys-color-on-tertiary-container: var(--terminal-green) !important;
+    }
+
+    /* Legacy comma-separated *-rgb tokens cannot contain light-dark() colors.
+       Keep them native; override the disabled component color tokens instead.
+       This works with forced appearance as well as the system preference, and
+       doesn't change importance-selected colors or any component dimensions. */
+    .pYTkkf-JX-I, .VYBDae-JX-I, .wX4xVc-JX-I, .jWOS7-JX-I, .mUIrbf-I, .UywwFc-I, .FOBRw-I {
+      --gm3-icon-button-standard-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-icon-button-filled-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-icon-button-filled-disabled-container-color: var(--terminal-surface) !important;
+      --gm3-icon-button-filled-tonal-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-icon-button-filled-tonal-disabled-container-color: var(--terminal-surface) !important;
+      --gm3-icon-button-outlined-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-icon-button-outlined-disabled-selected-container-color: var(--terminal-surface) !important;
+      --gm3-icon-button-outlined-disabled-unselected-outline-color: var(--terminal-border) !important;
+      --gm3-button-text-disabled-label-text-color: var(--terminal-disabled) !important;
+      --gm3-button-text-with-icon-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-button-filled-disabled-label-text-color: var(--terminal-disabled) !important;
+      --gm3-button-filled-with-icon-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-button-filled-disabled-container-color: var(--terminal-surface) !important;
+      --gm3-button-filled-tonal-disabled-label-text-color: var(--terminal-disabled) !important;
+      --gm3-button-filled-tonal-with-icon-disabled-icon-color: var(--terminal-disabled) !important;
+      --gm3-button-filled-tonal-disabled-container-color: var(--terminal-surface) !important;
+    }
+
+    /* Let Material label tokens carry typography without touching icon fonts,
+       icon sizes, line-height, hit targets or user-chosen editor formatting. */
+    .mUIrbf-I, .UywwFc-I, .FOBRw-I {
+      --gm3-button-text-label-text-font: var(--terminal-font) !important;
+      --gm3-button-text-label-text-size: var(--terminal-size) !important;
+      --gm3-button-filled-label-text-font: var(--terminal-font) !important;
+      --gm3-button-filled-label-text-size: var(--terminal-size) !important;
+      --gm3-button-filled-tonal-label-text-font: var(--terminal-font) !important;
+      --gm3-button-filled-tonal-label-text-size: var(--terminal-size) !important;
+    }
+
+    .O68mGe-M, .aqdrmf-Kf-J8 {
+      --gm3-menu-list-item-label-text-font: var(--terminal-font) !important;
+      --gm3-menu-list-item-label-text-size: var(--terminal-size) !important;
+      --gm3-list-list-item-label-text-font: var(--terminal-font) !important;
+      --gm3-list-list-item-label-text-size: var(--terminal-size) !important;
+    }
+
+    /* New search-focus variables are defined locally on fields/SVGs by photo
+       themes; map those actual owners while retaining the explicit header UI. */
+    #gb form[role="search"], #gb form[role="search"] input,
+    #gb form[role="search"] input::placeholder, #gb form[role="search"] svg {
+      --og-searchform-focused-background: var(--terminal-inset) !important;
+      --og-transparent-theme-searchform-background: var(--terminal-inset) !important;
+      --og-searchform-focused-color: var(--terminal-fg) !important;
+      --og-search-form-input-color: var(--terminal-fg) !important;
+      --og-searchform-focused-placeholder-color: var(--terminal-muted) !important;
+      --og-search-form-placeholder-color: var(--terminal-muted) !important;
+      --og-searchform-focused-icon-color: var(--terminal-fg) !important;
+      --og-search-form-svg-color: var(--terminal-fg) !important;
+      --og-svg-color: var(--terminal-fg) !important;
+    }
+
+    /* Keep overrides on shell components, not arbitrary divs/tables or email
+       HTML. Never override icon fonts or blanket-recolor SVGs, stars or labels. */
+    *, *::before, *::after {
+      color-scheme: inherit !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+
+    /* Standard scrollbar colors/width cover Firefox and nested Gmail scrollers.
+       Thumb geometry isn't exposed by Firefox's page CSS. Chromium/WebKit can
+       use the square pseudo-elements below; reset standard properties there
+       because non-auto values otherwise take precedence over those rules. */
+    * {
+      scrollbar-color: var(--terminal-border) var(--terminal-bg);
+      scrollbar-width: thin;
+    }
+
+    @supports selector(::-webkit-scrollbar) {
+      * { scrollbar-color: auto !important; scrollbar-width: auto !important; }
+
+      *::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+
+      *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner {
+        background: var(--terminal-bg) !important;
+        border-radius: 0 !important;
+      }
+
+      *::-webkit-scrollbar-thumb {
+        background: var(--terminal-border) !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+      }
+
+      *::-webkit-scrollbar-thumb:hover { background: var(--terminal-muted) !important; }
+    }
+
+    /* Preserve rem-based layout measurements and Gmail's density settings. */
+    html { font-size: 16px !important; }
+    html, body {
+      background: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      font-family: var(--terminal-font) !important;
+      caret-color: var(--terminal-blue);
+      scrollbar-color: var(--terminal-border) var(--terminal-bg);
+      scrollbar-width: thin;
+    }
+    body { font-size: var(--terminal-size) !important; }
+
+    button, input, select, textarea, kbd,
+    #gb, .aeN, .G-atb, .zA, .zA > td, .yW, .y6, .y2, .xW,
+    .n0, .CJ, .bsU, .hP, .gD, .g3, .go, .ams, .amn,
+    .T-I, .J-M, .J-KU, .Kj-JD, .aYF, .aoD, .aoT {
+      font-family: var(--terminal-font) !important;
+    }
+
+    button, input, select, textarea,
+    .zA, .zA > td, .yW, .y6, .y2, .xW, .n0, .CJ, .bsU,
+    .gD, .g3, .go, .ams, .amn, .T-I, .J-M, .J-KU, .aoT {
+      font-size: var(--terminal-size) !important;
+    }
+
+    /* Main layout, inbox/conversation surfaces and the app/sidebar rails. */
+    .bkL, .bkK, .aeN, .aeJ, .aeF, .aeI, .AO,
+    .nH[role="main"], .aUx, .brC-aT5-aOt-Jw {
+      background: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    #gb, .aeH, .G-atb {
+      background: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border-bottom: 1px solid var(--terminal-border) !important;
+    }
+
+    /* Match Calendar's 56px Google bar while keeping native 48px rows and search
+       geometry. Preserve 40px menu controls and native responsive visibility. Leave
+       Gmail's JS-sized message panes to the app after refresh. */
+    @media screen {
+      #gb[role="banner"] {
+        height: var(--terminal-header-height) !important;
+        min-height: 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      #gb[role="banner"] > .gb_Vd {
+        padding: 3px 8px !important;
+        box-sizing: border-box !important;
+        align-items: center !important;
+      }
+
+      #gb[role="banner"] > .gb_Vd :is(.gb_2d, .gb_Ad) {
+        line-height: var(--terminal-header-control-size) !important;
+        margin-block: 0 !important;
+        top: 0 !important;
+      }
+
+      #gb[role="banner"] > .gb_Vd .gb_5c { top: 0 !important; }
+      #gb[role="banner"] > .gb_Vd img.gb_bd { margin-block: 0 !important; }
+      #gb[role="banner"] > .gb_Vd .gb_7c { align-items: center !important; }
+      #gb[role="banner"] > .gb_Vd .gb_Cd { padding-inline-end: 12px !important; }
+
+      /* Native width is 24px content-box. Pair both 40px border-box dimensions
+         so 8px padding still leaves a full 24px menu glyph, not an 8px SVG. */
+      #gb[role="banner"] > .gb_Vd .gb_cd {
+        width: var(--terminal-header-control-size) !important;
+        height: var(--terminal-header-control-size) !important;
+        padding: 8px !important;
+        margin-inline: 2px !important;
+        box-sizing: border-box !important;
+      }
+
+      #gb[role="banner"] > .gb_Vd .gb_Hd { padding-block: 0 !important; }
+      #gb[role="banner"] > .gb_Vd .gb_9a {
+        height: var(--terminal-header-control-size) !important;
+        margin-block: 0 !important;
+        padding-block: 0 !important;
+      }
+
+    }
+
+    /* The sticky action bar also paints a backdrop in ::after. Coloring just
+       G-atb leaves that native white layer visible while scrolling. Preserve
+       its content, dimensions, positioning and z-index; only change paint. */
+    .G-atb[gh="tm"], .G-atb[gh="tm"] > .G6,
+    .G-atb[gh="tm"]::after, .G-atb[gh="tm"] > .G6::after {
+      background: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    /* Search-refinement strip: opaque arrow surfaces and palette-matched edge
+       fades, not white gradients over the dark toolbar. */
+    .G-atb .a5B {
+      background: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    .G-atb .YhbRke > .a5D.Ym {
+      background: linear-gradient(to right, var(--terminal-bg), transparent) !important;
+    }
+
+    .G-atb .YhbRke > .a5D.Yn {
+      background: linear-gradient(to left, var(--terminal-bg), transparent) !important;
+    }
+
+    .G-atb .H2 {
+      background: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border: 1px solid var(--terminal-border) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .G-atb .H2:hover:not([aria-disabled="true"]) { background-color: var(--terminal-hover) !important; }
+
+    .G-atb .H2:is(.bws, [aria-pressed="true"]) {
+      background: var(--terminal-selected) !important;
+      color: var(--terminal-blue) !important;
+      border-color: var(--terminal-blue) !important;
+    }
+
+    .G-atb .H2[aria-disabled="true"] {
+      background: var(--terminal-surface) !important;
+      color: var(--terminal-disabled) !important;
+    }
+
+    .G-atb .H2 :is(.HY, .H5, .H7) { color: inherit !important; }
+    .G-atb .H2 .H5 { font-family: inherit !important; font-size: inherit !important; }
+    .G-atb .H2 .H1, .G-atb .N5 .Oc { background-color: currentColor !important; }
+    .G-atb .H2 svg, .G-atb .a5B svg.aoH { fill: currentColor !important; }
+
+    .G-atb .N5, .G-atb .N5 .Og {
+      background: transparent !important;
+      color: var(--terminal-blue) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .G-atb .bmz, .G-atb .bmE {
+      color: var(--terminal-fg) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .G-atb .bmz:hover, .G-atb .bmz.bk5 { background-color: var(--terminal-hover) !important; }
+
+    /* Search's fields, table/ghost inputs, icons and focused/open/closed states
+       keep native geometry. Color/outline only: the form's box must not change. */
+    #gb form[role="search"] {
+      background: var(--terminal-inset) !important;
+      color: var(--terminal-fg) !important;
+      outline: 1px solid var(--terminal-border) !important;
+      outline-offset: -1px !important;
+    }
+
+    #gb form[role="search"] input {
+      background: transparent !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    #gb form[role="search"]:focus-within {
+      outline: 1px solid var(--terminal-blue) !important;
+      outline-offset: 2px !important;
+    }
+
+    #gb form[role="search"] input:focus-visible { outline: none !important; }
+
+    /* Advanced search is a legacy ZF-zT surface, not necessarily an ARIA dialog.
+       Native CSS hardcodes white on the panel and lJ/lN inner rows. Theme those
+       paint/text owners, but leave widths, anchors, visibility and fields native. */
+    .ZF-zT, .ZF-z6, .ZF-Av :is(.lJ, .lN), .ZF-z6 .SK.z6 {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    .ZF-zT {
+      outline: 1px solid var(--terminal-border) !important;
+      outline-offset: -1px !important;
+    }
+
+    .ZF-zT :is(.ZZ, label, legend, .w-Pw, .w-Py, .w-Pz) {
+      color: var(--terminal-fg) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .ZF-Av .lT { border-color: var(--terminal-border) !important; }
+
+    /* Google header icons use currentColor; leave logos and multicolor SVGs alone. */
+    #gb button, #gb [role="button"] {
+      color: var(--terminal-fg) !important;
+      background-color: transparent !important;
+    }
+
+    #gb button:hover, #gb [role="button"]:hover {
+      background-color: var(--terminal-hover) !important;
+    }
+
+    /* Folder names and counters. Custom label colors remain untouched. */
+    .TO, .nU, .n0, .CJ, .bsU, .ah9, .CL {
+      color: var(--terminal-fg) !important;
+    }
+
+    .TO:hover, .TO.NQ {
+      background-color: var(--terminal-hover) !important;
+    }
+
+    .TO.nZ, .TO.nZ .nU, .TO.nZ .n0, .TO.nZ .bsU {
+      background-color: var(--terminal-selected) !important;
+      color: var(--terminal-blue) !important;
+    }
+
+    .TO.nZ { border-left: 1px solid var(--terminal-blue) !important; }
+
+    /* Flat Compose/Send actions; sprite icons and split-button arrows stay native. */
+    .T-I {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border-color: transparent !important;
+      font-weight: 500 !important;
+    }
+
+    .T-I:hover, .T-I.T-I-JW { background-color: var(--terminal-hover) !important; }
+
+    .T-I.T-I-KE, .T-I.T-I-atl, .btA .Uo {
+      background-image: none !important;
+      background-color: var(--terminal-blue) !important;
+      color: var(--terminal-on-accent) !important;
+      border-color: transparent !important;
+    }
+
+    .T-I.T-I-KE:hover, .T-I.T-I-atl:hover, .btA .Uo:hover {
+      background-color: color-mix(in srgb, var(--terminal-blue) 85%, var(--terminal-fg)) !important;
+    }
+
+    .T-I.T-I-JE, .T-I[aria-disabled="true"], button:disabled {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-disabled) !important;
+    }
+
+    /* Toolbar controls may paint their glyph on the control itself. Keep native
+       images/masks and use text colors, never a filter on the entire button. */
+    .G-atb .T-I, .G-atb .bzn, .G-atb .amJ {
+      background-color: transparent !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    .G-atb .T-I:not(.T-I-JE, [aria-disabled="true"]):hover {
+      background-color: var(--terminal-hover) !important;
+    }
+
+    .G-atb .T-I:is(.T-I-JE, [aria-disabled="true"]) {
+      color: var(--terminal-disabled) !important;
+    }
+
+    /* Gmail renders inbox rows as flex containers with padded, shorter cells.
+       A cell border cuts through the row; an inset separator paints at the true
+       row edge without changing its height. This is a line, not elevation. */
+    .zA {
+      --terminal-row-line: var(--terminal-border);
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border: 0 !important;
+      box-shadow: inset 0 -1px 0 var(--terminal-row-line) !important;
+    }
+
+    .zA > td { border-bottom: 0 !important; }
+
+    .zA.yO {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-muted) !important;
+    }
+
+    .zA.zE {
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    .zA.zE .yW, .zA.zE .bog, .zA.zE .xW { font-weight: 600 !important; }
+
+    .zA .y2 { color: var(--terminal-muted) !important; }
+    .zA .xW { color: inherit !important; }
+    .zA .boq { color: var(--terminal-red) !important; }
+
+    .zA:hover { background-color: var(--terminal-hover) !important; }
+
+    .zA.x7, .zA.x7:hover, .zA[aria-selected="true"] {
+      --terminal-row-line: var(--terminal-blue);
+      background-color: var(--terminal-selected) !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    /* Gmail's keyboard cursor (btb / PF.PE) is separate from checkbox selection.
+       Put the focus rail on the full row, not the shorter indicator cell. Keep
+       the native cell's dimensions, but replace its colored border with this. */
+    .zA.btb, .zA:has(> .PF.PE), .zA:focus-visible {
+      outline: none !important;
+      box-shadow: inset 2px 0 0 var(--terminal-blue), inset 0 -1px 0 var(--terminal-row-line) !important;
+    }
+
+    .zA > .PF.PE {
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+
+    /* Hover actions need an opaque surface matching their row. */
+    .zA .bq4 { background-color: inherit !important; }
+    .zA .bq4 .bqX { background-color: transparent !important; }
+
+    /* Inbox category tabs and section headers, without changing tab layout. */
+    .J-KU-Jg, .J-KU, .Wg, .Wn, .aAv, .aKx > .aKz {
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    .J-KU:hover { background-color: var(--terminal-hover) !important; }
+
+    .J-KU-KO, .J-KU[aria-selected="true"] {
+      color: var(--terminal-blue) !important;
+      border-bottom: 1px solid var(--terminal-blue) !important;
+    }
+
+    .J-KU-KO::before { background-color: var(--terminal-blue) !important; }
+
+    /* Attachment chips keep their file-type icons and thumbnails. */
+    .brc {
+      color: var(--terminal-fg) !important;
+      border: 1px solid var(--terminal-border) !important;
+    }
+    .brc:hover { background-color: var(--terminal-hover) !important; }
+
+    /* Conversation chrome, not the sender's document. */
+    .if, .ha, .adn, .adx, .adf, .aHU, .aBj, .aDl, .aYF {
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    .adn { border-bottom: 1px solid var(--terminal-border) !important; }
+
+    .hP {
+      background-color: transparent !important;
+      color: var(--terminal-fg) !important;
+      font-size: calc(var(--terminal-size) + 2px) !important;
+      font-weight: 600 !important;
+    }
+
+    .gD { color: var(--terminal-fg) !important; }
+    .g3, .go, .hb, .ams, .amn { color: var(--terminal-muted) !important; }
+
+    /* Current conversation DOM: ha is only the inner subject, not its padded
+       white band. Theme the actual subject/sender/attachment/footer wrappers,
+       including the newer bottom action strip, without touching ii/a3s. */
+    .a98.iY, .a98.iY > .nH,
+    .a98.iY :is(.V8djrc.byY, .hj, .bHJ, .h7, .Bk, .G3.G2, .gE, .gA, .gB, .ip, .amr, .nr.wR, .hq, .btDi4d) {
+      background: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    .a98.iY :is(.gE, .gE .cf, .gE td, .iw, .hb, .g2, .hq, .aVW, .a2H, .aXL) {
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .a98.iY .gD { color: var(--terminal-fg) !important; }
+    .a98.iY :is(.go, .hb, .g2, .g3, .a2H) { color: var(--terminal-muted) !important; }
+
+    /* Gmail links outside the document: sender actions, image-warning links,
+       attachment Download/Learn more. a3s links remain excluded by the scope. */
+    .a98.iY :is(a, [role="link"]) {
+      color: var(--terminal-blue) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    /* The collapsed reply area uses link-role spans, not T-I buttons. */
+    .a98.iY .nr.wR .ams {
+      background: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border: 1px solid var(--terminal-border) !important;
+    }
+
+    .a98.iY .nr.wR .ams:hover { background-color: var(--terminal-hover) !important; }
+
+    /* Current print/pop-out, Reply/More and emoji controls. FqWqLc is the
+       importance toggle: keep its semantic color along with label swatches.
+       SVG glyphs inherit their own button's color, including disabled states. */
+    .a98.iY :is(button.pYTkkf-JX-I:not(.FqWqLc), button.jWOS7-JX-I) {
+      background: transparent !important;
+      color: var(--terminal-fg) !important;
+      border-color: transparent !important;
+    }
+
+    .a98.iY :is(button.pYTkkf-JX-I:not(.FqWqLc), button.jWOS7-JX-I):hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: var(--terminal-hover) !important;
+    }
+
+    .a98.iY :is(button.pYTkkf-JX-I:not(.FqWqLc), button.jWOS7-JX-I)[aria-pressed="true"] {
+      background-color: var(--terminal-selected) !important;
+      color: var(--terminal-blue) !important;
+    }
+
+    .a98.iY :is(button.pYTkkf-JX-I:not(.FqWqLc), button.jWOS7-JX-I):is(:disabled, [aria-disabled="true"]) {
+      background: transparent !important;
+      color: var(--terminal-disabled) !important;
+    }
+
+    .a98.iY :is(button.pYTkkf-JX-I:not(.FqWqLc), button.jWOS7-JX-I, button.UywwFc-I)
+    :is(.pYTkkf-JX-ank-Rtc0Jf, .jWOS7-JX-ank-Rtc0Jf, .bzc-ank) {
+      color: inherit !important;
+    }
+
+    .a98.iY :is(button.pYTkkf-JX-I:not(.FqWqLc), button.jWOS7-JX-I, button.UywwFc-I) svg.aoH {
+      fill: currentColor !important;
+    }
+
+    /* Gmail's extracted-event summary is UI above the email, not Calendar's
+       HTML invitation inside it. Keep its illustration's explicit SVG colors. */
+    .a98.iY :is(.DC5CAd, .DjVd6c, .CHBOjb) {
+      background: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .a98.iY .DC5CAd { border: 1px solid var(--terminal-border) !important; }
+    .a98.iY :is(.ARtNsf, .yJjnnd, .bCXFwf) {
+      color: var(--terminal-fg) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .a98.iY :is(.HZejI, .fRbbyb, .lnBNA, .kxBKPc) {
+      color: var(--terminal-muted) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .a98.iY .oWn5lf {
+      background: transparent !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    .a98.iY .oWn5lf:hover { background-color: var(--terminal-hover) !important; }
+
+    .a98.iY button.UywwFc-I {
+      background: var(--terminal-blue) !important;
+      color: var(--terminal-on-accent) !important;
+      border-color: transparent !important;
+    }
+
+    .a98.iY button.UywwFc-I:hover:not(:disabled, [aria-disabled="true"]) {
+      background-color: color-mix(in srgb, var(--terminal-blue) 85%, var(--terminal-fg)) !important;
+    }
+
+    .a98.iY button.UywwFc-I:is(:disabled, [aria-disabled="true"]) {
+      background: var(--terminal-surface) !important;
+      color: var(--terminal-disabled) !important;
+    }
+
+    .a98.iY button.UywwFc-I .UywwFc-anl {
+      color: inherit !important;
+      font-family: inherit !important;
+      font-size: inherit !important;
+    }
+
+    /* Image-blocking and translation banners are Gmail chrome, not email HTML.
+       Theme their fill/text together; keep the external-sender badge native. */
+    .adp, .ado, .h9, .adI {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .adp .ado, .adp .adi, .adp .adk { background-color: transparent !important; }
+    .adp .aZo, .adp .aZp, .adp a, .adp [role="link"], .adI .B9, .adI a, .bH {
+      color: var(--terminal-blue) !important;
+    }
+
+    /* Compose/reply frame, recipient fields and formatting toolbar. */
+    .AD, .aoI, .aoD, .HM, .I5, .aDh, .aXj, .aaZ, .Ap, .aoP .Ar {
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+      border-color: var(--terminal-border) !important;
+    }
+
+    .AD, .I5 { border: 1px solid var(--terminal-border) !important; }
+
+    .aYF, .Hy.Hy .m, .IG, .J-Z {
+      background-color: var(--terminal-surface) !important;
+      border-bottom: 1px solid var(--terminal-border) !important;
+    }
+
+    .Hp, .zu, .J-Z .J-Z-I, .J-Z .J-Z-M-I { color: var(--terminal-fg) !important; }
+
+    .aoT, .aoD input, .aoD textarea {
+      background-color: transparent !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    /* Native fields, excluding nested search/compose fields. Documents and
+       editors are already excluded by the scope, including signature fields. */
+    :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="submit"], [type="button"], [type="file"]), textarea, select):not(#gb *, .aoD *, .aoT) {
+      background-color: var(--terminal-inset) !important;
+      color: var(--terminal-fg) !important;
+      border: 1px solid var(--terminal-border) !important;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--terminal-muted) !important;
+      opacity: 1 !important;
+    }
+
+    :is(input, textarea, select):disabled {
+      color: var(--terminal-disabled) !important;
+    }
+
+    :is(input, textarea, select):is([aria-invalid="true"], :user-invalid) {
+      border-color: var(--terminal-red) !important;
+      outline-color: var(--terminal-red) !important;
+    }
+
+    input[type="checkbox"], input[type="radio"], progress {
+      accent-color: var(--terminal-blue) !important;
+    }
+
+    /* Menus, search suggestions, settings/dialogs and tooltips need boundaries
+       now that shadows are gone. Gmail uses Closure classes alongside ARIA. */
+    dialog, [role="dialog"], [role="alertdialog"], [role="menu"], [role="listbox"], [role="tooltip"],
+    .J-M, .Kj-JD, .OO.Pa, .ZF-z6, .gssb_c, .gssb_m, .T-ays-iP, .gb_Ac, .afC, .bvx,
+    .tB5Jxf-M-X, .O68mGe-M, .a2m {
+      background: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border: 1px solid var(--terminal-border) !important;
+    }
+
+    .J-N, .J-N .J-N-Jz, .Kj-JD-Jz, .Kj-JD-K7, .gssb_a {
+      color: var(--terminal-fg) !important;
+      font-family: var(--terminal-font) !important;
+      font-size: var(--terminal-size) !important;
+    }
+
+    .J-N-JT, .J-N-JW, .gssb_i, [role="option"][aria-selected="true"] {
+      background-color: var(--terminal-hover) !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    .J-N-JE, .J-N-JE .J-N-Jz { color: var(--terminal-disabled) !important; }
+    .J-Kh { border-color: var(--terminal-border) !important; }
+
+    /* The Material menu paints a surface wrapper plus a nested ARIA menu.
+       Keep one boundary, not doubled borders around the same floating panel. */
+    .tB5Jxf-M-X .O68mGe-M, .tB5Jxf-M-X [role="menu"] { border: 0 !important; }
+
+    /* Full settings page and its tabs. Leave signature editors on their light
+       document canvas, and don't recolor label swatches or theme thumbnails. */
+    .r4, .alO, .v .fY, .v .f1 {
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-fg) !important;
+    }
+
+    .dt, .v .f0, .r4 .qK, .r4 .qL { color: var(--terminal-fg) !important; }
+    .v .fZ { border-bottom: 1px solid var(--terminal-blue) !important; }
+    .r7 > td { border-bottom-color: var(--terminal-border) !important; }
+    .r4 .e, .alP { color: var(--terminal-blue) !important; }
+
+    /* Undo/status toast: match both the fill and its text/link colors. */
+    .bAp .vh {
+      background-color: var(--terminal-surface) !important;
+      color: var(--terminal-fg) !important;
+      border: 1px solid var(--terminal-border) !important;
+    }
+
+    .bAp .vh .ag { color: var(--terminal-blue) !important; }
+
+    /* Rows have their own full-height focus rail above; other controls retain
+       an outline. Document/editor descendants are excluded by the scope. */
+    :focus-visible:not(.zA) {
+      outline: 1px solid var(--terminal-blue) !important;
+      outline-offset: 2px !important;
+    }
+
+    ::selection {
+      background-color: light-dark(#f0f2d4, #3b3e48) !important;
+      color: var(--terminal-fg) !important;
+    }
+  }
+
+  /* @scope excludes rules, not inheritance. Restore the native light Material
+     colors at every email/editor root (including non-textbox editors). Reset
+     our component aliases to initial so native var() fallbacks apply inside
+     the document; do not match or recolor any document descendants. */
+  .a3s, [contenteditable="true"] {
+    --gm3-sys-color-background: #ffffff !important;
+    --gm3-sys-color-on-background: #1f1f1f !important;
+    --gm3-sys-color-surface: #ffffff !important;
+    --gm3-sys-color-surface-bright: #ffffff !important;
+    --gm3-sys-color-surface-dim: #d3dbe5 !important;
+    --gm3-sys-color-surface-variant: #e1e3e1 !important;
+    --gm3-sys-color-surface-container-lowest: #ffffff !important;
+    --gm3-sys-color-surface-container-low: #f8fafd !important;
+    --gm3-sys-color-surface-container: #f0f4f9 !important;
+    --gm3-sys-color-surface-container-high: #e9eef6 !important;
+    --gm3-sys-color-surface-container-highest: #dde3ea !important;
+    --gm3-sys-color-on-surface: #1f1f1f !important;
+    --gm3-sys-color-on-surface-rgb: 31, 31, 31 !important;
+    --gm3-sys-color-on-surface-variant: #444746 !important;
+    --gm3-sys-color-on-surface-variant-rgb: 68, 71, 70 !important;
+    --gm3-sys-color-surface-container-highest-rgb: 221, 227, 234 !important;
+    --gm3-sys-color-outline: #747775 !important;
+    --gm3-sys-color-outline-variant: #c4c7c5 !important;
+    --gm3-sys-color-surface-tint: #6991d6 !important;
+    --gm3-sys-color-inverse-surface: #303030 !important;
+    --gm3-sys-color-inverse-on-surface: #f2f2f2 !important;
+    --gm3-sys-color-inverse-primary: #a8c7fa !important;
+    --gm3-sys-color-primary: #0b57d0 !important;
+    --gm3-sys-color-on-primary: #ffffff !important;
+    --gm3-sys-color-primary-container: #d3e3fd !important;
+    --gm3-sys-color-on-primary-container: #041e49 !important;
+    --gm3-sys-color-primary-fixed: #d3e3fd !important;
+    --gm3-sys-color-primary-fixed-dim: #a8c7fa !important;
+    --gm3-sys-color-on-primary-fixed: #041e49 !important;
+    --gm3-sys-color-on-primary-fixed-variant: #0842a0 !important;
+    --gm3-sys-color-secondary: #00639b !important;
+    --gm3-sys-color-on-secondary: #ffffff !important;
+    --gm3-sys-color-secondary-container: #c2e7ff !important;
+    --gm3-sys-color-on-secondary-container: #001d35 !important;
+    --gm3-sys-color-error: #b3261e !important;
+    --gm3-sys-color-on-error: #ffffff !important;
+    --gm3-sys-color-error-container: #f9dedc !important;
+    --gm3-sys-color-on-error-container: #410e0b !important;
+    --gm3-sys-color-tertiary: #146c2e !important;
+    --gm3-sys-color-on-tertiary: #ffffff !important;
+    --gm3-sys-color-tertiary-container: #c4eed0 !important;
+    --gm3-sys-color-on-tertiary-container: #072711 !important;
+    --gm3-icon-button-standard-disabled-icon-color: initial !important;
+    --gm3-icon-button-filled-disabled-icon-color: initial !important;
+    --gm3-icon-button-filled-disabled-container-color: initial !important;
+    --gm3-icon-button-filled-tonal-disabled-icon-color: initial !important;
+    --gm3-icon-button-filled-tonal-disabled-container-color: initial !important;
+    --gm3-icon-button-outlined-disabled-icon-color: initial !important;
+    --gm3-icon-button-outlined-disabled-selected-container-color: initial !important;
+    --gm3-icon-button-outlined-disabled-unselected-outline-color: initial !important;
+    --gm3-button-text-disabled-label-text-color: initial !important;
+    --gm3-button-text-with-icon-disabled-icon-color: initial !important;
+    --gm3-button-filled-disabled-label-text-color: initial !important;
+    --gm3-button-filled-with-icon-disabled-icon-color: initial !important;
+    --gm3-button-filled-disabled-container-color: initial !important;
+    --gm3-button-filled-tonal-disabled-label-text-color: initial !important;
+    --gm3-button-filled-tonal-with-icon-disabled-icon-color: initial !important;
+    --gm3-button-filled-tonal-disabled-container-color: initial !important;
+    --gm3-button-text-label-text-font: initial !important;
+    --gm3-button-text-label-text-size: initial !important;
+    --gm3-button-filled-label-text-font: initial !important;
+    --gm3-button-filled-label-text-size: initial !important;
+    --gm3-button-filled-tonal-label-text-font: initial !important;
+    --gm3-button-filled-tonal-label-text-size: initial !important;
+    --gm3-menu-list-item-label-text-font: initial !important;
+    --gm3-menu-list-item-label-text-size: initial !important;
+    --gm3-list-list-item-label-text-font: initial !important;
+    --gm3-list-list-item-label-text-size: initial !important;
+    --og-searchform-focused-background: initial !important;
+    --og-transparent-theme-searchform-background: initial !important;
+    --og-searchform-focused-color: initial !important;
+    --og-search-form-input-color: initial !important;
+    --og-searchform-focused-placeholder-color: initial !important;
+    --og-search-form-placeholder-color: initial !important;
+    --og-searchform-focused-icon-color: initial !important;
+    --og-search-form-svg-color: initial !important;
+    --og-svg-color: initial !important;
+  }
+
+  /* Email HTML often hardcodes dark text on white. Give the document a light
+     canvas even in Sonokai; never recolor its descendants, links or images.
+     The editor gets the same safe canvas so CSS doesn't change outgoing mail
+     formatting or make pasted content/signatures unreadable. Keep this after
+     frame rules: signature/reply editors can share the frame's Ar class. */
+  .a3s, [contenteditable="true"][role="textbox"],
+  .Am[contenteditable="true"], .Ar[contenteditable="true"] {
+    color-scheme: light !important;
+    background-color: #ffffff !important;
+    color: #202124 !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 14px !important;
+    caret-color: #25739b;
+    scrollbar-color: auto;
+    scrollbar-width: auto;
+  }
+
+  /* Explicit light-canvas selection: root selection otherwise inherits the
+     dark appearance, including within sender-provided HTML. */
+  .a3s::selection, .a3s *::selection,
+  [contenteditable="true"]::selection, [contenteditable="true"] *::selection {
+    background-color: #dce8ef !important;
+    color: #202124 !important;
+  }
+}

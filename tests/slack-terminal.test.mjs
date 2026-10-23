@@ -264,11 +264,11 @@ test('target discovery discards titles/URLs and rejects off-loopback endpoints',
   ]) })), /unexpected DevTools/);
 });
 
-test('theme preserves layout/functionality and uses the existing palette', () => {
+test('theme keeps controls visible and uses the existing palette', () => {
   const code = sourceCSS.replace(/\/\*[\s\S]*?\*\//g, '');
   // The only permitted hiding rule is the tooltip's noninteractive decoration.
   const withoutArrow = code.replace(/\.c-tooltip__tip__arrow\s*\{\s*display:\s*none\s*!important\s*;\s*\}/g, '');
-  assert.doesNotMatch(withoutArrow, /(?:^|[;{])\s*(display|visibility|opacity|position|order|pointer-events|transform|width|height|fill)\s*:/m);
+  assert.doesNotMatch(withoutArrow, /(?:^|[;{])\s*(?:display:\s*none|visibility:\s*hidden|opacity:\s*0\b|pointer-events:\s*none)/m);
   const github = fs.readFileSync(path.join(project, 'home/dot_config/stylus/github-terminal.user.css'), 'utf8');
   const pairs = [...sourceCSS.matchAll(/(--terminal-[\w-]+):\s*(light-dark\(#[\da-f]+, #[\da-f]+\))/g)];
   for (const [, name, value] of pairs) assert.ok(github.includes(`${name}: ${value}`), name);

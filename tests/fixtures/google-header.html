@@ -1,0 +1,54 @@
+<!doctype html>
+<!-- Synthetic structure based on the common Google header in both captures.
+     Includes Calendar's plain search field and Gmail's layered/table search,
+     plus drawer/popup lookalikes that must not inherit header geometry rules.
+     No accounts, URLs, scripts, fetched images or external resources. -->
+<html lang="en"><head><style>
+  /* Native menu geometry: the theme must replace width AND height when it
+     switches this 24px content box plus padding to a 40px border box. */
+  .gb_cd { width: 24px; height: 24px; padding: 12px; }
+  /* Native row/field units must survive header compaction and search state
+     changes. The userstyle must not redefine these or the ghost-input table. */
+  .gb_4d, .gb_Ve, .gb_Ce .gb_Ee, .gb_Ce .gb_Fe { height: 48px; }
+  .gb_Ne, input.gb_Le { height: 46px; }
+  form.bas { min-height: 48px; }
+  .gb_Le:not(.gb_Me) { padding: 11px 0; }
+</style></head><body data-viewfamily="EVENT">
+  <div class="KKOvEb">
+    <header id="gb" class="gb_Ta gb_Nd gb_9d" role="banner">
+      <div class="gb_ie"><div class="gb_td"><div class="gb_Cd"><span class="gb_2d">Drawer heading</span><div class="gb_cd" role="button">Drawer action</div></div></div></div>
+      <div class="gb_Vd gb_Zd gb_dd">
+        <div class="gb_4d gb_Cd gb_Dd">
+          <div class="gb_cd" role="button" tabindex="0" aria-label="Toggle navigation"><svg viewBox="0 0 24 24"><path d="M3 6h18v2H3z"></path></svg></div>
+          <div class="gb_5c"><div class="gb_6c"><span class="gb_7c"><img class="gb_bd gb_le" alt="Example logo" width="40" height="40"><span class="gb_2d">Example app</span></span></div></div>
+          <div class="gb_Ad"><span class="gb_Ed">Example section</span></div>
+        </div>
+        <div class="gb_4d gb_ce gb_We">
+          <div class="gb_j gb_Ce"><div class="gb_Ee"><div class="v6hCJ"><div class="T5GQA">
+            <button class="AeBiU-LgbsSe UZLCCd"><span class="AeBiU-vQzf8d">Today</span></button>
+            <button class="pYTkkf-Bz112c-LgbsSe X2i7Ne" aria-label="Next"><span class="google-material-icons">chevron_right</span></button>
+          </div></div></div></div>
+          <div class="gb_Ve"><form class="gb_Rd" role="search">
+            <button class="gb_0e" aria-label="Search"><svg viewBox="0 0 24 24"><path d="M4 4h8v8H4z"></path></svg></button>
+            <div class="gb_Ne"><input class="gb_Le" role="combobox" aria-label="Calendar search"></div>
+          </form></div>
+          <div class="gb_Ve"><form class="gb_Rd gb_4e bas" role="search">
+            <button class="gb_0e" aria-label="Search"><svg viewBox="0 0 24 24"><path d="M4 4h8v8H4z"></path></svg></button>
+            <div class="gb_Ne gb_1e"><table class="gstl_50 gstt" role="presentation" style="height:28px"><tbody><tr><td class="gsib_a gb_Le aJh afOp8c"><div style="position:relative">
+              <input class="gb_Le aJh afOp8c" aria-label="Gmail search" style="position:absolute;z-index:6;height:auto">
+              <input class="gb_Le aJh afOp8c v1GPYd" aria-hidden="true" tabindex="-1" style="position:absolute;z-index:1;height:auto;visibility:hidden">
+              <div class="etAEh pbiu3c">Search measurement</div>
+            </div></td></tr></tbody></table></div>
+          </form></div>
+          <div class="gb_v gb_Ce"><div class="gb_Fe"><div class="uW9umb"><button class="pYTkkf-Bz112c-LgbsSe" aria-label="Settings"><span class="google-material-icons">settings</span></button></div></div></div>
+        </div>
+        <div class="gb_de gb_4d">
+          <div class="gb_Hd"><div class="gb_C" role="button" tabindex="0" aria-label="Apps"><svg viewBox="0 0 24 24"><path d="M4 4h4v4H4z"></path></svg></div></div>
+          <div class="gb_9a" role="button" tabindex="0" aria-label="Account"><span class="gb_0">Example avatar</span></div>
+        </div>
+      </div>
+      <div class="gb_Ac" role="dialog" aria-label="Example popup"><p>Popup content stays independent of the header row.</p></div>
+    </header>
+    <div class="SGWAac"><main role="main">Example application content</main></div>
+  </div>
+</body></html>

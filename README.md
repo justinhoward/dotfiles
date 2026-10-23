@@ -44,15 +44,12 @@ Everything chezmoi manages lives under `home/`:
   fzf-tab, history-substring-search, autosuggestions, fast-syntax-highlighting).
 - `dot_p10k.zsh` — the prompt configuration.
 - `dot_config/…` — app configs (nvim, kitty, git, bat, ctags, …).
-- `dot_config/stylus/github-terminal.user.css` — square, minimal GitHub style
-  for Firefox + Stylus, matching the terminal colors; see
-  [installation and settings](runbooks/github-terminal-userstyle.md).
-- `dot_config/stylus/jira-terminal.user.css` — matching Jira Cloud style; see
-  [installation and settings](runbooks/jira-terminal-userstyle.md).
+- `dot_config/stylus/` — matching GitHub, Jira Cloud, Gmail, and Google Calendar
+  userstyles; see [installation](runbooks/browser-userstyles.md).
 - `dot_config/firefox/chrome/` — matching Firefox browser UI and built-in page
   theme; see [profile installation](runbooks/firefox-terminal-theme.md).
 - `dot_config/slack-terminal/` — local native-Slack CSS launcher/watcher, wired
-  into skhd's Slack shortcut; see [testing and installation](runbooks/slack-terminal.md).
+  into skhd's Slack shortcut; see [installation](runbooks/slack-terminal.md).
 - `run_*` — one-shot and on-change setup scripts.
 
 OS-specific files are guarded in `home/.chezmoiignore` — macOS-only (yabai, skhd,
