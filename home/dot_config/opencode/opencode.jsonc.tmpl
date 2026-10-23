@@ -12,14 +12,17 @@
   "permissions": [
     { "action": "edit", "resource": "*", "effect": "allow" },
 
-    // External directories: ask by default (also the V2 base default), allow the
-    // temp dirs. macOS canonicalizes checked paths through /private, so match both
-    // the symlinked and canonical forms.
+    // External directories: ask outside the project, except for temp dirs and
+    // OpenCode's own cache/tool output. macOS canonicalizes checked paths through
+    // /private, so match both the symlinked and canonical forms.
     { "action": "external_directory", "resource": "*", "effect": "ask" },
     { "action": "external_directory", "resource": "/tmp/*", "effect": "allow" },
     { "action": "external_directory", "resource": "/private/tmp/*", "effect": "allow" },
     { "action": "external_directory", "resource": "/var/folders/qh/*", "effect": "allow" },
     { "action": "external_directory", "resource": "/private/var/folders/qh/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/.cache/opencode/*", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/.local/share/opencode/tool-output/*", "effect": "allow" },
+    // Don't allow all of ~/.local/share/opencode: it also holds auth credentials.
 
     { "action": "webfetch", "resource": "*", "effect": "allow" },
     { "action": "websearch", "resource": "*", "effect": "allow" },
