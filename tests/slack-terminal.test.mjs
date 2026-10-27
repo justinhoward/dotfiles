@@ -7,7 +7,7 @@ import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 import { isSlackClient, validateCSS, debuggerURL, styleExpression, STYLE_ID,
   STYLE_OWNER, CDPClient, discoverTargets } from '../home/dot_config/slack-terminal/cdp.mjs';
-import { optionsFor, parseProcesses, assessListener, launchPlan, launch,
+import { optionsFor, parseProcesses, usesProfile, listProcesses, assessListener, startApp, launchPlan, launch,
   control, status, watch, readJSON, writeJSON } from '../home/dot_config/slack-terminal/executable_slack-terminal.mjs';
 
 const project = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -21,7 +21,8 @@ function fixture(t) {
   fs.writeFileSync(path.join(app, 'Contents/MacOS/Slack'), 'fake executable, never run');
   const css = path.join(root, 'theme.css');
   fs.writeFileSync(css, 'body { color: #e2e2e3; }');
-  return optionsFor(['launch', '--app', app, '--css', css, '--state-dir', path.join(root, 'state')], {});
+  return optionsFor(['launch', '--app', app, '--css', css, '--state-dir', path.join(root, 'state'),
+    '--user-data-dir', path.join(root, 'profile')], {});
 }
 
 function fakeOperations(options, processes = []) {
@@ -61,11 +62,110 @@ test('process lookup matches the exact main executable, not helpers or other app
   assert.deepEqual(parseProcesses(' 21 /Applications/Slack.app/Contents/MacOS/Slack\n22 /Applications/Slack.app/Contents/Frameworks/Slack Helper.app/Contents/MacOS/Slack Helper\n23 /Applications/NotSlack.app/Contents/MacOS/Slack\n', '/Applications/Slack.app/Contents/MacOS/Slack'), [{ pid: 21 }]);
 });
 
+test('profile defaults are separate from normal Slack and honor XDG and explicit overrides', () => {
+  const options = optionsFor([], {});
+  assert.equal(options.userDataDir, path.join(os.homedir(), '.local/share/slack-terminal/profile'));
+  assert.equal(optionsFor([], { XDG_DATA_HOME: '/custom/data' }).userDataDir, '/custom/data/slack-terminal/profile');
+  assert.equal(optionsFor([], { SLACK_TERMINAL_USER_DATA_DIR: '/custom/profile' }).userDataDir, '/custom/profile');
+  assert.equal(optionsFor(['launch', '--user-data-dir', '/flag/profile'], { SLACK_TERMINAL_USER_DATA_DIR: '/custom/profile' }).userDataDir, '/flag/profile');
+});
+
+test('profile matching handles spaces and excludes normal, foreign and ambiguous profiles', () => {
+  for (const profile of ['/custom/profile', '/custom/Slack Theme']) {
+    assert.equal(usesProfile(`/Applications/Slack.app/Contents/MacOS/Slack --remote-debugging-port=49152 --user-data-dir=${profile}\n`, profile), true);
+    assert.equal(usesProfile(`Slack --user-data-dir=${profile} --remote-debugging-port=49152`, profile), true);
+    assert.equal(usesProfile(`Slack --user-data-dir=${profile}-other`, profile), false);
+    assert.equal(usesProfile(`Slack --user-data-dir=${profile} other`, profile), false);
+    assert.equal(usesProfile(`Slack --user-data-dir=${profile} --user-data-dir=/other`, profile), false);
+    assert.equal(usesProfile('Slack --remote-debugging-port=49152', profile), false);
+  }
+});
+
+test('process discovery ignores a running normal Slack and selects only the dedicated profile', async t => {
+  const options = fixture(t);
+  const calls = [];
+  const result = await listProcesses(options, async (file, args) => {
+    calls.push([file, args]);
+    if (args.includes('pid=,comm=')) return { stdout: `21 ${options.executable}\n22 ${options.executable}\n23 ${options.app}/Contents/Frameworks/Slack Helper.app/Contents/MacOS/Slack Helper\n` };
+    return { stdout: args.includes('21') ? `${options.executable}\n` :
+      `${options.executable} --remote-debugging-port=49152 --user-data-dir=${options.userDataDir}\n` };
+  });
+  assert.deepEqual(result, [{ pid: 22, port: 49152 }]);
+  assert.deepEqual(calls, [['/bin/ps', ['-axww', '-o', 'pid=,comm=']],
+    ['/bin/ps', ['-ww', '-p', '21', '-o', 'args=']], ['/bin/ps', ['-ww', '-p', '22', '-o', 'args=']]]);
+});
+
+test('a process disappearing during lookup is ignored, but inspection errors are not hidden', async t => {
+  const options = fixture(t);
+  for (const code of [1, 'EPERM']) {
+    const lookup = listProcesses(options, async (_file, args) => {
+      if (args.includes('pid=,comm=')) return { stdout: `21 ${options.executable}\n` };
+      throw Object.assign(new Error('process lookup failed'), { code });
+    });
+    if (code === 1) assert.deepEqual(await lookup, []);
+    else await assert.rejects(lookup, /process lookup failed/);
+  }
+});
+
 test('listener must belong to our main process and have only loopback bindings', () => {
   assert.equal(assessListener('p21\nn127.0.0.1:49152\n', 49152, 21), 'safe');
   assert.equal(assessListener('p21\nn[::1]:49152\n', 49152, 21), 'safe');
   assert.equal(assessListener('', 49152, 21), 'pending');
   for (const output of ['p21\nn*:49152\n', 'p21\nn[::]:49152\n', 'p99\nn127.0.0.1:49152\n', 'p21\nn127.0.0.1:49152\np99\nn*:49152\n']) assert.equal(assessListener(output, 49152, 21), 'unsafe');
+});
+
+test('app startup uses LaunchServices and waits for the actual app PID and verified listener', async t => {
+  const options = fixture(t);
+  const calls = [];
+  const snapshots = [[], [{ pid: 8001, port: null }], [{ pid: 9001, port: 49152 }], [{ pid: 9001, port: 49152 }]];
+  let bindings = 0;
+  const pid = await startApp(options, 49152, {
+    run: async (...args) => { calls.push(args); },
+    processes: async () => snapshots.shift(),
+    listener: async session => {
+      assert.equal(session.appPid, 9001);
+      assert.equal(session.port, 49152);
+      return ++bindings === 1 ? 'pending' : 'safe';
+    },
+    sleep: async milliseconds => { assert.equal(milliseconds, 200); },
+  });
+  assert.equal(pid, 9001);
+  assert.deepEqual(calls, [['/usr/bin/open', ['-n', '-a', options.app, '--args',
+    '--remote-debugging-address=127.0.0.1', '--remote-debugging-port=49152',
+    `--user-data-dir=${options.userDataDir}`], { timeout: 10000 }]]);
+  assert.equal(snapshots.length, 0);
+});
+
+test('app startup reports failure when Slack never stays running', async t => {
+  await assert.rejects(startApp(fixture(t), 49152, {
+    run: async () => {}, processes: async () => [], sleep: async () => {},
+    listener: async () => { assert.fail('There is no Slack listener to inspect.'); },
+  }), /Slack did not stay running/);
+});
+
+test('app startup never adopts an undebugged themed profile or a different debugging port', async t => {
+  for (const port of [null, 49153]) {
+    await assert.rejects(startApp(fixture(t), 49152, {
+      run: async () => {}, processes: async () => [{ pid: 9001, port }], sleep: async () => {},
+      listener: async () => { assert.fail('Must not inspect another session.'); },
+    }), /without the requested debugging port/);
+  }
+});
+
+test('app startup requires a safe listener, not just a successful open or matching process', async t => {
+  for (const binding of ['pending', 'unsafe']) {
+    await assert.rejects(startApp(fixture(t), 49152, {
+      run: async () => {}, processes: async () => [{ pid: 9001, port: 49152 }],
+      listener: async () => binding, sleep: async () => {},
+    }), binding === 'unsafe' ? /Unsafe or foreign/ : /verified loopback DevTools listener/);
+  }
+});
+
+test('LaunchServices errors propagate before process discovery', async t => {
+  await assert.rejects(startApp(fixture(t), 49152, {
+    run: async () => { throw new Error('open failed'); },
+    processes: async () => { assert.fail('LaunchServices did not start Slack.'); },
+  }), /open failed/);
 });
 
 test('launch planning never restarts an ordinary running Slack', () => {
@@ -85,9 +185,38 @@ test('cold launch starts one app and watcher, retaining a child-published status
   const session = readJSON(path.join(options.stateDir, 'session.json'));
   assert.equal(session.phase, 'attached');
   assert.equal(session.applied, 1);
+  assert.equal(session.userDataDir, options.userDataDir);
+  assert.equal(fs.statSync(options.userDataDir).mode & 0o777, 0o700);
+  assert.deepEqual(fs.readdirSync(options.userDataDir), [], 'The launcher must not copy any profile data.');
   assert.equal(fs.statSync(options.stateDir).mode & 0o777, 0o700);
   assert.equal(fs.statSync(path.join(options.stateDir, 'session.json')).mode & 0o777, 0o600);
   assert.equal(fs.existsSync(path.join(options.stateDir, 'launch.lock')), false);
+});
+
+test('failed app startup never starts a watcher or overwrites the prior session', async t => {
+  const options = fixture(t);
+  fs.mkdirSync(options.stateDir);
+  const previous = { sessionId: 'previous-session', phase: 'stopped', appPid: 1, port: 49151, watcherPid: 0 };
+  writeJSON(path.join(options.stateDir, 'session.json'), previous);
+  const operations = fakeOperations(options);
+  operations.startApp = async () => { throw new Error('Slack did not stay running'); };
+  await assert.rejects(launch(options, operations), /did not stay running/);
+  assert.deepEqual(operations.calls, ['port']);
+  assert.deepEqual(readJSON(path.join(options.stateDir, 'session.json')), previous);
+  assert.equal(fs.existsSync(path.join(options.stateDir, 'launch.lock')), false);
+});
+
+test('launcher does not overwrite a watcher that already published a terminal status', async t => {
+  const options = fixture(t);
+  const operations = fakeOperations(options);
+  operations.startWatcher = async (_options, session) => {
+    writeJSON(path.join(options.stateDir, 'session.json'), { ...session, watcherPid: 0, phase: 'error', error: 'Startup failed' });
+    return 9002;
+  };
+  await launch(options, operations);
+  assert.equal(status(options).phase, 'error');
+  assert.equal(status(options).watcherPid, 0);
+  assert.equal(status(options).error, 'Startup failed');
 });
 
 test('running Slack is focused even if the CSS file is missing; no process is quit', async t => {
@@ -98,7 +227,7 @@ test('running Slack is focused even if the CSS file is missing; no process is qu
   assert.deepEqual(operations.calls, ['focus']);
 });
 
-test('ordinary Dock relaunch still explains missing styling when old session metadata exists', async t => {
+test('an undebugged themed profile explains missing styling when old session metadata exists', async t => {
   const options = fixture(t);
   fs.mkdirSync(options.stateDir);
   writeJSON(path.join(options.stateDir, 'session.json'), { appPid: 1, port: 49152, watcherPid: 0, phase: 'stopped' });
@@ -114,9 +243,14 @@ test('disabled launch is normal Slack without allocating a port/watcher', async 
   control(options, 'disable');
   fs.unlinkSync(options.css);
   const operations = fakeOperations(options);
+  operations.focus = async focused => {
+    assert.equal(focused.userDataDir, null, 'Disabled launch must not select the dedicated profile.');
+    operations.calls.push('focus');
+  };
   assert.equal((await launch(options, operations)).themed, false);
   assert.deepEqual(operations.calls, ['focus']);
   assert.equal(status(options, operations).enabled, false);
+  assert.equal(fs.existsSync(options.userDataDir), false);
 });
 
 test('invalid CSS fails before starting Slack, without leaving the launch lock', async t => {
@@ -404,4 +538,44 @@ test('watcher refuses foreign/non-loopback listeners before discovery or injecti
   });
   assert.equal(status(options).phase, 'error');
   assert.match(status(options).error, /refused to connect/);
+});
+
+test('watcher reports an early Slack exit instead of silently publishing stopped', async t => {
+  const options = { ...fixture(t), port: 49152, appPid: 9001, sessionId: 'early-exit-test' };
+  fs.mkdirSync(options.stateDir);
+  writeJSON(path.join(options.stateDir, 'session.json'), { ...options, watcherPid: 0 });
+  await watch(options, {
+    processes: async () => [],
+    listener: async () => { assert.fail('Slack is not running.'); },
+  }, {
+    discover: async () => { assert.fail('Must not discover targets after Slack exits.'); },
+  });
+  assert.equal(status(options).phase, 'error');
+  assert.equal(status(options).watcherPid, 0);
+  assert.match(status(options).error, /before the theme attached/);
+});
+
+test('normal Slack exit after attachment still stops the watcher cleanly', async t => {
+  const options = { ...fixture(t), port: 49152, appPid: 9001, sessionId: 'normal-exit-test' };
+  fs.mkdirSync(options.stateDir);
+  writeJSON(path.join(options.stateDir, 'session.json'), { ...options, watcherPid: 0 });
+  let running = true;
+  const client = {
+    applied: false, closed: false,
+    initialize: async () => {},
+    apply: async (_css, enabled) => { client.applied = enabled; },
+    close: () => { client.closed = true; },
+  };
+  await watch(options, {
+    processes: async () => running ? [{ pid: 9001, port: 49152 }] : [],
+    listener: async () => 'safe',
+  }, {
+    discover: async () => [{ id: 'client', websocket: 'ws://127.0.0.1:49152/devtools/page/client' }],
+    clientFactory: () => client,
+    sleep: async () => { running = false; },
+  });
+  assert.equal(status(options).phase, 'stopped');
+  assert.equal(status(options).error, null);
+  assert.equal(client.applied, false);
+  assert.equal(client.closed, true);
 });

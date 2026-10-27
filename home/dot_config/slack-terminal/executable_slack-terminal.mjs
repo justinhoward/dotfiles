@@ -20,14 +20,15 @@ export function optionsFor(args, environment = process.env) {
     app: environment.SLACK_TERMINAL_APP || '/Applications/Slack.app',
     css: environment.SLACK_TERMINAL_CSS || path.join(path.dirname(self), 'slack-terminal.css'),
     stateDir: environment.SLACK_TERMINAL_STATE_DIR || path.join(environment.XDG_STATE_HOME || path.join(os.homedir(), '.local/state'), 'slack-terminal'),
+    userDataDir: environment.SLACK_TERMINAL_USER_DATA_DIR || path.join(environment.XDG_DATA_HOME || path.join(os.homedir(), '.local/share'), 'slack-terminal/profile'),
   };
-  const flags = { '--app': 'app', '--css': 'css', '--state-dir': 'stateDir', '--port': 'port', '--app-pid': 'appPid', '--session-id': 'sessionId' };
+  const flags = { '--app': 'app', '--css': 'css', '--state-dir': 'stateDir', '--user-data-dir': 'userDataDir', '--port': 'port', '--app-pid': 'appPid', '--session-id': 'sessionId' };
   for (let index = 1; index < args.length; index += 2) {
     const key = flags[args[index]];
     if (!key || !args[index + 1]) throw new Error('Unknown or incomplete option.');
     options[key] = args[index + 1];
   }
-  for (const key of ['app', 'css', 'stateDir']) options[key] = path.resolve(options[key]);
+  for (const key of ['app', 'css', 'stateDir', 'userDataDir']) options[key] = path.resolve(options[key]);
   options.executable = path.join(options.app, 'Contents/MacOS/Slack');
   return options;
 }
@@ -66,6 +67,30 @@ export function parseProcesses(output, executable) {
   });
 }
 
+export function usesProfile(args, directory) {
+  // ps prints argv joined by spaces, including unquoted spaces inside paths.
+  // Match the whole profile value, not a prefix of another profile's path.
+  const profiles = [...args.trim().matchAll(/(?:^|\s)--user-data-dir=(.*?)(?=\s--[\w-]+(?:=|\s|$)|$)/g)];
+  return profiles.length === 1 && profiles[0][1].trim() === directory;
+}
+
+export async function listProcesses(options, run = execute) {
+  const { stdout } = await run('/bin/ps', ['-axww', '-o', 'pid=,comm='], { maxBuffer: 4 * 1024 * 1024 });
+  const processes = parseProcesses(stdout, options.executable);
+  const matched = await Promise.all(processes.map(async item => {
+    let args;
+    try { ({ stdout: args } = await run('/bin/ps', ['-ww', '-p', String(item.pid), '-o', 'args='])); }
+    catch (error) {
+      if (error.code === 1 && !error.stdout?.trim() && !error.stderr?.trim()) return null;
+      throw error;
+    }
+    if (!usesProfile(args, options.userDataDir)) return null;
+    const port = args.match(/(?:^|\s)--remote-debugging-port=(\d+)(?:\s|$)/);
+    return { ...item, port: port ? Number(port[1]) : null };
+  }));
+  return matched.filter(Boolean);
+}
+
 export function assessListener(output, port, appPid) {
   let owner = null;
   let count = 0;
@@ -78,18 +103,45 @@ export function assessListener(output, port, appPid) {
   return count ? 'safe' : 'pending';
 }
 
+export async function startApp(options, port, {
+  run = execute, processes = () => macOS.processes(options),
+  listener = session => macOS.listener(session), sleep = pause,
+} = {}) {
+  // LaunchServices starts Slack with the normal macOS app environment. The
+  // launcher's PID is not the app's PID, so discover and verify the real one.
+  // Current Slack refuses debugging its normal profile. -n also ensures a
+  // running ordinary Slack cannot consume this separate profile's launch.
+  await run('/usr/bin/open', ['-n', '-a', options.app, '--args',
+    '--remote-debugging-address=127.0.0.1', `--remote-debugging-port=${port}`,
+    `--user-data-dir=${options.userDataDir}`], { timeout: 10000 });
+  let seenSlack = false;
+  let seenManaged = false;
+  for (let attempt = 0; attempt < 50; attempt++) {
+    const running = await processes();
+    seenSlack ||= running.length > 0;
+    const app = running.find(item => item.port === port);
+    if (app) {
+      seenManaged = true;
+      const binding = await listener({ ...options, port, appPid: app.pid });
+      if (binding === 'unsafe') throw new Error('Unsafe or foreign DevTools listener. Quit Slack normally; the injector refused to connect.');
+      if (binding === 'safe') return app.pid;
+    }
+    await sleep(200);
+  }
+  if (seenManaged) throw new Error('Slack did not keep a verified loopback DevTools listener running. Quit Slack normally and try again.');
+  if (seenSlack) throw new Error('Slack started without the requested debugging port. Quit Slack normally and relaunch to enable styling.');
+  throw new Error('Slack did not stay running after launch. Open Slack normally to check for an app startup error.');
+}
+
 export const macOS = {
   isAlive: alive,
-  async processes(options) {
-    const { stdout } = await execute('/bin/ps', ['-axo', 'pid=,comm='], { maxBuffer: 4 * 1024 * 1024 });
-    const processes = parseProcesses(stdout, options.executable);
-    return Promise.all(processes.map(async item => {
-      const { stdout: args } = await execute('/bin/ps', ['-p', String(item.pid), '-o', 'args=']);
-      const port = args.match(/(?:^|\s)--remote-debugging-port=(\d+)(?:\s|$)/);
-      return { ...item, port: port ? Number(port[1]) : null };
-    }));
+  processes: listProcesses,
+  async focus(options) {
+    // A second launch of the same profile lets Electron's singleton focus that
+    // instance, rather than whichever Slack LaunchServices happens to select.
+    const args = options.userDataDir ? ['-n', '-a', options.app, '--args', `--user-data-dir=${options.userDataDir}`] : ['-a', options.app];
+    await execute('/usr/bin/open', args);
   },
-  async focus(options) { await execute('/usr/bin/open', ['-a', options.app]); },
   async port() {
     const server = net.createServer();
     await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
@@ -97,19 +149,13 @@ export const macOS = {
     await new Promise(resolve => server.close(resolve));
     return port;
   },
-  async startApp(options, port) {
-    const child = spawn(options.executable, [`--remote-debugging-address=127.0.0.1`, `--remote-debugging-port=${port}`], {
-      detached: true, stdio: 'ignore',
-    });
-    await new Promise((resolve, reject) => { child.once('spawn', resolve); child.once('error', reject); });
-    child.unref();
-    return child.pid;
-  },
+  startApp,
   async startWatcher(options, session) {
     const log = fs.openSync(path.join(options.stateDir, 'watcher.log'), 'a', 0o600);
     try {
       const child = spawn(process.execPath, [self, '_watch', '--app', options.app, '--css', options.css,
-        '--state-dir', options.stateDir, '--port', String(session.port), '--app-pid', String(session.appPid),
+        '--state-dir', options.stateDir, '--user-data-dir', options.userDataDir,
+        '--port', String(session.port), '--app-pid', String(session.appPid),
         '--session-id', session.sessionId], { detached: true, stdio: ['ignore', log, log] });
       await new Promise((resolve, reject) => { child.once('spawn', resolve); child.once('error', reject); });
       child.unref();
@@ -163,7 +209,7 @@ export async function launch(options, operations = macOS) {
     const plan = launchPlan(processes, previous, operations.isAlive);
     const managed = previous && processes.some(item => item.pid === previous.appPid && item.port === previous.port);
     if (plan === 'focus' || control.enabled === false) {
-      await operations.focus(options);
+      await operations.focus(control.enabled === false ? { ...options, userDataDir: null } : options);
       return { action: 'focused', themed: Boolean(managed && control.enabled !== false &&
         operations.isAlive(previous.watcherPid) && previous.enabled && previous.applied),
         note: control.enabled === false ? 'Styling is disabled.' :
@@ -171,19 +217,22 @@ export async function launch(options, operations = macOS) {
     }
     validateCSS(fs.readFileSync(options.css, 'utf8'));
     if (!fs.existsSync(options.executable)) throw new Error('Slack executable not found. Use --app to select its bundle.');
+    // New profile data is private. Never migrate/copy the normal Slack profile
+    // or change permissions on an existing user-selected directory.
+    fs.mkdirSync(options.userDataDir, { recursive: true, mode: 0o700 });
     const port = plan === 'resume' ? previous.port : await operations.port();
     const appPid = plan === 'resume' ? previous.appPid : await operations.startApp(options, port);
-    const session = { sessionId: randomUUID(), appPid, port, css: options.css, enabled: control.enabled !== false,
+    const session = { sessionId: randomUUID(), appPid, port, css: options.css, userDataDir: options.userDataDir, enabled: control.enabled !== false,
       watcherPid: 0, phase: 'starting', targets: 0, applied: 0, error: null };
     writeJSON(stateFile(options), session);
     session.watcherPid = await operations.startWatcher(options, session);
     // The watcher owns subsequent updates. Don't overwrite a status it already
     // published while this process was waiting for the child spawn event.
     const current = readJSON(stateFile(options));
-    if (current?.sessionId === session.sessionId && !current.watcherPid) writeJSON(stateFile(options), session);
+    if (current?.sessionId === session.sessionId && current.phase === 'starting' && !current.watcherPid) writeJSON(stateFile(options), session);
     if (plan === 'resume') await operations.focus(options);
     return { action: plan === 'resume' ? 'watcher-resumed' : 'launched', port,
-      note: 'Check status after Slack has loaded. If listener validation fails, quit Slack normally.' };
+      note: 'This uses a separate Slack profile; sign in if prompted. Check status after Slack has loaded.' };
   });
 }
 
@@ -216,6 +265,7 @@ export async function watch(options, operations = macOS, {
   let css = null;
   let cssVersion = null;
   let lastError = null;
+  let attached = false;
   const stop = () => { stopping = true; };
   process.on('SIGTERM', stop);
   process.on('SIGINT', stop);
@@ -235,7 +285,10 @@ export async function watch(options, operations = macOS, {
       const control = readJSON(controlFile(options), { enabled: true });
       if (control.stopSession === options.sessionId) break;
       const processes = await operations.processes(options);
-      if (!processes.some(item => item.pid === options.appPid && item.port === options.port)) break;
+      if (!processes.some(item => item.pid === options.appPid && item.port === options.port)) {
+        if (!attached) throw new Error('Slack exited or lost its debugging arguments before the theme attached. Quit Slack normally and relaunch.');
+        break;
+      }
       const listener = await operations.listener(options);
       if (listener === 'unsafe') throw new Error('Unsafe or foreign DevTools listener. Quit Slack normally; the injector refused to connect.');
       if (listener === 'pending') { publish({ phase: 'waiting' }); await sleep(POLL_INTERVAL); continue; }
@@ -273,6 +326,7 @@ export async function watch(options, operations = macOS, {
         const results = await Promise.allSettled([...clients.values()].map(client => client.apply(css || '', control.enabled !== false)));
         const rejected = results.find(result => result.status === 'rejected');
         if (rejected) throw rejected.reason;
+        attached ||= clients.size > 0;
         if (!editError) lastError = null;
         publish({ phase: clients.size ? 'attached' : 'waiting', enabled: control.enabled !== false, error: editError });
       } catch (error) {
@@ -301,7 +355,7 @@ export async function watch(options, operations = macOS, {
 async function main() {
   const options = optionsFor(process.argv.slice(2));
   if (['help', '--help', '-h'].includes(options.command)) {
-    console.log('slack-terminal: launch | status | enable | disable | stop\nOptions: --app PATH --css PATH --state-dir PATH\nRequires macOS and Node 22+. Does not modify Slack or quit it automatically.');
+    console.log('slack-terminal: launch | status | enable | disable | stop\nOptions: --app PATH --css PATH --state-dir PATH --user-data-dir PATH\nRequires macOS and Node 22+. Uses a separate profile (sign in again); never copies the normal profile, modifies Slack, or quits it automatically.');
     return;
   }
   if (process.platform !== 'darwin') throw new Error('This launcher supports macOS only.');
