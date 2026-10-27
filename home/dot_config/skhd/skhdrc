@@ -175,6 +175,8 @@ alt - 3 : idx="$(yabai -m query --spaces --display | jq -er '.[2].index')" && ya
 alt - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3].index')" && yabai -m space --focus "$idx"
 alt - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" && yabai -m space --focus "$idx"
 alt - 6 : idx="$(yabai -m query --spaces --display | jq -er '.[5].index')" && yabai -m space --focus "$idx"
+alt - 7 : idx="$(yabai -m query --spaces --display | jq -er '.[6].index')" && yabai -m space --focus "$idx"
+alt - 8 : idx="$(yabai -m query --spaces --display | jq -er '.[7].index')" && yabai -m space --focus "$idx"
 
 # send window to desktop
 alt + shift - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" \
@@ -189,6 +191,10 @@ alt + shift - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index'
   && yabai -m window --space "$idx"
 alt + shift - 6 : idx="$(yabai -m query --spaces --display | jq -er '.[5].index')" \
   && yabai -m window --space "$idx"
+alt + shift - 7 : idx="$(yabai -m query --spaces --display | jq -er '.[6].index')" \
+  && yabai -m window --space "$idx"
+alt + shift - 8 : idx="$(yabai -m query --spaces --display | jq -er '.[7].index')" \
+  && yabai -m window --space "$idx"
 
 # move whole space to another space
 alt + shift + ctrl - 1 : idx="$(yabai -m query --spaces --display | jq -er '.[0].index')" \
@@ -202,6 +208,10 @@ alt + shift + ctrl - 4 : idx="$(yabai -m query --spaces --display | jq -er '.[3]
 alt + shift + ctrl - 5 : idx="$(yabai -m query --spaces --display | jq -er '.[4].index')" \
   && yabai -m space --move "$idx"
 alt + shift + ctrl - 6 : idx="$(yabai -m query --spaces --display | jq -er '.[5].index')" \
+  && yabai -m space --move "$idx"
+alt + shift + ctrl - 7 : idx="$(yabai -m query --spaces --display | jq -er '.[6].index')" \
+  && yabai -m space --move "$idx"
+alt + shift + ctrl - 8 : idx="$(yabai -m query --spaces --display | jq -er '.[7].index')" \
   && yabai -m space --move "$idx"
 
 # focus display
