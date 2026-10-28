@@ -3,6 +3,9 @@
 A matching Sonokai/Everforest and Victor Mono theme for Firefox's UI and built-in
 pages, installed through profile CSS rather than Stylus.
 
+Horizontal tabs use a flush, borderless 32px minimum row with a selected fill.
+Window controls and drag spacers stay native; vertical tabs retain their sizing.
+
 ## Install
 
 Run `chezmoi apply`, open the active **Profile Folder** from `about:support`, and

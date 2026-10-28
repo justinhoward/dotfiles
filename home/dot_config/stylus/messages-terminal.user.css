@@ -1,0 +1,353 @@
+/* ==UserStyle==
+@name         Google Messages / terminal
+@namespace    github.com/justinhoward/dotfiles
+@version      1.0.2
+@description  Flat, square Google Messages for web in Victor Mono. Sonokai dark / Everforest light.
+@license      MIT
+@preprocessor default
+@var select appearance "Appearance" {
+  "system:Follow system*": "light dark",
+  "dark:Sonokai (dark)": "dark",
+  "light:Everforest (light)": "light"
+}
+@var text fontFamily "Font family" "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace
+@var range fontSize "Text size" [13, 11, 18, 1, "px"]
+==/UserStyle== */
+
+/* Web app, pairing and settings only; not the product or Google account pages. */
+@-moz-document url-prefix("https://messages.google.com/web/") {
+  :root {
+    color-scheme: var(--appearance, light dark) !important;
+
+    /* Keep the shared palette in sync with github-terminal.user.css. */
+    --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
+    --terminal-size: var(--fontSize, 13px);
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-selected: light-dark(#e8efeb, #303e44);
+  }
+
+  /* Messages defines Angular Material colors on body, including its own dark
+     theme. Important aliases follow our Appearance option, not that setting.
+     Keep Material dimensions, touch targets and icon font metrics native. */
+  :root, body {
+    --body-bg-color: var(--terminal-bg) !important;
+    --scroll-bar-bg-color: var(--terminal-border) !important;
+    --focus-ring-color: var(--terminal-blue) !important;
+    --mat-sys-background: var(--terminal-bg) !important;
+    --mat-sys-on-background: var(--terminal-fg) !important;
+    --mat-sys-surface: var(--terminal-bg) !important;
+    --mat-sys-surface-bright: var(--terminal-bg) !important;
+    --mat-sys-surface-dim: var(--terminal-inset) !important;
+    --mat-sys-surface-variant: var(--terminal-border) !important;
+    --mat-sys-surface-container-lowest: var(--terminal-inset) !important;
+    --mat-sys-surface-container-low: var(--terminal-bg) !important;
+    --mat-sys-surface-container: var(--terminal-surface) !important;
+    --mat-sys-surface-container-high: var(--terminal-hover) !important;
+    --mat-sys-surface-container-highest: var(--terminal-border) !important;
+    --mat-sys-on-surface: var(--terminal-fg) !important;
+    --mat-sys-on-surface-variant: var(--terminal-muted) !important;
+    --mat-sys-outline: var(--terminal-muted) !important;
+    --mat-sys-outline-variant: var(--terminal-border) !important;
+    --mat-sys-surface-tint: var(--terminal-blue) !important;
+    --mat-sys-primary: var(--terminal-blue) !important;
+    --mat-sys-on-primary: var(--terminal-on-accent) !important;
+    --mat-sys-primary-container: var(--terminal-selected) !important;
+    --mat-sys-on-primary-container: var(--terminal-fg) !important;
+    --mat-sys-primary-fixed: var(--terminal-selected) !important;
+    --mat-sys-primary-fixed-dim: var(--terminal-selected) !important;
+    --mat-sys-on-primary-fixed: var(--terminal-fg) !important;
+    --mat-sys-on-primary-fixed-variant: var(--terminal-blue) !important;
+    --mat-sys-secondary: var(--terminal-blue) !important;
+    --mat-sys-on-secondary: var(--terminal-on-accent) !important;
+    --mat-sys-secondary-container: var(--terminal-selected) !important;
+    --mat-sys-on-secondary-container: var(--terminal-fg) !important;
+    --mat-sys-secondary-fixed: var(--terminal-selected) !important;
+    --mat-sys-secondary-fixed-dim: var(--terminal-selected) !important;
+    --mat-sys-on-secondary-fixed: var(--terminal-fg) !important;
+    --mat-sys-on-secondary-fixed-variant: var(--terminal-blue) !important;
+    --mat-sys-tertiary: var(--terminal-green) !important;
+    --mat-sys-on-tertiary: var(--terminal-on-accent) !important;
+    --mat-sys-tertiary-container: var(--terminal-surface) !important;
+    --mat-sys-on-tertiary-container: var(--terminal-green) !important;
+    --mat-sys-tertiary-fixed: var(--terminal-surface) !important;
+    --mat-sys-tertiary-fixed-dim: var(--terminal-surface) !important;
+    --mat-sys-on-tertiary-fixed: var(--terminal-fg) !important;
+    --mat-sys-on-tertiary-fixed-variant: var(--terminal-green) !important;
+    --mat-sys-error: var(--terminal-red) !important;
+    --mat-sys-on-error: var(--terminal-on-accent) !important;
+    --mat-sys-error-container: color-mix(in srgb, var(--terminal-red) 4%, var(--terminal-surface)) !important;
+    --mat-sys-on-error-container: var(--terminal-red) !important;
+    --mat-sys-inverse-surface: var(--terminal-surface) !important;
+    --mat-sys-inverse-on-surface: var(--terminal-fg) !important;
+    --mat-sys-inverse-primary: var(--terminal-blue) !important;
+    --mat-sys-link: var(--terminal-blue) !important;
+    --mat-sys-link-hover: var(--terminal-blue) !important;
+    --mat-sys-link-visited: var(--terminal-blue) !important;
+    --mat-sys-body-large-font: var(--terminal-font) !important;
+    --mat-sys-body-medium-font: var(--terminal-font) !important;
+    --mat-sys-body-small-font: var(--terminal-font) !important;
+    --mat-sys-label-large-font: var(--terminal-font) !important;
+    --mat-sys-label-medium-font: var(--terminal-font) !important;
+    --mat-sys-label-small-font: var(--terminal-font) !important;
+    --mat-sys-title-large-font: var(--terminal-font) !important;
+    --mat-sys-title-medium-font: var(--terminal-font) !important;
+    --mat-sys-title-small-font: var(--terminal-font) !important;
+    --mat-sys-body-large-size: var(--terminal-size) !important;
+    --mat-sys-body-medium-size: var(--terminal-size) !important;
+    --mat-sys-label-large-size: var(--terminal-size) !important;
+    --mat-sys-label-medium-size: var(--terminal-size) !important;
+  }
+
+  /* Private component tokens observed in the public web bundles. Put aliases
+     on their owners: body inheritance cannot beat a component's local theme. */
+  mw-branded-header {
+    --branded-header-bg-color: var(--terminal-bg) !important;
+    --branded-header-border-color: var(--terminal-border) !important;
+  }
+  mw-landing-page-header {
+    --landing-page-header-bg-color: var(--terminal-bg) !important;
+    --landing-page-header-border-color: var(--terminal-border) !important;
+  }
+  /* The nested Google account bar owns another native background; toolbar
+     aliases alone don't recolor it or the surrounding branded header. */
+  #gb {
+    --og-bar-background: var(--terminal-bg) !important;
+    --og-bar-color: var(--terminal-fg) !important;
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+  }
+  mw-main-nav {
+    --main-nav-host-bg-color: var(--terminal-bg) !important;
+    --main-nav-host-border-color: var(--terminal-border) !important;
+    --main-nav-header-color: var(--terminal-fg) !important;
+    --main-nav-header-menu-color: var(--terminal-fg) !important;
+    --main-nav-empty-state-color: var(--terminal-muted) !important;
+    --main-nav-header-box-shadow: none !important;
+  }
+  mw-conversation-container { --conv-container-host-bg-color: var(--terminal-bg) !important; }
+  mws-toolbar, mw-main-nav-toolbar mws-toolbar, mws-header {
+    --toolbar-bg-color: var(--terminal-bg) !important;
+    --toolbar-icon-color: var(--terminal-fg) !important;
+    --toolbar-bow-shadow: none !important;
+    --header-bg-color: var(--terminal-bg) !important;
+    --header-color: var(--terminal-fg) !important;
+    --header-back-button-color: var(--terminal-fg) !important;
+    --header-back-box-shadow: none !important;
+  }
+  mw-main-nav-toolbar, mw-conversation-header { border-bottom: 1px solid var(--terminal-border) !important; }
+  mw-messages-logo { --logo-text-color: var(--terminal-fg) !important; }
+
+  /* Google account avatar decorations are separate, absolutely positioned
+     ring layers. Hide only those: retain the photo, account button and focus. */
+  #gb :is(.gb_X, .gb_Z) { display: none !important; }
+
+  mws-conversation-list-item {
+    --conv-name-color: var(--terminal-fg) !important;
+    --conv-snippet-color: var(--terminal-muted) !important;
+    --conv-notification-icon-fill: var(--terminal-muted) !important;
+    --list-grey-hover-bg-color: var(--terminal-hover) !important;
+    --list-grey-selected-bg-color: var(--terminal-selected) !important;
+    --conv-list-selected-indicator-bg-color: var(--terminal-blue) !important;
+    --conv-list-item-edit-mode-bg-color: var(--terminal-selected) !important;
+    --conv-list-item-checked-avatar-bg-color: var(--terminal-blue) !important;
+    --conv-list-item-checked-avatar-color: var(--terminal-on-accent) !important;
+    --conv-list-item-verification-badge-color: var(--terminal-blue) !important;
+  }
+  mws-conversations-list {
+    --conversations-load-more-bg-color: var(--terminal-surface) !important;
+    --conversations-load-more-color: var(--terminal-fg) !important;
+  }
+
+  /* Incoming is neutral; outgoing SMS/MMS and RCS share a quiet blue tint.
+     Map fill/ink together, including replies, edit mode and native selection.
+     Never paint the entire message wrapper: attachments and stickers live there. */
+  mws-message-part-content {
+    --empty-bg-color: var(--terminal-bg) !important;
+    --incoming-bg-color: var(--terminal-surface) !important;
+    --incoming-color: var(--terminal-fg) !important;
+    --incoming-edit-bg-color: var(--terminal-hover) !important;
+    --incoming-edit-color: var(--terminal-fg) !important;
+    --incoming-selection-bg-color: var(--terminal-hover) !important;
+    --rcs-incoming-bg-color: var(--terminal-surface) !important;
+    --xms-outgoing-bg-color: var(--terminal-selected) !important;
+    --xms-outgoing-color: var(--terminal-fg) !important;
+    --xms-outgoing-edit-bg-color: var(--terminal-hover) !important;
+    --xms-outgoing-edit-color: var(--terminal-fg) !important;
+    --xms-outgoing-selection-color: var(--terminal-fg) !important;
+    --xms-outgoing-selection-bg-color: var(--terminal-hover) !important;
+    --rcs-outgoing-bg-color: var(--terminal-selected) !important;
+    --rcs-outgoing-color: var(--terminal-fg) !important;
+    --rcs-outgoing-edit-bg-color: var(--terminal-hover) !important;
+    --rcs-outgoing-edit-color: var(--terminal-fg) !important;
+    --rcs-outgoing-selection-bg-color: var(--terminal-hover) !important;
+    --message-border-color: var(--terminal-border) !important;
+    --replied-to-message-outer--container-color: var(--terminal-inset) !important;
+    --message-reply-header-container-color: var(--terminal-inset) !important;
+  }
+  :root body.material-next-msg mws-message-part-content.is-focused.incoming {
+    background: var(--terminal-hover) !important;
+  }
+  .text-msg a { color: var(--terminal-blue) !important; }
+  mws-message-status {
+    --msg-info-color: var(--terminal-muted) !important;
+    --msg-info-failed-color: var(--terminal-red) !important;
+    --msg-status-read-icon-color: var(--terminal-blue) !important;
+  }
+  mw-message-failure-status {
+    --msg-failure-status-color: var(--terminal-muted) !important;
+    --msg-failure-status-failed-color: var(--terminal-red) !important;
+    --msg-failure-status-button-disabled-color: var(--terminal-disabled) !important;
+  }
+  mw-message-reactions-display {
+    --reaction-bg-color: var(--terminal-inset) !important;
+    --reaction-badge-count-text-color: var(--terminal-fg) !important;
+  }
+  mws-link-preview-decorator {
+    --link-preview-background-color: var(--terminal-surface) !important;
+    --link-preview-border-color: var(--terminal-border) !important;
+    --link-preview-title-color: var(--terminal-fg) !important;
+    --link-preview-content-color: var(--terminal-muted) !important;
+  }
+
+  mws-message-compose {
+    --input-bg-color: var(--terminal-inset) !important;
+    --input-color: var(--terminal-fg) !important;
+    --input-bg-fade-color: var(--terminal-bg) !important;
+    --input-bg-transparent-fade-color: color-mix(in srgb, var(--terminal-bg) 0%, transparent) !important;
+    --input-shadow: none !important;
+    --message-compose-input-shadow-override: none !important;
+    --message-compose-input-border-override: 1px solid var(--terminal-border) !important;
+    --input-reply-header-container-color: var(--terminal-surface) !important;
+    --mention-pill-bg-color: var(--terminal-selected) !important;
+    --mention-pill-color: var(--terminal-blue) !important;
+  }
+  mws-autosize-textarea { --autosize-textarea-placeholder-color: var(--terminal-muted) !important; }
+  mws-message-compose-picker-buttons {
+    --picker-button-fill-color: var(--terminal-fg) !important;
+    --picker-button-selected-fill-color: var(--terminal-blue) !important;
+    --picker-button-disabled-fill-color: var(--terminal-disabled) !important;
+  }
+  mws-message-send-button .container, mw-message-send-button .container {
+    --button-active-color: var(--terminal-blue) !important;
+    --button-inactive-color: var(--terminal-disabled) !important;
+  }
+  mw-fab-link {
+    --fab-icon-container-bg-color: var(--terminal-blue) !important;
+    --fab-label-color: var(--terminal-on-accent) !important;
+    --fab-icon-container-disabled-bg-color: var(--terminal-surface) !important;
+    --fab-label-disabled-color: var(--terminal-disabled) !important;
+    --fab-link-outline-color: var(--terminal-blue) !important;
+  }
+
+  /* Pairing surfaces, not QR pixels/illustrations. Keep those native black/white
+     assets scannable; no filters, broad SVG fills or image color inversion. */
+  mw-main-landing {
+    --main-landing-host-bg-color: var(--terminal-bg) !important;
+    --main-landing-title-color: var(--terminal-fg) !important;
+    --main-landing-sub-title-color: var(--terminal-muted) !important;
+  }
+  mw-authentication-container {
+    --authentication-bg-color: var(--terminal-bg) !important;
+    --authentication-hamburger-font-color: var(--terminal-fg) !important;
+    --authentication-instructions-steps-font-color: var(--terminal-fg) !important;
+    --authentication-instructions-title-font-color: var(--terminal-fg) !important;
+    --authentication-toggle-label-color: var(--terminal-fg) !important;
+    --authentication-learn-more-launch-icon-color: var(--terminal-blue) !important;
+  }
+  mw-pair-container {
+    --pair-bg-color: var(--terminal-bg) !important;
+    --pair-font-color: var(--terminal-fg) !important;
+    --pair-link-color: var(--terminal-blue) !important;
+  }
+  mw-settings-container { --settings-bg-color: var(--terminal-bg) !important; }
+  mw-new-conversation-container {
+    --new-conversation-bg-color: var(--terminal-bg) !important;
+    --groups-list-label-color: var(--terminal-muted) !important;
+    --contacts-load-more-bg-color: var(--terminal-surface) !important;
+    --contacts-load-more-color: var(--terminal-fg) !important;
+  }
+
+  *, *::before, *::after {
+    color-scheme: inherit !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  html { font-size: 16px !important; }
+  html, body {
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    font-family: var(--terminal-font) !important;
+    caret-color: var(--terminal-blue);
+  }
+  body { font-size: var(--terminal-size) !important; }
+
+  /* SMS text and the plain-text composer can share the UI font. Icon ligatures
+     and emoji renderers must keep theirs, including nested spans. */
+  *:not(:where(.material-icons, .material-icons *, .google-material-icons, .google-material-icons *, .google-symbols, .google-symbols *, mat-icon, mat-icon *, svg, svg *, .emoji, .emoji *, .animated-emoji, .animated-emoji *)) {
+    font-family: var(--terminal-font) !important;
+  }
+  button, input, textarea, select, .text-msg, .text-msg-content,
+  [data-e2e-message-input-box], mws-conversation-list-item {
+    font-size: var(--terminal-size) !important;
+  }
+
+  mws-message-compose .input-box:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+  mws-message-compose :is(input, textarea, [contenteditable="true"]):focus-visible { outline: none !important; }
+  input, textarea, select, [data-e2e-message-input-box] { color: var(--terminal-fg) !important; }
+  input::placeholder, textarea::placeholder { color: var(--terminal-muted) !important; opacity: 1 !important; }
+  :is(input, textarea, select):disabled { color: var(--terminal-disabled) !important; }
+  :is(input, textarea, select):is([aria-invalid="true"], :user-invalid) {
+    border-color: var(--terminal-red) !important;
+    outline-color: var(--terminal-red) !important;
+  }
+
+  /* Portaled Material menus/dialogs use a painted surface inside the ARIA host.
+     Add one boundary on that visible surface, not both host and descendant. */
+  .mat-mdc-dialog-surface, .mat-mdc-menu-panel, .mat-mdc-select-panel,
+  .mat-mdc-tooltip-surface, .mat-mdc-snackbar-surface {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+  mws-dialog {
+    --dialog-background-color: var(--terminal-surface) !important;
+    --dialog-content-color: var(--terminal-fg) !important;
+    --dialog-title-color: var(--terminal-fg) !important;
+    --dialog-section-bg-color: var(--terminal-inset) !important;
+    --dialog-section-title-color: var(--terminal-muted) !important;
+    --dialog-content-link-color: var(--terminal-blue) !important;
+    --dialog-cancel-color: var(--terminal-fg) !important;
+    --dialog-confirm-bg-color: var(--terminal-blue) !important;
+    --dialog-confirm-color: var(--terminal-on-accent) !important;
+  }
+  .mat-mdc-menu-item { color: var(--terminal-fg) !important; }
+  .mat-mdc-menu-item:hover:not([disabled]) { background-color: var(--terminal-hover) !important; }
+  .mat-mdc-menu-item[disabled] { color: var(--terminal-disabled) !important; }
+
+  :focus-visible { outline: 1px solid var(--terminal-blue) !important; outline-offset: 2px !important; }
+  ::selection { background-color: var(--terminal-hover) !important; color: var(--terminal-fg) !important; }
+  input[type="checkbox"], input[type="radio"], progress { accent-color: var(--terminal-blue) !important; }
+  * { scrollbar-color: var(--terminal-border) var(--terminal-bg); scrollbar-width: thin; }
+  @supports selector(::-webkit-scrollbar) {
+    * { scrollbar-color: auto !important; scrollbar-width: auto !important; }
+    *::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+    *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner { background: var(--terminal-bg) !important; }
+    *::-webkit-scrollbar-thumb { background: var(--terminal-border) !important; border: 0 !important; border-radius: 0 !important; }
+    *::-webkit-scrollbar-thumb:hover { background: var(--terminal-muted) !important; }
+  }
+}

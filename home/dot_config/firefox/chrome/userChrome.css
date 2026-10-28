@@ -1,4 +1,4 @@
-/* Firefox / terminal, v1.0.0. Browser UI, not a Stylus userstyle.
+/* Firefox / terminal, v1.0.2. Browser UI, not a Stylus userstyle.
    Enable toolkit.legacyUserProfileCustomizations.stylesheets in about:config.
    Install all three CSS files in the active Firefox profile's chrome/ folder. */
 @import url("terminal-palette.css");
@@ -54,13 +54,15 @@
   --sidebar-text-color: var(--terminal-fg) !important;
   --sidebar-border-color: var(--terminal-border) !important;
   --sidebar-divider-color: var(--terminal-border) !important;
-  --tabs-navbar-separator-color: var(--terminal-border) !important;
-  --chrome-content-separator-color: var(--terminal-border) !important;
+  --tabs-navbar-separator-color: transparent !important;
+  --tabs-navbar-separator-style: none !important;
+  --chrome-content-separator-color: transparent !important;
   --content-area-shadow: none !important;
 }
 
 /* This stylesheet only applies to browser chrome, not web-page documents.
-   Keep native widget sizes, layout, window controls and drag regions. */
+   Compact horizontal tabs below; other widgets, window controls and drag
+   regions retain their native sizing and behavior. */
 *, *::before, *::after {
   color-scheme: inherit !important;
   border-radius: 0 !important;
@@ -81,15 +83,44 @@ button, input, textarea, select, .toolbarbutton-text, .subviewbutton {
   color: var(--terminal-fg) !important;
 }
 
+/* Let the browser toolbar meet the page without an extra top-edge line.
+   Each website still owns its own header dividers. */
 #navigator-toolbox {
-  border-bottom: 1px solid var(--terminal-border) !important;
+  border-bottom: 0 !important;
 }
 
-/* A small terminal-style cursor line on the active tab, in either orientation.
-   Container stripes, group labels, audio indicators and close buttons stay. */
+/* Flush horizontal tabs. Firefox 159 uses --tab-margin-block; older releases
+   use --tab-block-margin. Scope both to the top bar and horizontal strip so
+   vertical tabs keep native row spacing, pinned sizing and group geometry.
+   Use a minimum, not a forced/max height: larger controls can still fit. */
+#TabsToolbar, #tabbrowser-tabs[orient="horizontal"] {
+  --tab-min-height: 32px !important;
+  --tab-margin-block: 0px !important;
+  --tab-block-margin: 0px !important;
+  --tabstrip-min-height: var(--tab-min-height) !important;
+}
+
+#TabsToolbar {
+  min-height: var(--tab-min-height) !important;
+  padding-block: 0 !important;
+  border-block: 0 !important;
+}
+
+/* Remove outer vertical button gaps, not icon padding or horizontal drag
+   spacers. Don't reset the tab strip's native movingtab drag/drop padding. */
+#TabsToolbar-customization-target,
+#TabsToolbar .toolbarbutton-1 {
+  padding-block: 0 !important;
+}
+
+#nav-bar { border-top: 0 !important; }
+
+/* Selection is a flat fill, not a bordered floating card. Container stripes,
+   group labels, audio indicators and close buttons remain native. The keyboard
+   focus rule at the end restores an outline only when navigating the tabs. */
 .tab-background {
-  border: 0 solid transparent !important;
-  border-bottom-width: 1px !important;
+  border: 0 !important;
+  outline: none !important;
 }
 
 .tabbrowser-tab:hover > .tab-stack > .tab-background {
@@ -98,8 +129,7 @@ button, input, textarea, select, .toolbarbutton-text, .subviewbutton {
 
 .tabbrowser-tab:is([visuallyselected], [multiselected]) > .tab-stack > .tab-background,
 .tab-background:is([selected], [multiselected]) {
-  background-color: var(--terminal-hover) !important;
-  border-bottom-color: var(--terminal-blue) !important;
+  background: var(--terminal-hover) !important;
 }
 
 .tabbrowser-tab:is([visuallyselected], [multiselected]) .tab-content {
@@ -191,4 +221,5 @@ findbar {
 /* Tab keyboard navigation focuses the tab list, not each background node. */
 #tabbrowser-tabs[tablist-has-focus] .tabbrowser-tab.tablist-keyboard-focus > .tab-stack > .tab-background {
   outline: 1px solid var(--terminal-blue) !important;
+  outline-offset: -1px !important;
 }

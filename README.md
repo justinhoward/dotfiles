@@ -44,8 +44,9 @@ Everything chezmoi manages lives under `home/`:
   fzf-tab, history-substring-search, autosuggestions, fast-syntax-highlighting).
 - `dot_p10k.zsh` — the prompt configuration.
 - `dot_config/…` — app configs (nvim, kitty, git, bat, ctags, …).
-- `dot_config/stylus/` — matching GitHub, Jira Cloud, Gmail, and Google Calendar
-  userstyles; see [installation](runbooks/browser-userstyles.md).
+- `dot_config/stylus/` — matching GitHub, Jira Cloud, Gmail, Google Calendar,
+  YouTube Music, and Google Messages userstyles; see
+  [installation](runbooks/browser-userstyles.md).
 - `dot_config/firefox/chrome/` — matching Firefox browser UI and built-in page
   theme; see [profile installation](runbooks/firefox-terminal-theme.md).
 - `dot_config/slack-terminal/` — local native-Slack CSS launcher/watcher, wired

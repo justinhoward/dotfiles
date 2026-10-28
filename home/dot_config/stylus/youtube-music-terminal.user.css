@@ -1,0 +1,311 @@
+/* ==UserStyle==
+@name         YouTube Music / terminal
+@namespace    github.com/justinhoward/dotfiles
+@version      1.0.1
+@description  Flat, square YouTube Music in Victor Mono. Sonokai dark / Everforest light.
+@license      MIT
+@preprocessor default
+@var select appearance "Appearance" {
+  "system:Follow system*": "light dark",
+  "dark:Sonokai (dark)": "dark",
+  "light:Everforest (light)": "light"
+}
+@var text fontFamily "Font family" "Victor Mono", "VictorMono Nerd Font Mono", "VictorMono Nerd Font", ui-monospace, monospace
+@var range fontSize "Text size" [13, 11, 18, 1, "px"]
+==/UserStyle== */
+
+/* Music only; leave regular YouTube, account pages and embedded videos alone. */
+@-moz-document url-prefix("https://music.youtube.com/") {
+  :root {
+    color-scheme: var(--appearance, light dark) !important;
+
+    /* Keep the shared palette in sync with github-terminal.user.css. */
+    --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
+    --terminal-size: var(--fontSize, 13px);
+    --terminal-bg: light-dark(#fffbef, #2c2e34);
+    --terminal-surface: light-dark(#f2efdf, #282a30);
+    --terminal-inset: light-dark(#f8f5e4, #222327);
+    --terminal-hover: light-dark(#eae8d8, #3b3e48);
+    --terminal-fg: light-dark(#5c6a72, #e2e2e3);
+    --terminal-muted: light-dark(#60706b, #a1a7ae);
+    --terminal-disabled: light-dark(#939f91, #82878b);
+    --terminal-border: light-dark(#dedccd, #454852);
+    --terminal-blue: light-dark(#25739b, #76cce0);
+    --terminal-green: light-dark(#637300, #9ed072);
+    --terminal-red: light-dark(#b83a39, #fc5d7c);
+    --terminal-on-accent: light-dark(#fffbef, #181819);
+    --terminal-selected: light-dark(#e8efeb, #303e44);
+  }
+
+  /* Observed Music semantic tokens, including the color-migration variant.
+     Do not redefine raw white/black or overlay tokens: art and video overlays
+     still need white ink on native dark scrims even in Everforest. */
+  :root {
+    --ytmusic-background: var(--terminal-bg) !important;
+    --ytmusic-brand-background-solid: var(--terminal-surface) !important;
+    --ytmusic-general-background-a: var(--terminal-surface) !important;
+    --ytmusic-general-background-c: var(--terminal-bg) !important;
+    --ytmusic-nav-bar: var(--terminal-bg) !important;
+    --ytmusic-detail-header: var(--terminal-bg) !important;
+    --ytmusic-player-bar-background: var(--terminal-surface) !important;
+    --ytmusic-player-page-background: var(--terminal-bg) !important;
+    --ytmusic-horizontal-action-card-background: var(--terminal-surface) !important;
+    --ytmusic-text-primary: var(--terminal-fg) !important;
+    --ytmusic-text-secondary: var(--terminal-muted) !important;
+    --ytmusic-text-disabled: var(--terminal-disabled) !important;
+    --ytmusic-text-primary-inverse: var(--terminal-on-accent) !important;
+    --ytmusic-icon-inactive: var(--terminal-fg) !important;
+    --ytmusic-icon-disabled: var(--terminal-disabled) !important;
+    --ytmusic-inactive-tab: var(--terminal-muted) !important;
+    --ytmusic-wordmark-text: var(--terminal-fg) !important;
+    --ytmusic-call-to-action: var(--terminal-blue) !important;
+    --ytmusic-brand-link-text: var(--terminal-red) !important;
+    --ytmusic-themed-blue: var(--terminal-blue) !important;
+    --ytmusic-themed-green: var(--terminal-green) !important;
+    --ytmusic-divider: var(--terminal-border) !important;
+    --ytmusic-guide-divider: var(--terminal-border) !important;
+    --ytmusic-guide-hover: var(--terminal-hover) !important;
+    --ytmusic-guide-entry-focus-border: var(--terminal-blue) !important;
+    --ytmusic-guide-signin-promo-text-secondary: var(--terminal-muted) !important;
+    --ytmusic-focus-active: var(--terminal-blue) !important;
+    --ytmusic-focus-outline-style: 1px solid var(--terminal-blue) !important;
+    --ytmusic-progress-container: var(--terminal-border) !important;
+    --ytmusic-playback-progress-color: var(--terminal-blue) !important;
+    --ytmusic-player-bar-repeat-disabled: var(--terminal-disabled) !important;
+    --ytmusic-player-controls-button-disabled: var(--terminal-disabled) !important;
+    --ytmusic-search-background: var(--terminal-inset) !important;
+    --ytmusic-search-bar-background-bauhaus: var(--terminal-inset) !important;
+    --ytmusic-search-border: var(--terminal-border) !important;
+    --ytmusic-search-bar-border-bauhaus: var(--terminal-border) !important;
+    --ytmusic-search-box-text-secondary: var(--terminal-muted) !important;
+    --ytmusic-search-suggestion-text-secondary: var(--terminal-muted) !important;
+    --ytmusic-search-suggestion-icon-color: var(--terminal-muted) !important;
+    --ytmusic-search-suggestion-focus-active: var(--terminal-blue) !important;
+    --ytmusic-search-suggestion-focus-active-background: var(--terminal-hover) !important;
+    --ytmusic-dialog-background-color: var(--terminal-surface) !important;
+    --ytmusic-confirm-dialog-outline: var(--terminal-border) !important;
+    --ytmusic-menu-popup-background: var(--terminal-surface) !important;
+    --ytmusic-menu-item-focus-background-color: var(--terminal-hover) !important;
+    --ytmusic-menu-renderer-button-hover-background: var(--terminal-hover) !important;
+    --ytmusic-dropdown-background: var(--terminal-surface) !important;
+    --ytmusic-dropdown-border-color: var(--terminal-border) !important;
+    --ytmusic-dropdown-item-hover-background: var(--terminal-hover) !important;
+    --ytmusic-dropdown-error-color: var(--terminal-red) !important;
+    --ytmusic-color-input-border: var(--terminal-border) !important;
+    --ytmusic-input-border-focused: var(--terminal-blue) !important;
+    --ytmusic-responsive-list-item-checked-background-bauhaus: var(--terminal-selected) !important;
+    --ytmusic-multiselect-form-item-border-color: var(--terminal-border) !important;
+    --ytmusic-multiselect-form-item-hover-background-color: var(--terminal-hover) !important;
+    --ytmusic-multiselect-form-footer-background: var(--terminal-surface) !important;
+    --ytmusic-badge-chip-background: var(--terminal-surface) !important;
+    --ytmusic-badge-chip-inactive-hover: var(--terminal-hover) !important;
+    --ytmusic-explore-chip-background: var(--terminal-surface) !important;
+    --ytmusic-inline-badge-color: var(--terminal-muted) !important;
+    --ytmusic-color-badge: var(--terminal-muted) !important;
+    --ytmusic-call-to-action-disclaimer: var(--terminal-muted) !important;
+    --ytmusic-two-column-browse-results-description-color: var(--terminal-muted) !important;
+    --ytmusic-alert-with-actions-background: var(--terminal-surface) !important;
+    --ytmusic-alert-with-actions-header-text: var(--terminal-fg) !important;
+    --ytmusic-message-renderer-text-color: var(--terminal-muted) !important;
+    --ytmusic-message-renderer-icon-color: var(--terminal-muted) !important;
+    --ytmusic-primary-text-font-family: var(--terminal-font) !important;
+    --ytmusic-standard-text-font-family: var(--terminal-font) !important;
+    --ytmusic-display-text-font-family: var(--terminal-font) !important;
+    --ytmusic-responsive-font-size: var(--terminal-size) !important;
+    --ytmusic-body-font-size: var(--terminal-size) !important;
+    --ytmusic-caption-1-font-size: calc(var(--terminal-size) - 1px) !important;
+  }
+
+  /* Polymer controls define some tokens locally; override the actual owners. */
+  tp-yt-paper-dialog, tp-yt-paper-listbox, tp-yt-paper-tooltip,
+  tp-yt-paper-input, tp-yt-paper-checkbox, tp-yt-paper-radio-button,
+  tp-yt-paper-toggle-button, tp-yt-paper-tabs, tp-yt-paper-toast {
+    --paper-dialog-background-color: var(--terminal-surface) !important;
+    --paper-dialog-color: var(--terminal-fg) !important;
+    --paper-listbox-background-color: var(--terminal-surface) !important;
+    --paper-listbox-color: var(--terminal-fg) !important;
+    --paper-tooltip-background: var(--terminal-surface) !important;
+    --paper-tooltip-text-color: var(--terminal-fg) !important;
+    --paper-input-container-color: var(--terminal-muted) !important;
+    --paper-input-container-input-color: var(--terminal-fg) !important;
+    --paper-input-container-focus-color: var(--terminal-blue) !important;
+    --paper-input-container-invalid-color: var(--terminal-red) !important;
+    --paper-checkbox-checked-color: var(--terminal-blue) !important;
+    --paper-checkbox-unchecked-color: var(--terminal-muted) !important;
+    --paper-checkbox-checkmark-color: var(--terminal-on-accent) !important;
+    --paper-checkbox-label-color: var(--terminal-fg) !important;
+    --paper-radio-button-checked-color: var(--terminal-blue) !important;
+    --paper-radio-button-unchecked-color: var(--terminal-muted) !important;
+    --paper-radio-button-label-color: var(--terminal-fg) !important;
+    --paper-toggle-button-checked-bar-color: var(--terminal-blue) !important;
+    --paper-toggle-button-checked-button-color: var(--terminal-on-accent) !important;
+    --paper-toggle-button-unchecked-bar-color: var(--terminal-border) !important;
+    --paper-toggle-button-unchecked-button-color: var(--terminal-muted) !important;
+    --paper-tabs-selection-bar-color: var(--terminal-blue) !important;
+    --paper-toast-background-color: var(--terminal-surface) !important;
+    --paper-toast-color: var(--terminal-fg) !important;
+  }
+
+  *, *::before, *::after {
+    color-scheme: inherit !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Music uses 10px rem units. Changing them to 16px enlarges the whole app. */
+  html { font-size: 10px !important; }
+  html, body {
+    background-color: var(--terminal-bg) !important;
+    color: var(--terminal-fg) !important;
+    font-family: var(--terminal-font) !important;
+    caret-color: var(--terminal-blue);
+  }
+  body { font-size: var(--terminal-size) !important; }
+
+  *:not(:where(.material-icons, .material-icons *, .google-material-icons, .google-material-icons *, svg, svg *, .html5-video-player, .html5-video-player *)) {
+    font-family: var(--terminal-font) !important;
+  }
+
+  button, input, select, textarea, yt-formatted-string,
+  .ytSpecButtonShapeNextHost, .ytAttributedStringHeading1,
+  .ytAttributedStringHeading2, .ytAttributedStringHeading3,
+  ytmusic-search-box #placeholder, ytmusic-guide-entry-renderer .title,
+  ytmusic-guide-entry-renderer .subtitle, ytmusic-player-bar .time-info {
+    font-size: var(--terminal-size) !important;
+  }
+
+  /* Flat shell only; don't paint arbitrary divs, thumbnails or video canvases.
+     Fullscreen leaves its native overlay/scrim rather than an opaque toolbar. */
+  /* The browse backdrop is separate from album art. Its gradient wrapper also
+     contains all page content, so flatten that wrapper instead of hiding it.
+     Native background-size is 100vw 50vh and repeats down a long home page. */
+  ytmusic-browse-response > #background.ytmusic-browse-response {
+    display: none !important;
+  }
+  ytmusic-browse-response > .background-gradient.ytmusic-browse-response {
+    background: var(--terminal-bg) !important;
+  }
+
+  /* Keep the sidebar borderless both before and after content-scrolled, and
+     in the expanded guide. Preserve native drawer/fullscreen visibility. */
+  ytmusic-app #guide-wrapper.ytmusic-app,
+  #mini-guide-background.ytmusic-app-layout {
+    border-right: 0 !important;
+  }
+
+  ytmusic-nav-bar {
+    background-color: var(--terminal-bg) !important;
+    border-bottom: 1px solid var(--terminal-border) !important;
+  }
+  ytmusic-player-bar:not([player-fullscreened]) {
+    background-color: var(--terminal-surface) !important;
+    border-top: 1px solid var(--terminal-border) !important;
+  }
+  ytmusic-nav-bar .left-content yt-icon-button { color: var(--terminal-fg) !important; }
+
+  ytmusic-player-bar .byline, ytmusic-guide-entry-renderer .subtitle {
+    color: var(--terminal-muted) !important;
+    --yt-endpoint-color: var(--terminal-muted) !important;
+    --yt-endpoint-hover-color: var(--terminal-blue) !important;
+    --yt-endpoint-visited-color: var(--terminal-muted) !important;
+  }
+
+  ytmusic-guide-entry-renderer[active] tp-yt-paper-item,
+  ytmusic-player-queue-item[selected] {
+    background-color: var(--terminal-selected) !important;
+    color: var(--terminal-blue) !important;
+  }
+  ytmusic-guide-entry-renderer[active] .title { color: var(--terminal-blue) !important; }
+
+  ytmusic-responsive-list-item-renderer:hover,
+  ytmusic-player-queue-item:hover {
+    background-color: var(--terminal-hover) !important;
+  }
+
+  /* Chips and modern buttons hardcode white fills instead of Music tokens. */
+  ytmusic-chip-cloud-chip-renderer a, .ytSpecButtonShapeNextHost,
+  ytmusic-nav-bar .app-bar-button {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border-color: transparent !important;
+    --yt-endpoint-hover-color: var(--terminal-fg) !important;
+  }
+  :is(ytmusic-chip-cloud-chip-renderer a, .ytSpecButtonShapeNextHost, ytmusic-nav-bar .app-bar-button):hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: var(--terminal-hover) !important;
+  }
+  ytmusic-chip-cloud-chip-renderer[is-selected] a,
+  ytmusic-chip-cloud-chip-renderer[chip-style="STYLE_PRIMARY"] a,
+  .ytSpecButtonShapeNextHost[aria-pressed="true"] {
+    background: var(--terminal-selected) !important;
+    color: var(--terminal-blue) !important;
+    --yt-endpoint-hover-color: var(--terminal-blue) !important;
+  }
+  .ytSpecButtonShapeNextHost.ytSpecButtonShapeNextFilled {
+    background: var(--terminal-blue) !important;
+    color: var(--terminal-on-accent) !important;
+  }
+  .ytSpecButtonShapeNextHost.ytSpecButtonShapeNextFilled:hover:not(:disabled, [aria-disabled="true"]) {
+    background-color: color-mix(in srgb, var(--terminal-blue) 85%, var(--terminal-fg)) !important;
+  }
+  .ytSpecButtonShapeNextHost:is(.ytSpecButtonShapeNextDisabled, :disabled, [aria-disabled="true"]) {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-disabled) !important;
+  }
+
+  /* Paint sliders through their local tokens, never resizing their hit areas
+     or forcing hover-only knobs visible. Volume and seek use the same accent. */
+  ytmusic-player-bar #progress-bar, ytmusic-player-bar .volume-slider,
+  ytmusic-player-bar .expand-volume-slider {
+    --paper-slider-active-color: var(--terminal-blue) !important;
+    --paper-slider-secondary-color: var(--terminal-muted) !important;
+    --paper-slider-container-color: var(--terminal-border) !important;
+  }
+  ytmusic-player-bar :is(.volume-slider, .expand-volume-slider),
+  ytmusic-player-bar:hover #progress-bar, ytmusic-player-bar #progress-bar[focused] {
+    --paper-slider-knob-color: var(--terminal-blue) !important;
+    --paper-slider-knob-start-color: var(--terminal-blue) !important;
+    --paper-slider-knob-start-border-color: var(--terminal-blue) !important;
+  }
+  ytmusic-player-bar[shuffle-on] :is(.shuffle, .expand-shuffle):not([disabled]),
+  ytmusic-player-bar:not([repeat-mode="NONE"], [repeat-mode="DISABLED"]) .repeat:not([disabled]) {
+    color: var(--terminal-blue) !important;
+  }
+
+  ytmusic-search-box .search-box:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: 2px !important;
+  }
+  ytmusic-search-box input:focus-visible { outline: none !important; }
+  input, textarea, select { color: var(--terminal-fg) !important; }
+  input::placeholder, textarea::placeholder { color: var(--terminal-muted) !important; opacity: 1 !important; }
+  :is(input, textarea, select):disabled { color: var(--terminal-disabled) !important; }
+  :is(input, textarea, select):is([aria-invalid="true"], :user-invalid) {
+    border-color: var(--terminal-red) !important;
+    outline-color: var(--terminal-red) !important;
+  }
+
+  /* Without shadows, floating surfaces need one thin boundary. */
+  tp-yt-paper-dialog, ytmusic-menu-popup-renderer, ytmusic-multi-page-menu-renderer,
+  tp-yt-paper-listbox, tp-yt-paper-toast, [role="dialog"], [role="alertdialog"],
+  .ytTooltipContainerDefaultTooltipContent, tp-yt-paper-tooltip #tooltip,
+  ytmusic-player-bar #hover-time-info {
+    background: var(--terminal-surface) !important;
+    color: var(--terminal-fg) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+  ytmusic-menu-popup-renderer tp-yt-paper-listbox { border: 0 !important; }
+
+  :focus-visible { outline: 1px solid var(--terminal-blue) !important; outline-offset: 2px !important; }
+  ::selection { background-color: var(--terminal-selected) !important; color: var(--terminal-fg) !important; }
+  input[type="checkbox"], input[type="radio"], progress { accent-color: var(--terminal-blue) !important; }
+
+  * { scrollbar-color: var(--terminal-border) var(--terminal-bg); scrollbar-width: thin; }
+  @supports selector(::-webkit-scrollbar) {
+    * { scrollbar-color: auto !important; scrollbar-width: auto !important; }
+    *::-webkit-scrollbar { width: 8px !important; height: 8px !important; }
+    *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner { background: var(--terminal-bg) !important; }
+    *::-webkit-scrollbar-thumb { background: var(--terminal-border) !important; border: 0 !important; border-radius: 0 !important; }
+    *::-webkit-scrollbar-thumb:hover { background: var(--terminal-muted) !important; }
+  }
+}
