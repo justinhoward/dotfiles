@@ -4,6 +4,7 @@
   // a V2 port of @fencesandbox/opencode-fence, whose published package is
   // V1-only and fails to load on V2. Don't re-add it with `fence hooks install
   // --opencode` until Fence ships a V2 build.
+  "plugins": ["opencode-stay-awake"],
   "lsp": true,
   // V2 permissions are one ordered array; the last matching rule wins. Keep the
   // broad rule first and its exceptions after it. Actions renamed from V1:
@@ -11,6 +12,9 @@
   // and action patterns accept "*" wildcards (e.g. "atlassian_*").
   "permissions": [
     { "action": "edit", "resource": "*", "effect": "allow" },
+    // Project-local .opencode/ dirs (any depth, relative or absolute paths):
+    // ask before writing, since they hold config, plugins and agent definitions.
+    { "action": "edit", "resource": "*.opencode/*", "effect": "ask" },
 
     // External directories: ask outside the project, except for temp dirs and
     // OpenCode's own cache/tool output. macOS canonicalizes checked paths through
