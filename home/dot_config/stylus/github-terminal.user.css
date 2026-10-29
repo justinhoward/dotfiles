@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         GitHub / terminal
 @namespace    github.com/justinhoward/dotfiles
-@version      1.0.2
+@version      1.0.4
 @description  Flat, square GitHub in Victor Mono. Sonokai dark / Everforest light.
 @license      MIT
 @preprocessor default
@@ -373,12 +373,14 @@
   }
 
   /* Inputs need a boundary, but nested inputs must not gain a second one.
-     Code views layer a transparent textarea over syntax highlighting. Leave
-     both renderers' paint/borders native, including the newer plain-text mode. */
+     Code views and older Copilot inputs layer textareas over formatted text;
+     the new Copilot composer owns its field boundary. Leave editor paint and
+     borders native, including code's plain-text mode. */
   :is(.form-control, .form-select, .TextInput-wrapper, textarea,
       [class*="prc-components-TextInputWrapper-"],
       [class*="prc-components-TextInputBaseWrapper-"]):not(:where(
-      #read-only-cursor-text-area, textarea[class*="Textarea__"])) {
+      #read-only-cursor-text-area, textarea[class*="Textarea__"],
+      [class*="chatForm__"] textarea, [data-copilot-chat-input="true"])) {
     background-color: var(--terminal-inset) !important;
     color: var(--terminal-fg) !important;
     border-width: 1px !important;
@@ -404,7 +406,34 @@
     outline: none !important;
   }
 
-  :is(.form-control, .form-select, textarea):disabled,
+  /* Copilot's composer owns the fill and focus boundary. Use the new
+     composer's stable attributes rather than its hashed CSS-module classes.
+     Keep both generations' editor paint and autosize geometry native. */
+  [data-testid="chat-composer-container"],
+  [class*="chatForm__"] {
+    background-color: var(--terminal-inset) !important;
+    border: 1px solid var(--terminal-border) !important;
+  }
+
+  [data-testid="chat-composer-container"]:has([data-copilot-chat-input="true"]:focus),
+  [class*="chatForm__"]:focus-within {
+    outline: 1px solid var(--terminal-blue) !important;
+    outline-offset: -1px !important;
+  }
+
+  /* The older input has a formatted preview under its transparent textarea. */
+  [class*="chatForm__"] textarea,
+  [class*="chatForm__"] [class*="inputPreview__"] {
+    font-family: var(--terminal-font) !important;
+  }
+
+  textarea[data-copilot-chat-input="true"]:focus-visible,
+  [class*="chatForm__"] textarea:focus-visible {
+    outline: none !important;
+  }
+
+  :is(.form-control, .form-select, textarea):disabled:not(:where(
+      [class*="chatForm__"] textarea, [data-copilot-chat-input="true"])),
   .TextInput-wrapper[data-disabled],
   [class*="prc-components-TextInputBaseWrapper-"][data-disabled] {
     background-color: var(--terminal-surface) !important;

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" data-color-mode="dark">
+<meta charset="utf-8">
+<title>GitHub Copilot legacy layered composer</title>
+<style>
+  /* Reduced public Copilot ChatInput styles: the textarea is transparent so
+     the matching preview underneath can render highlighted @references. */
+  :root {
+    --base-size-16: 16px;
+    --borderWidth-thin: 1px;
+    --borderColor-default: #454852;
+    --bgColor-default: #2c2e34;
+    --fgColor-default: #e2e2e3;
+    --fgColor-muted: #a1a7ae;
+    --focus-outlineColor: #76cce0;
+    --text-body-size-large: 14px;
+    --text-body-lineHeight-large: 1.5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 24px; }
+  .chatForm__S3rNdI {
+    background-color: var(--bgColor-default);
+    border: var(--borderWidth-thin) solid var(--borderColor-default);
+    border-radius: 12px;
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+    position: relative;
+  }
+  .chatForm__S3rNdI.chatFormFocused__LxBkLu {
+    outline: 2px solid var(--focus-outlineColor);
+    outline-offset: -1px;
+  }
+  .inputContainer__VrTwoP {
+    isolation: isolate;
+    width: 100%;
+    min-height: 84px;
+    max-height: 30dvh;
+    display: flex;
+    position: relative;
+    overflow-y: auto;
+  }
+  .input__Kzrn2s, .inputPreview__N7C-Uo {
+    overflow-wrap: break-word;
+    resize: none;
+    width: 100%;
+    caret-color: var(--fgColor-default);
+    font-size: var(--text-body-size-large);
+    line-height: var(--text-body-lineHeight-large);
+    padding: var(--base-size-16);
+    background: transparent;
+    border: none;
+    outline: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow-y: hidden;
+  }
+  .input__Kzrn2s { z-index: 1; color: transparent; }
+  .input__Kzrn2s::placeholder { color: var(--fgColor-muted); }
+  .inputPreview__N7C-Uo {
+    z-index: 0;
+    white-space: pre-wrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .mention__LppmWE {
+    color: var(--fgColor-accent);
+    background-color: var(--bgColor-accent-muted);
+  }
+  .toolbar__zpzF6u { display: flex; gap: 8px; padding: 8px; }
+  .cssAutosize__sGQ8ze { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .cssAutosize__sGQ8ze .input__Kzrn2s,
+  .cssAutosize__sGQ8ze .inputPreview__N7C-Uo {
+    grid-area: 1 / 1;
+    position: static;
+    inset: auto;
+  }
+  .cssAutosize__sGQ8ze .input__Kzrn2s { field-sizing: content; }
+</style>
+<body>
+  <h1>Copilot composer</h1>
+  <form id="copilot-composer" class="chatForm__S3rNdI">
+    <div class="inputContainer__VrTwoP">
+      <div id="copilot-preview" class="inputPreview__N7C-Uo" aria-hidden="true">Ask <span class="mention__LppmWE">@example/repo</span> about this code</div>
+      <textarea id="copilot-input" class="input__Kzrn2s"
+        aria-label="Ask Copilot" placeholder="Ask anything. Type @ to attach references">Ask @example/repo about this code</textarea>
+    </div>
+    <div class="toolbar__zpzF6u">
+      <button id="attach" type="button">Attach</button>
+      <button type="button">Interactive</button>
+      <button type="submit">Send</button>
+    </div>
+  </form>
+  <form id="autosize-composer" class="chatForm__S3rNdI">
+    <div class="inputContainer__VrTwoP cssAutosize__sGQ8ze">
+      <div class="inputPreview__N7C-Uo" aria-hidden="true">A second composer using CSS autosize</div>
+      <textarea id="autosize-input" class="input__Kzrn2s" aria-label="Ask Copilot">A second composer using CSS autosize</textarea>
+    </div>
+  </form>
+  <label>Comment <textarea id="comment" class="form-control">Ordinary comment text</textarea></label>
+  <label>Readonly field <textarea id="readonly-field" readonly>Ordinary readonly text</textarea></label>
+</body>
+</html>

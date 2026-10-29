@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" data-color-mode="dark">
+<meta charset="utf-8">
+<title>GitHub Copilot current composer</title>
+<style>
+  /* Reduced public composer styles matching the supplied copilot.html.
+     Unlike the legacy composer, this textarea renders its own visible text. */
+  :root {
+    --base-size-4: 4px;
+    --base-size-8: 8px;
+    --base-size-16: 16px;
+    --base-size-24: 24px;
+    --base-size-48: 48px;
+    --borderWidth-thin: 1px;
+    --borderRadius-large: 12px;
+    --borderColor-default: #454852;
+    --bgColor-default: #2c2e34;
+    --fgColor-default: #e2e2e3;
+    --fgColor-muted: #a1a7ae;
+    --focus-outline: 2px solid #76cce0;
+    --focus-outline-offset: -1px;
+    --text-body-shorthand-large: 14px/1.5 sans-serif;
+    --text-body-shorthand-medium: 13px/1.5 sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 24px; }
+  .composerMinHeight__JcfcFl { --composer-min-height: 64px; }
+  .composerNewConversationMinHeight__c_hx0G { --composer-min-height: 84px; }
+  .Container__UH20f2 {
+    background-color: var(--bgColor-default);
+    border: var(--borderWidth-thin) solid var(--borderColor-default);
+    border-radius: var(--borderRadius-large);
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+    position: relative;
+  }
+  .Container__UH20f2:has(.Input__BVltzR:focus) {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+  }
+  .InputWrapper__Xv8ir6 {
+    width: 100%;
+    min-height: var(--composer-min-height);
+    scrollbar-width: thin;
+    max-height: 30dvh;
+    display: flex;
+    position: relative;
+    overflow-y: auto;
+  }
+  .InputWrapperCssAutosize__5cKrCK {
+    padding-left: var(--base-size-16);
+    padding-right: var(--base-size-48);
+    align-items: flex-start;
+  }
+  .container__YpJHmd { display: inline-block; position: relative; }
+  .fullWidth__3jx5JM { width: 100%; }
+  .Input__BVltzR {
+    width: 100%;
+    min-height: var(--composer-min-height);
+    overflow-wrap: break-word;
+    resize: none;
+    caret-color: var(--fgColor-default);
+    color: var(--fgColor-default);
+    font: var(--text-body-shorthand-large);
+    padding: var(--base-size-16);
+    padding-right: var(--base-size-48);
+    background: transparent;
+    border: none;
+    outline: 0;
+    display: block;
+    overflow-y: hidden;
+  }
+  .responsiveText__Jbmxp6 { font: var(--text-body-shorthand-medium); }
+  .InputCssAutosize__cjWBCU {
+    min-height: calc(var(--composer-min-height) - 2 * var(--base-size-16));
+    padding-inline: 0;
+  }
+  .Input__BVltzR::placeholder { color: var(--fgColor-muted); }
+  .Toolbar__CoX2DJ {
+    align-items: center;
+    gap: var(--base-size-4);
+    padding: 0 var(--base-size-8) var(--base-size-8);
+    flex-wrap: wrap-reverse;
+    justify-content: space-between;
+    display: flex;
+    position: relative;
+  }
+</style>
+<body>
+  <div class="inputSection__dwz_LW">
+    <div class="input__Q4Kq5n">
+      <div class="inputWrapper__MWiIxX">
+        <div><div>
+          <div id="copilot-composer" class="Container__UH20f2 composerMinHeight__JcfcFl composerNewConversationMinHeight__c_hx0G container__LPPkxZ" data-testid="chat-composer-container">
+            <div class="InputWrapper__Xv8ir6 InputWrapperCssAutosize__5cKrCK" data-testid="chat-composer-input-wrapper">
+              <div class="container__YpJHmd fullWidth__3jx5JM">
+                <textarea id="copilot-input" class="Input__BVltzR InputCssAutosize__cjWBCU responsiveText__Jbmxp6"
+                  style="box-sizing: content-box; field-sizing: content; overflow-wrap: anywhere;"
+                  placeholder="Ask anything. Type @ to attach references" aria-label="Send a message"
+                  aria-readonly="false" aria-multiline="true" rows="1" maxlength="30000"
+                  data-copilot-chat-input="true" data-testid="chat-composer-input">Visible Copilot input text</textarea>
+              </div>
+            </div>
+            <div class="Toolbar__CoX2DJ">
+              <div class="ToolbarLeading__zFbXn4" data-testid="chat-composer-toolbar-leading">
+                <button id="attach" type="button" data-testid="chat-composer-attach-menu">Attach</button>
+                <button type="button">Interactive</button>
+                <button type="button">Auto · Balance</button>
+              </div>
+              <div class="ToolbarActions__q5OLPD">
+                <button type="button" data-testid="quick-chat-meter-button">Token usage</button>
+                <button type="button" data-testid="chat-composer-submit" aria-disabled="true">Send</button>
+              </div>
+            </div>
+          </div>
+        </div></div>
+        <div class="strip__1egFBc" data-testid="environment-strip">
+          <button type="button">Chat (Personal)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <label>Comment <textarea id="comment" class="form-control">Ordinary comment text</textarea></label>
+  <label>Readonly field <textarea id="readonly-field" readonly>Ordinary readonly text</textarea></label>
+</body>
+</html>
