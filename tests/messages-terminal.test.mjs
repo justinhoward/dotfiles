@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const source = fs.readFileSync(new URL('../home/dot_config/stylus/messages-terminal.user.css', import.meta.url), 'utf8');
 const github = fs.readFileSync(new URL('../home/dot_config/stylus/github-terminal.user.css', import.meta.url), 'utf8');
+const fixture = fs.readFileSync(new URL('fixtures/messages-start-chat.html', import.meta.url), 'utf8');
 const css = source.replace(/\/\*[\s\S]*?\*\//g, '');
 
 // Structural guards only; these do not claim to validate a paired account.
@@ -21,7 +22,7 @@ function rule(selector) {
 
 test('Messages shares local fonts, palette and options, scoped to web app routes', () => {
   assert.match(source, /@name\s+Google Messages \/ terminal/);
-  assert.match(source, /@version\s+1\.0\.2/);
+  assert.match(source, /@version\s+1\.0\.3/);
   for (const setting of ['select appearance', 'text fontFamily', 'range fontSize']) {
     assert.ok(source.includes(`@var ${setting}`));
   }
@@ -78,8 +79,30 @@ test('composer owns one field boundary and supports both textarea and contentedi
   assert.match(rule('mw-fab-link'), /--fab-label-color:\s*var\(--terminal-on-accent\)/);
 });
 
+test('Start chat matches compact Google sidebar actions without resizing the floating FAB', () => {
+  const host = 'mw-main-nav mw-fab-link.start-chat:not(.floating-start-chat)';
+  assert.match(rule(':root'), /--terminal-start-chat-height:\s*calc\(max\(24px, var\(--terminal-size\) \* 1\.25\) \+ 8px\)/);
+  assert.match(rule(host), /--fab-link-height-px:\s*var\(--terminal-start-chat-height\)\s*!important/);
+  assert.match(rule(host), /margin-inline:\s*16px\s*!important/);
+  const button = rule(`${host} .fab`);
+  assert.match(button, /width:\s*100%\s*!important/);
+  assert.match(button, /min-width:\s*0\s*!important/);
+  assert.match(button, /min-height:\s*0\s*!important/);
+  assert.match(button, /padding:\s*4px 12px\s*!important/);
+  assert.match(button, /box-sizing:\s*border-box\s*!important/);
+  assert.match(button, /justify-content:\s*flex-start\s*!important/);
+  assert.match(rule(`${host} .fab-label`), /font-size:\s*var\(--terminal-size\)\s*!important/);
+  assert.match(rule(`${host} .fab-label`), /line-height:\s*1\.25\s*!important/);
+  assert.match(rule('mw-fab-link'), /--fab-icon-container-bg-color:\s*var\(--terminal-blue\)\s*!important/);
+  assert.match(rule('mw-fab-link'), /--fab-label-disabled-color:\s*var\(--terminal-disabled\)\s*!important/);
+  assert.ok(fixture.includes('class="start-chat floating-start-chat"'));
+  assert.ok(fixture.includes('class="fab disabled mat-mdc-button" disabled'));
+  assert.ok(fixture.includes('class="fab link mat-mdc-button" data-e2e-start-button'));
+  assert.doesNotMatch(fixture, /<script|<iframe|https?:|@|url\(/i);
+});
+
 test('QR pixels, media, emoji and icon fonts keep native rendering and hit targets', () => {
-  assert.doesNotMatch(css, /(?:^|[;{])\s*(?:visibility|overflow[\w-]*|pointer-events|position|transform|filter|fill|stroke|z-index|line-height|font)\s*:/);
+  assert.doesNotMatch(css, /(?:^|[;{])\s*(?:visibility|overflow[\w-]*|pointer-events|position|transform|filter|fill|stroke|z-index|font)\s*:/);
   for (const entry of rules().filter(entry => /(?:^|;)\s*display\s*:/.test(entry.body))) {
     assert.equal(entry.selectors, '#gb :is(.gb_X, .gb_Z)', 'Only decorative account rings may be hidden');
   }
@@ -87,7 +110,16 @@ test('QR pixels, media, emoji and icon fonts keep native rendering and hit targe
     assert.ok(entry.selectors.split(', ').every(selector => selector.endsWith('::placeholder')));
   }
   assert.doesNotMatch(css, /--(?:mat|mdc)-[\w-]*(?:height|width|size|padding|touch-target)[\w-]*\s*:(?!\s*var\(--terminal-size)/);
-  assert.doesNotMatch(css, /(?:^|;)\s*(?:height|width|padding[\w-]*|margin[\w-]*)\s*:(?!\s*8px)/);
+  for (const entry of rules()) {
+    const startChat = entry.selectors.startsWith('mw-main-nav mw-fab-link.start-chat:not(.floating-start-chat)');
+    if (startChat) {
+      assert.doesNotMatch(entry.body, /(?:^|;)\s*(?:display|height|position|top|left|right|bottom|transform|pointer-events|z-index)\s*:/);
+    } else {
+      assert.doesNotMatch(entry.body, /(?:^|;)\s*(?:height|width|padding[\w-]*|margin[\w-]*)\s*:(?!\s*8px)/);
+      assert.doesNotMatch(entry.body, /(?:^|;)\s*(?:min-height|min-width|line-height|justify-content|box-sizing)\s*:/);
+      assert.doesNotMatch(entry.body, /--fab-link-height-px\s*:/);
+    }
+  }
   assert.doesNotMatch(css, /(?:^|})\s*(?:img|video|canvas|svg|mws-message-wrapper)\b[^{}]*\{/);
   const fonts = rules().find(entry => entry.selectors.startsWith('*:not'));
   for (const exception of ['.material-icons *', '.google-symbols *', 'mat-icon *', 'svg *', '.emoji *', '.animated-emoji *']) {

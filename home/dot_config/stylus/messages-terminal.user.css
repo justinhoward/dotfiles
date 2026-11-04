@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Google Messages / terminal
 @namespace    github.com/justinhoward/dotfiles
-@version      1.0.2
+@version      1.0.3
 @description  Flat, square Google Messages for web in Victor Mono. Sonokai dark / Everforest light.
 @license      MIT
 @preprocessor default
@@ -22,6 +22,7 @@
     /* Keep the shared palette in sync with github-terminal.user.css. */
     --terminal-font: var(--fontFamily, "Victor Mono", "VictorMono Nerd Font Mono", ui-monospace, monospace);
     --terminal-size: var(--fontSize, 13px);
+    --terminal-start-chat-height: calc(max(24px, var(--terminal-size) * 1.25) + 8px);
     --terminal-bg: light-dark(#fffbef, #2c2e34);
     --terminal-surface: light-dark(#f2efdf, #282a30);
     --terminal-inset: light-dark(#f8f5e4, #222327);
@@ -248,6 +249,27 @@
     --fab-icon-container-disabled-bg-color: var(--terminal-surface) !important;
     --fab-label-disabled-color: var(--terminal-disabled) !important;
     --fab-link-outline-color: var(--terminal-blue) !important;
+  }
+
+  /* Match Gmail's Compose and Calendar's Create: compact, sidebar-wide with
+     16px gutters. Keep the narrow-screen floating FAB and its placement native.
+     Use the component's height token to beat its repeated Material selector. */
+  mw-main-nav mw-fab-link.start-chat:not(.floating-start-chat) {
+    --fab-link-height-px: var(--terminal-start-chat-height) !important;
+    margin-inline: 16px !important;
+  }
+  mw-main-nav mw-fab-link.start-chat:not(.floating-start-chat) .fab {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 4px 12px !important;
+    box-sizing: border-box !important;
+    justify-content: flex-start !important;
+  }
+  mw-main-nav mw-fab-link.start-chat:not(.floating-start-chat) .fab-label {
+    font-size: var(--terminal-size) !important;
+    font-weight: 500 !important;
+    line-height: 1.25 !important;
   }
 
   /* Pairing surfaces, not QR pixels/illustrations. Keep those native black/white

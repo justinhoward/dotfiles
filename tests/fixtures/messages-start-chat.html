@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- Synthetic structure and native geometry from the public Messages bundles.
+     Enabled, disabled and narrow-screen floating variants; no account data. -->
+<html lang="en"><head><style>
+  mw-main-nav { display: flex; flex-direction: column; width: 340px; }
+  mw-main-nav .start-chat { margin: 16px 0 16px 24px; }
+  mw-main-nav .floating-start-chat { --fab-link-height-px: 52px; position: absolute; bottom: 12px; right: 24px; }
+  mw-fab-link {
+    display: block;
+    --fab-icon-container-bg-color: #1a73e8;
+    --fab-icon-container-disabled-bg-color: #e8eaed;
+    --fab-label-color: #fff;
+    --fab-label-disabled-color: #9aa0a6;
+  }
+  .fab { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-width: 64px; border: 0; border-radius: 16px; text-decoration: none; }
+  .fab.mat-mdc-button.mat-mdc-button.mat-mdc-button { height: var(--fab-link-height-px, 48px); }
+  .link { background-color: var(--fab-icon-container-bg-color); padding: 16px; }
+  .disabled { background-color: var(--fab-icon-container-disabled-bg-color); padding: 0 16px; }
+  .fab-icon-label-container { display: flex; align-items: center; }
+  .fab-icon { color: var(--fab-label-color); fill: var(--fab-label-color); width: 24px; height: 24px; line-height: 0; }
+  .fab-label { font: 400 15px/15px sans-serif; color: var(--fab-label-color); margin-left: 8px; }
+  .disabled .fab-icon, .disabled .fab-label { color: var(--fab-label-disabled-color); }
+</style></head><body>
+  <mw-main-nav>
+    <div class="main-nav-header">
+      <mw-fab-link class="start-chat">
+        <a class="fab link mat-mdc-button" data-e2e-start-button href="#new-chat">
+          <span class="mdc-button__label"><div class="fab-icon-label-container">
+            <mws-icon class="fab-icon"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"></path></svg></mws-icon>
+            <div class="fab-label">Start chat</div>
+          </div></span>
+        </a>
+      </mw-fab-link>
+      <mw-fab-link class="start-chat">
+        <button class="fab disabled mat-mdc-button" disabled data-e2e-start-button>
+          <span class="mdc-button__label"><div class="fab-icon-label-container">
+            <mws-icon class="fab-icon"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"></path></svg></mws-icon>
+            <div class="fab-label">Start chat</div>
+          </div></span>
+        </button>
+      </mw-fab-link>
+      <mw-fab-link class="start-chat floating-start-chat">
+        <a class="fab link mat-mdc-button" data-e2e-start-button href="#new-chat">
+          <span class="mdc-button__label"><div class="fab-icon-label-container">
+            <mws-icon class="fab-icon"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"></path></svg></mws-icon>
+            <div class="fab-label">Start chat</div>
+          </div></span>
+        </a>
+      </mw-fab-link>
+    </div>
+  </mw-main-nav>
+</body></html>
