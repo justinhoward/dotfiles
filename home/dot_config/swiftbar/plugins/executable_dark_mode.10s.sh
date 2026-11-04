@@ -12,7 +12,7 @@ export LANG="en_EN.UTF-8"
 
 # Swiftbar options
 OPTIONS="font='Symbols Nerd Font' ansi=true size=16 terminal=false refresh=true bash=osascript \
-param0=~/.config/skhd/scripts/toggle_dark_mode.scpt"
+param0=~/.config/scripts/toggle_dark_mode.scpt"
 
 dark_icon=''
 light_icon=''

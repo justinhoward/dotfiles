@@ -10,7 +10,7 @@ tell app "System Events"
     set pictureFilename to "light.png"
   end if
 
-  set picturePath to POSIX path of (path to home folder) & "/.config/skhd/resources/" & pictureFilename
+  set picturePath to POSIX path of (path to home folder) & "/.config/scripts/wallpapers/" & pictureFilename
 
   tell every desktop
     set picture to picturePath

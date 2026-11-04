@@ -6,7 +6,7 @@ local CSS watcher without modifying the app bundle.
 ## Install
 
 Install Node 22+, run `chezmoi apply`, and launch
-`~/.config/skhd/scripts/slack_terminal.sh` or use **skhd app mode → s**.
+`~/.config/scripts/slack_terminal.sh` or use **Alt+Space → S**.
 Current Slack refuses remote debugging against its normal profile, so the theme
 uses a separate profile at `~/.local/share/slack-terminal/profile` (under
 `$XDG_DATA_HOME` if set). **Sign in again on the first themed launch.** Your normal

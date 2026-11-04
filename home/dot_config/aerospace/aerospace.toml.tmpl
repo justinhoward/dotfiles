@@ -1,0 +1,131 @@
+# AeroSpace window management, app launcher, and global shortcuts.
+config-version = 2
+start-at-login = false
+auto-reload-config = true
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+accordion-padding = 0
+
+focus-follows-mouse.enabled = true
+# Don't recenter after hover focus; do move the pointer to an empty screen.
+on-focus-changed = ['move-mouse window-lazy-center || move-mouse monitor-lazy-center']
+on-focused-monitor-changed = []
+
+# Keep one home workspace per screen; other slots exist only while visible or
+# occupied. Names are <screen>-<slot>, and the numbered shortcuts create them.
+# AeroSpace numbers monitors left-to-right: laptop, landscape, portrait.
+persistent-workspaces = ['1-1', '2-1', '3-1']
+
+exec-on-workspace-change = ['/usr/bin/open', '-gj', 'swiftbar://refreshplugin?name=aerospace']
+
+[gaps]
+inner.horizontal = 0
+inner.vertical = 0
+outer.left = 0
+outer.right = 0
+outer.top = 0
+outer.bottom = 0
+
+# Screen-local slots; disconnected screens fall back to the main monitor.
+[workspace-to-monitor-force-assignment]
+{{- range $monitor := list 1 2 3 }}
+{{- range $slot := untilStep 1 9 1 }}
+'{{ $monitor }}-{{ $slot }}' = {{ $monitor }}
+{{- end }}
+{{- end }}
+
+[mode.main.binding]
+# App launcher and global shortcuts.
+alt-enter = 'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~'
+alt-space = 'mode app'
+cmd-h = 'true'
+f14 = '''exec-and-forget osascript "$HOME/.config/scripts/toggle_dark_mode.scpt";
+    open -gj 'swiftbar://refreshplugin?name=dark_mode' '''
+alt-m = 'exec-and-forget open -a "Mission Control"'
+
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+alt-p = 'focus --wrap-around dfs-prev'
+alt-n = 'focus --wrap-around dfs-next'
+
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+alt-shift-p = 'swap --wrap-around dfs-prev'
+alt-shift-n = 'swap --wrap-around dfs-next'
+alt-0 = 'balance-sizes'
+
+{{ range $slot := untilStep 1 9 1 -}}
+alt-{{ $slot }} = 'exec-and-forget "$HOME/.config/aerospace/workspace.sh" focus {{ $slot }}'
+alt-shift-{{ $slot }} = 'exec-and-forget "$HOME/.config/aerospace/workspace.sh" send {{ $slot }}'
+{{ end }}
+# Left, center, and right screens.
+alt-q = 'focus-monitor 1'
+alt-w = 'focus-monitor 2'
+alt-e = 'focus-monitor 3'
+alt-shift-q = 'move-node-to-monitor --focus-follows-window 1'
+alt-shift-w = 'move-node-to-monitor --focus-follows-window 2'
+alt-shift-e = 'move-node-to-monitor --focus-follows-window 3'
+
+# Tiled-window sizing and layouts.
+alt-i = 'resize smart +100'
+alt-o = 'resize smart -100'
+alt-shift-a = 'layout floating tiling'
+alt-shift-s = 'layout horizontal vertical'
+alt-shift-f = 'fullscreen'
+alt-z = 'layout tiles'
+alt-x = 'layout accordion'
+alt-c = 'layout floating'
+alt-tab = 'workspace-back-and-forth'
+
+# Escape hatch: makes all parked windows visible and releases AeroSpace's keys.
+alt-ctrl-esc = 'enable off'
+alt-semicolon = 'mode service'
+
+[mode.service.binding]
+esc = 'mode main'
+semicolon = 'mode main'
+alt-semicolon = 'mode main'
+cmd-h = 'true'
+r = ['flatten-workspace-tree', 'mode main']
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
+s = ['layout accordion', 'mode main']
+alt-h = ['join-with left', 'mode main']
+alt-j = ['join-with down', 'mode main']
+alt-k = ['join-with up', 'mode main']
+alt-l = ['join-with right', 'mode main']
+
+[mode.app.binding]
+alt-space = 'mode main'
+space = 'mode main'
+esc = 'mode main'
+cmd-h = 'true'
+enter = [
+    'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~',
+    'mode main',
+]
+w = [
+    'exec-and-forget /Applications/Firefox.app/Contents/MacOS/firefox',
+    'mode main',
+]
+m = [
+    'exec-and-forget /Applications/Firefox.app/Contents/MacOS/firefox --new-window https://music.youtube.com',
+    'mode main',
+]
+s = [
+    'exec-and-forget "$HOME/.config/scripts/slack_terminal.sh"',
+    'mode main',
+]
+a = [
+    'exec-and-forget "/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop"',
+    'mode main',
+]

@@ -18,3 +18,13 @@
 .config/opencode/skill
 .config/opencode/tools
 .config/opencode/tui.jsonc
+
+# Obsolete AeroSpace shortcut shim; leave the original skhd config untouched.
+{{ if eq .chezmoi.os "darwin" -}}
+.config/skhd/aerospace.skhdrc
+# Replaced by shared desktop actions and wallpaper assets under .config/scripts.
+.config/aerospace/scripts/slack_terminal.sh
+.config/aerospace/scripts/toggle_dark_mode.scpt
+.config/aerospace/resources/dark.png
+.config/aerospace/resources/light.png
+{{ end -}}

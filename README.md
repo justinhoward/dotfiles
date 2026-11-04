@@ -44,6 +44,7 @@ Everything chezmoi manages lives under `home/`:
   fzf-tab, history-substring-search, autosuggestions, fast-syntax-highlighting).
 - `dot_p10k.zsh` — the prompt configuration.
 - `dot_config/…` — app configs (nvim, kitty, git, bat, ctags, …).
+- `dot_config/scripts/` — shared macOS desktop actions and wallpaper assets.
 - `dot_config/stylus/` — matching GitHub, Jira Cloud, Gmail, Google Calendar,
   YouTube Music, and Google Messages userstyles; see
   [installation](runbooks/browser-userstyles.md).

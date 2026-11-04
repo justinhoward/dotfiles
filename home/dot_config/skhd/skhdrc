@@ -85,7 +85,7 @@ app < space; default
 app < return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ & skhd --key 'space'
 app < w : /Applications/Firefox.app/Contents/MacOS/firefox & skhd --key 'space'
 app < m : /Applications/Firefox.app/Contents/MacOS/firefox --new-window https://music.youtube.com & skhd --key 'space'
-app < s : ~/.config/skhd/scripts/slack_terminal.sh & skhd --key 'space'
+app < s : ~/.config/scripts/slack_terminal.sh & skhd --key 'space'
 app < a : '/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop' & skhd --key 'space'
 
 #####################
@@ -94,9 +94,9 @@ app < a : '/Applications/Authy Desktop.app/Contents/MacOS/Authy Desktop' & skhd 
 
 # Disable cmd-h for hide
 cmd - h : true
-f14 : osascript ~/.config/skhd/scripts/toggle_dark_mode.scpt; \
+f14 : osascript ~/.config/scripts/toggle_dark_mode.scpt; \
   open -gj 'swiftbar://refreshplugin?name=dark_mode'
-# f15 : osascript ~/.config/skhd/scripts/toggle_input_mute.scpt; \
+# f15 : osascript ~/.config/scripts/toggle_input_mute.scpt; \
 #   open -gj 'swiftbar://refreshplugin?name=input_mute'
 
 #####################

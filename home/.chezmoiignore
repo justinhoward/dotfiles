@@ -7,8 +7,10 @@
 # macOS window-manager / app configs are darwin-only.
 {{ if ne .chezmoi.os "darwin" -}}
 .config/yabai
+.config/aerospace
 .config/skhd
 .config/swiftbar
 .config/finicky
 .config/slack-terminal
+.config/scripts
 {{ end -}}

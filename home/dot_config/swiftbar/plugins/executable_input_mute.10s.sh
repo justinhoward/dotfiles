@@ -11,7 +11,7 @@
 export LANG="en_EN.UTF-8"
 
 # Swiftbar options
-OPTIONS="font='Symbols Nerd Font' ansi=true size=16 bash=osascript param0=~/.config/skhd/scripts/toggle_input_mute.scpt terminal=false refresh=true"
+OPTIONS="font='Symbols Nerd Font' ansi=true size=16 bash=osascript param0=~/.config/scripts/toggle_input_mute.scpt terminal=false refresh=true"
 RED=$'\e[31m'
 DEFAULT_COLOR=$'\e[0m'
 
