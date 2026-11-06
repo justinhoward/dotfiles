@@ -31,6 +31,17 @@ import { Plugin } from "@opencode/plugin"
  * parseable expiry, it falls back to an `aws sts get-caller-identity` check
  * cached for a short default window.
  *
+ * That pre-request check can't be fully trusted, though. The CLI answers from
+ * its own role-credential cache (~/.aws/cli/cache) while those credentials
+ * last, even after the SSO session behind them has expired or been revoked.
+ * opencode's embedded AWS JS SDK never reads that cache: it keeps its own
+ * in-memory role credentials and, when they lapse, mints new ones from the SSO
+ * token (~/.aws/sso/cache). So the CLI can report "valid for hours" while
+ * Bedrock fails with an expired-SSO-session error. To recover from that, a
+ * `retry` hook watches for credential failures from Bedrock, forces
+ * `aws sso login` (skipping the probe, which would wrongly report success),
+ * and retries the request.
+ *
  * Concurrent Bedrock requests await a single in-flight check/login. If an
  * attempt fails, the next Bedrock request will try again.
  *
@@ -45,6 +56,15 @@ const EXPIRY_SAFETY_MS = 60_000
 // Cache window used only when the CLI can't tell us a real expiry (older CLI,
 // or missing/unparseable Expiration). Keeps behavior sane without a signal.
 const FALLBACK_TTL_MS = 15 * 60_000
+// After a forced login, don't open another browser login for this long; if
+// Bedrock still rejects the credentials, the problem isn't an expired session.
+const RELOGIN_COOLDOWN_MS = 2 * 60_000
+
+// Bedrock or AWS SDK errors meaning the credentials are expired or unusable,
+// as opposed to authorization failures such as AccessDenied, which a new login
+// won't fix.
+const CREDENTIAL_ERROR =
+  /SSO session|Token is expired|ExpiredToken|security token included in the request is (expired|invalid)|UnrecognizedClient|Could not load credentials|aws sso login/i
 
 // Request kinds that issue a provider call. Each is gated the same way.
 const KINDS = ["context", "generate", "title", "compaction"] as const
@@ -145,23 +165,45 @@ export default Plugin.define({
           : Date.now() + FALLBACK_TTL_MS
     }
 
-    const ensureFresh = () => {
+    // Bedrock rejected credentials the CLI considers valid: log in
+    // unconditionally, then re-probe for the new expiry.
+    const relogin = async () => {
+      validUntil = 0
+      await ssoLogin()
+      const probe = await probeExpiry()
+      if (!probe.ok)
+        throw new Error("credentials still invalid after aws sso login")
+      validUntil =
+        probe.expiresAt !== null
+          ? probe.expiresAt - EXPIRY_SAFETY_MS
+          : Date.now() + FALLBACK_TTL_MS
+    }
+
+    // Run one check/login at a time. Returns whether it succeeded.
+    const serialize = async (task: () => Promise<void>) => {
+      while (inflight) await inflight
+      let ok = true
+      inflight = task()
+        .catch((err) => {
+          ok = false
+          // Reset so a later Bedrock request can retry after a failed login.
+          log(
+            "error",
+            `aws sso login for "${AWS_PROFILE}" failed: ${String(err)}`,
+          )
+        })
+        .finally(() => {
+          inflight = null
+        })
+      await inflight
+      return ok
+    }
+
+    const ensureFresh = async () => {
       // Fast path: credentials known-good, skip the CLI entirely.
-      if (Date.now() < validUntil) return Promise.resolve()
-      if (!inflight) {
-        inflight = ensureSso()
-          .catch((err) => {
-            // Reset so a later Bedrock request can retry after a failed login.
-            log(
-              "error",
-              `aws sso login for "${AWS_PROFILE}" failed: ${String(err)}`,
-            )
-          })
-          .finally(() => {
-            inflight = null
-          })
-      }
-      return inflight
+      if (Date.now() < validUntil) return
+      if (inflight) return inflight
+      await serialize(ensureSso)
     }
 
     for (const kind of KINDS) {
@@ -169,5 +211,22 @@ export default Plugin.define({
         if (event.model?.providerID === BEDROCK_PROVIDER) await ensureFresh()
       })
     }
+
+    let lastRelogin = 0
+    await ctx.session.hook(
+      "retry",
+      async (event) => {
+        if (!CREDENTIAL_ERROR.test(`${event.error.type} ${event.error.message}`))
+          return
+        if (Date.now() - lastRelogin < RELOGIN_COOLDOWN_MS) return
+        lastRelogin = Date.now()
+        log(
+          "warn",
+          `Bedrock rejected credentials for "${AWS_PROFILE}": ${event.error.message}`,
+        )
+        if (await serialize(relogin)) event.decision = { retry: true, delay: 0 }
+      },
+      { providerID: BEDROCK_PROVIDER },
+    )
   },
 })

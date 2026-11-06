@@ -170,8 +170,12 @@
     // re-enable those tools (e.g. "edit": "allow" covers edit, write and
     // apply_patch); denying again here removes them from these agents'
     // requests.
+    //
+    // No agent here pins a model: subagents inherit the session's model, and
+    // the hidden title/summary agents use the session provider's small model.
+    // That keeps every request on the selected provider, so the Bedrock SSO
+    // plugin only fires when a Bedrock model is selected.
     "explore": {
-      "model": "amazon-bedrock/us.openai.gpt-6.1-sol",
       "permissions": [
         { "action": "github_*", "resource": "*", "effect": "deny" },
         { "action": "circleci_*", "resource": "*", "effect": "deny" },
@@ -184,7 +188,6 @@
     "scout": {
       "mode": "all",
       "description": "Quick, read-only codebase searches, file and symbol lookups, and concise summaries. Use explore for deeper investigation.",
-      "model": "amazon-bedrock/us.anthropic.claude-haiku-5-5#low",
       "permissions": [
         { "action": "github_*", "resource": "*", "effect": "deny" },
         { "action": "circleci_*", "resource": "*", "effect": "deny" },
@@ -193,12 +196,6 @@
         { "action": "slack_*", "resource": "*", "effect": "deny" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
-    },
-    "title": {
-      "model": "amazon-bedrock/us.openai.gpt-6.1-sol"
-    },
-    "summary": {
-      "model": "amazon-bedrock/us.openai.gpt-6.1-sol"
     }
   },
   "mcp": {
