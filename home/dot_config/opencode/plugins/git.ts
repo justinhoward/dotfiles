@@ -7,7 +7,7 @@ import { join } from "node:path"
 /**
  * Git operations that cannot run in the Fence-sandboxed bash tool.
  *
- * This plugin registers commit, push, rebase, and merge tools. They run in
+ * This plugin registers commit, fetch, push, rebase, and merge tools. They run in
  * opencode's own process, outside Fence, so their behaviour is fixed here
  * rather than left to arbitrary arguments, and OpenCode's `permissions` config
  * (see opencode.jsonc) is their only gate: each tool calls
@@ -497,7 +497,7 @@ export default Plugin.define({
           "Rebase with GPG signing for every recreated commit, outside the shell sandbox. " +
           "Supports git rebase [--onto newbase] [upstream [branch]], or --root [branch]. " +
           "Omitting upstream uses the current branch's tracking upstream. " +
-          "Protected branches and replay ranges shared on other remote branches are refused (using local refs; fetch first). " +
+          "Protected branches and replay ranges shared on other remote branches are refused (using local refs; run git_fetch first). " +
           "Resolve conflicts and git add in the sandbox, then call action: continue. " +
           "Never use git_commit to finish a rebase. Skip/abort are explicit destructive actions. " +
           "No arbitrary interactive todo, exec, update-refs, strategy, or autostash options.",
@@ -752,15 +752,15 @@ export default Plugin.define({
             if (!args.force)
               throw new Error(
                 `${REMOTE}/${branch} (${remoteSha!.slice(0, 12)}) is not an ancestor of HEAD. ` +
-                  "If you amended or rebased, retry with force: true. Otherwise fetch " +
-                  "and integrate the remote changes first.",
+                  "If you amended or rebased, retry with force: true. Otherwise run " +
+                  "git_fetch and integrate the remote changes first.",
               )
             const tracking = await git("rev-parse", "--verify", "--quiet", trackingRef)
             if (tracking.stdout !== remoteSha)
               throw new Error(
                 `${REMOTE}/${branch} is at ${remoteSha!.slice(0, 12)} on the remote but ` +
                   `${tracking.stdout ? tracking.stdout.slice(0, 12) : "missing"} locally; ` +
-                  "it changed since your last fetch. Fetch and review before force-pushing.",
+                  "it changed since your last fetch. Run git_fetch and review before force-pushing.",
               )
             discarded = (
               await git("log", "--oneline", "--no-decorate", `-n${MAX_COMMITS_SHOWN}`, `${localSha}..${remoteSha}`)
@@ -833,6 +833,44 @@ export default Plugin.define({
               (discarded ? `\n\nReplaced on ${REMOTE}:\n${discarded}` : "") +
               `\n\n${output}`,
           }
+        },
+      })
+
+      /**
+       * Fetch from origin so bash does not need the SSH agent. Updates only
+       * remote-tracking refs and objects; the working tree and local branches
+       * are untouched. Allowed without a prompt, since `git fetch` in bash
+       * needed no approval either.
+       */
+      editor.add({
+        name: "git_fetch",
+        description:
+          "Fetch from origin, updating remote-tracking branches. Use this instead of " +
+          "`git fetch`, `git pull`, or `git clone` in bash, which cannot reach the SSH " +
+          "agent from the sandbox. Does not change the working tree or local branches.",
+        input: {
+          type: "object",
+          properties: {},
+          additionalProperties: false,
+        },
+        execute: async (_input, context) => {
+          const git = gitIn(await sessionDirectory(context.sessionID), context.signal)
+
+          await context.progress({ title: `git fetch ${REMOTE}`, remote: REMOTE })
+          await ctx.permission.assert({
+            sessionID: context.sessionID,
+            agent: context.agent,
+            action: "git_fetch",
+            resources: [REMOTE],
+            save: [REMOTE],
+            metadata: { remote: REMOTE },
+            source: { type: "tool", messageID: context.messageID, id: context.id },
+          })
+
+          const result = await git("fetch", REMOTE)
+          const output = [result.stdout, result.stderr].filter(Boolean).join("\n")
+          if (!result.ok) throw new Error(`git fetch failed:\n${output}`)
+          return { content: output || `${REMOTE} is up to date.` }
         },
       })
     })

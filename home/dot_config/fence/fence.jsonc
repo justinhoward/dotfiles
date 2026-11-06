@@ -41,7 +41,7 @@
     // TRADEOFF: permits every Unix socket, including the Docker daemon
     // socket. Acceptable for an accident-prevention posture; not appropriate
     // if you are defending against a deliberately hostile process.
-    "allowAllUnixSockets": true
+    "allowAllUnixSockets": false
   },
 
   // Fence's SSH policy is allowlist-mode with an empty default list, which

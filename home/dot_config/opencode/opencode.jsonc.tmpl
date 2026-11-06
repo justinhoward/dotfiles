@@ -142,6 +142,9 @@
     //   - git_rebase/git_merge: signed start/continue, explicit abort (and
     //     rebase skip). Each action asks with resource "<action>:<branch>",
     //     so approving continuation never also approves destructive recovery.
+    //   - git_fetch: fetches origin without changing the working tree or local
+    //     branches, so it runs without asking.
+    { "action": "git_fetch", "resource": "*", "effect": "allow" },
     { "action": "git_push", "resource": "*", "effect": "ask" },
     { "action": "git_commit", "resource": "*", "effect": "allow" },
     { "action": "git_commit", "resource": "amend", "effect": "ask" },
