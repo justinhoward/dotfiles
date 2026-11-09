@@ -37,3 +37,11 @@ Git and GitHub, where bash is blocked:
   blocked with no alternative; ask the user. Read-only git, `add`, and
   creating/switching branches work in bash as usual.
 
+## Worktrees
+
+- After `worktree_create`, `session_move` into it first; until then every
+  command there needs approval.
+- It starts at the main checkout's HEAD, without uncommitted changes.
+  `git_fetch`, then `git switch -c <name> origin/<base>`.
+- Gitignored setup is missing; check the repo's AGENTS.md.
+
