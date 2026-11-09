@@ -94,9 +94,8 @@ async function harness(options = {}) {
       return ok(state.mergeBase);
     }
     if (command === 'log') return ok(flags.includes('-1') ? 'aaaaaaa change\nsignature: G Test signer' : 'aaaaaaa change');
-    if (command === 'for-each-ref') return ok(flags.includes('--contains')
-      ? state.remotes.split('\n').map(line => line.split('\t')[0]).join('\n') : state.remotes);
-    if (command === 'rev-list') return ok(flags.includes('--count') ? String(flags.filter(f => /^[a-f0-9]{40}$/.test(f)).length) : state.candidates.join('\n'));
+    if (command === 'for-each-ref') return ok(state.remotes);
+    if (command === 'rev-list') return ok(state.candidates.join('\n'));
     throw new Error(`Unexpected git command: ${JSON.stringify(args)}`);
   }
 
@@ -153,7 +152,7 @@ async function harness(options = {}) {
 
 test('registers narrow schemas including --onto and both positional arguments', async () => {
   const h = await harness();
-  assert.deepEqual([...h.tools.keys()], ['git_commit', 'git_rebase', 'git_merge', 'git_push']);
+  assert.deepEqual([...h.tools.keys()], ['git_commit', 'git_rebase', 'git_merge', 'git_push', 'git_fetch']);
   for (const name of ['git_rebase', 'git_merge']) {
     const schema = h.tools.get(name).input;
     assert.equal(schema.additionalProperties, false);
@@ -277,21 +276,27 @@ for (const tool of ['git_rebase', 'git_merge']) {
 
 test('rebase checks the whole replay range against other remote branches, exempting only its own', async () => {
   const h = await harness({ state: { candidates: [HEAD, OTHER],
-    remotes: 'refs/remotes/origin/feature\t\nrefs/remotes/origin/HEAD\trefs/remotes/origin/main\nrefs/remotes/origin/shared\t' },
-    git: args => args[0] === 'rev-list' && args.includes('--count') ? ok('1') : undefined });
+    remotes: 'refs/remotes/origin/feature\t\nrefs/remotes/origin/HEAD\trefs/remotes/origin/main\nrefs/remotes/origin/shared\t' } });
   await assert.rejects(h.run('git_rebase', { upstream: 'origin/main' }), /replay range includes commits already on origin\/shared/);
-  const check = h.calls.find(args => args[0] === 'rev-list' && args.includes('--count'));
-  assert.ok(check.includes(HEAD)); assert.ok(check.includes(OTHER));
-  assert.equal(check.at(-1), 'refs/remotes/origin/shared');
+  const check = h.calls.find(args => args[0] === 'for-each-ref' && args.includes('--contains'));
+  assert.deepEqual(check.slice(2), ['--contains', HEAD, '--contains', OTHER, 'refs/remotes']);
   assert.equal(h.approvals.length, 0); assert.equal(h.mutations.length, 0);
 });
 
-test('remote-history checks batch large ref inventories instead of spawning once per remote', async () => {
-  const h = await harness({ state: { remotes: Array.from({ length: 250 }, (_, i) => `refs/remotes/origin/topic-${i}\t`).join('\n') } });
+test('rebase allows a replay range that is only on its own remote branch', async () => {
+  const h = await harness({ state: { candidates: [HEAD, OTHER],
+    remotes: 'refs/remotes/origin/feature\t\nrefs/remotes/origin/HEAD\trefs/remotes/origin/main' } });
+  const result = await h.run('git_rebase', { upstream: 'origin/main' });
+  assert.equal(result.status, 'completed');
+  assert.equal(h.mutations.length, 1);
+});
+
+test('remote-history checks batch large replay ranges instead of spawning once per commit', async () => {
+  const h = await harness({ state: { candidates: Array.from({ length: 250 }, (_, i) => i.toString(16).padStart(40, '0')) } });
   await h.run('git_rebase', { upstream: 'origin/main' });
-  const counts = h.calls.filter(args => args[0] === 'rev-list' && args.includes('--count'));
-  assert.equal(counts.length, 6); // three batches, checked before and after approval
-  assert.ok(counts.every(args => args.length <= 105));
+  const checks = h.calls.filter(args => args[0] === 'for-each-ref' && args.includes('--contains'));
+  assert.equal(checks.length, 6); // three batches, checked before and after approval
+  assert.ok(checks.every(args => args.length <= 203));
 });
 
 test('rebases return recoverable conflict state instead of aborting or making an ordinary commit', async () => {

@@ -310,29 +310,18 @@ const rebasePlan = async (git: Git, args: RebaseInput, branch: string) => {
   const commits = await checked(git, "log", "--oneline", "--no-decorate", `-n${MAX_COMMITS_SHOWN}`, ...range)
 
   // Protect every replay candidate, not just HEAD: --onto can rewrite a range
-  // whose older commits are already shared on another remote branch.
+  // whose older commits are already shared on another remote branch. Repeated
+  // --contains lists refs containing any of the candidates; batch the
+  // candidates to bound argv size. (Not `rev-list --count --no-walk C --not R`:
+  // --no-walk is ignored for ranges, so that walks and counts C's ancestors.)
   const candidates = (await checked(git, "rev-list", ...range)).split("\n").filter(Boolean)
-  const refs = await checked(git, "for-each-ref", "--format=%(refname)\t%(symref)", "refs/remotes")
-  const otherRefs = refs.split("\n").map((line) => line.split("\t"))
-    .filter(([ref, symref]) => ref && !symref && ref !== `refs/remotes/${REMOTE}/${branch}`)
-    .map(([ref]) => ref)
   for (let i = 0; i < candidates.length; i += 100) {
-    const batch = candidates.slice(i, i + 100)
-    // Batch both sides to bound argv size and avoid one Git process per remote
-    // branch in repositories with thousands of remote-tracking refs.
-    for (let j = 0; j < otherRefs.length; j += 100) {
-      const remoteBatch = otherRefs.slice(j, j + 100)
-      const unshared = await checked(git, "rev-list", "--count", "--no-walk", ...batch, "--not", ...remoteBatch)
-      if (Number(unshared) === batch.length) continue
-      for (const candidate of batch) {
-        const containing = await checked(git, "for-each-ref", "--contains", candidate, "--format=%(refname)", "refs/remotes")
-        const shared = containing.split("\n").find((ref) => remoteBatch.includes(ref))
-        if (shared)
-          throw new Error(`The replay range includes commits already on ${shared.replace("refs/remotes/", "")}; rebasing would rewrite shared history.`)
-      }
-      // Fail closed if refs changed between the count and diagnostic query.
-      throw new Error("Cannot prove the replay range is unshared; fetch, inspect remote refs, and retry.")
-    }
+    const contains = candidates.slice(i, i + 100).flatMap((candidate) => ["--contains", candidate])
+    const refs = await checked(git, "for-each-ref", "--format=%(refname)\t%(symref)", ...contains, "refs/remotes")
+    const shared = refs.split("\n").map((line) => line.split("\t"))
+      .find(([ref, symref]) => ref && !symref && ref !== `refs/remotes/${REMOTE}/${branch}`)
+    if (shared)
+      throw new Error(`The replay range includes commits already on ${shared[0].replace("refs/remotes/", "")}; rebasing would rewrite shared history.`)
   }
   return { argv, head, upstream, upstreamSha, onto, fork, branch, commits }
 }
