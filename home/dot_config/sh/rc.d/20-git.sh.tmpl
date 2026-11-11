@@ -217,8 +217,19 @@ alias gwdt='git difftool'                  # custom
 alias wdiff="git --no-pager diff --color=auto --no-ext-diff --no-index --color-words '--word-diff-regex=[a-zA-Z0-9\-_]+'"
 
 # --- Worktree (W) — custom -------------------------------------------------
+alias gW='git worktree'
 alias gWa='git worktree add'
+alias gWc='git worktree add -b'             # gWc <branch> <path> [<base>] (cf. gbc)
+alias gWl='git worktree list'
+alias gWL='git worktree list --verbose'
+alias gWm='git worktree move'
+alias gWM='git worktree move --force'
+alias gWx='git worktree remove'
+alias gWX='git worktree remove --force'
+alias gWk='git worktree lock'
+alias gWK='git worktree unlock'
 alias gWp='git worktree prune'
+alias gWr='git worktree repair'
 
 # --- Default-branch helpers — custom ---------------------------------------
 alias gdefault='git symbolic-ref --short refs/remotes/origin/HEAD | sed "s@^origin/@@" || git config --get init.defaultBranch'
