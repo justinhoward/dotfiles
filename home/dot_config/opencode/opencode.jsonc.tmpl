@@ -149,7 +149,26 @@
     { "action": "git_commit", "resource": "*", "effect": "allow" },
     { "action": "git_commit", "resource": "amend", "effect": "ask" },
     { "action": "git_rebase", "resource": "*", "effect": "ask" },
-    { "action": "git_merge", "resource": "*", "effect": "ask" }
+    { "action": "git_merge", "resource": "*", "effect": "ask" },
+
+    // wip (`wip mcp`, below): task tracking for agents, run outside Fence
+    // with your gh login and write access to the task store, which is why
+    // it's a server and not the CLI in bash. Each call acts for the calling
+    // session (its notes and tasks are labeled with it). Default deny, so a
+    // tool wip adds later stays hidden until listed. done asks: closing is
+    // final, and its removal of worktrees and branches reaches any repo.
+    { "action": "wip_*", "resource": "*", "effect": "deny" },
+    { "action": "wip_show", "resource": "*", "effect": "allow" },
+    { "action": "wip_ls", "resource": "*", "effect": "allow" },
+    { "action": "wip_search", "resource": "*", "effect": "allow" },
+    { "action": "wip_new", "resource": "*", "effect": "allow" },
+    { "action": "wip_attach", "resource": "*", "effect": "allow" },
+    { "action": "wip_detach", "resource": "*", "effect": "allow" },
+    { "action": "wip_note", "resource": "*", "effect": "allow" },
+    { "action": "wip_start", "resource": "*", "effect": "allow" },
+    { "action": "wip_later", "resource": "*", "effect": "allow" },
+    { "action": "wip_ignore", "resource": "*", "effect": "allow" },
+    { "action": "wip_done", "resource": "*", "effect": "ask" }
   ],
   "providers": {
     "github-copilot": {
@@ -185,6 +204,11 @@
         { "action": "git_*", "resource": "*", "effect": "deny" },
         { "action": "atlassian_*", "resource": "*", "effect": "deny" },
         { "action": "slack_*", "resource": "*", "effect": "deny" },
+        // wip: reading tasks only.
+        { "action": "wip_*", "resource": "*", "effect": "deny" },
+        { "action": "wip_show", "resource": "*", "effect": "allow" },
+        { "action": "wip_ls", "resource": "*", "effect": "allow" },
+        { "action": "wip_search", "resource": "*", "effect": "allow" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
     },
@@ -197,6 +221,10 @@
         { "action": "git_*", "resource": "*", "effect": "deny" },
         { "action": "atlassian_*", "resource": "*", "effect": "deny" },
         { "action": "slack_*", "resource": "*", "effect": "deny" },
+        { "action": "wip_*", "resource": "*", "effect": "deny" },
+        { "action": "wip_show", "resource": "*", "effect": "allow" },
+        { "action": "wip_ls", "resource": "*", "effect": "allow" },
+        { "action": "wip_search", "resource": "*", "effect": "allow" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
     }
@@ -239,6 +267,14 @@
           "/bin/sh", "-c",
           "GITHUB_PERSONAL_ACCESS_TOKEN=\"${GITHUB_MCP_TOKEN:-$(/opt/homebrew/bin/gh auth token)}\" exec /opt/homebrew/bin/github-mcp-server stdio --toolsets=context,repos,pull_requests,actions --tools=add_issue_comment,update_issue_comment --exclude-tools=merge_pull_request,push_files,create_or_update_file,delete_file,create_repository,fork_repository,list_releases,get_release_by_tag,get_latest_release,list_tags,get_tag,get_teams,get_team_members,list_repository_collaborators,search_repositories"
         ]
+      },
+      // wip's task tools: each call runs `wip <command> --json` for the
+      // calling session, in its directory (see the wip_* permissions). The
+      // `cargo install`ed binary, by path: the service's PATH may lack
+      // ~/.cargo/bin.
+      "wip": {
+        "type": "local",
+        "command": ["/bin/sh", "-c", "exec \"$HOME/.cargo/bin/wip\" mcp"]
       }{{ if .psqrMcpUrl }},
       "psqr": {
         "type": "remote",
