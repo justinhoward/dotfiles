@@ -2,5 +2,6 @@
   "theme": "dark",
   "spinnerTipsEnabled": false,
   "spinnerVerbs": { "mode": "replace", "verbs": ["Working"] },
-  "prefersReducedMotion": true
+  "prefersReducedMotion": true,
+  "permissions": { "ask": ["mcp__wip__done"] }
 }
