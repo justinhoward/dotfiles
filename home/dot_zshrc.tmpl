@@ -119,6 +119,7 @@ fi
 command -v zoxide >/dev/null && _cache_eval zoxide zoxide init zsh
 command -v fzf    >/dev/null && _cache_eval fzf    fzf --zsh
 command -v dstask >/dev/null && _cache_eval dstask dstask zsh-completion
+command -v opencode >/dev/null && _cache_eval opencode opencode --completions zsh
 # wip: the `wip` function (so `wip open` can cd) and dynamic completion. NOT
 # cached: clap's completion protocol is unstable, so the code must come from
 # the installed binary every start (~5 ms). Needs compdef, so after compinit.
