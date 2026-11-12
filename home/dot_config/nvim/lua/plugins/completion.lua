@@ -37,6 +37,11 @@ return {
         default = { 'lsp', 'snippets', 'buffer' },
         per_filetype = {
           codecompanion = { 'codecompanion' },
+          -- chezmoi data keys, template functions, and block snippets (chezmoi.lua).
+          gotmpl = { inherit_defaults = true, 'chezmoi' },
+        },
+        providers = {
+          chezmoi = { name = 'chezmoi', module = 'chezmoi-template.blink' },
         },
       },
     },
