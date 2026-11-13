@@ -26,6 +26,8 @@
     { "action": "external_directory", "resource": "/private/var/folders/qh/*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/.cache/opencode/*", "effect": "allow" },
     { "action": "external_directory", "resource": "~/.local/share/opencode/tool-output/*", "effect": "allow" },
+    // Full output of truncated shell commands, one dir per project.
+    { "action": "external_directory", "resource": "~/.local/share/opencode/shell/*", "effect": "allow" },
     // Don't allow all of ~/.local/share/opencode: it also holds auth credentials.
 
     { "action": "webfetch", "resource": "*", "effect": "allow" },
@@ -156,7 +158,8 @@
     // it's a server and not the CLI in bash. Each call acts for the calling
     // session (its notes and tasks are labeled with it). Default deny, so a
     // tool wip adds later stays hidden until listed. done asks: closing is
-    // final, and its removal of worktrees and branches reaches any repo.
+    // final, and its removal of worktrees and branches reaches any repo. do
+    // asks: it can push and merge.
     { "action": "wip_*", "resource": "*", "effect": "deny" },
     { "action": "wip_show", "resource": "*", "effect": "allow" },
     { "action": "wip_ls", "resource": "*", "effect": "allow" },
@@ -165,10 +168,12 @@
     { "action": "wip_attach", "resource": "*", "effect": "allow" },
     { "action": "wip_detach", "resource": "*", "effect": "allow" },
     { "action": "wip_note", "resource": "*", "effect": "allow" },
-    { "action": "wip_start", "resource": "*", "effect": "allow" },
-    { "action": "wip_later", "resource": "*", "effect": "allow" },
+    { "action": "wip_item", "resource": "*", "effect": "allow" },
+    { "action": "wip_park", "resource": "*", "effect": "allow" },
+    { "action": "wip_unpark", "resource": "*", "effect": "allow" },
     { "action": "wip_ignore", "resource": "*", "effect": "allow" },
-    { "action": "wip_done", "resource": "*", "effect": "ask" }
+    { "action": "wip_done", "resource": "*", "effect": "ask" },
+    { "action": "wip_do", "resource": "*", "effect": "ask" }
   ],
   "providers": {
     "github-copilot": {
@@ -209,6 +214,7 @@
         { "action": "wip_show", "resource": "*", "effect": "allow" },
         { "action": "wip_ls", "resource": "*", "effect": "allow" },
         { "action": "wip_search", "resource": "*", "effect": "allow" },
+        { "action": "wip_item", "resource": "*", "effect": "allow" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
     },
@@ -225,6 +231,7 @@
         { "action": "wip_show", "resource": "*", "effect": "allow" },
         { "action": "wip_ls", "resource": "*", "effect": "allow" },
         { "action": "wip_search", "resource": "*", "effect": "allow" },
+        { "action": "wip_item", "resource": "*", "effect": "allow" },
         { "action": "edit", "resource": "*", "effect": "deny" }
       ]
     }
