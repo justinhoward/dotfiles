@@ -5,6 +5,11 @@
   // V1-only and fails to load on V2. Don't re-add it with `fence hooks install
   // --opencode` until Fence ships a V2 build.
   "plugins": ["opencode-stay-awake"],
+  // Default for sessions started without a model, e.g. `wip do --bg`, which
+  // creates them through the service API. The TUI's recent pick still wins for
+  // sessions it starts. A variant here would be dropped; its effort is set
+  // under providers.claude-agent instead.
+  "model": "claude-agent/haiku",
   "lsp": true,
   // V2 permissions are one ordered array; the last matching rule wins. Keep the
   // broad rule first and its exceptions after it. Actions renamed from V1:
@@ -176,6 +181,15 @@
     { "action": "wip_do", "resource": "*", "effect": "ask" }
   ],
   "providers": {
+    // The root "model" can't carry a variant, so set the default effort on the
+    // model itself. A selected variant (e.g. haiku#high) still overrides it.
+    "claude-agent": {
+      "models": {
+        "haiku": {
+          "settings": { "effort": "medium" }
+        }
+      }
+    },
     "github-copilot": {
       "settings": {
         "timeout": 600000,
