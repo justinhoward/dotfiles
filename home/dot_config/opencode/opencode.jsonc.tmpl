@@ -127,6 +127,9 @@
     { "action": "github_list_*", "resource": "*", "effect": "allow" },
     { "action": "github_search_*", "resource": "*", "effect": "allow" },
     { "action": "github_pull_request_read", "resource": "*", "effect": "allow" }, // includes inline review threads
+    // Pending review comments stay private to the reviewer until the review is
+    // submitted, so adding them does not prompt. Submitting still asks.
+    { "action": "github_add_comment_to_pending_review", "resource": "*", "effect": "allow" },
     { "action": "github_actions_list", "resource": "*", "effect": "allow" },
     // One tool covering run details plus billable usage and signed
     // artifact/log download URLs. Approval is per tool, not per method;
