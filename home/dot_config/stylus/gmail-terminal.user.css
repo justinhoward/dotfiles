@@ -520,6 +520,12 @@
       color: var(--terminal-fg) !important;
     }
 
+    /* Empty-list state ("No new mail!") is a bare cf table, not a .zA row. */
+    .TB, .TB .TD, .TB .TC {
+      background-color: var(--terminal-bg) !important;
+      color: var(--terminal-muted) !important;
+    }
+
     /* Gmail's keyboard cursor (btb / PF.PE) is separate from checkbox selection.
        Put the focus rail on the full row, not the shorter indicator cell. Keep
        the native cell's dimensions, but replace its colored border with this. */

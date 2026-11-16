@@ -101,6 +101,16 @@ test('inbox separators paint at the row edge without adding cell borders', () =>
   assert.match(rule('.zA.x7, .zA.x7:hover, .zA[aria-selected="true"]'), /--terminal-row-line:\s*var\(--terminal-blue\)/);
 });
 
+test('empty inbox state paints the no-mail table on the terminal canvas', () => {
+  const fixture = fs.readFileSync(new URL('fixtures/gmail-empty-inbox.html', import.meta.url), 'utf8');
+  assert.ok(fixture.includes('<table cellpadding="0" class="cf TB">'));
+  assert.ok(fixture.includes('<tr class="TD" tabindex="-1"><td class="TC"'));
+  const empty = rule('.TB, .TB .TD, .TB .TC');
+  assert.match(empty, /background-color:\s*var\(--terminal-bg\)\s*!important/);
+  assert.match(empty, /color:\s*var\(--terminal-muted\)\s*!important/);
+  assert.doesNotMatch(empty, /(?:^|;)\s*(?:height|width|padding|margin|display|border)\s*:/);
+});
+
 test('keyboard focus uses a full-row rail, preserving native indicator dimensions', () => {
   assert.match(rule('.zA.btb, .zA:has(> .PF.PE), .zA:focus-visible'), /box-shadow:\s*inset 2px 0 0 var\(--terminal-blue\)/);
   assert.doesNotMatch(rule('.zA > .PF.PE'), /(?:^|[;{])\s*(?:border|width|height|padding|margin)\s*:/);
