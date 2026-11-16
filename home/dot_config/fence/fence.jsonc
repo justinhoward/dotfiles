@@ -114,7 +114,8 @@
     // break `npm install` in every project that has one (7 files across 6
     // repos on this machine). Deny it per-project where the tradeoff is wanted.
     "denyRead": [
-      "~/.npmrc"
+      "~/.npmrc",
+      "~/.bundle/config"
     ],
 
     // Keep a shell command from clobbering the policy that governs it.

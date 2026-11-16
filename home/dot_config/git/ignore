@@ -11,3 +11,4 @@ compile_commands.json
 .exrc
 .DS_Store
 mise.toml
+.opencode/
