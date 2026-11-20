@@ -20,6 +20,8 @@
     // Project-local .opencode/ dirs (any depth, relative or absolute paths):
     // ask before writing, since they hold config, plugins and agent definitions.
     { "action": "edit", "resource": "*.opencode/*", "effect": "ask" },
+    // Skills are read-only here: block edits under the global skills folder.
+    { "action": "edit", "resource": "~/.config/opencode/skills/*", "effect": "deny" },
 
     // External directories: ask outside the project, except for temp dirs and
     // OpenCode's own cache/tool output. macOS canonicalizes checked paths through
@@ -33,6 +35,10 @@
     { "action": "external_directory", "resource": "~/.local/share/opencode/tool-output/*", "effect": "allow" },
     // Full output of truncated shell commands, one dir per project.
     { "action": "external_directory", "resource": "~/.local/share/opencode/shell/*", "effect": "allow" },
+    // Skill definitions and their supporting files (e.g. review-board personas),
+    // read-only in practice; skills are loaded from here, not edited.
+    { "action": "external_directory", "resource": "~/.config/opencode/skills/*", "effect": "allow" },
+    { "action": "read", "resource": "~/.config/opencode/skills/*", "effect": "allow" },
     // Don't allow all of ~/.local/share/opencode: it also holds auth credentials.
 
     { "action": "webfetch", "resource": "*", "effect": "allow" },
