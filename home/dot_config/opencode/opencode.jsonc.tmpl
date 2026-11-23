@@ -11,6 +11,9 @@
   // under providers.claude-agent instead.
   "model": "claude-agent/haiku",
   "lsp": true,
+  // No session sharing, and no update checks (updates stay manual via brew).
+  "share": "disabled",
+  "update": "disable",
   // V2 permissions are one ordered array; the last matching rule wins. Keep the
   // broad rule first and its exceptions after it. Actions renamed from V1:
   // bash -> shell. MCP tools use the action "<server>_<tool>" with resource "*",
